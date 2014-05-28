@@ -4,7 +4,7 @@ object Lamma {
 
   def generate(start: Date,
                end: Date,
-               frequency: DFrequency,
+               frequency: Frequency,
                startStub: Option[StubRule] = None,
                endStub: Option[StubRule] = None,
                patterns: List[Pattern]) = {
