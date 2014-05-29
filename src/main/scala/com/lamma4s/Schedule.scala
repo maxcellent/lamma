@@ -1,5 +1,7 @@
 package com.lamma4s
 
+import Schedule._
+
 case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
 
   val rows = periods.map {
@@ -14,6 +16,36 @@ case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
       }
 
       Row(populatedDates)
+  }
+
+  val tableHeaders = PeriodHeader :: dateDefs.map(_.name)
+
+  val tableRows = rows.zipWithIndex.map {
+    case (row, index) => (index + 1).toString :: row.dates.map(_.toISOString)
+  }
+
+  val printableString = Schedule.toPrintableString(tableHeaders, tableRows)
+}
+
+object Schedule {
+  val PeriodHeader = "Period"
+
+  def toPrintableString(headers: List[String], rows: List[List[String]]) = {
+    require(rows.forall(_.size == headers.size))
+
+    val colWidths = headers.map {
+      header => math.max(header.size, Date.ISOStringLen)
+    }
+
+    def genLine(tokens: List[String]) = {
+      val formattedTokens = colWidths zip tokens map {
+        case (colWidth, token) => "%" + colWidth + "s" format token
+      }
+
+      formattedTokens.mkString("|", "|", "|")
+    }
+
+    (genLine(headers) :: rows.map(genLine)).mkString("\n")
   }
 }
 

@@ -135,4 +135,9 @@ class DateSpec extends FlatSpec with Matchers {
     val expected = Date(2014, 1, 5) :: Date(2014, 1, 6) :: Date(2014, 1, 7) :: Date(2014, 1, 8) :: Nil
     DateRange(Date(2014, 1, 5), Date(2014, 1, 8)).toList should be(expected)
   }
+
+  "toISOString" should "work" in {
+    Date(978, 1, 5).toISOString should be("0978-01-05")
+    Date(2014, 11, 29).toISOString should be("2014-11-29")
+  }
 }

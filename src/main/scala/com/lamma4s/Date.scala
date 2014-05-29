@@ -82,9 +82,13 @@ case class Date(yyyy: Int, mm: Int, dd: Int) {
    * previous weekday including today
    */
   def previousWeekday(wd: Weekday) = Date.previousWeekday(this, wd)
+
+  val toISOString = f"$yyyy%04d-$mm%02d-$dd%02d"
 }
 
 object Date {
+  final val ISOStringLen = "1978-01-01".size
+
   def apply(d: LocalDate) = new Date(d.getYear, d.getMonthOfYear, d.getDayOfMonth)
 
   private[lamma4s] def monthsBetween(d1: Date, d2: Date) = {
