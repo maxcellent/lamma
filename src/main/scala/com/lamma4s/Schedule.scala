@@ -1,9 +1,24 @@
 package com.lamma4s
 
-case class Schedule(rows: List[Row]) {
+case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
 
+  val rows = periods.map {
+    period =>
+      val populatedDates = (List.empty[Date] /: dateDefs) {
+        (dates, dateDef) =>
+          val populatedDefs = dateDefs.take(dates.size)
+          val populatedMap = (populatedDefs zip dates).map {
+            case (dateDef, date) => dateDef.name -> date
+          }.toMap
+          dates :+ dateDef.populate(period, populatedMap)
+      }
+
+      Row(populatedDates)
+  }
 }
 
-case class Row(seq: Int, dt: Date, cols: List[Cell])
+case class Row(dates: List[Date])
 
-case class Cell(name: String, dt: Date)
+object Row {
+  def apply(dates: Date*) = new Row(dates.toList)
+}
