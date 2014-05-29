@@ -53,6 +53,12 @@ class DateSpec extends FlatSpec with Matchers {
     Date(2014, 4, 10) - (10 years) should be(Date(2004, 4, 10))
   }
 
+  "-" should "work for Date object" in {
+    Date(2014, 4, 10) - Date(2014, 4, 10) should be(0)
+    Date(2014, 4, 10) - Date(2014, 4, 5) should be(5)
+    Date(2014, 4, 10) - Date(2014, 4, 15) should be(-5)
+  }
+
   ">" should "work" in {
     Date(2014, 4, 10) > Date(2014, 4, 5) should be(true)
     Date(2014, 4, 10) > Date(2014, 4, 10) should be(false)

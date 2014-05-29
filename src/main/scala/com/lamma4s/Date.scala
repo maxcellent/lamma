@@ -1,6 +1,6 @@
 package com.lamma4s
 
-import org.joda.time.{Period => JPeriod, PeriodType, LocalDate}
+import org.joda.time.{Period => JPeriod, PeriodType, LocalDate, Days => JDays}
 import annotation.tailrec
 import com.lamma4s.Duration._
 
@@ -25,6 +25,8 @@ case class Date(yyyy: Int, mm: Int, dd: Int) {
     case Months(n) => Date(internal.minusMonths(n))
     case Years(n) => Date(internal.minusYears(n))
   }
+
+  def -(that: Date) = JDays.daysBetween(that.internal, this.internal).getDays
 
   def <(that: Date) = internal.isBefore(that.internal)
 
