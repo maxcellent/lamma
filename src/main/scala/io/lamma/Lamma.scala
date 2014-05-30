@@ -4,7 +4,7 @@ object Lamma {
 
   def generateSchedule(start: Date,
                end: Date,
-               frequency: Frequency,
+               frequency: Recurrence,
                startRule: StartRule = NoStartRule,
                endRule: EndRule = NoEndRule,
                dateDefs: List[DateDef]) = {

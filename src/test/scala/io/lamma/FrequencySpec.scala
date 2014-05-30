@@ -1,7 +1,7 @@
 package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
-import io.lamma.Frequency._
+import io.lamma.Recurrence._
 import io.lamma.PositionOfMonth.LastWeekdayOfMonth
 import io.lamma.Weekday.{Tuesday, Friday}
 import io.lamma.PositionOfYear.NthWeekdayOfYear
@@ -10,44 +10,44 @@ class FrequencySpec extends WordSpec with Matchers {
 
   "genForward" should {
     "generate empty schedule if start date is earlier than end date" in {
-      Frequency.genForward(Date(2014, 4, 15), Date(2014, 4, 10), 1) should be('empty)
+      Recurrence.genForward(Date(2014, 4, 15), Date(2014, 4, 10), 1) should be('empty)
     }
 
     "generate schedule properly" in {
-      val expected = Date(2014, 4, 15) :: Date(2014, 4, 22) :: Date(2014, 4, 29) :: Nil
-      Frequency.genForward(Date(2014, 4, 15), Date(2014, 4, 30), 7) should be(expected)
+      val expected = Date(2014, 4, 22) :: Date(2014, 4, 29) :: Nil
+      Recurrence.genForward(Date(2014, 4, 15), Date(2014, 4, 30), 7) should be(expected)
     }
   }
 
   "genBackward" should {
     "generate empty schedule if start date is earlier than end date" in {
-      Frequency.genBackward(Date(2014, 4, 15), Date(2014, 4, 10), 1) should be('empty)
+      Recurrence.genBackward(Date(2014, 4, 15), Date(2014, 4, 10), 1) should be('empty)
     }
 
     "generate schedule properly" in {
-      val expected = Date(2014, 4, 16) :: Date(2014, 4, 23) :: Date(2014, 4, 30) :: Nil
-      Frequency.genBackward(Date(2014, 4, 15), Date(2014, 4, 30), 7) should be(expected)
+      val expected = Date(2014, 4, 16) :: Date(2014, 4, 23) :: Nil
+      Recurrence.genBackward(Date(2014, 4, 15), Date(2014, 4, 30), 7) should be(expected)
     }
   }
 
   "DailyForward" should {
     "generate schedule properly" in {
-      val expected = Date(2014, 4, 10) :: Date(2014, 4, 13) :: Date(2014, 4, 16) :: Date(2014, 4, 19) :: Nil
+      val expected = Date(2014, 4, 12) :: Date(2014, 4, 15) :: Date(2014, 4, 18) :: Nil
       DailyForward(3).generate(Date(2014, 4, 10), Date(2014, 4, 20)) should be (expected)
     }
   }
 
   "DailyBackward" should {
     "generate schedule properly" in {
-      val expected = Date(2014, 4, 11) :: Date(2014, 4, 14) :: Date(2014, 4, 17) :: Date(2014, 4, 20) :: Nil
+      val expected = Date(2014, 4, 11) :: Date(2014, 4, 14) :: Date(2014, 4, 17) :: Nil
       DailyBackward(3).generate(Date(2014, 4, 10), Date(2014, 4, 20)) should be (expected)
     }
   }
 
   "WeeklyForward" should {
     "generate schedule if weekday is NOT defined" in {
-      val expected = Date(2014, 4, 10) :: Date(2014, 4, 24) :: Nil
-      WeeklyForward(2).generate(Date(2014, 4, 10), Date(2014, 5, 1)) should be(expected)
+      val expected = Date(2014, 4, 24) :: Nil
+      WeeklyForward(2).generate(Date(2014, 4, 11), Date(2014, 5, 1)) should be(expected)
     }
 
     "generate schedule if weekday is already defined" in {
@@ -58,12 +58,12 @@ class FrequencySpec extends WordSpec with Matchers {
 
   "WeeklyBackward" should {
     "generate schedule if weekday is NOT defined" in {
-      val expected = Date(2014, 4, 16) :: Date(2014, 4, 30) :: Nil
+      val expected = Date(2014, 4, 16) :: Nil
       WeeklyBackward(2).generate(Date(2014, 4, 10), Date(2014, 4, 30)) should be(expected)
     }
 
     "generate schedule if weekday is already defined" in {
-      val expected = Date(2014,4,18) :: Date(2014,5,2) :: Nil
+      val expected = Date(2014,4,18) :: Nil
       WeeklyBackward(2, Some(Friday)).generate(Date(2014, 4, 10), Date(2014, 5, 2)) should be(expected)
     }
   }

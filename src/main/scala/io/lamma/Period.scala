@@ -15,7 +15,7 @@ object Period {
     case Nil => Nil
     case dts =>
       (dts.dropRight(1) zip dts.drop(1)) map {
-        case (from, to) => Period(from, to)
+        case (from, to) => Period(from + 1, to)
       }
   }
 }

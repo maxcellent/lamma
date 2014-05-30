@@ -18,8 +18,8 @@ class PeriodSpec extends WordSpec with Matchers {
     }
 
     "return periods when input list contains more than 2 dates" in {
-      val input = Date(2014, 4, 1) :: Date(2014, 4, 5) :: Date(2014, 5, 1) :: Nil
-      val expected = Period((2014, 4, 1) -> (2014, 4, 5)) :: Period((2014, 4, 5) -> (2014, 5, 1)) :: Nil
+      val input = Date(2014, 4, 10) :: Date(2014, 4, 20) :: Date(2014, 4, 30) :: Nil
+      val expected = Period((2014, 4, 11) -> (2014, 4, 20)) :: Period((2014, 4, 21) -> (2014, 4, 30)) :: Nil
       Period.fromDates(input) should be(expected)
     }
   }

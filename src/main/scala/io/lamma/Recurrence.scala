@@ -3,71 +3,82 @@ package io.lamma
 import scala.annotation.tailrec
 import Duration._
 
-sealed trait Frequency {
+sealed trait Recurrence {
   val n: Int
 
   require(n > 0)
 
+  /**
+   * generate recurrence date based on start and end date
+   * @param start
+   * @param end
+   * @return list of recurrence date (period end date)
+   */
   def generate(start: Date, end: Date): List[Date]
 }
 
-object Frequency {
+/**
+ * frequency is used to generate recurrence dates
+ */
+object Recurrence {
 
   // ============= shared methods =========
   @tailrec
   private[lamma] def genForward(current: Date, end: Date, freq: Int, acc: List[Date] = Nil): List[Date] = {
-    if (current > end) {
+    val next = current + freq
+    if (next > end) {
       acc
     } else {
-      genForward(current + freq, end, freq, acc :+ current)
+      genForward(next, end, freq, acc :+ next)
     }
   }
 
   @tailrec
   private[lamma] def genBackward(start: Date, current: Date, freq: Int, acc: List[Date] = Nil): List[Date] = {
-    if (current < start) {
+    val previous = current - freq
+    if (previous < start) {
       acc
     } else {
-      genBackward(start, current - freq, freq, current :: acc)
+      genBackward(start, previous, freq, previous :: acc)
     }
   }
 
   // ========== daily ==========
   val EveryDay = DailyForward(1)
 
-  case class DailyForward(n: Int) extends Frequency {
-    override def generate(start: Date, end: Date) = genForward(start, end, n)
+  case class DailyForward(n: Int) extends Recurrence {
+    override def generate(start: Date, end: Date) = genForward(start - 1, end, n)
   }
 
-  case class DailyBackward(n: Int) extends Frequency {
-    override def generate(start: Date, end: Date) = genBackward(start, end, n)
+  case class DailyBackward(n: Int) extends Recurrence {
+    override def generate(start: Date, end: Date) = genBackward(start - 1, end, n)
   }
 
   // ========= weekly ==========
   val EveryWeek = WeeklyForward(1)
 
-  case class WeeklyForward(n: Int, weekday: Option[Weekday] = None) extends Frequency {
+  case class WeeklyForward(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
     val freq = n * 7
 
     override def generate(start: Date, end: Date) = weekday match {
-      case None => genForward(start, end, freq)
-      case Some(wd) => genForward(start.nextWeekday(wd), end, freq)
+      case None => genForward(start - 1, end, freq)
+      case Some(wd) => genForward(start.nextWeekday(wd) - freq, end, freq)
     }
   }
 
-  case class WeeklyBackward(n: Int, weekday: Option[Weekday] = None) extends Frequency {
+  case class WeeklyBackward(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
     val freq = n * 7
 
     override def generate(start: Date, end: Date) = weekday match {
-      case None => genBackward(start, end, freq)
-      case Some(wd) => genBackward(start, end.previousWeekday(wd), freq)
+      case None => genBackward(start - 1, end, freq)
+      case Some(wd) => genBackward(start - 1, end.previousWeekday(wd), freq)
     }
   }
 
   // ========= monthly ========
   val EveryMonth = MonthlyForward(1)
 
-  case class MonthlyForward(n: Int, pom: Option[PositionOfMonth] = None) extends Frequency {
+  case class MonthlyForward(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
     override def generate(start: Date, end: Date) = {
       val dates = pom match {
         case Some(p) =>
@@ -81,7 +92,7 @@ object Frequency {
     }
   }
 
-  case class MonthlyBackward(n: Int, pom: Option[PositionOfMonth] = None) extends Frequency {
+  case class MonthlyBackward(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
     override def generate(start: Date, end: Date) = {
       val dates = pom match {
         case Some(p) =>
@@ -98,7 +109,7 @@ object Frequency {
   // ========= yearly ==========
   val EveryYear = YearlyForward(1)
 
-  case class YearlyForward(n: Int, poy: Option[PositionOfYear] = None) extends Frequency {
+  case class YearlyForward(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
     override def generate(start: Date, end: Date) = {
       val dates = poy match {
         case Some(p) =>
@@ -112,7 +123,7 @@ object Frequency {
     }
   }
 
-  case class YearlyBackward(n: Int, poy: Option[PositionOfYear] = None) extends Frequency {
+  case class YearlyBackward(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
     override def generate(start: Date, end: Date) = {
       val dates = poy match {
         case Some(p) =>
