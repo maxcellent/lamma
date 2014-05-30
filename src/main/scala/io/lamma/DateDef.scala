@@ -2,8 +2,8 @@ package io.lamma
 
 case class DateDef(name: String,
                    relativeTo: Anchor = PeriodEnd,
-                   shifter: ShiftRule = NoShift,
-                   selector: SelectionRule = SameDay,
+                   shifter: Shifter = NoShift,
+                   selector: Selector = SameDay,
                    cal: HolidayCalendar = WeekendHolidayCalendar) {
 
   /**
@@ -72,53 +72,53 @@ case object PeriodEnd extends Anchor
 case class OtherDateDef(name: String) extends Anchor
 
 /**
- * how we are going to shift based on the position
+ * how we are going to shift relative to Anchor
  */
-sealed trait ShiftRule
+sealed trait Shifter
 
-case object NoShift extends ShiftRule
+case object NoShift extends Shifter
 
-case class FutureDay(n: Int) extends ShiftRule {
+case class FutureDay(n: Int) extends Shifter {
   require(n > 0)
 }
 
-case class PastDay(n: Int) extends ShiftRule {
+case class PastDay(n: Int) extends Shifter {
   require(n > 0)
 }
 
-case class FutureBizDay(n: Int) extends ShiftRule {
+case class FutureBizDay(n: Int) extends Shifter {
   require(n > 0)
 }
 
-case class PastBizDay(n: Int) extends ShiftRule {
+case class PastBizDay(n: Int) extends Shifter {
   require(n > 0)
 }
 
 /**
  * once we shifted, how we are going to select the date to use
  */
-sealed trait SelectionRule
+sealed trait Selector
 
-case object SameDay extends SelectionRule
+case object SameDay extends Selector
 
 /**
  * if current day not a working day,
  * then move forward to the next working day
  */
-case object Forward extends SelectionRule
+case object Forward extends Selector
 
 /**
  * if current day not a working day,
  * then move backward to the previous working day
  */
-case object Backward extends SelectionRule
+case object Backward extends Selector
 
 /**
  * the next working day unless that working day crosses over a new month
  */
-case object ModifiedFollowing extends SelectionRule
+case object ModifiedFollowing extends Selector
 
 /**
  * previous working day unless that working day crosses over a new month
  */
-case object ModifiedPreceding extends SelectionRule
+case object ModifiedPreceding extends Selector
