@@ -81,6 +81,11 @@ class RecurrenceSpec extends WordSpec with Matchers {
       MonthlyForward(3).endDays(Date(2013, 12, 1), Date(2014, 6, 30)) should be(expected)
     }
 
+    "generate end days if position of month is NOT defined and start dom is smaller" in {
+      val expected = Date(2013, 5, 30) :: Nil
+      MonthlyForward(1).endDays(Date(2013, 5, 1), Date(2013, 6, 5)) should be(expected)
+    }
+
     "generate end days if position of month is already defined" in {
       val expected = Date(2014,2,25) :: Date(2014,4,29) :: Date(2014,6,24) :: Nil
       val pom = LastWeekdayOfMonth(Tuesday)

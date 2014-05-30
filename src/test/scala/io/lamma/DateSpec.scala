@@ -98,11 +98,18 @@ class DateSpec extends FlatSpec with Matchers {
   }
 
   "monthsBetween" should "work" in {
-    Date.monthsBetween(Date(2014, 4, 10), Date(2014, 3, 20)) should be(0)
-    Date.monthsBetween(Date(2014, 4, 10), Date(2014, 4, 20)) should be(0)
-    Date.monthsBetween(Date(2014, 4, 10), Date(2014, 5, 20)) should be(1)
-    Date.monthsBetween(Date(2014, 4, 10), Date(2014, 6, 9)) should be(1)
-    Date.monthsBetween(Date(2014, 4, 10), Date(2014, 6, 10)) should be(2)
+    Date.monthsBetween((2014, 4, 10) -> (2014, 3, 20)) should be(0)
+    Date.monthsBetween((2014, 4, 10) -> (2014, 4, 20)) should be(0)
+    Date.monthsBetween((2014, 4, 10) -> (2014, 5, 10)) should be(1)
+    Date.monthsBetween((2014, 4, 10) -> (2014, 6,  9)) should be(1)
+    Date.monthsBetween((2014, 4, 10) -> (2014, 6, 10)) should be(2)
+    Date.monthsBetween((2016, 2, 29) -> (2017, 2, 28)) should be(12)
+  }
+
+  "yearsBetween" should "work" in {
+    Date.yearsBetween((2014, 4, 10) -> (2015, 4, 5)) should be(0)
+    Date.yearsBetween((2014, 4, 10) -> (2015, 4, 10)) should be(1)
+    Date.yearsBetween((2014, 4, 10) -> (2016, 4, 9)) should be(1)
   }
 
   "maxDayOfMonth" should "work" in {

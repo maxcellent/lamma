@@ -139,7 +139,7 @@ object Recurrence {
           val days = (end0 to end).filter(p.isValidDOY).toList
           for (i <- 0 until days.size by n) yield days(i)
         case None =>
-          for (i <- 0 to Date.completeYears(end0, end) by n) yield end0 + (i years)
+          for (i <- 0 to Date.yearsBetween(end0, end) by n) yield end0 + (i years)
       }
       dates.toList
     }
@@ -152,7 +152,7 @@ object Recurrence {
           val days = (end0 to end).filter(p.isValidDOY).toList
           for (i <- days.size - 1 to 0 by -n) yield days(i)
         case None =>
-          for (i <- 0 to Date.completeYears(end0, end) by n) yield end - (i years)
+          for (i <- 0 to Date.yearsBetween(end0, end) by n) yield end - (i years)
       }
       dates.reverse.toList
     }

@@ -112,8 +112,22 @@ object Date {
 
   def apply(d: LocalDate) = new Date(d.getYear, d.getMonthOfYear, d.getDayOfMonth)
 
+  private[lamma] def monthsBetween(input: ((Int, Int, Int), (Int, Int, Int))): Int = {
+    val ((fy, fm, fd), (ty, tm, td)) = input
+    monthsBetween(Date(fy, fm, fd), Date(ty, tm, td))
+  }
+
   private[lamma] def monthsBetween(d1: Date, d2: Date) = {
     new JPeriod(d1.internal, d2.internal, PeriodType.months).getMonths
+  }
+
+  private[lamma] def yearsBetween(input: ((Int, Int, Int), (Int, Int, Int))): Int = {
+    val ((fy, fm, fd), (ty, tm, td)) = input
+    yearsBetween(Date(fy, fm, fd), Date(ty, tm, td))
+  }
+
+  private[lamma] def yearsBetween(d1: Date, d2: Date) = {
+    new JPeriod(d1.internal, d2.internal, PeriodType.years).getYears
   }
 
   @tailrec
