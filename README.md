@@ -1,4 +1,4 @@
-lamma4s
+lamma
 =======
 
-Lamma schedule generator for Scala is a professional schedule generation library for periodic schedules like fixed income coupon payment, equity deravitive fixing date generation etc. 
+Lamma schedule generator is a professional schedule generation library for financial instruments schedules like mortgage repayment schedule, fixed income coupon payment, equity derivative fixing date generation etc.
