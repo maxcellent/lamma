@@ -7,7 +7,7 @@ class ScheduleSpec extends FlatSpec with Matchers {
   val couponDef = DateDef("CouponDate", PeriodEnd, NoShift, Forward)
   val settlementDef = DateDef("SettlementDate", OtherDateDef("CouponDate"), FutureBizDay(2), Forward)
   val defs = couponDef :: settlementDef :: Nil
-  val periods = Period((2014, 3, 31) -> (2014, 4, 30)) :: Period((2014, 4, 30) -> (2014, 5, 31)) :: Nil
+  val periods = Period((2014, 4, 1) -> (2014, 4, 30)) :: Period((2014, 5, 1) -> (2014, 5, 31)) :: Nil
   val schedule = Schedule(periods, defs)
 
   "rows" should "be empty when input is empty" in {
@@ -20,12 +20,13 @@ class ScheduleSpec extends FlatSpec with Matchers {
   }
 
   "tableHeaders" should "be generated properly" in {
-    val expected = "Period" :: "CouponDate" :: "SettlementDate" :: Nil
+    val expected = "Period" :: "From Date" :: "To Date" :: "CouponDate" :: "SettlementDate" :: Nil
     schedule.tableHeaders should be(expected)
   }
 
   "tableRows" should "be generated properly" in {
-    val expected = List("1", "2014-04-30", "2014-05-02") :: List("2", "2014-06-02", "2014-06-04") :: Nil
+    val expected = List("1", "2014-04-01", "2014-04-30", "2014-04-30", "2014-05-02") ::
+      List("2", "2014-05-01", "2014-05-31", "2014-06-02", "2014-06-04") :: Nil
     schedule.tableRows should be(expected)
   }
 
@@ -34,9 +35,9 @@ class ScheduleSpec extends FlatSpec with Matchers {
     val rows = List("1", "2014-04-30", "2014-05-02") :: List("2", "2014-06-02", "2014-06-04") :: Nil
     val expected =
       """
-        ||    Period|CouponDate|SettlementDate|
-        ||         1|2014-04-30|    2014-05-02|
-        ||         2|2014-06-02|    2014-06-04|
+        |||    Period | CouponDate | SettlementDate ||
+        |||         1 | 2014-04-30 |     2014-05-02 ||
+        |||         2 | 2014-06-02 |     2014-06-04 ||
       """.stripMargin
     Schedule.toPrintableString(header, rows) should be(expected.trim)
   }

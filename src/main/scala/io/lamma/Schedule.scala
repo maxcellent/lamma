@@ -18,10 +18,11 @@ case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
       Row(populatedDates)
   }
 
-  val tableHeaders = PeriodHeader :: dateDefs.map(_.name)
+  val tableHeaders = PeriodHeader :: FromHeader :: ToHeader :: dateDefs.map(_.name)
 
-  val tableRows = rows.zipWithIndex.map {
-    case (row, index) => (index + 1).toString :: row.dates.map(_.toISOString)
+  val tableRows = rows.zip(periods).zipWithIndex.map {
+    case ((row, p), index) =>
+      (index + 1).toString :: p.from.toISOString :: p.to.toISOString :: row.dates.map(_.toISOString)
   }
 
   val printableString = Schedule.toPrintableString(tableHeaders, tableRows)
@@ -29,6 +30,8 @@ case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
 
 object Schedule {
   val PeriodHeader = "Period"
+  val FromHeader = "From Date"
+  val ToHeader = "To Date"
 
   def toPrintableString(headers: List[String], rows: List[List[String]]) = {
     require(rows.forall(_.size == headers.size))
@@ -42,7 +45,7 @@ object Schedule {
         case (colWidth, token) => "%" + colWidth + "s" format token
       }
 
-      formattedTokens.mkString("|", "|", "|")
+      formattedTokens.mkString("||", " | ", " ||")
     }
 
     (genLine(headers) :: rows.map(genLine)).mkString("\n")
