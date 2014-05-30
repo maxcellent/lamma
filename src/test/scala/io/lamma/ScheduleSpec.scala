@@ -4,7 +4,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class ScheduleSpec extends FlatSpec with Matchers {
 
-  val couponDef = DateDef("CouponDate", End, NoShift, Forward)
+  val couponDef = DateDef("CouponDate", PeriodEnd, NoShift, Forward)
   val settlementDef = DateDef("SettlementDate", OtherDateDef("CouponDate"), FutureBizDay(2), Forward)
   val defs = couponDef :: settlementDef :: Nil
   val periods = Period((2014, 3, 31) -> (2014, 4, 30)) :: Period((2014, 4, 30) -> (2014, 5, 31)) :: Nil

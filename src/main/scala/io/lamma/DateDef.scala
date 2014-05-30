@@ -1,7 +1,7 @@
 package io.lamma
 
 case class DateDef(name: String,
-                   pos: Position = End,
+                   relativeTo: Anchor = PeriodEnd,
                    shifter: ShiftRule = NoShift,
                    selector: SelectionRule = SameDay,
                    cal: HolidayCalendar = WeekendHolidayCalendar) {
@@ -12,9 +12,9 @@ case class DateDef(name: String,
    * @return
    */
   def populate(period: Period, populated: Map[String, Date] = Map.empty) = {
-    val anchorDate = pos match {
-      case Start => period.from
-      case End => period.to
+    val anchorDate = relativeTo match {
+      case PeriodStart => period.from
+      case PeriodEnd => period.to
       case OtherDateDef(name) => populated(name)
     }
 
@@ -44,7 +44,7 @@ object DateDef {
     // validate OtherDateDef position
     (Set.empty[String] /: defs) {
       (availableName, dateDef) =>
-        dateDef.pos match {
+        dateDef.relativeTo match {
           case OtherDateDef(name) =>
             if (! availableName.contains(name)) {
               if (names.contains(name)) {
@@ -61,15 +61,15 @@ object DateDef {
 }
 
 /**
- * shall we shift based on Period start or end day
+ * relative to which anchor date?
  */
-sealed trait Position
+sealed trait Anchor
 
-case object Start extends Position
+case object PeriodStart extends Anchor
 
-case object End extends Position
+case object PeriodEnd extends Anchor
 
-case class OtherDateDef(name: String) extends Position
+case class OtherDateDef(name: String) extends Anchor
 
 /**
  * how we are going to shift based on the position
