@@ -70,20 +70,20 @@ class RecurrenceSpec extends WordSpec with Matchers {
 
   "MonthlyForward" should {
     "generate schedule if position of month is NOT defined" in {
-      val expected = Date(2013, 11, 30) :: Date(2014, 2, 28) :: Date(2014, 5, 30) :: Nil
+      val expected = Date(2014, 2, 28) :: Date(2014, 5, 30) :: Nil
       MonthlyForward(3).generate(Date(2013, 11, 30), Date(2014, 6, 30)) should be(expected)
     }
 
     "generate schedule if position of month is already defined" in {
-      val expected = Date(2013,12,31) :: Date(2014,2,25) :: Date(2014,4,29) :: Date(2014,6,24) :: Nil
+      val expected = Date(2014,2,25) :: Date(2014,4,29) :: Date(2014,6,24) :: Nil
       val pom = LastWeekdayOfMonth(Tuesday)
-      MonthlyForward(2, Some(pom)).generate(Date(2013, 12, 30), Date(2014, 8, 15)) should be(expected)
+      MonthlyForward(2, Some(pom)).generate(Date(2014, 1, 1), Date(2014, 8, 15)) should be(expected)
     }
   }
 
   "MonthlyBackward" should {
     "generate schedule if position of month is NOT defined" in {
-      val expected = Date(2014, 2, 28) :: Date(2014, 4, 30) :: Date(2014, 6, 30) :: Nil
+      val expected = Date(2014, 2, 28) :: Date(2014, 4, 30) :: Nil
       MonthlyBackward(2).generate(Date(2014, 1, 30), Date(2014, 6, 30)) should be(expected)
     }
 
@@ -96,7 +96,7 @@ class RecurrenceSpec extends WordSpec with Matchers {
 
   "YearlyForward" should {
     "generate schedule if position of year is NOT defined" in {
-      val expected = Date(2010,10,1) :: Date(2012,10,1) :: Date(2014,10,1) :: Nil
+      val expected = Date(2012,10,1) :: Date(2014,10,1) :: Nil
       YearlyForward(2).generate(Date(2010, 10, 1), Date(2015, 5, 1)) should be(expected)
     }
 
@@ -109,7 +109,7 @@ class RecurrenceSpec extends WordSpec with Matchers {
 
   "YearlyBackward" should {
     "generate schedule if position of year is NOT defined" in {
-      val expected = Date(2011,5,1) :: Date(2013,5,1) :: Date(2015,5,1) :: Nil
+      val expected = Date(2011,5,1) :: Date(2013,5,1) :: Nil
       YearlyBackward(2).generate(Date(2010, 10, 1), Date(2015, 5, 1)) should be(expected)
     }
 

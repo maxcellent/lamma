@@ -62,7 +62,7 @@ object Recurrence {
 
     override def generate(start: Date, end: Date) = weekday match {
       case None => genForward(start - 1, end, freq)
-      case Some(wd) => genForward(start.nextWeekday(wd) - freq, end, freq)
+      case Some(wd) => genForward((start - 1).nextWeekday(wd) - freq, end, freq)
     }
   }
 
@@ -82,11 +82,11 @@ object Recurrence {
     override def generate(start: Date, end: Date) = {
       val dates = pom match {
         case Some(p) =>
-          val days = (start to end).filter(p.isValidDOM).toList
-          for (i <- 0 until days.size by n) yield days(i)
+          val days = (start - 1 to end).filter(p.isValidDOM).toList
+          for (i <- n until days.size by n) yield days(i)
         case None =>
           val totalMonths = Date.monthsBetween(start, end)
-          for (i <- 0 to totalMonths by n) yield start + (i months)
+          for (i <- n to totalMonths by n) yield start + (i months)
       }
       dates.toList
     }
@@ -100,7 +100,7 @@ object Recurrence {
           for (i <- days.size - 1 to 0 by -n) yield days(i)
         case None =>
           val totalMonths = Date.monthsBetween(start, end)
-          for (i <- 0 to totalMonths by n) yield end - (i months)
+          for (i <- n to totalMonths by n) yield end - (i months)
       }
       dates.reverse.toList
     }
@@ -117,7 +117,7 @@ object Recurrence {
           for (i <- 0 until days.size by n) yield days(i)
         case None =>
           val totalYears = end.yyyy - start.yyyy
-          for (i <- 0 to totalYears by n) yield start + (i years)
+          for (i <- n to totalYears by n) yield start + (i years)
       }
       dates.toList
     }
@@ -131,7 +131,7 @@ object Recurrence {
           for (i <- days.size - 1 to 0 by -n) yield days(i)
         case None =>
           val totalYears = end.yyyy - start.yyyy
-          for (i <- 0 to totalYears by n) yield end - (i years)
+          for (i <- n to totalYears by n) yield end - (i years)
       }
       dates.reverse.toList
     }
