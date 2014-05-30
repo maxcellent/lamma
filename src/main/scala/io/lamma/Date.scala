@@ -54,23 +54,6 @@ case class Date(yyyy: Int, mm: Int, dd: Int) {
 
   lazy val monthSinceBC = yyyy * 12 + mm
 
-  lazy val isLeapYear = maxDayOfYear == 366
-
-  lazy val isLeapDay = mm == 2 && dd == 29
-
-  /**
-   * day of month considering leap day
-   * for most of the case this is the same as dayOfMonth
-   * but for Feb 29, this will be 29
-   */
-  lazy val lDayOfMonth = if (isLeapDay) 28 else this.dd
-
-  /**
-   * day of year considering leap year
-   * if it's leap year, then Feb 29 will be skipped counting dayOfYear
-   */
-  lazy val lDayOfYear = if (isLeapYear && dayOfYear > 59) dayOfYear - 1 else dayOfYear
-
   /**
    * eg, if this.weekday == Wednesday, then this is a list of all Wednesday in the same month
    */
@@ -154,32 +137,6 @@ object Date {
       d
     } else {
       nextPositionOfMonth(d + 1, pom)
-    }
-  }
-
-  def completeMonths(input: ((Int, Int, Int), (Int, Int, Int))): Int = {
-    val ((fy, fm, fd), (ty, tm, td)) = input
-    completeMonths(Date(fy, fm, fd), Date(ty, tm, td))
-  }
-
-  def completeMonths(from: Date, to: Date) = {
-    if (from.lDayOfMonth <= to.lDayOfMonth) {
-      to.monthSinceBC - from.monthSinceBC
-    } else {
-      to.monthSinceBC - from.monthSinceBC - 1
-    }
-  }
-
-  def completeYears(input: ((Int, Int, Int), (Int, Int, Int))): Int = {
-    val ((fy, fm, fd), (ty, tm, td)) = input
-    completeYears(Date(fy, fm, fd), Date(ty, tm, td))
-  }
-
-  def completeYears(from: Date, to: Date) = {
-    if (from.lDayOfYear <= to.lDayOfYear) {
-      to.yyyy - from.yyyy
-    } else {
-      to.yyyy - from.yyyy - 1
     }
   }
 }
