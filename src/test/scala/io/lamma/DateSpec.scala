@@ -140,4 +140,50 @@ class DateSpec extends FlatSpec with Matchers {
     Date(978, 1, 5).toISOString should be("0978-01-05")
     Date(2014, 11, 29).toISOString should be("2014-11-29")
   }
+
+  "dayOfMonth" should "work" in {
+    Date(2014, 5, 9).dayOfMonth should be(9)
+  }
+
+  "dayOfYear" should "work" in {
+    Date(2014, 2, 9).dayOfYear should be(40)
+    Date(2014, 3, 9).dayOfYear should be(68)
+    Date(2016, 3, 9).dayOfYear should be(69)
+  }
+
+  "monthSinceBC" should "work" in {
+    Date(2000, 5, 5).monthSinceBC should be(24005)
+  }
+
+  "isLeapDay" should "work" in {
+    Date(2016, 2, 28).isLeapDay should be(false)
+    Date(2016, 2, 29).isLeapDay should be(true)
+  }
+
+  "lDayOfMonth" should "work" in {
+    Date(2016, 2, 28).lDayOfMonth should be(28)
+    Date(2016, 2, 29).lDayOfMonth should be(28)
+    Date(2014, 2, 28).lDayOfMonth should be(28)
+  }
+
+  "lDayOfYear" should "work" in {
+    Date(2016, 2, 28).lDayOfYear should be(59)
+    Date(2016, 2, 29).lDayOfYear should be(59)
+    Date(2016, 3, 1).lDayOfYear should be(60)
+
+    Date(2014, 2, 28).lDayOfYear should be(59)
+    Date(2014, 3, 1).lDayOfYear should be(60)
+  }
+
+  "completeMonth" should "work" in {
+    Date.completeMonths((2014, 4, 10) -> (2014, 5, 5)) should be(0)
+    Date.completeMonths((2014, 4, 10) -> (2014, 5, 10)) should be(1)
+    Date.completeMonths((2016, 2, 29) -> (2017, 2, 28)) should be(12)
+  }
+
+  "completeYears" should "work" in {
+    Date.completeYears((2014, 4, 10) -> (2015, 4, 5)) should be(0)
+    Date.completeYears((2014, 4, 10) -> (2015, 4, 10)) should be(1)
+    Date.completeYears((2014, 4, 10) -> (2016, 4, 9)) should be(1)
+  }
 }
