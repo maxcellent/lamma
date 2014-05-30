@@ -6,7 +6,7 @@ import io.lamma.PositionOfMonth.LastWeekdayOfMonth
 import io.lamma.Weekday.{Tuesday, Friday}
 import io.lamma.PositionOfYear.NthWeekdayOfYear
 
-class FrequencySpec extends WordSpec with Matchers {
+class RecurrenceSpec extends WordSpec with Matchers {
 
   "genForward" should {
     "generate empty schedule if start date is earlier than end date" in {
