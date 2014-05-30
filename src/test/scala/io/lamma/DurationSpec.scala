@@ -1,7 +1,7 @@
-package com.lamma4s
+package io.lamma
 
 import org.scalatest.{Matchers, FlatSpec}
-import com.lamma4s.Duration.Days
+import io.lamma.Duration.Days
 
 class DurationSpec extends FlatSpec with Matchers {
 

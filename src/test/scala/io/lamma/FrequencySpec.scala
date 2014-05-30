@@ -1,10 +1,10 @@
-package com.lamma4s
+package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
-import com.lamma4s.Frequency._
-import com.lamma4s.PositionOfMonth.LastWeekdayOfMonth
-import com.lamma4s.Weekday.{Tuesday, Friday}
-import com.lamma4s.PositionOfYear.NthWeekdayOfYear
+import io.lamma.Frequency._
+import io.lamma.PositionOfMonth.LastWeekdayOfMonth
+import io.lamma.Weekday.{Tuesday, Friday}
+import io.lamma.PositionOfYear.NthWeekdayOfYear
 
 class FrequencySpec extends WordSpec with Matchers {
 

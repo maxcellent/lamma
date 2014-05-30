@@ -1,4 +1,4 @@
-package com.lamma4s
+package io.lamma
 
 import org.joda.time.{LocalDate, DateTimeConstants}
 
@@ -17,7 +17,7 @@ object Weekday {
 
   case object Sunday extends Weekday
 
-  private[lamma4s] def fromJoda(d: LocalDate): Weekday = d.getDayOfWeek match {
+  private[lamma] def fromJoda(d: LocalDate): Weekday = d.getDayOfWeek match {
     case DateTimeConstants.MONDAY => Monday
     case DateTimeConstants.TUESDAY => Tuesday
     case DateTimeConstants.WEDNESDAY => Wednesday

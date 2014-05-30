@@ -1,4 +1,4 @@
-package com.lamma4s
+package io.lamma
 
 import scala.annotation.tailrec
 import Duration._
@@ -15,7 +15,7 @@ object Frequency {
 
   // ============= shared methods =========
   @tailrec
-  private[lamma4s] def genForward(current: Date, end: Date, freq: Int, acc: List[Date] = Nil): List[Date] = {
+  private[lamma] def genForward(current: Date, end: Date, freq: Int, acc: List[Date] = Nil): List[Date] = {
     if (current > end) {
       acc
     } else {
@@ -24,7 +24,7 @@ object Frequency {
   }
 
   @tailrec
-  private[lamma4s] def genBackward(start: Date, current: Date, freq: Int, acc: List[Date] = Nil): List[Date] = {
+  private[lamma] def genBackward(start: Date, current: Date, freq: Int, acc: List[Date] = Nil): List[Date] = {
     if (current < start) {
       acc
     } else {

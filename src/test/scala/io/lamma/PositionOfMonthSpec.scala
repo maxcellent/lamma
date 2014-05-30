@@ -1,8 +1,8 @@
-package com.lamma4s
+package io.lamma
 
 import org.scalatest.{WordSpec, Matchers}
-import com.lamma4s.PositionOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
-import com.lamma4s.Weekday.Wednesday
+import io.lamma.PositionOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
+import io.lamma.Weekday.Wednesday
 
 class PositionOfMonthSpec extends WordSpec with Matchers {
 

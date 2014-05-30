@@ -1,4 +1,4 @@
-name := "Lamma4s"
+name := "lamma"
 
 version := "1.0"
 

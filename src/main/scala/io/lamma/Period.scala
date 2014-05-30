@@ -1,4 +1,4 @@
-package com.lamma4s
+package io.lamma
 
 case class Period(from: Date, to: Date) {
   require(from <= to)

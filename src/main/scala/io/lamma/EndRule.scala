@@ -1,4 +1,4 @@
-package com.lamma4s
+package io.lamma
 
 sealed trait EndRule {
   /**

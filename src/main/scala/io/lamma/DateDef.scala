@@ -1,4 +1,4 @@
-package com.lamma4s
+package io.lamma
 
 case class DateDef(name: String,
                    pos: Position = End,

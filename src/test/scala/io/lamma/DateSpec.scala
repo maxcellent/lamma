@@ -1,9 +1,9 @@
-package com.lamma4s
+package io.lamma
 
 import org.scalatest.{Matchers, FlatSpec}
-import com.lamma4s.Weekday.{Tuesday, Thursday, Monday}
+import io.lamma.Weekday.{Tuesday, Thursday, Monday}
 import Duration._
-import com.lamma4s.PositionOfMonth.LastWeekdayOfMonth
+import io.lamma.PositionOfMonth.LastWeekdayOfMonth
 
 class DateSpec extends FlatSpec with Matchers {
 

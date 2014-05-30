@@ -1,6 +1,6 @@
-package com.lamma4s
+package io.lamma
 
-import com.lamma4s.Weekday.{Sunday, Saturday}
+import io.lamma.Weekday.{Sunday, Saturday}
 
 trait HolidayCalendar {
 

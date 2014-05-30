@@ -1,8 +1,8 @@
-package com.lamma4s
+package io.lamma
 
 import org.joda.time.{Period => JPeriod, PeriodType, LocalDate, Days => JDays}
 import annotation.tailrec
-import com.lamma4s.Duration._
+import io.lamma.Duration._
 
 case class Date(yyyy: Int, mm: Int, dd: Int) {
 
@@ -91,7 +91,7 @@ object Date {
 
   def apply(d: LocalDate) = new Date(d.getYear, d.getMonthOfYear, d.getDayOfMonth)
 
-  private[lamma4s] def monthsBetween(d1: Date, d2: Date) = {
+  private[lamma] def monthsBetween(d1: Date, d2: Date) = {
     new JPeriod(d1.internal, d2.internal, PeriodType.months).getMonths
   }
 
