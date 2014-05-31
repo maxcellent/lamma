@@ -8,27 +8,19 @@ trait Shifter
 object Shifter {
   case object NoShift extends Shifter
 
-  case class FutureDay(n: Int) extends Shifter {
-    require(n > 0)
-  }
+  /**
+   * @param n number of calendar days to shift
+   */
+  case class ShiftCalendarDays(n: Int) extends Shifter
 
-  case class PastDay(n: Int) extends Shifter {
-    require(n > 0)
-  }
-
-  case class FutureBizDay(n: Int) extends Shifter {
-    require(n > 0)
-  }
-
-  case class PastBizDay(n: Int) extends Shifter {
-    require(n > 0)
-  }
+  /**
+   * @param n number of working days to shift
+   */
+  case class ShiftWorkingDays(n: Int) extends Shifter
 
   def shift(d: Date, shifter: Shifter, cal: Calendar) = shifter match {
     case NoShift => d
-    case FutureDay(n) => d + n
-    case PastDay(n) => d - n
-    case FutureBizDay(n) => cal.shiftBizDay(d, n)
-    case PastBizDay(n) => cal.shiftBizDay(d, -n)
+    case ShiftCalendarDays(n) => d + n
+    case ShiftWorkingDays(n) => cal.shiftBizDay(d, n)
   }
 }
