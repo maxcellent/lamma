@@ -5,12 +5,6 @@ import io.lamma.Duration.DayDuration
 
 class DurationSpec extends FlatSpec with Matchers {
 
-  "when length is less than 1 there" should "be exception" in {
-    intercept[IllegalArgumentException] {
-      DayDuration(-1)
-    }
-  }
-
   "implicit duration" should "work" in {
     import Duration._
 

@@ -2,8 +2,6 @@ package io.lamma
 
 sealed trait Duration {
   val n: Int
-
-  require(n >= 0)
 }
 
 object Duration {
