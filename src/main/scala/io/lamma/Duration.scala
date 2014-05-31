@@ -8,30 +8,30 @@ sealed trait Duration {
 
 object Duration {
 
-  case class Days(n: Int) extends Duration
+  case class DayDuration(n: Int) extends Duration
 
-  case class Weeks(n: Int) extends Duration
+  case class WeekDuration(n: Int) extends Duration
 
-  case class Months(n: Int) extends Duration
+  case class MonthDuration(n: Int) extends Duration
 
-  case class Years(n: Int) extends Duration
+  case class YearDuration(n: Int) extends Duration
 
   implicit class DurationInt(n: Int) {
 
-    def day = Days(n)
+    def day = DayDuration(n)
 
-    def days = Days(n)
+    def days = DayDuration(n)
 
-    def week = Weeks(n)
+    def week = WeekDuration(n)
 
-    def weeks = Weeks(n)
+    def weeks = WeekDuration(n)
 
-    def month = Months(n)
+    def month = MonthDuration(n)
 
-    def months = Months(n)
+    def months = MonthDuration(n)
 
-    def year = Years(n)
+    def year = YearDuration(n)
 
-    def years = Years(n)
+    def years = YearDuration(n)
   }
 }

@@ -11,19 +11,19 @@ case class Date(yyyy: Int, mm: Int, dd: Int) {
   def +(n: Int): Date = this + (n days)
 
   def +(d: Duration) = d match {
-    case Days(n) => Date(internal.plusDays(n))
-    case Weeks(n) => Date(internal.plusWeeks(n))
-    case Months(n) => Date(internal.plusMonths(n))
-    case Years(n) => Date(internal.plusYears(n))
+    case DayDuration(n) => Date(internal.plusDays(n))
+    case WeekDuration(n) => Date(internal.plusWeeks(n))
+    case MonthDuration(n) => Date(internal.plusMonths(n))
+    case YearDuration(n) => Date(internal.plusYears(n))
   }
 
   def -(n: Int): Date = this - (n days)
 
   def -(d: Duration) = d match {
-    case Days(n) => Date(internal.minusDays(n))
-    case Weeks(n) => Date(internal.minusWeeks(n))
-    case Months(n) => Date(internal.minusMonths(n))
-    case Years(n) => Date(internal.minusYears(n))
+    case DayDuration(n) => Date(internal.minusDays(n))
+    case WeekDuration(n) => Date(internal.minusWeeks(n))
+    case MonthDuration(n) => Date(internal.minusMonths(n))
+    case YearDuration(n) => Date(internal.minusYears(n))
   }
 
   def -(that: Date) = JDays.daysBetween(that.internal, this.internal).getDays

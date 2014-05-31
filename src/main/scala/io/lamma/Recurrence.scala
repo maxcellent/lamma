@@ -63,24 +63,24 @@ object Recurrence {
   }
 
   // ========== daily ==========
-  val EveryDay = DailyForward(1)
+  val EveryDay = Days(1)
 
-  case class DailyForward(n: Int) extends Recurrence {
+  case class Days(n: Int) extends Recurrence {
     private[lamma] override def gen(end0: Date, end: Date) = genForward(end0, end, n)
   }
 
-  case class DailyBackward(n: Int) extends Recurrence {
+  case class DaysBackward(n: Int) extends Recurrence {
     private[lamma] override def gen(end0: Date, end: Date) = genBackward(end0, end, n)
   }
 
   // ========= weekly ==========
-  val EveryWeek = WeeklyForward(1)
+  val EveryWeek = Weeks(1)
 
   /**
    * @param n
    * @param weekday which weekday to recur
    */
-  case class WeeklyForward(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
+  case class Weeks(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
     private val freq = n * 7
 
     private[lamma] override def gen(end0: Date, end: Date) = weekday match {
@@ -89,11 +89,11 @@ object Recurrence {
     }
   }
 
-  object WeeklyForward {
-    def apply(weekday: Weekday): WeeklyForward = WeeklyForward(1, Some(weekday))
+  object Weeks {
+    def apply(weekday: Weekday): Weeks = Weeks(1, Some(weekday))
   }
 
-  case class WeeklyBackward(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
+  case class WeeksBackward(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
     val freq = n * 7
 
     private[lamma] override def gen(end0: Date, end: Date) = weekday match {
@@ -103,9 +103,9 @@ object Recurrence {
   }
 
   // ========= monthly ========
-  val EveryMonth = MonthlyForward(1)
+  val EveryMonth = Months(1)
 
-  case class MonthlyForward(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
+  case class Months(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
     private[lamma] override def gen(end0: Date, end: Date) = {
       val dates = pom match {
         case Some(p) =>
@@ -119,7 +119,7 @@ object Recurrence {
     }
   }
 
-  case class MonthlyBackward(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
+  case class MonthsBackward(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
     private[lamma] override def gen(end0: Date, end: Date) = {
       val dates = pom match {
         case Some(p) =>
@@ -134,9 +134,9 @@ object Recurrence {
   }
 
   // ========= yearly ==========
-  val EveryYear = YearlyForward(1)
+  val EveryYear = Years(1)
 
-  case class YearlyForward(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
+  case class Years(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
     private[lamma] override def gen(end0: Date, end: Date) = {
       val dates = poy match {
         case Some(p) =>
@@ -149,7 +149,7 @@ object Recurrence {
     }
   }
 
-  case class YearlyBackward(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
+  case class YearsBackward(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
     private[lamma] override def gen(end0: Date, end: Date) = {
       val dates = poy match {
         case Some(p) =>
