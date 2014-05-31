@@ -24,7 +24,7 @@ object Shifter {
     require(n > 0)
   }
 
-  def shift(d: Date, shifter: Shifter, cal: HolidayCalendar) = shifter match {
+  def shift(d: Date, shifter: Shifter, cal: Calendar) = shifter match {
     case NoShift => d
     case FutureDay(n) => d + n
     case PastDay(n) => d - n

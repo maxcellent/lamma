@@ -2,13 +2,13 @@ package io.lamma
 
 import io.lamma.Weekday.{Sunday, Saturday}
 
-trait HolidayCalendar {
+trait Calendar {
 
   def isHoliday(d: Date): Boolean
 
   def shiftBizDay(d: Date, by: Int) = {
     require(by != 0)
-    HolidayCalendar.shiftBizDay(d, by, this)
+    Calendar.shiftBizDay(d, by, this)
   }
 
   def forward(d: Date) = if (isHoliday(d)) shiftBizDay(d, 1) else d
@@ -34,8 +34,8 @@ trait HolidayCalendar {
   }
 }
 
-object HolidayCalendar {
-  def shiftBizDay(d: Date, by: Int, cal: HolidayCalendar): Date = by match {
+object Calendar {
+  def shiftBizDay(d: Date, by: Int, cal: Calendar): Date = by match {
     case 0 => d
     case by if by < 0 =>
       val nextDay = d - 1
@@ -50,18 +50,18 @@ object HolidayCalendar {
   }
 }
 
-case object NoHolidayCalendar extends HolidayCalendar {
+case object NoHoliday extends Calendar {
   override def isHoliday(d: Date) = false
 }
 
-case class SimpleHolidayCalendar(holidays: Set[Date]) extends HolidayCalendar {
+case class SimpleCalendar(holidays: Set[Date]) extends Calendar {
   override def isHoliday(d: Date) = holidays.contains(d)
 }
 
 /**
  * consider all weekend as holiday
  */
-case object WeekendHolidayCalendar extends HolidayCalendar {
+case object WeekendCalendar extends Calendar {
   override def isHoliday(d: Date) = {
     d.weekday == Saturday || d.weekday == Sunday
   }
@@ -70,7 +70,7 @@ case object WeekendHolidayCalendar extends HolidayCalendar {
 /**
  * only consider Sunday as holiday
  */
-case object SundayHolidayCalendar extends HolidayCalendar {
+case object SundayCalendar extends Calendar {
   override def isHoliday(d: Date) = d.weekday == Sunday
 }
 

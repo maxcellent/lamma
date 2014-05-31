@@ -71,7 +71,7 @@ object Lamma {
                pattern: Recurrence = EveryDay,
                shifter: Shifter = NoShift,
                selector: Selector = SameDay,
-               cal: HolidayCalendar = NoHolidayCalendar) = {
+               cal: Calendar = NoHoliday) = {
     pattern.gen(start, end).map(shift(_, shifter, cal)).map(select(_, selector, cal))
   }
 }

@@ -30,7 +30,7 @@ object Selector {
    */
   case object ModifiedPreceding extends Selector
 
-  def select(d: Date, selector: Selector, cal: HolidayCalendar) = selector match {
+  def select(d: Date, selector: Selector, cal: Calendar) = selector match {
     case SameDay => d
     case Forward => cal.forward(d)
     case Backward => cal.backward(d)

@@ -8,7 +8,7 @@ case class DateDef(name: String,
                    relativeTo: Anchor = PeriodEnd,
                    shifter: Shifter = NoShift,
                    selector: Selector = SameDay,
-                   cal: HolidayCalendar = WeekendHolidayCalendar) {
+                   cal: Calendar = WeekendCalendar) {
 
   /**
    * @param period
