@@ -3,42 +3,61 @@ package io.lamma
 trait EndRule {
   /**
    * apply end rule to periods
+   *
+   * @param end end date
+   * @param nakedPeriods periods without taking start / end rules into consideration, contain at least one period
+   * @return list periods with start rule applied
    */
-  def applyRule(end: Date, periods: List[Period]): List[Period]
+  def applyRule(end: Date, nakedPeriods: List[Period]) = {
+    require(nakedPeriods.size > 0)
+
+    if (end > nakedPeriods.last.to) {
+      doApplyRule(end, nakedPeriods)
+    } else {
+      nakedPeriods
+    }
+  }
+
+  def doApplyRule(end: Date, nakedPeriods: List[Period]): List[Period]
 }
 
 object EndRule {
 
-  case object NoEndRule extends EndRule {
-    override def applyRule(end: Date, periods: List[Period]) = periods
-  }
+  val NoEndRule = LongEnd(0)
 
-  case class LongEnd(max: Int) extends EndRule {
-    require(max > 0, "max end should be larger than 0")
+  case class LongEnd(maxOpt: Option[Int] = None) extends EndRule {
 
-    override def applyRule(end: Date, periods: List[Period]) = periods match {
+    override def doApplyRule(end: Date, nakedPeriods: List[Period]) = nakedPeriods match {
       case Nil => Nil
       case rest :+ last =>
-        if (end - last.from <= max) {
+        val max = maxOpt.map(_.toDouble).getOrElse(last.length * 1.5)
+        if (end - last.from + 1 <= max) {
           rest :+ Period(last.from, end)
         } else {
-          periods :+ Period(last.to, end)
+          nakedPeriods :+ Period(last.to + 1, end)
         }
     }
   }
 
-  case class ShortEnd(min: Int) extends EndRule {
-    require(min > 0, "min end should be larger than 0")
+  object LongEnd {
+    def apply(max: Int): LongEnd = LongEnd(Some(max))
+  }
 
-    override def applyRule(end: Date, periods: List[Period]) = periods match {
+  case class ShortEnd(minOpt: Option[Int] = None) extends EndRule {
+
+    override def doApplyRule(end: Date, nakedPeriods: List[Period]) = nakedPeriods match {
       case Nil => Nil
       case rest :+ last =>
+        val min = minOpt.map(_.toDouble).getOrElse(last.length * 0.5)
         if (end - last.to >= min) {
-          periods :+ Period(last.to, end)
+          nakedPeriods :+ Period(last.to + 1, end)
         } else {
           rest :+ Period(last.from, end)
         }
     }
   }
 
+  object ShortEnd {
+    def apply(min: Int): ShortEnd = ShortEnd(Some(min))
+  }
 }

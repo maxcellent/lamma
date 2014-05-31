@@ -45,9 +45,10 @@ object Lamma {
     val dates = pattern.endDays(start, end)
 
     val periods = {
-      val p = Period.fromDates(dates)
-      val withStartRule = startRule.applyRule(start, p)
-      endRule.applyRule(end, withStartRule)
+      Period.fromDates(dates) match {
+        case Nil => Period(start, end) :: Nil // if no naked period is generated, then return single Period
+        case p => endRule.applyRule(end, startRule.applyRule(start, p))
+      }
     }
 
     Schedule(periods, dateDefs)

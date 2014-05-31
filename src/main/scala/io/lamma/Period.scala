@@ -1,7 +1,14 @@
 package io.lamma
 
+/**
+ *
+ * @param from from date inclusive
+ * @param to to date inclusive
+ */
 case class Period(from: Date, to: Date) {
   require(from <= to)
+
+  val length = to - from + 1
 }
 
 object Period {

@@ -24,4 +24,10 @@ class PeriodSpec extends WordSpec with Matchers {
     }
   }
 
+  "length" should {
+    "be calculated properly" in {
+      Period((2014, 4, 10) -> (2014, 4, 10)).length should be(1)
+      Period((2014, 4, 10) -> (2014, 4, 15)).length should be(6)
+    }
+  }
 }
