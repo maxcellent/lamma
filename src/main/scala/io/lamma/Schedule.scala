@@ -56,4 +56,6 @@ case class Row(dates: List[Date])
 
 object Row {
   def apply(dates: Date*) = new Row(dates.toList)
+
+  def apply(yyyy: Int, mm: Int, dd: Int): Row = Row(Date(yyyy, mm, dd))
 }
