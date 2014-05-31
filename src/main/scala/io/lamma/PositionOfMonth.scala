@@ -1,5 +1,9 @@
 package io.lamma
 
+/**
+ * for each PositionOfMonth implementation
+ * Lamma expect there is one and only one day match the criteria
+ */
 trait PositionOfMonth {
 
   /**

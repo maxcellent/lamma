@@ -65,6 +65,8 @@ object Recurrence {
   // ========== daily ==========
   val EveryDay = Days(1)
 
+  val EveryOtherDay = Days(2)
+
   case class Days(n: Int) extends Recurrence {
     private[lamma] override def gen(end0: Date, end: Date) = genForward(end0, end, n)
   }
@@ -75,6 +77,8 @@ object Recurrence {
 
   // ========= weekly ==========
   val EveryWeek = Weeks(1)
+
+  val EveryOtherWeek = Weeks(2)
 
   /**
    * @param n
@@ -90,7 +94,9 @@ object Recurrence {
   }
 
   object Weeks {
-    def apply(weekday: Weekday): Weeks = Weeks(1, Some(weekday))
+    def apply(weekday: Weekday): Weeks = Weeks(1, weekday)
+
+    def apply(n: Int, weekday: Weekday): Weeks = Weeks(n, Some(weekday))
   }
 
   case class WeeksBackward(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
@@ -102,8 +108,16 @@ object Recurrence {
     }
   }
 
+  object WeeksBackward {
+    def apply(weekday: Weekday): WeeksBackward = WeeksBackward(1, weekday)
+
+    def apply(n: Int, weekday: Weekday): WeeksBackward = WeeksBackward(n, Some(weekday))
+  }
+
   // ========= monthly ========
   val EveryMonth = Months(1)
+
+  val EveryOtherMonth = Months(2)
 
   case class Months(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
     private[lamma] override def gen(end0: Date, end: Date) = {
@@ -117,6 +131,12 @@ object Recurrence {
       }
       dates.toList
     }
+  }
+
+  object Months {
+    def apply(pom: PositionOfMonth): Months = Months(1, pom)
+
+    def apply(n: Int, pom: PositionOfMonth): Months = Months(n, Some(pom))
   }
 
   case class MonthsBackward(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
@@ -133,8 +153,16 @@ object Recurrence {
     }
   }
 
+  object MonthsBackward {
+    def apply(pom: PositionOfMonth): MonthsBackward = MonthsBackward(1, pom)
+
+    def apply(n: Int, pom: PositionOfMonth): MonthsBackward = MonthsBackward(n, Some(pom))
+  }
+
   // ========= yearly ==========
   val EveryYear = Years(1)
+
+  val EveryOtherYear = Years(2)
 
   case class Years(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
     private[lamma] override def gen(end0: Date, end: Date) = {
@@ -149,6 +177,12 @@ object Recurrence {
     }
   }
 
+  object Years {
+    def apply(poy: PositionOfYear): Years = Years(1, poy)
+
+    def apply(n: Int, poy: PositionOfYear): Years = Years(n, Some(poy))
+  }
+
   case class YearsBackward(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
     private[lamma] override def gen(end0: Date, end: Date) = {
       val dates = poy match {
@@ -160,6 +194,12 @@ object Recurrence {
       }
       dates.reverse.toList
     }
+  }
+
+  object YearsBackward {
+    def apply(poy: PositionOfYear): YearsBackward = YearsBackward(1, poy)
+
+    def apply(n: Int, poy: PositionOfYear): YearsBackward = YearsBackward(n, Some(poy))
   }
 }
 

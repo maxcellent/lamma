@@ -2,9 +2,9 @@ package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.Recurrence._
-import io.lamma.PositionOfMonth.LastWeekdayOfMonth
+import io.lamma.PositionOfMonth.{LastDayOfMonth, LastWeekdayOfMonth}
 import io.lamma.Weekday.{Tuesday, Friday}
-import io.lamma.PositionOfYear.NthWeekdayOfYear
+import io.lamma.PositionOfYear.{LastDayOfYear, NthWeekdayOfYear}
 
 class RecurrenceSpec extends WordSpec with Matchers {
 
@@ -52,6 +52,11 @@ class RecurrenceSpec extends WordSpec with Matchers {
   }
 
   "Weeks" should {
+    "have all apply methods working" in {
+      Weeks(5, Tuesday) should be(Weeks(5, Some(Tuesday)))
+      Weeks(Tuesday) should be(Weeks(1, Some(Tuesday)))
+    }
+
     "generate end days if weekday is NOT defined" in {
       val expected = Date(2014, 4, 24) :: Nil
       Weeks(2).endDays(Date(2014, 4, 11), Date(2014, 5, 1)) should be(expected)
@@ -64,6 +69,11 @@ class RecurrenceSpec extends WordSpec with Matchers {
   }
 
   "WeeksBackward" should {
+    "have all apply methods working" in {
+      WeeksBackward(5, Tuesday) should be(WeeksBackward(5, Some(Tuesday)))
+      WeeksBackward(Tuesday) should be(WeeksBackward(1, Some(Tuesday)))
+    }
+
     "generate end days if weekday is NOT defined" in {
       val expected = Date(2014, 4, 16) :: Date(2014, 4, 30) :: Nil
       WeeksBackward(2).endDays(Date(2014, 4, 10), Date(2014, 4, 30)) should be(expected)
@@ -76,6 +86,11 @@ class RecurrenceSpec extends WordSpec with Matchers {
   }
 
   "Months" should {
+    "have all apply methods working" in {
+      Months(5, LastDayOfMonth) should be(Months(5, Some(LastDayOfMonth)))
+      Months(LastDayOfMonth) should be(Months(1, Some(LastDayOfMonth)))
+    }
+
     "generate end days if position of month is NOT defined" in {
       val expected = Date(2014, 2, 28) :: Date(2014, 5, 30) :: Nil
       Months(3).endDays(Date(2013, 12, 1), Date(2014, 6, 30)) should be(expected)
@@ -94,6 +109,11 @@ class RecurrenceSpec extends WordSpec with Matchers {
   }
 
   "MonthsBackward" should {
+    "have all apply methods working" in {
+      MonthsBackward(5, LastDayOfMonth) should be(MonthsBackward(5, Some(LastDayOfMonth)))
+      MonthsBackward(LastDayOfMonth) should be(MonthsBackward(1, Some(LastDayOfMonth)))
+    }
+
     "generate end days if position of month is NOT defined" in {
       val expected = Date(2014, 2, 28) :: Date(2014, 4, 30) :: Date(2014, 6, 30) :: Nil
       MonthsBackward(2).endDays(Date(2014, 1, 30), Date(2014, 6, 30)) should be(expected)
@@ -107,6 +127,11 @@ class RecurrenceSpec extends WordSpec with Matchers {
   }
 
   "Years" should {
+    "have all apply methods working" in {
+      Years(5, LastDayOfYear) should be(Years(5, Some(LastDayOfYear)))
+      Years(LastDayOfYear) should be(Years(1, Some(LastDayOfYear)))
+    }
+
     "generate end days if position of year is NOT defined" in {
       val expected = Date(2011, 12, 31) :: Date(2013, 12, 31) :: Nil
       Years(2).endDays(Date(2010, 1, 1), Date(2015, 5, 1)) should be(expected)
@@ -135,6 +160,11 @@ class RecurrenceSpec extends WordSpec with Matchers {
   }
 
   "YearsBackward" should {
+    "have all apply methods working" in {
+      YearsBackward(5, LastDayOfYear) should be(YearsBackward(5, Some(LastDayOfYear)))
+      YearsBackward(LastDayOfYear) should be(YearsBackward(1, Some(LastDayOfYear)))
+    }
+
     "generate end days if position of year is NOT defined and start doy is bigger" in {
       val expected = Date(2013,5,1) :: Date(2015,5,1) :: Nil
       YearsBackward(2).endDays(Date(2011, 10, 1), Date(2015, 5, 1)) should be(expected)

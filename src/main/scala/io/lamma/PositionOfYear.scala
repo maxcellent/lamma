@@ -1,5 +1,9 @@
 package io.lamma
 
+/**
+ * for each PositionOfYear implementation
+ * Lamma expect there is one and only one day match the criteria in each year
+ */
 trait PositionOfYear {
 
   /**
@@ -47,9 +51,7 @@ object PositionOfYear {
     }
   }
 
-  case class LastWeekdayOfYear(weekday: Weekday) extends PositionOfYear {
-    override def isValidDOY(d: Date) = d.sameWeekdaysOfYear.last == d
-  }
+  def LastWeekdayOfYear(weekday: Weekday) = NthWeekdayOfYear(53, weekday)
 
   case class NthMonthOfYear(m: Month, pom: PositionOfMonth) extends PositionOfYear {
     override def isValidDOY(d: Date) = d.month == m && pom.isValidDOM(d)
