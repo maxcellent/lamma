@@ -50,6 +50,10 @@ object HolidayCalendar {
   }
 }
 
+case object NoHolidayCalendar extends HolidayCalendar {
+  override def isHoliday(d: Date) = false
+}
+
 case class SimpleHolidayCalendar(holidays: Set[Date]) extends HolidayCalendar {
   override def isHoliday(d: Date) = holidays.contains(d)
 }

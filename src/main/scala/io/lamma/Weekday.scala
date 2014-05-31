@@ -2,6 +2,8 @@ package io.lamma
 
 import org.joda.time.{LocalDate, DateTimeConstants}
 
+sealed trait Weekday
+
 object Weekday {
   case object Monday extends Weekday
 
@@ -27,5 +29,3 @@ object Weekday {
     case DateTimeConstants.SUNDAY => Sunday
   }
 }
-
-sealed trait Weekday

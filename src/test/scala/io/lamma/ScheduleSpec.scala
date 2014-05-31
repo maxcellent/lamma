@@ -1,6 +1,9 @@
 package io.lamma
 
 import org.scalatest.{FlatSpec, Matchers}
+import io.lamma.Anchor.{OtherDateDef, PeriodEnd}
+import io.lamma.Selector.Forward
+import io.lamma.Shifter.{FutureBizDay, NoShift}
 
 class ScheduleSpec extends FlatSpec with Matchers {
 

@@ -89,6 +89,10 @@ object Recurrence {
     }
   }
 
+  object WeeklyForward {
+    def apply(weekday: Weekday): WeeklyForward = WeeklyForward(1, Some(weekday))
+  }
+
   case class WeeklyBackward(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
     val freq = n * 7
 

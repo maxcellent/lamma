@@ -1,6 +1,7 @@
 package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
+import io.lamma.EndRule.{ShortEnd, LongEnd}
 
 class EndStubSpec extends WordSpec with Matchers {
 

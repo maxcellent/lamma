@@ -1,5 +1,9 @@
 package io.lamma
 
+import io.lamma.Shifter.NoShift
+import io.lamma.Selector.SameDay
+import io.lamma.Anchor.{OtherDateDef, PeriodEnd, PeriodStart}
+
 case class DateDef(name: String,
                    relativeTo: Anchor = PeriodEnd,
                    shifter: Shifter = NoShift,
@@ -18,21 +22,9 @@ case class DateDef(name: String,
       case OtherDateDef(name) => populated(name)
     }
 
-    val shiftedDate = shifter match {
-      case NoShift => anchorDate
-      case FutureDay(n) => anchorDate + n
-      case PastDay(n) => anchorDate - n
-      case FutureBizDay(n) => cal.shiftBizDay(anchorDate, n)
-      case PastBizDay(n) => cal.shiftBizDay(anchorDate, -n)
-    }
+    val shiftedDate = Shifter.shift(anchorDate, shifter, cal)
 
-    selector match {
-      case SameDay => shiftedDate
-      case Forward => cal.forward(shiftedDate)
-      case Backward => cal.backward(shiftedDate)
-      case ModifiedFollowing => cal.modifiedFollowing(shiftedDate)
-      case ModifiedPreceding => cal.modifiedPreceding(shiftedDate)
-    }
+    Selector.select(shiftedDate, selector, cal)
   }
 }
 
@@ -60,65 +52,3 @@ object DateDef {
   }
 }
 
-/**
- * relative to which anchor date?
- */
-sealed trait Anchor
-
-case object PeriodStart extends Anchor
-
-case object PeriodEnd extends Anchor
-
-case class OtherDateDef(name: String) extends Anchor
-
-/**
- * how we are going to shift relative to Anchor
- */
-sealed trait Shifter
-
-case object NoShift extends Shifter
-
-case class FutureDay(n: Int) extends Shifter {
-  require(n > 0)
-}
-
-case class PastDay(n: Int) extends Shifter {
-  require(n > 0)
-}
-
-case class FutureBizDay(n: Int) extends Shifter {
-  require(n > 0)
-}
-
-case class PastBizDay(n: Int) extends Shifter {
-  require(n > 0)
-}
-
-/**
- * once we shifted, how we are going to select the date to use
- */
-sealed trait Selector
-
-case object SameDay extends Selector
-
-/**
- * if current day not a working day,
- * then move forward to the next working day
- */
-case object Forward extends Selector
-
-/**
- * if current day not a working day,
- * then move backward to the previous working day
- */
-case object Backward extends Selector
-
-/**
- * the next working day unless that working day crosses over a new month
- */
-case object ModifiedFollowing extends Selector
-
-/**
- * previous working day unless that working day crosses over a new month
- */
-case object ModifiedPreceding extends Selector

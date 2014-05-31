@@ -1,6 +1,7 @@
 package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
+import io.lamma.StartRule.{ShortStart, LongStart}
 
 class StartStubSpec extends WordSpec with Matchers {
 
