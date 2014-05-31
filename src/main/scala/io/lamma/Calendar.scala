@@ -58,6 +58,10 @@ case class SimpleCalendar(holidays: Set[Date]) extends Calendar {
   override def isHoliday(d: Date) = holidays.contains(d)
 }
 
+object SimpleCalendar {
+  def apply(holidays: Date*): SimpleCalendar = SimpleCalendar(holidays.toSet)
+}
+
 /**
  * consider all weekend as holiday
  */
@@ -72,5 +76,15 @@ case object WeekendCalendar extends Calendar {
  */
 case object SundayCalendar extends Calendar {
   override def isHoliday(d: Date) = d.weekday == Sunday
+}
+
+/**
+ * a calendar composed of multiple calendars.
+ * this calendar will treat a day as holiday if any one of underlying calendar returns true
+ *
+ * @param cals list of calendars
+ */
+case class CompositeCalendar(cals: Calendar*) extends Calendar {
+  override def isHoliday(d: Date) = cals.exists(_.isHoliday(d))
 }
 

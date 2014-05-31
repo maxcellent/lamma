@@ -81,4 +81,21 @@ class CalendarSpec extends WordSpec with Matchers {
       WeekendCalendar.modifiedPreceding(Date(2014, 6, 1)) should be(Date(2014, 6, 2))
     }
   }
+
+  "CompositeCalendar" should {
+    "always return false if no underlying calendar is defined" in {
+      (Date(2014, 1, 1) to Date(2014, 12, 31)).exists(CompositeCalendar().isHoliday) should be(false)
+    }
+
+    "union results from underlying calendars" in {
+      val simpleCal = SimpleCalendar(Date(2014, 6, 1), Date(2014, 6, 2))
+      val compositeCal = CompositeCalendar(simpleCal, WeekendCalendar)
+
+      compositeCal.isHoliday(Date(2014, 5, 30)) should be(false)
+      compositeCal.isHoliday(Date(2014, 5, 31)) should be(true)
+      compositeCal.isHoliday(Date(2014, 6,  1)) should be(true)
+      compositeCal.isHoliday(Date(2014, 6,  2)) should be(true)
+      compositeCal.isHoliday(Date(2014, 6,  3)) should be(false)
+    }
+  }
 }
