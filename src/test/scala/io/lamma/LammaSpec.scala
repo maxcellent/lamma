@@ -3,9 +3,13 @@ package io.lamma
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.Recurrence._
 import io.lamma.Weekday.{Friday, Tuesday}
-import io.lamma.PositionOfMonth.{NthWeekdayOfMonth, NthDayOfMonth}
+import io.lamma.PositionOfMonth.{LastDayOfMonth, NthWeekdayOfMonth, NthDayOfMonth}
 import io.lamma.Month.February
 import io.lamma.PositionOfYear.{NthMonthOfYear, LastWeekdayOfYear}
+import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
+import io.lamma.Selector.{ModifiedFollowing, Forward}
+import io.lamma.Anchor.{OtherDateDef, PeriodEnd}
+import io.lamma.EndRule.LongEnd
 
 /**
  * this spec is written in tutorial order in order to verify and maintain everything used in tutorial
@@ -13,7 +17,7 @@ import io.lamma.PositionOfYear.{NthMonthOfYear, LastWeekdayOfYear}
  */
 class LammaSpec extends WordSpec with Matchers {
 
-  "seq" should {
+  "get started: generate a list if date" should {
     "generate date sequence" in {
       val expected = Date(2014, 5, 10) :: Date(2014, 5, 11) :: Date(2014, 5, 12) :: Nil
       Lamma.sequence(Date(2014, 5, 10), Date(2014, 5, 12)) should be(expected)
@@ -111,5 +115,72 @@ class LammaSpec extends WordSpec with Matchers {
       val expected = Date(2010,2,19) :: Date(2013,2,15) :: Date(2016,2,19) :: Date(2019,2,15) :: Nil
       Lamma.sequence(Date(2010, 1, 1), Date(2019, 12, 31), Years(3, NthMonthOfYear(February, NthWeekdayOfMonth(3, Friday)))) should be(expected)
     }
+
+    "you can shift a date based on the result. For example, I want 3rd last day of every month" in {
+      val expected = Date(2014,1,29) :: Date(2014,2,26) :: Date(2014,3,29) :: Nil
+      Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(1, LastDayOfMonth), ShiftCalendarDays(-2)) should be(expected)
+    }
+
+    "you can also shift by working days" in {
+      val expected = Date(2014,1,29) :: Date(2014,2,26) :: Date(2014,3,27) :: Nil
+      Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(1, LastDayOfMonth), ShiftWorkingDays(-2, WeekendCalendar)) should be(expected)
+    }
+
+    "you can further select result date after the date is shifted" in {
+      val expected = Date(2014,1,29) :: Date(2014,2,26) :: Date(2014,3,31) :: Nil   // last date is different
+      Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(1, LastDayOfMonth), ShiftCalendarDays(-2), Forward(WeekendCalendar)) should be(expected)
+    }
   }
+
+  "advanced: generate a full schedule" should {
+    // sometimes dates need to be generated in pairs.
+    // For example, for a bond coupon payment schedule,
+    //  not only we need to generate coupon date, but also settlement date
+
+    "let's start with a coupon date only" in {
+      val expected = Row(2015, 6, 30) :: Row(2015, 12, 31) :: Row(2016, 6, 30) :: Row(2016, 12, 30) :: Nil  // 2016-12-31 is Saturday
+
+      val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(WeekendCalendar)) :: Nil
+      Lamma.schedule(Date(2015, 1, 1), Date(2016, 12, 31), Months(6, LastDayOfMonth), dateDefs = dateDefs).rows should be(expected)
+    }
+
+    "now settlement delay is 2 days" in {
+      val expected = List(
+        Row(Date(2015, 6, 30), Date(2015, 7, 2)),
+        Row(Date(2015, 12, 31), Date(2016, 1, 4)), // 2016-01-02 is Saturday, 2016-01-03 is Sunday
+        Row(Date(2016, 6, 30), Date(2016, 7, 4)),  // 2016-07-02 is Saturday, 2016-07-03 is Sunday
+        Row(Date(2016, 12, 30), Date(2017, 1, 3))  // 2016-12-31 is Saturday, 2017-01-01 is Sunday
+      )
+
+      val dateDefs = List(
+        DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(WeekendCalendar)),
+        DateDef("SettlementDate", relativeTo = OtherDateDef("CouponDate"), shifter = ShiftWorkingDays(2, WeekendCalendar))
+      )
+      Lamma.schedule(Date(2015, 1, 1), Date(2016, 12, 31), Months(6, LastDayOfMonth), dateDefs = dateDefs).rows should be(expected)
+    }
+
+    "how about the schedule is fractional? for example, end day is 1 month later, then an extra row will be generated" in {
+      val expected = Row(2015, 6, 30) :: Row(2015, 12, 31) :: Row(2016, 6, 30) :: Row(2016, 12, 30) :: Row(2017, 1, 31) :: Nil
+
+      val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(WeekendCalendar)) :: Nil
+      Lamma.schedule(Date(2015, 1, 1), Date(2017, 1, 31), Months(6, LastDayOfMonth), dateDefs = dateDefs).rows should be(expected)
+    }
+
+    "let's merge it by applying a long end stub rule" in {
+      val expected = Row(2015, 6, 30) :: Row(2015, 12, 31) :: Row(2016, 6, 30) :: Row(2017, 1, 31) :: Nil
+
+      val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(WeekendCalendar)) :: Nil
+      Lamma.schedule(Date(2015, 1, 1), Date(2017, 1, 31), Months(6, LastDayOfMonth), endRule = LongEnd(270), dateDefs = dateDefs).rows should be(expected)
+    }
+  }
+
+  "topic: recurrence pattern"
+
+  "topic: shifters"
+
+  "topic: selectors"
+
+  "topic: holiday calendar"
+
+  "topic: stub rules handling"
 }
