@@ -6,8 +6,25 @@ import io.lamma.StartRule.NoStartRule
 import io.lamma.EndRule.NoEndRule
 import io.lamma.Recurrence.EveryDay
 
+/**
+ * Entry point of the library
+ *
+ * @since 1.0
+ */
 object Lamma {
 
+  /**
+   *
+   * @param start
+   * @param end
+   * @param pattern
+   * @param startRule
+   * @param endRule
+   * @param dateDefs
+   * @return
+   *
+   * @since 1.0
+   */
   def schedule(start: Date,
                end: Date,
                pattern: Recurrence,
@@ -27,6 +44,18 @@ object Lamma {
     Schedule(periods, dateDefs)
   }
 
+  /**
+   *
+   * @param start
+   * @param end
+   * @param pattern
+   * @param selector
+   * @param shifter
+   * @param cal
+   * @return
+   *
+   * @since 1.0
+   */
   def sequence(start: Date,
                end: Date,
                pattern: Recurrence = EveryDay,
