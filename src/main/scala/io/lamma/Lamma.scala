@@ -1,7 +1,7 @@
 package io.lamma
 
-import io.lamma.Shifter.{NoShift, shift}
-import io.lamma.Selector.{SameDay, select}
+import io.lamma.Shifter.NoShift
+import io.lamma.Selector.SameDay
 import io.lamma.StartRule.NoStartRule
 import io.lamma.EndRule.NoEndRule
 import io.lamma.Recurrence.EveryDay
@@ -72,6 +72,6 @@ object Lamma {
                shifter: Shifter = NoShift,
                selector: Selector = SameDay,
                cal: Calendar = NoHoliday) = {
-    pattern.gen(start, end).map(shift(_, shifter, cal)).map(select(_, selector, cal))
+    pattern.gen(start, end).map(shifter.shift).map(selector.select)
   }
 }

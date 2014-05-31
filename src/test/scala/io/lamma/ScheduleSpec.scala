@@ -7,8 +7,8 @@ import io.lamma.Shifter.{ShiftWorkingDays, NoShift}
 
 class ScheduleSpec extends FlatSpec with Matchers {
 
-  val couponDef = DateDef("CouponDate", PeriodEnd, NoShift, Forward)
-  val settlementDef = DateDef("SettlementDate", OtherDateDef("CouponDate"), ShiftWorkingDays(2), Forward)
+  val couponDef = DateDef("CouponDate", PeriodEnd, NoShift, Forward())
+  val settlementDef = DateDef("SettlementDate", OtherDateDef("CouponDate"), ShiftWorkingDays(2), Forward())
   val defs = couponDef :: settlementDef :: Nil
   val periods = Period((2014, 4, 1) -> (2014, 4, 30)) :: Period((2014, 5, 1) -> (2014, 5, 31)) :: Nil
   val schedule = Schedule(periods, defs)

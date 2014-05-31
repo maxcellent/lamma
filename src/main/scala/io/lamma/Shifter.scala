@@ -3,24 +3,27 @@ package io.lamma
 /**
  * how we are going to shift relative to the anchor date
  */
-trait Shifter
+trait Shifter {
+  def shift(d: Date): Date
+}
 
 object Shifter {
-  case object NoShift extends Shifter
+  case object NoShift extends Shifter {
+    override def shift(d: Date) = d
+  }
 
   /**
    * @param n number of calendar days to shift
    */
-  case class ShiftCalendarDays(n: Int) extends Shifter
+  case class ShiftCalendarDays(n: Int) extends Shifter {
+    override def shift(d: Date) = d + n
+  }
 
   /**
    * @param n number of working days to shift
+   * @param cal holiday calendar applied to determine business days
    */
-  case class ShiftWorkingDays(n: Int) extends Shifter
-
-  def shift(d: Date, shifter: Shifter, cal: Calendar) = shifter match {
-    case NoShift => d
-    case ShiftCalendarDays(n) => d + n
-    case ShiftWorkingDays(n) => cal.shiftBizDay(d, n)
+  case class ShiftWorkingDays(n: Int, cal: Calendar = WeekendCalendar) extends Shifter {
+    override def shift(d: Date) = cal.shiftBizDay(d, n)
   }
 }

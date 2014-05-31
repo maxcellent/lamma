@@ -3,38 +3,42 @@ package io.lamma
 /**
  * once we shifted, how we are going to select the date to use
  */
-trait Selector
+trait Selector {
+  def select(d: Date): Date
+}
 
 object Selector {
-  case object SameDay extends Selector
+  case object SameDay extends Selector {
+    override def select(d: Date) = d
+  }
 
   /**
    * if current day not a working day,
    * then move forward to the next working day
    */
-  case object Forward extends Selector
+  case class Forward(cal: Calendar = WeekendCalendar) extends Selector {
+    override def select(d: Date) = cal.forward(d)
+  }
 
   /**
    * if current day not a working day,
    * then move backward to the previous working day
    */
-  case object Backward extends Selector
+  case class Backward(cal: Calendar = WeekendCalendar) extends Selector {
+    override def select(d: Date) = cal.backward(d)
+  }
 
   /**
    * the next working day unless that working day crosses over a new month
    */
-  case object ModifiedFollowing extends Selector
+  case class ModifiedFollowing(cal: Calendar = WeekendCalendar) extends Selector {
+    override def select(d: Date) = cal.modifiedFollowing(d)
+  }
 
   /**
    * previous working day unless that working day crosses over a new month
    */
-  case object ModifiedPreceding extends Selector
-
-  def select(d: Date, selector: Selector, cal: Calendar) = selector match {
-    case SameDay => d
-    case Forward => cal.forward(d)
-    case Backward => cal.backward(d)
-    case ModifiedFollowing => cal.modifiedFollowing(d)
-    case ModifiedPreceding => cal.modifiedPreceding(d)
+  case class ModifiedPreceding(cal: Calendar = WeekendCalendar) extends Selector {
+    override def select(d: Date) = cal.modifiedPreceding(d)
   }
 }

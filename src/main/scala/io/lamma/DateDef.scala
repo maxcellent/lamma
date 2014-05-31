@@ -7,8 +7,7 @@ import io.lamma.Anchor.{OtherDateDef, PeriodEnd, PeriodStart}
 case class DateDef(name: String,
                    relativeTo: Anchor = PeriodEnd,
                    shifter: Shifter = NoShift,
-                   selector: Selector = SameDay,
-                   cal: Calendar = WeekendCalendar) {
+                   selector: Selector = SameDay) {
 
   /**
    * @param period
@@ -22,9 +21,7 @@ case class DateDef(name: String,
       case OtherDateDef(name) => populated(name)
     }
 
-    val shiftedDate = Shifter.shift(anchorDate, shifter, cal)
-
-    Selector.select(shiftedDate, selector, cal)
+    selector.select(shifter.shift(anchorDate))
   }
 }
 
