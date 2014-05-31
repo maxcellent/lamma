@@ -2,11 +2,15 @@ package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.PositionOfYear.{NthWeekdayOfYear, NthDayOfYear}
-import io.lamma.Weekday.{Tuesday, Wednesday}
+import io.lamma.Weekday.{Monday, Tuesday, Wednesday}
 
 class PositionOfYearSpec extends WordSpec with Matchers {
 
   "NthDayOfYear" should {
+    "be valid" in {
+      PositionOfYear.validate(NthDayOfYear(40))
+    }
+
     "return false when input is not correct" in {
       NthDayOfYear(40).isValidDOY(Date(2014, 2, 8)) should be(false)
     }
@@ -25,6 +29,10 @@ class PositionOfYearSpec extends WordSpec with Matchers {
   }
 
   "NthWeekdayOfYear" should {
+    "be valid" in {
+      PositionOfYear.validate(NthWeekdayOfYear(40, Monday))
+    }
+
     "return false if weekday does not match" in {
       NthWeekdayOfYear(10, Wednesday).isValidDOY(Date(2014, 3, 4)) should be(false)
     }
@@ -43,6 +51,20 @@ class PositionOfYearSpec extends WordSpec with Matchers {
     }
   }
 
+  "validate" should {
+    "throw exception when input PositionOfYear is invalid" in {
 
+      /**
+       * this POM will match last day of every month
+       */
+      case object InvalidPOY extends PositionOfYear {
+        override def isValidDOY(d: Date) = d.isLastDayOfMonth
+      }
+
+      intercept[InvalidPositionOfYearException] {
+        PositionOfYear.validate(InvalidPOY)
+      }
+    }
+  }
 
 }

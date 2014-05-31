@@ -2,11 +2,15 @@ package io.lamma
 
 import org.scalatest.{WordSpec, Matchers}
 import io.lamma.PositionOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
-import io.lamma.Weekday.Wednesday
+import io.lamma.Weekday.{Monday, Friday, Wednesday}
 
 class PositionOfMonthSpec extends WordSpec with Matchers {
 
   "NthDayOfMonth" should {
+    "be valid" in {
+      PositionOfMonth.validate(NthDayOfMonth(10))
+    }
+
     "return true when input date is valid" in {
       NthDayOfMonth(10).isValidDOM(Date(2014, 4, 10)) should be(true)
     }
@@ -21,6 +25,10 @@ class PositionOfMonthSpec extends WordSpec with Matchers {
   }
 
   "LastDayOfMonth" should {
+    "be valid" in {
+      PositionOfMonth.validate(LastDayOfMonth)
+    }
+
     "return true when input date is the last day of the month" in {
       LastDayOfMonth.isValidDOM(Date(2014, 2, 28)) should be(true)
     }
@@ -31,6 +39,10 @@ class PositionOfMonthSpec extends WordSpec with Matchers {
   }
 
   "NthWeekdayOfMonth" should {
+    "be valid" in {
+      PositionOfMonth.validate(NthWeekdayOfMonth(2, Monday))
+    }
+
     "return false if input weekday is not correct" in {
       NthWeekdayOfMonth(2, Wednesday).isValidDOM(Date(2014, 2, 4)) should be(false)
     }
@@ -49,6 +61,10 @@ class PositionOfMonthSpec extends WordSpec with Matchers {
   }
 
   "LastWeekdayOfMonth" should {
+    "be valid" in {
+      PositionOfMonth.validate(LastWeekdayOfMonth(Friday))
+    }
+
     "return false if input weekday is not correct" in {
       LastWeekdayOfMonth(Wednesday).isValidDOM(Date(2014, 2, 27)) should be(false)
     }
@@ -59,6 +75,22 @@ class PositionOfMonthSpec extends WordSpec with Matchers {
 
     "return true if input weekday is the last weekday of the month" in {
       LastWeekdayOfMonth(Wednesday).isValidDOM(Date(2014, 2, 26)) should be(true)
+    }
+  }
+
+  "validate" should {
+    "throw exception when the PositionOfMonth is incorrectly implemented" in {
+
+      /**
+       * this POM will match every Friday
+       */
+      case object InvalidPOM extends PositionOfMonth {
+        override def isValidDOM(d: Date) = d.weekday == Friday
+      }
+
+      intercept[InvalidPositionOfMonthException] {
+        PositionOfMonth.validate(InvalidPOM)
+      }
     }
   }
 }

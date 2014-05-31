@@ -1,5 +1,7 @@
 package io.lamma
 
+import Duration._
+
 /**
  * for each PositionOfMonth implementation
  * Lamma expect there is one and only one day match the criteria
@@ -14,6 +16,26 @@ trait PositionOfMonth {
 }
 
 object PositionOfMonth {
+  def validate(pom: PositionOfMonth) = {
+
+    def validate(yyyy: Int, mm: Int) = {
+      val start = Date(yyyy, mm, 1)
+      val end = start + (1 month) - 1
+      val result = (start to end).filter(pom.isValidDOM).toList
+
+      if (result.size != 1) {
+        throw new InvalidPositionOfMonthException(pom, yyyy, mm, result)
+      }
+    }
+
+    validate(1900, 2) // special non-leap year Feb
+    validate(2000, 2) // leap year Feb
+    validate(2000, 3) // leap year non-Feb
+    validate(2014, 2) // non-leap year Feb
+    validate(2014, 1) // non-leap year month with 31 days
+    validate(2014, 4) // non-leap year month with 30 days
+  }
+
   val FirstDayOfMonth = NthDayOfMonth(1)
 
   case class NthDayOfMonth(n: Int) extends PositionOfMonth {
@@ -52,3 +74,6 @@ object PositionOfMonth {
     override def isValidDOM(d: Date) = d.weekday == weekday && d.sameWeekdaysOfMonth.last == d
   }
 }
+
+class InvalidPositionOfMonthException(pom: PositionOfMonth, failingYear: Int, failingMonth: Int, result: List[Date])
+  extends RuntimeException(s"${pom.toString} does not work for $failingYear-$failingMonth. Please make sure there is one and only one day matches for each month. Actual result: $result")

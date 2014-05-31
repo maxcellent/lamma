@@ -13,6 +13,20 @@ trait PositionOfYear {
 }
 
 object PositionOfYear {
+
+  def validate(poy: PositionOfYear) = {
+    def validate(yyyy: Int) = {
+      val result = (Date(yyyy, 1, 1) to Date(yyyy, 12, 31)).filter(poy.isValidDOY).toList
+      if (result.size != 1) {
+        throw new InvalidPositionOfYearException(poy, yyyy, result)
+      }
+    }
+
+    validate(1900)  // special non-leap year
+    validate(2000)  // leap year
+    validate(2014)  // non-leap year
+  }
+
   val FirstDayOfYear = NthDayOfYear(1)
 
   val SecondDayOfYear = NthDayOfYear(2)
@@ -58,7 +72,5 @@ object PositionOfYear {
   }
 }
 
-
-
-
-
+class InvalidPositionOfYearException(poy: PositionOfYear, failingYear: Int, result: List[Date])
+  extends RuntimeException(s"${poy.toString} does not work for year $failingYear. Please make sure there is one and only one day matches for each year. Actual result: $result")
