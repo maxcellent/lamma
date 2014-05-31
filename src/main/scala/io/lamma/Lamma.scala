@@ -1,8 +1,14 @@
 package io.lamma
 
+import io.lamma.Shifter.{NoShift, shift}
+import io.lamma.Selector.{SameDay, select}
+import io.lamma.StartRule.NoStartRule
+import io.lamma.EndRule.NoEndRule
+import io.lamma.Recurrence.EveryDay
+
 object Lamma {
 
-  def generateSchedule(start: Date,
+  def schedule(start: Date,
                end: Date,
                pattern: Recurrence,
                startRule: StartRule = NoStartRule,
@@ -19,5 +25,14 @@ object Lamma {
     }
 
     Schedule(periods, dateDefs)
+  }
+
+  def sequence(start: Date,
+               end: Date,
+               pattern: Recurrence = EveryDay,
+               selector: Selector = SameDay,
+               shifter: Shifter = NoShift,
+               cal: HolidayCalendar = NoHolidayCalendar) = {
+    pattern.gen(start, end).map(shift(_, shifter, cal)).map(select(_, selector, cal))
   }
 }
