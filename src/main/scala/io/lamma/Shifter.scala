@@ -3,7 +3,7 @@ package io.lamma
 /**
  * how we are going to shift relative to the anchor date
  */
-sealed trait Shifter
+trait Shifter
 
 object Shifter {
   case object NoShift extends Shifter

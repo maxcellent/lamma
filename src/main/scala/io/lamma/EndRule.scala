@@ -1,6 +1,6 @@
 package io.lamma
 
-sealed trait EndRule {
+trait EndRule {
   /**
    * apply end rule to periods
    */

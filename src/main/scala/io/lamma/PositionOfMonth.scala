@@ -1,6 +1,6 @@
 package io.lamma
 
-sealed trait PositionOfMonth {
+trait PositionOfMonth {
 
   /**
    * @return true if the input date is valid to the currently defined position of month

@@ -1,6 +1,6 @@
 package io.lamma
 
-sealed trait StartRule {
+trait StartRule {
   /**
    * apply start rule to periods
    */

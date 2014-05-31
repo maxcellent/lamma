@@ -6,7 +6,7 @@ import Duration._
 /**
  *
  */
-sealed trait Recurrence {
+trait Recurrence {
   /**
    * recurrence duration
    */

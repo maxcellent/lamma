@@ -3,7 +3,7 @@ package io.lamma
 /**
  * once we shifted, how we are going to select the date to use
  */
-sealed trait Selector
+trait Selector
 
 object Selector {
   case object SameDay extends Selector
