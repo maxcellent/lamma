@@ -96,8 +96,8 @@ object Date {
   def apply(d: LocalDate) = new Date(d.getYear, d.getMonthOfYear, d.getDayOfMonth)
 
   private[lamma] def monthsBetween(input: ((Int, Int, Int), (Int, Int, Int))): Int = {
-    val ((fy, fm, fd), (ty, tm, td)) = input
-    monthsBetween(Date(fy, fm, fd), Date(ty, tm, td))
+    val (from, to) = unpack(input)
+    monthsBetween(from, to)
   }
 
   private[lamma] def monthsBetween(d1: Date, d2: Date) = {
@@ -105,8 +105,8 @@ object Date {
   }
 
   private[lamma] def yearsBetween(input: ((Int, Int, Int), (Int, Int, Int))): Int = {
-    val ((fy, fm, fd), (ty, tm, td)) = input
-    yearsBetween(Date(fy, fm, fd), Date(ty, tm, td))
+    val (from, to) = unpack(input)
+    yearsBetween(from, to)
   }
 
   private[lamma] def yearsBetween(d1: Date, d2: Date) = {
@@ -138,6 +138,11 @@ object Date {
     } else {
       nextPositionOfMonth(d + 1, pom)
     }
+  }
+
+  private[lamma] def unpack(pair: ((Int, Int, Int), (Int, Int, Int))) = {
+    val ((fy, fm, fd), (ty, tm, td)) = pair
+    Date(fy, fm, fd) -> Date(ty, tm, td)
   }
 }
 

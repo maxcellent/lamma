@@ -7,8 +7,8 @@ case class Period(from: Date, to: Date) {
 object Period {
 
   def apply(input: ((Int, Int, Int), (Int, Int, Int))) = {
-    val ((fy, fm, fd), (ty, tm, td)) = input
-    new Period(Date(fy, fm, fd), Date(ty, tm, td))
+    val (from, to) = Date.unpack(input)
+    new Period(from, to)
   }
 
   def fromDates(dates: List[Date]) = dates match {
