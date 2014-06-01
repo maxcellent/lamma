@@ -77,6 +77,8 @@ object Recurrence {
       case ShiftWorkingDays(n, _) => require(n > 0, s"Working day shifter $shifter should have a positive delta. Otherwise an infinite loop is likely to happen. ")
     }
 
+    require(selector.isInstanceOf[SameDay.type] || selector.isInstanceOf[Forward], s"Only SameDay and Forward is allowed for Days forward recurrence pattern")
+
     override def recur(from: Date, to: Date) = shift(selector.select(from), to)
 
     @tailrec
@@ -113,6 +115,8 @@ object Recurrence {
       case ShiftCalendarDays(n) => require(n < 0, s"Calendar day shifter $shifter should have a negative delta. Otherwise an infinite loop is likely to happen. ")
       case ShiftWorkingDays(n, _) => require(n < 0, s"Working day shifter $shifter should have a negative delta. Otherwise an infinite loop is likely to happen. ")
     }
+
+    require(selector.isInstanceOf[SameDay.type] || selector.isInstanceOf[Backward], s"Only SameDay and Backward is allowed for Days backward recurrence pattern")
 
     override def recur(from: Date, to: Date) = shift(from, selector.select(to))
 
