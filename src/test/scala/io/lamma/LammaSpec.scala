@@ -210,7 +210,38 @@ class LammaSpec extends WordSpec with Matchers {
     }
   }
 
-  "topic: recurrence pattern"
+  "topic: recurrence pattern" should {
+
+    "you can customize your own recurrence pattern" should {
+
+      /**
+       * this custom recurrence pattern will work as follows:
+       * 1) first recurrence date is the from date
+       * 2) second recurrence date is 7 days later
+       * 3) third recurrence date is 5 days later
+       * 4) fourth recurrence date is to date
+       *
+       * this is just a reference for demo purpose, some logics like validations are skipped
+       */
+      case object CustomRecurrence extends Recurrence {
+        override private[lamma] def recur(from: Date, to: Date) = {
+          from :: from + 7 :: from + 7 + 5 :: to :: Nil
+        }
+      }
+
+      "let's use it to generate a sequence" in {
+        val expected = Date(2014, 1, 1) :: Date(2014, 1, 8) :: Date(2014, 1, 13) :: Date(2014, 1, 31) :: Nil
+        Lamma.sequence(Date(2014, 1, 1), Date(2014, 1, 31), CustomRecurrence) should be(expected)
+      }
+
+      "let's use it to generate a schedule" in {
+        val expected = Row(2015, 1, 7) :: Row(2015, 1, 12) :: Row(2015, 1, 31) :: Nil
+
+        val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd) :: Nil
+        Lamma.schedule(Date(2015, 1, 1), Date(2015, 1, 31), CustomRecurrence, dateDefs = dateDefs).rows should be(expected)
+      }
+    }
+  }
 
   "topic: shifters"
 
