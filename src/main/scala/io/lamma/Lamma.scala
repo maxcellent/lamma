@@ -57,7 +57,7 @@ object Lamma {
   }
 
   /**
-   * Generate a list of dates from the input criteria
+   * Generate a list of dates from the input arguments
    *
    * @param from from date
    * @param to to date

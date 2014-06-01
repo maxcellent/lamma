@@ -2,6 +2,8 @@ package io.lamma
 
 import scala.annotation.tailrec
 import Duration._
+import io.lamma.Selector.{Backward, Forward, SameDay}
+import io.lamma.Shifter.{NoShift, ShiftWorkingDays, ShiftCalendarDays}
 
 /**
  *
@@ -61,16 +63,77 @@ object Recurrence {
 
   val EveryOtherDay = Days(2)
 
-  case class Days(n: Int) extends Recurrence {
-    require(n > 0)
+  /**
+   * @param shifter only ShiftCalendarDays / ShiftWorkingDays are allowed
+   * @param selector selector is only used to select from date,
+   *                 if we want to select each result date, then we can use sequence level or schedule level selector
+   */
+  case class Days(shifter: Shifter, selector: Selector = SameDay) extends Recurrence {
+    shifter match {
+      case NoShift => throw new IllegalArgumentException(s"$NoShift should not be used here. Otherwise an infinite loop is likely to happen")
+      case ShiftCalendarDays(n) => require(n > 0, s"Calendar day shifter $shifter should have a positive delta. Otherwise an infinite loop is likely to happen. ")
+      case ShiftWorkingDays(n, _) => require(n > 0, s"Working day shifter $shifter should have a positive delta. Otherwise an infinite loop is likely to happen. ")
+    }
 
-    private[lamma] override def recur(from: Date, to: Date) = recurForward(from, to, n)
+    override private[lamma] def recur(from: Date, to: Date) = shift(selector.select(from), to)
+
+    @tailrec
+    private def shift(current: Date, to: Date, acc: List[Date] = Nil): List[Date] = {
+      if (current > to) {
+        acc
+      } else {
+        shift(shifter.shift(current), to , acc :+ current)
+      }
+    }
   }
 
-  case class DaysBackward(n: Int) extends Recurrence {
-    require(n > 0)
+  object Days {
+    def apply(n: Int): Days = {
+      require(n > 0, s"Number of days must be a positive number. Otherwise an infinite loop is likely to happen. Actual value = $n")
+      Days(ShiftCalendarDays(n))
+    }
 
-    private[lamma] override def recur(from: Date, to: Date) = recurBackward(from, to, n)
+    def workingDay(n: Int, cal: Calendar = WeekendCalendar) = {
+      require(n > 0, s"Number of working days must be a positive number. Otherwise an infinite loop is likely to happen. Actual value = $n")
+      Days(ShiftWorkingDays(n, cal), Forward(cal))
+    }
+  }
+
+  /**
+   *
+   * @param shifter  only ShiftCalendarDays / ShiftWorkingDays are allowed
+   * @param selector selector is only used to select to date,
+   *                 if we want to select each result date, then we can use sequence level or schedule level selector
+   */
+  case class DaysBackward(shifter: Shifter, selector: Selector = SameDay) extends Recurrence {
+    shifter match {
+      case NoShift => throw new IllegalArgumentException(s"$NoShift should not be used here. Otherwise an infinite loop is likely to happen")
+      case ShiftCalendarDays(n) => require(n < 0, s"Calendar day shifter $shifter should have a negative delta. Otherwise an infinite loop is likely to happen. ")
+      case ShiftWorkingDays(n, _) => require(n < 0, s"Working day shifter $shifter should have a negative delta. Otherwise an infinite loop is likely to happen. ")
+    }
+
+    private[lamma] override def recur(from: Date, to: Date) = shift(from, selector.select(to))
+
+    @tailrec
+    private def shift(from: Date, current: Date, acc: List[Date] = Nil): List[Date] = {
+      if (current < from) {
+        acc
+      } else {
+        shift(from, shifter.shift(current), current :: acc)
+      }
+    }
+  }
+
+  object DaysBackward {
+    def apply(n: Int): DaysBackward = {
+      require(n > 0, s"Number of days must be a positive number. Otherwise an infinite loop is likely to happen. Actual value = $n")
+      DaysBackward(ShiftCalendarDays(-n))
+    }
+
+    def workingDay(n: Int, cal: Calendar = WeekendCalendar) = {
+      require(n > 0, s"Number of working days must be a positive number. Otherwise an infinite loop is likely to happen. Actual value = $n")
+      DaysBackward(ShiftWorkingDays(-n, cal), Backward(cal))
+    }
   }
 
   // ========= weekly ==========

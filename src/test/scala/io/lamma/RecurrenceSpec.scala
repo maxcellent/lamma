@@ -5,6 +5,7 @@ import io.lamma.Recurrence._
 import io.lamma.PositionOfMonth.{LastDayOfMonth, LastWeekdayOfMonth}
 import io.lamma.Weekday.{Tuesday, Friday}
 import io.lamma.PositionOfYear.{LastDayOfYear, NthWeekdayOfYear}
+import io.lamma.Shifter.{ShiftCalendarDays, NoShift, ShiftWorkingDays}
 
 class RecurrenceSpec extends WordSpec with Matchers {
 
@@ -42,12 +43,116 @@ class RecurrenceSpec extends WordSpec with Matchers {
       Days(5).periodEndDays(Date(2014, 4, 10), Date(2014, 4, 11)) should be('empty)
       Days(5).periodEndDays(Date(2014, 4, 10), Date(2014, 4, 13)) should be('empty)
     }
+
+    "generate working days properly" in {
+      val expected = Date(2015, 10, 5) :: Date(2015, 10, 12) :: Date(2015, 10, 19) :: Nil
+      Days.workingDay(5).recur(Date(2015, 10, 5), Date(2015, 10, 20)) should be(expected)
+    }
+
+    "generate working days properly even when start day is a holiday" in {
+      val expected = Date(2015, 10, 5) :: Date(2015, 10, 12) :: Date(2015, 10, 19) :: Nil
+      Days.workingDay(5).recur(Date(2015, 10, 3), Date(2015, 10, 20)) should be(expected)
+    }
+
+    "throw exception when NoShift is used" in {
+      intercept[IllegalArgumentException] {
+        Days(NoShift)
+      }
+    }
+
+    "throw exception when ShiftCalendarDays with a non-positive number is used" in {
+      intercept[IllegalArgumentException] {
+        DaysBackward(ShiftCalendarDays(0))
+      }
+    }
+
+    "throw exception when ShiftWorkingDays with a non-positive number is used" in {
+      intercept[IllegalArgumentException] {
+        DaysBackward(ShiftWorkingDays(0))
+      }
+    }
+
+    "throw exception when 0 day is specified" in {
+      intercept[IllegalArgumentException] {
+        Days(0)
+      }
+    }
+
+    "throw exception when netative day is specified" in {
+      intercept[IllegalArgumentException] {
+        Days(-1)
+      }
+    }
+
+    "throw exception when 0 working day is specified" in {
+      intercept[IllegalArgumentException] {
+        Days.workingDay(0)
+      }
+    }
+
+    "throw exception when netative working day is specified" in {
+      intercept[IllegalArgumentException] {
+        Days.workingDay(-1)
+      }
+    }
   }
 
   "DaysBackward" should {
     "generate end days properly" in {
       val expected = Date(2014, 4, 11) :: Date(2014, 4, 14) :: Date(2014, 4, 17) :: Date(2014, 4, 20) :: Nil
       DaysBackward(3).periodEndDays(Date(2014, 4, 10), Date(2014, 4, 20)) should be (expected)
+    }
+
+    "generate working days properly" in {
+      val expected = Date(2015, 10, 6) :: Date(2015, 10, 13) :: Date(2015, 10, 20) :: Nil
+      DaysBackward.workingDay(5).recur(Date(2015, 10, 5), Date(2015, 10, 20)) should be(expected)
+    }
+
+    "generate working days properly even when start day is a holiday" in {
+      val expected = Date(2015, 10, 9) :: Date(2015, 10, 16) :: Date(2015, 10, 23) :: Nil
+      DaysBackward.workingDay(5).recur(Date(2015, 10, 5), Date(2015, 10, 25)) should be(expected)
+    }
+
+    "throw exception when NoShift is used" in {
+      intercept[IllegalArgumentException] {
+        DaysBackward(NoShift)
+      }
+    }
+
+    "throw exception when ShiftCalendarDays with a non-negative number is used" in {
+      intercept[IllegalArgumentException] {
+        DaysBackward(ShiftCalendarDays(0))
+      }
+    }
+
+    "throw exception when ShiftWorkingDays with a non-negative number is used" in {
+      intercept[IllegalArgumentException] {
+        DaysBackward(ShiftWorkingDays(0))
+      }
+    }
+
+    "throw exception when 0 day is specified" in {
+      intercept[IllegalArgumentException] {
+        DaysBackward(0)
+      }
+    }
+
+    "throw exception when negative backward day is specified" in {
+      intercept[IllegalArgumentException] {
+        DaysBackward(-1)
+      }
+    }
+
+    "throw exception when 0 working day is specified" in {
+      intercept[IllegalArgumentException] {
+        Days.workingDay(0)
+      }
+    }
+
+    "throw exception when netative working day is specified" in {
+      intercept[IllegalArgumentException] {
+        Days.workingDay(-1)
+      }
     }
   }
 
