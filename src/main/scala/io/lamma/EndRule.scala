@@ -2,7 +2,7 @@ package io.lamma
 
 trait EndRule {
   /**
-   * apply end rule to periods
+   * apply end rule to naked periods
    *
    * @param end end date
    * @param nakedPeriods periods without taking start / end rules into consideration, contain at least one period

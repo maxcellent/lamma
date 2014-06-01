@@ -2,7 +2,7 @@ package io.lamma
 
 trait StartRule {
   /**
-   * apply start rule to periods
+   * apply start rule to naked periods
    *
    * @param start start date
    * @param nakedPeriods periods without taking start / end rules into consideration, contain at least one period

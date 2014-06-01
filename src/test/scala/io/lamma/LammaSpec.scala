@@ -2,7 +2,7 @@ package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.Recurrence._
-import io.lamma.Weekday.{Friday, Tuesday}
+import io.lamma.Weekday.{Wednesday, Friday, Tuesday}
 import io.lamma.PositionOfMonth.{LastDayOfMonth, NthWeekdayOfMonth, NthDayOfMonth}
 import io.lamma.Month.February
 import io.lamma.PositionOfYear.{NthMonthOfYear, LastWeekdayOfYear}
@@ -248,11 +248,105 @@ class LammaSpec extends WordSpec with Matchers {
     }
   }
 
-  "topic: shifters"
+  "topic: shifters" should {
+    "you can customize your own shifter" should {
+      /**
+       * this custom shifter work as follows:
+       * if it's a 15th day of a month, then shift by 2 days, otherwise remains unchanged
+       */
+      case object CustomShifter extends Shifter {
+        override def shift(d: Date) = if (d.dd == 15) d + 2 else d
+      }
 
-  "topic: selectors"
+      "let's use it to generate a sequence" in {
+        val expected = Date(2015, 10, 8) :: Date(2015, 10, 17) :: Date(2015, 10, 22) :: Date(2015, 10, 29) :: Nil
+        Lamma.sequence(Date(2015, 10, 8), Date(2015, 10, 30), EveryWeek, CustomShifter) should be(expected)
+      }
 
-  "topic: holiday calendar"
+      "let's use it to generate a schedule" in {
+        val expected = Row(2015, 10, 8) :: Row(2015, 10, 17) :: Row(2015, 10, 22) :: Row(2015, 10, 29) :: Nil
 
-  "topic: stub rules handling"
+        val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, shifter = CustomShifter) :: Nil
+        Lamma.schedule(Date(2015, 10, 2), Date(2015, 10, 29), EveryWeek, dateDefs = dateDefs).rows should be(expected)
+      }
+    }
+  }
+
+  "topic: selectors" should {
+    "you can customize your own selector" should {
+      /**
+       * this custom selector work as follows:
+       * if it's an even day, select the previous day. otherwise select current day
+       */
+      case object CustomSelector extends Selector {
+        override def select(d: Date) = if (d.dd % 2 == 0) d - 1 else d
+      }
+
+      "let's use it to generate a sequence" in {
+        val expected = Date(2015, 10, 1) :: Date(2015, 10, 3) :: Date(2015, 10, 7) :: Date(2015, 10, 9) :: Nil
+        Lamma.sequence(Date(2015, 10, 1), Date(2015, 10, 10), Days(3), selector = CustomSelector) should be(expected)
+      }
+
+      "let's use it to generate a schedule" in {
+        val expected = Date(2015, 10, 3) :: Date(2015, 10, 5) :: Date(2015, 10, 9) :: Nil
+
+        val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, selector = CustomSelector) :: Nil
+        Lamma.schedule(Date(2015, 10, 1), Date(2015, 10, 9), Days(3), dateDefs = dateDefs)("CouponDate") should be(expected)
+      }
+    }
+  }
+
+  "topic: holiday calendar" should {
+    "you can customize your own calendar" should {
+      /**
+       * all Wednesdays are now holiday :)
+       */
+      case object WednesdayCalendar extends Calendar {
+        override def isHoliday(d: Date) = d.weekday == Wednesday
+      }
+
+      "let's use it to generate a sequence" in {
+        val expected = Date(2015, 10, 13) :: Date(2015, 10, 15) :: Date(2015, 10, 16) :: Nil
+        Lamma.sequence(Date(2015, 10, 13), Date(2015, 10, 16), EveryWorkingDay(WednesdayCalendar)) should be(expected)
+      }
+    }
+
+    "you can compose multiple calendars with CompositeCalendar" in {
+      val ukHolidays2014 = SimpleCalendar(Date(2014, 1, 1), Date(2014, 4, 18), Date(2014, 4, 21),
+        Date(2014, 5, 5), Date(2014, 5, 26), Date(2014, 8, 25), Date(2014, 12, 25), Date(2014, 12, 26))
+
+      val composedCalendar = CompositeCalendar(ukHolidays2014, WeekendCalendar)
+
+      // 2014-04-18 is a UK holiday
+      // 2014-04-20 is Sunday
+      val expected = Date(2014, 4, 16) :: Date(2014, 4, 22) :: Date(2014, 4, 24) :: Nil
+      Lamma.sequence(Date(2014, 4, 16), Date(2014, 4, 24), Days.workingDay(2, composedCalendar)) should be(expected)
+    }
+  }
+
+  "topic: stub rules" should {
+    "as always, you can customize your stub rule" should {
+
+      /**
+       * if last period is shorter than 5 days, then merge with end day
+       */
+      case object CustomEndRule extends EndRule {
+        override def doApplyRule(end: Date, nakedPeriods: List[Period]) = nakedPeriods match {
+          case Nil => Nil
+          case rest :+ last if last.length < 5 => rest :+ Period(last.start, end)
+          case rest :+ last => nakedPeriods :+ Period(last.end + 1, end)
+        }
+      }
+
+      "for this schedule end stub should be merged with last period" in {
+        val expected = Period((2015, 10, 1) -> (2015, 10, 3)) :: Period((2015, 10, 4) -> (2015, 10, 6)) :: Period((2015, 10, 7) -> (2015, 10, 10)) :: Nil
+        Lamma.schedule(Date(2015, 10, 1), Date(2015, 10, 10), Days(3), endRule = CustomEndRule).periods should be(expected)
+      }
+
+      "and this one won't be merged" in {
+        val expected = Period((2015, 10, 1) -> (2015, 10, 10)) :: Period((2015, 10, 11) -> (2015, 10, 20)) :: Period((2015, 10, 21) -> (2015, 10, 25)) :: Nil
+        Lamma.schedule(Date(2015, 10, 1), Date(2015, 10, 25), Days(10), endRule = CustomEndRule).periods should be(expected)
+      }
+    }
+  }
 }
