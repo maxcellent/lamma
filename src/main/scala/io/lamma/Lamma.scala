@@ -61,7 +61,7 @@ object Lamma {
    * @param end end date
    * @param pattern recurrence pattern. Determine how next date will be generated from the previous one
    * @param shifter how to shift the date once it's generated? eg, no shift, 2 days later, 2 working days later
-   * @param selector How to select the date once the date is generated? eg, same day, following business date?
+   * @param selector How to select the date once the date is generated? eg, same day, following working day?
    * @param cal calendar used to shift and select date
    * @return a list of generated dates
    *
