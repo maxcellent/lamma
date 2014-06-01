@@ -8,7 +8,7 @@ import StubRulePeriodBuilder._
  * @param startRule
  * @param endRule
  */
-case class StubRulePeriodBuilder(startRule: StartRule1 = NoStartRule, endRule: EndRule1 = NoEndRule) extends PeriodBuilder {
+case class StubRulePeriodBuilder(startRule: StartRule = NoStartRule, endRule: EndRule = NoEndRule) extends PeriodBuilder {
 
   override def build(start: Date, end: Date, ends: List[Date]) = {
     require(start <= end)
@@ -43,13 +43,13 @@ object StubRulePeriodBuilder {
   /**
    * always create a new start period, identical with LongStart(0)
    */
-  val NoStartRule = LongStart1(0)
+  val NoStartRule = LongStart(0)
 
-  sealed trait StartRule1 {
+  sealed trait StartRule {
     def start(end0: Date, end1: Date, end2: Date): List[Date]
   }
 
-  case class LongStart1(maxOpt: Option[Int] = None) extends StartRule1 {
+  case class LongStart(maxOpt: Option[Int] = None) extends StartRule {
     override def start(end0: Date, end1: Date, end2: Date) = {
       val max = maxOpt.map(_.toDouble).getOrElse( (end2 - end1) * 1.5 )
       if (end2 - end0 <= max) {
@@ -60,11 +60,11 @@ object StubRulePeriodBuilder {
     }
   }
 
-  object LongStart1 {
-    def apply(max: Int): LongStart1 = LongStart1(Some(max))
+  object LongStart {
+    def apply(max: Int): LongStart = LongStart(Some(max))
   }
 
-  case class ShortStart1(minOpt: Option[Int] = None) extends StartRule1 {
+  case class ShortStart(minOpt: Option[Int] = None) extends StartRule {
     override def start(end0: Date, end1: Date, end2: Date) = {
       val min = minOpt.map(_.toDouble).getOrElse( (end2 - end1) * 0.5 )
       if (end1 - end0 >= min) {
@@ -75,20 +75,20 @@ object StubRulePeriodBuilder {
     }
   }
 
-  object ShortStart1 {
-    def apply(min: Int): ShortStart1 = ShortStart1(Some(min))
+  object ShortStart {
+    def apply(min: Int): ShortStart = ShortStart(Some(min))
   }
 
   /**
    * always create a new end period, identical with LongEnd(0)
    */
-  val NoEndRule = LongEnd1(0)
+  val NoEndRule = LongEnd(0)
 
-  sealed trait EndRule1 {
+  sealed trait EndRule {
     def end(endx: Date, endy: Date, endz: Date): List[Date]
   }
 
-  case class LongEnd1(maxOpt: Option[Int] = None) extends EndRule1 {
+  case class LongEnd(maxOpt: Option[Int] = None) extends EndRule {
     override def end(endx: Date, endy: Date, endz: Date) = {
       val max = maxOpt.map(_.toDouble).getOrElse( (endy - endx) * 1.5)
       if (endz - endx <= max) {
@@ -99,11 +99,11 @@ object StubRulePeriodBuilder {
     }
   }
 
-  object LongEnd1 {
-    def apply(max: Int): LongEnd1 = LongEnd1(Some(max))
+  object LongEnd {
+    def apply(max: Int): LongEnd = LongEnd(Some(max))
   }
 
-  case class ShortEnd1(minOpt: Option[Int] = None) extends EndRule1 {
+  case class ShortEnd(minOpt: Option[Int] = None) extends EndRule {
     override def end(endx: Date, endy: Date, endz: Date) = {
       val min = minOpt.map(_.toDouble).getOrElse( (endy - endx) * 0.5)
       if (endz - endy >= min) {
@@ -114,7 +114,7 @@ object StubRulePeriodBuilder {
     }
   }
 
-  object ShortEnd1 {
-    def apply(min: Int): ShortEnd1 = ShortEnd1(Some(min))
+  object ShortEnd {
+    def apply(min: Int): ShortEnd = ShortEnd(Some(min))
   }
 }

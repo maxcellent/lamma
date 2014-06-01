@@ -9,7 +9,7 @@ import io.lamma.PositionOfYear.{NthMonthOfYear, LastWeekdayOfYear}
 import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 import io.lamma.Selector.{ModifiedFollowing, Forward}
 import io.lamma.Anchor.{OtherDateDef, PeriodEnd}
-import io.lamma.EndRule.LongEnd
+import io.lamma.StubRulePeriodBuilder.LongEnd
 
 /**
  * this spec is written in tutorial order in order to verify and maintain everything used in tutorial
@@ -187,9 +187,8 @@ class LammaSpec extends WordSpec with Matchers {
 
     "let's merge it by applying a long end stub rule" in {
       val expected = Row(2015, 6, 30) :: Row(2015, 12, 31) :: Row(2016, 6, 30) :: Row(2017, 1, 31) :: Nil
-
       val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(WeekendCalendar)) :: Nil
-      Lamma.schedule(Date(2015, 1, 1), Date(2017, 1, 31), Months(6, LastDayOfMonth), endRule = LongEnd(270), dateDefs = dateDefs).rows should be(expected)
+      Lamma.schedule(Date(2015, 1, 1), Date(2017, 1, 31), Months(6, LastDayOfMonth), StubRulePeriodBuilder(endRule = LongEnd(270)), dateDefs = dateDefs).rows should be(expected)
     }
 
     // edge cases
@@ -324,29 +323,23 @@ class LammaSpec extends WordSpec with Matchers {
     }
   }
 
-  "topic: stub rules" should {
-    "as always, you can customize your stub rule" should {
+  "topic: period builder / stub rules" should {
+    "you can customize your period builder" in {
 
       /**
-       * if last period is shorter than 5 days, then merge with end day
+       * this period builder will merge every two periods into one
+       * and then prepend start stub and append end stub
        */
-      case object CustomEndRule extends EndRule {
-        override def doApplyRule(end: Date, nakedPeriods: List[Period]) = nakedPeriods match {
-          case Nil => Nil
-          case rest :+ last if last.length < 5 => rest :+ Period(last.start, end)
-          case rest :+ last => nakedPeriods :+ Period(last.end + 1, end)
+      case object CustomPeriodBuilder extends PeriodBuilder {
+        override def build(start: Date, end: Date, periodEnds: List[Date]) = {
+          val dates = (start - 1 :: periodEnds.grouped(2).map(_.head).toList) :+ end
+          Period.fromDates(dates)
         }
       }
 
-      "for this schedule end stub should be merged with last period" in {
-        val expected = Period((2015, 10, 1) -> (2015, 10, 3)) :: Period((2015, 10, 4) -> (2015, 10, 6)) :: Period((2015, 10, 7) -> (2015, 10, 10)) :: Nil
-        Lamma.schedule(Date(2015, 10, 1), Date(2015, 10, 10), Days(3), endRule = CustomEndRule).periods should be(expected)
-      }
-
-      "and this one won't be merged" in {
-        val expected = Period((2015, 10, 1) -> (2015, 10, 10)) :: Period((2015, 10, 11) -> (2015, 10, 20)) :: Period((2015, 10, 21) -> (2015, 10, 25)) :: Nil
-        Lamma.schedule(Date(2015, 10, 1), Date(2015, 10, 25), Days(10), endRule = CustomEndRule).periods should be(expected)
-      }
+      // first two periods are merged together
+      val expected = Period((2015, 10, 1) -> (2015, 10, 3)) :: Period((2015, 10, 4) -> (2015, 10, 9)) :: Period((2015, 10, 10) -> (2015, 10, 10)) :: Nil
+      Lamma.schedule(Date(2015, 10, 1), Date(2015, 10, 10), Days(3), CustomPeriodBuilder).periods should be(expected)
     }
   }
 }

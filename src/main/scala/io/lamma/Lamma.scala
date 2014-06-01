@@ -2,8 +2,6 @@ package io.lamma
 
 import io.lamma.Shifter.NoShift
 import io.lamma.Selector.SameDay
-import io.lamma.StartRule.NoStartRule
-import io.lamma.EndRule.NoEndRule
 import io.lamma.Recurrence.EveryDay
 
 /**
@@ -27,8 +25,7 @@ object Lamma {
    * @param start start date
    * @param end end date
    * @param pattern recurrence pattern. Determine how anchor dates will be generated
-   * @param startRule start stub rule, how do we handle fraction period on start? (if any)
-   * @param endRule end stub rule, how do we handle fraction period at the end? (if any)
+   * @param periodBuilder how do we build periods (rows) based on the result of recurrence pattern
    * @param dateDefs a list of date definitions used to generate Date. In this case List(CouponDate, SettlementDate)
    * @return generated schedule
    *
@@ -37,22 +34,14 @@ object Lamma {
   def schedule(start: Date,
                end: Date,
                pattern: Recurrence,
-               startRule: StartRule = NoStartRule,
-               endRule: EndRule = NoEndRule,
+               periodBuilder: PeriodBuilder = StubRulePeriodBuilder(),
                dateDefs: List[DateDef] = Nil) = {
     require(start <= end, s"start date $start must be on or before end date $end")
 
     DateDef.validate(dateDefs)
 
-    val dates = pattern.periodEndDays(start, end)
-
-    val periods = {
-      Period.fromDates(dates) match {
-        case Nil => Period(start, end) :: Nil // if no naked period is generated, then return single Period
-        case p => endRule.applyRule(end, startRule.applyRule(start, p))
-      }
-    }
-
+    val periodEndDays = pattern.periodEndDays(start, end)
+    val periods = periodBuilder.build(start, end, periodEndDays)
     Schedule(periods, dateDefs)
   }
 

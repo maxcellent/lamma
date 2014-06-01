@@ -12,7 +12,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val second = Date(2014, 6, 21)
       val expected = start :: first :: second :: Nil
 
-      LongStart1(15).start(start, first, second) should be(expected)
+      LongStart(15).start(start, first, second) should be(expected)
     }
 
     "merge to first period if the merged period is not too long when max is specified" in {
@@ -21,7 +21,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val second = Date(2014, 6, 21)
       val expected = start :: second :: Nil
 
-      LongStart1(15).start(start, first, second) should be(expected)
+      LongStart(15).start(start, first, second) should be(expected)
     }
 
     "prepend new period if the merged period is too long when max is unspecified" in {
@@ -30,7 +30,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val second = Date(2014, 6, 21)
       val expected = start :: first :: second :: Nil
 
-      LongStart1().start(start, first, second) should be(expected)
+      LongStart().start(start, first, second) should be(expected)
     }
 
     "merge to first period if the merged period is not too long when max is unspecified" in {
@@ -39,7 +39,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val second = Date(2014, 6, 21)
       val expected = start :: second :: Nil
 
-      LongStart1().start(start, first, second) should be(expected)
+      LongStart().start(start, first, second) should be(expected)
     }
   }
 
@@ -50,7 +50,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val second = Date(2014, 6, 21)
       val expected = start :: first :: second :: Nil
 
-      ShortStart1(5).start(start, first, second) should be(expected)
+      ShortStart(5).start(start, first, second) should be(expected)
     }
 
     "merge to first period if the merged period is not long enough when min is specified" in {
@@ -59,7 +59,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val second = Date(2014, 6, 21)
       val expected = start :: second :: Nil
 
-      ShortStart1(5).start(start, first, second) should be(expected)
+      ShortStart(5).start(start, first, second) should be(expected)
     }
 
     "prepend new period if the merged period is long enough when min is unspecified" in {
@@ -68,7 +68,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val second = Date(2014, 6, 21)
       val expected = start :: first :: second :: Nil
 
-      ShortStart1().start(start, first, second) should be(expected)
+      ShortStart().start(start, first, second) should be(expected)
     }
 
     "merge to first period if the merged period is not long enough when min is unspecified" in {
@@ -77,7 +77,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val second = Date(2014, 6, 21)
       val expected = start :: second :: Nil
 
-      ShortStart1().start(start, first, second) should be(expected)
+      ShortStart().start(start, first, second) should be(expected)
     }
   }
 
@@ -87,7 +87,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val last = Date(2014, 6, 20)
       val end = Date(2014, 6, 26)
       val expected = secondLast :: last :: end :: Nil
-      LongEnd1(15).end(secondLast, last, end) should be(expected)
+      LongEnd(15).end(secondLast, last, end) should be(expected)
     }
 
     "merge to last period if the merged period is not too long when max is specified" in {
@@ -95,7 +95,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val last = Date(2014, 6, 20)
       val end = Date(2014, 6, 25)
       val expected = secondLast :: end :: Nil
-      LongEnd1(15).end(secondLast, last, end) should be(expected)
+      LongEnd(15).end(secondLast, last, end) should be(expected)
     }
 
     "append new period if the merged period is too long when max is unspecified" in {
@@ -103,7 +103,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val last = Date(2014, 6, 20)
       val end = Date(2014, 6, 26)
       val expected = secondLast :: last :: end :: Nil
-      LongEnd1().end(secondLast, last, end) should be(expected)
+      LongEnd().end(secondLast, last, end) should be(expected)
     }
 
     "merge to last period if the merged period is not too long when max is unspecified" in {
@@ -111,7 +111,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val last = Date(2014, 6, 20)
       val end = Date(2014, 6, 25)
       val expected = secondLast :: end :: Nil
-      LongEnd1().end(secondLast, last, end) should be(expected)
+      LongEnd().end(secondLast, last, end) should be(expected)
     }
   }
 
@@ -121,7 +121,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val last = Date(2014, 6, 24)
       val end = Date(2014, 6, 29)
       val expected = secondLast :: last :: end :: Nil
-      ShortEnd1(5).end(secondLast, last, end) should be(expected)
+      ShortEnd(5).end(secondLast, last, end) should be(expected)
     }
 
     "merge to last period if the merged period is not long enough when min is specified" in {
@@ -129,7 +129,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val last = Date(2014, 6, 24)
       val end = Date(2014, 6, 28)
       val expected = secondLast :: end :: Nil
-      ShortEnd1(5).end(secondLast, last, end) should be(expected)
+      ShortEnd(5).end(secondLast, last, end) should be(expected)
     }
 
     "append new period if the merged period is long enough when min is unspecified" in {
@@ -137,7 +137,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val last = Date(2014, 6, 24)
       val end = Date(2014, 6, 29)
       val expected = secondLast :: last :: end :: Nil
-      ShortEnd1().end(secondLast, last, end) should be(expected)
+      ShortEnd().end(secondLast, last, end) should be(expected)
     }
 
     "merge to last period if the merged period is not long enough when min is unspecified" in {
@@ -145,7 +145,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val last = Date(2014, 6, 24)
       val end = Date(2014, 6, 28)
       val expected = secondLast :: end :: Nil
-      ShortEnd1().end(secondLast, last, end) should be(expected)
+      ShortEnd().end(secondLast, last, end) should be(expected)
     }
   }
 
@@ -197,10 +197,10 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
         val end = Date(2014, 6, 30)
         val anchors = Date(2014, 6, 10) :: Nil
         val expected = Period((2014, 6, 1) -> (2014, 6, 30)) :: Nil
-        StubRulePeriodBuilder(LongStart1(30), LongEnd1(15)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(LongStart1(30), LongEnd1(25)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(LongStart1(30), ShortEnd1(15)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(LongStart1(30), ShortEnd1(25)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(30), LongEnd(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(30), LongEnd(25)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(30), ShortEnd(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(30), ShortEnd(25)).build(start, end, anchors) should be(expected)
       }
 
       "LongStart always append when max is NOT bit enough" in {
@@ -208,10 +208,10 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
         val end = Date(2014, 6, 30)
         val anchors = Date(2014, 6, 10) :: Nil
         val expected = Period((2014, 6, 1) -> (2014, 6, 10)) :: Period((2014, 6, 11) -> (2014, 6, 30)) :: Nil
-        StubRulePeriodBuilder(LongStart1(29), LongEnd1(15)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(LongStart1(29), LongEnd1(25)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(LongStart1(29), ShortEnd1(15)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(LongStart1(29), ShortEnd1(25)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(29), LongEnd(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(29), LongEnd(25)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(29), ShortEnd(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(29), ShortEnd(25)).build(start, end, anchors) should be(expected)
       }
 
       "ShortStart always merge when min is too big" in {
@@ -219,10 +219,10 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
         val end = Date(2014, 6, 30)
         val anchors = Date(2014, 6, 10) :: Nil
         val expected = Period((2014, 6, 1) -> (2014, 6, 30)) :: Nil
-        StubRulePeriodBuilder(ShortStart1(11), LongEnd1(15)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(ShortStart1(11), LongEnd1(25)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(ShortStart1(11), ShortEnd1(15)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(ShortStart1(11), ShortEnd1(25)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(11), LongEnd(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(11), LongEnd(25)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(11), ShortEnd(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(11), ShortEnd(25)).build(start, end, anchors) should be(expected)
       }
 
       "ShortStart always append when min is small enough" in {
@@ -230,10 +230,10 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
         val end = Date(2014, 6, 30)
         val anchors = Date(2014, 6, 10) :: Nil
         val expected = Period((2014, 6, 1) -> (2014, 6, 10)) :: Period((2014, 6, 11) -> (2014, 6, 30)) :: Nil
-        StubRulePeriodBuilder(ShortStart1(10), LongEnd1(15)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(ShortStart1(10), LongEnd1(25)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(ShortStart1(10), ShortEnd1(15)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(ShortStart1(10), ShortEnd1(25)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(10), LongEnd(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(10), LongEnd(25)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(10), ShortEnd(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(10), ShortEnd(25)).build(start, end, anchors) should be(expected)
       }
     }
 
@@ -251,10 +251,10 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
         val end = Date(2014, 6, 30)
         val anchors = Date(2014, 6, 10) :: Date(2014, 6, 20) :: Nil
         val expected = Period((2014, 6, 1) -> (2014, 6, 20)) :: Period((2014, 6, 21) -> (2014, 6, 30)) :: Nil
-        StubRulePeriodBuilder(LongStart1(20), LongEnd1(15)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(LongStart1(20), LongEnd1(25)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(LongStart1(20), ShortEnd1(5)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(LongStart1(20), ShortEnd1(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(20), LongEnd(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(20), LongEnd(25)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(20), ShortEnd(5)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(LongStart(20), ShortEnd(15)).build(start, end, anchors) should be(expected)
       }
 
       "EndRule should take effect when long start rule does not merge" in {
@@ -263,10 +263,10 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
         val anchors = Date(2014, 6, 10) :: Date(2014, 6, 20) :: Nil
         val expectMerged = Period((2014, 6, 1) ->(2014, 6, 10)) :: Period((2014, 6, 11) ->(2014, 6, 30)) :: Nil
         val expectAppended = Period((2014, 6, 1) ->(2014, 6, 10)) :: Period((2014, 6, 11) ->(2014, 6, 20)) :: Period((2014, 6, 21) ->(2014, 6, 30)) :: Nil
-        StubRulePeriodBuilder(LongStart1(19), LongEnd1(15)).build(start, end, anchors) should be(expectAppended)
-        StubRulePeriodBuilder(LongStart1(19), LongEnd1(25)).build(start, end, anchors) should be(expectMerged)
-        StubRulePeriodBuilder(LongStart1(19), ShortEnd1(5)).build(start, end, anchors) should be(expectAppended)
-        StubRulePeriodBuilder(LongStart1(19), ShortEnd1(15)).build(start, end, anchors) should be(expectMerged)
+        StubRulePeriodBuilder(LongStart(19), LongEnd(15)).build(start, end, anchors) should be(expectAppended)
+        StubRulePeriodBuilder(LongStart(19), LongEnd(25)).build(start, end, anchors) should be(expectMerged)
+        StubRulePeriodBuilder(LongStart(19), ShortEnd(5)).build(start, end, anchors) should be(expectAppended)
+        StubRulePeriodBuilder(LongStart(19), ShortEnd(15)).build(start, end, anchors) should be(expectMerged)
       }
 
       "ShortStart should override end rule when successfully merged" in {
@@ -274,10 +274,10 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
         val end = Date(2014, 6, 30)
         val anchors = Date(2014, 6, 10) :: Date(2014, 6, 20) :: Nil
         val expected = Period((2014, 6, 1) -> (2014, 6, 20)) :: Period((2014, 6, 21) -> (2014, 6, 30)) :: Nil
-        StubRulePeriodBuilder(ShortStart1(11), LongEnd1(15)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(ShortStart1(11), LongEnd1(25)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(ShortStart1(11), ShortEnd1(5)).build(start, end, anchors) should be(expected)
-        StubRulePeriodBuilder(ShortStart1(11), ShortEnd1(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(11), LongEnd(15)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(11), LongEnd(25)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(11), ShortEnd(5)).build(start, end, anchors) should be(expected)
+        StubRulePeriodBuilder(ShortStart(11), ShortEnd(15)).build(start, end, anchors) should be(expected)
       }
 
       "EndRule should take effect when short start rule does not merge" in {
@@ -286,10 +286,10 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
         val anchors = Date(2014, 6, 10) :: Date(2014, 6, 20) :: Nil
         val expectMerged = Period((2014, 6, 1) ->(2014, 6, 10)) :: Period((2014, 6, 11) ->(2014, 6, 30)) :: Nil
         val expectAppended = Period((2014, 6, 1) ->(2014, 6, 10)) :: Period((2014, 6, 11) ->(2014, 6, 20)) :: Period((2014, 6, 21) ->(2014, 6, 30)) :: Nil
-        StubRulePeriodBuilder(ShortStart1(10), LongEnd1(15)).build(start, end, anchors) should be(expectAppended)
-        StubRulePeriodBuilder(ShortStart1(10), LongEnd1(25)).build(start, end, anchors) should be(expectMerged)
-        StubRulePeriodBuilder(ShortStart1(10), ShortEnd1(5)).build(start, end, anchors) should be(expectAppended)
-        StubRulePeriodBuilder(ShortStart1(10), ShortEnd1(15)).build(start, end, anchors) should be(expectMerged)
+        StubRulePeriodBuilder(ShortStart(10), LongEnd(15)).build(start, end, anchors) should be(expectAppended)
+        StubRulePeriodBuilder(ShortStart(10), LongEnd(25)).build(start, end, anchors) should be(expectMerged)
+        StubRulePeriodBuilder(ShortStart(10), ShortEnd(5)).build(start, end, anchors) should be(expectAppended)
+        StubRulePeriodBuilder(ShortStart(10), ShortEnd(15)).build(start, end, anchors) should be(expectMerged)
       }
     }
 
@@ -299,7 +299,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
       val anchors = Date(2014, 6, 5) :: Date(2014, 6, 10) :: Date(2014, 6, 15) :: Nil
       val expected = Period((2014, 6, 1) ->(2014, 6, 10)) :: Period((2014, 6, 11) ->(2014, 6, 20)) :: Nil
 
-      StubRulePeriodBuilder(LongStart1(10), LongEnd1(10)).build(start, end, anchors) should be(expected)
+      StubRulePeriodBuilder(LongStart(10), LongEnd(10)).build(start, end, anchors) should be(expected)
     }
 
     "when period date list has more than 3 element, start and end rules are applied separately" in {
@@ -313,7 +313,7 @@ class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
         Period((2014, 6, 16) ->(2014, 6, 25))
       )
 
-      StubRulePeriodBuilder(LongStart1(10), LongEnd1(10)).build(start, end, anchors) should be(expected)
+      StubRulePeriodBuilder(LongStart(10), LongEnd(10)).build(start, end, anchors) should be(expected)
     }
   }
 }
