@@ -332,8 +332,9 @@ class LammaSpec extends WordSpec with Matchers {
        */
       case object CustomPeriodBuilder extends PeriodBuilder {
         override def build(start: Date, end: Date, periodEnds: List[Date]) = {
-          val dates = (start - 1 :: periodEnds.grouped(2).map(_.head).toList) :+ end
-          Period.fromDates(dates)
+          val end0 = start - 1
+          val endDays = (end0 :: periodEnds.grouped(2).map(_.head).toList) :+ end
+          Period.fromPeriodEndDays(endDays)
         }
       }
 

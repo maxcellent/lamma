@@ -34,7 +34,7 @@ case class StubRulePeriodBuilder(startRule: StartRule = NoStartRule, endRule: En
           case (end1 :: end2 :: rest) :+ endx :+ endy => startRule.start(end0, end1, end2) ::: rest ::: endRule.end(endx, endy, end)
         }
 
-        Period.fromDates(stubbed)
+        Period.fromPeriodEndDays(stubbed)
     }
   }
 }

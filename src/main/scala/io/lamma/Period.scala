@@ -18,7 +18,15 @@ object Period {
     new Period(from, to)
   }
 
-  def fromDates(dates: List[Date]) = dates match {
+  /**
+   * Create list of periods from period end days. <br>
+   * <br>
+   * <b>Note</b> this method expect first date to be period0 date, ie, 1 day before first period.
+   * <br>
+   * For example: List(2013-12-31, 2014-01-05, 2014-01-10)
+   * will generate: Period(2014-01-01 -> 2014-01-05) and Period(2014-01-06 -> 2014-01-10)
+   */
+  def fromPeriodEndDays(dates: List[Date]) = dates match {
     case Nil => Nil
     case dts =>
       (dts.dropRight(1) zip dts.drop(1)) map {
