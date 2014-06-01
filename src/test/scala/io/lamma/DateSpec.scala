@@ -98,7 +98,6 @@ class DateSpec extends FlatSpec with Matchers {
   }
 
   "monthsBetween" should "work" in {
-    Date.monthsBetween((2014, 4, 10) -> (2014, 3, 20)) should be(0)
     Date.monthsBetween((2014, 4, 10) -> (2014, 4, 20)) should be(0)
     Date.monthsBetween((2014, 4, 10) -> (2014, 5, 10)) should be(1)
     Date.monthsBetween((2014, 4, 10) -> (2014, 6,  9)) should be(1)

@@ -1,59 +1,37 @@
 package io.lamma
 
-import org.joda.time.{Period => JPeriod, Days => JDays, DateTimeConstants, PeriodType, LocalDate}
 import annotation.tailrec
 import io.lamma.Duration._
-import io.lamma.Weekday._
-import io.lamma.Duration.WeekDuration
-import io.lamma.Duration.DayDuration
-import io.lamma.Duration.MonthDuration
-import io.lamma.Duration.YearDuration
+import java.sql.{Date => SDate}
 
 case class Date(yyyy: Int, mm: Int, dd: Int) extends Ordered[Date] {
 
-  private val internal = new LocalDate(yyyy, mm, dd)
+  // simply make sure yyyy-MM-dd is a valid date
+  SDate.valueOf(toISOString)
 
   def +(n: Int): Date = this + (n days)
 
-  def +(d: Duration) = d match {
-    case DayDuration(n) => Date(internal.plusDays(n))
-    case WeekDuration(n) => Date(internal.plusWeeks(n))
-    case MonthDuration(n) => Date(internal.plusMonths(n))
-    case YearDuration(n) => Date(internal.plusYears(n))
-  }
+  def +(d: Duration) = JavaDateUtil.plus(this, d)
 
   def -(n: Int): Date = this - (n days)
 
-  def -(d: Duration) = d match {
-    case DayDuration(n) => Date(internal.minusDays(n))
-    case WeekDuration(n) => Date(internal.minusWeeks(n))
-    case MonthDuration(n) => Date(internal.minusMonths(n))
-    case YearDuration(n) => Date(internal.minusYears(n))
-  }
+  def -(d: Duration) = JavaDateUtil.minus(this, d)
 
-  def -(that: Date) = JDays.daysBetween(that.internal, this.internal).getDays
+  def -(that: Date) = JavaDateUtil.daysBetween(that, this)
 
-  lazy val weekday: Weekday = internal.getDayOfWeek match {
-    case DateTimeConstants.MONDAY => Monday
-    case DateTimeConstants.TUESDAY => Tuesday
-    case DateTimeConstants.WEDNESDAY => Wednesday
-    case DateTimeConstants.THURSDAY => Thursday
-    case DateTimeConstants.FRIDAY => Friday
-    case DateTimeConstants.SATURDAY => Saturday
-    case DateTimeConstants.SUNDAY => Sunday
-  }
+  lazy val weekday = JavaDateUtil.dayOfWeek(this)
 
   lazy val month = Month(mm)
 
-  lazy val maxDayOfMonth = internal.dayOfMonth.withMaximumValue.getDayOfMonth
+  lazy val maxDayOfMonth = JavaDateUtil.maxDayOfMonth(this)
 
-  lazy val maxDayOfYear = internal.dayOfYear.withMaximumValue.getDayOfYear
+  lazy val maxDayOfYear = JavaDateUtil.maxDayOfYear(this)
 
   lazy val isLastDayOfMonth = dd == maxDayOfMonth
 
-  lazy val dayOfMonth = internal.getDayOfMonth
+  lazy val dayOfMonth = JavaDateUtil.dayOfMonth(this)
 
-  lazy val dayOfYear = internal.getDayOfYear
+  lazy val dayOfYear = JavaDateUtil.dayOfYear(this)
 
   lazy val isLastDayOfYear = dayOfYear == maxDayOfYear
 
@@ -75,6 +53,8 @@ case class Date(yyyy: Int, mm: Int, dd: Int) extends Ordered[Date] {
     daysOfYear.filter(_.weekday == weekday).toList
   }
 
+  lazy val toISOString = f"$yyyy%04d-$mm%02d-$dd%02d"
+  
   /**
    * next weekday including today
    */
@@ -92,33 +72,25 @@ case class Date(yyyy: Int, mm: Int, dd: Int) extends Ordered[Date] {
    */
   def previousWeekday(wd: Weekday) = Date.previousWeekday(this, wd)
 
-  val toISOString = f"$yyyy%04d-$mm%02d-$dd%02d"
-
   def compare(that: Date) = this.toISOString.compare(that.toISOString)
 }
 
 object Date {
   final val ISOStringLen = "1978-01-01".size
 
-  def apply(d: LocalDate) = new Date(d.getYear, d.getMonthOfYear, d.getDayOfMonth)
-
   private[lamma] def monthsBetween(input: ((Int, Int, Int), (Int, Int, Int))): Int = {
     val (from, to) = unpack(input)
     monthsBetween(from, to)
   }
 
-  private[lamma] def monthsBetween(d1: Date, d2: Date) = {
-    new JPeriod(d1.internal, d2.internal, PeriodType.months).getMonths
-  }
+  private[lamma] def monthsBetween(d1: Date, d2: Date) = JavaDateUtil.monthsBetween(d1, d2)
 
   private[lamma] def yearsBetween(input: ((Int, Int, Int), (Int, Int, Int))): Int = {
     val (from, to) = unpack(input)
     yearsBetween(from, to)
   }
 
-  private[lamma] def yearsBetween(d1: Date, d2: Date) = {
-    new JPeriod(d1.internal, d2.internal, PeriodType.years).getYears
-  }
+  private[lamma] def yearsBetween(d1: Date, d2: Date) = JavaDateUtil.yearsBetween(d1, d2)
 
   @tailrec
   private def nextWeekday(d: Date, target: Weekday): Date = {
