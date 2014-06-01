@@ -4,29 +4,29 @@ import org.scalatest.{Matchers, WordSpec}
 
 class CalendarSpec extends WordSpec with Matchers {
 
-  "shiftBizDay" should {
+  "shiftWorkingDay" should {
     "return date if by is 0" in {
-      Calendar.shiftBizDay(Date(2014, 4, 10), 0, WeekendCalendar) should be(Date(2014, 4, 10))
+      Calendar.shiftWorkingDay(Date(2014, 4, 10), 0, WeekendCalendar) should be(Date(2014, 4, 10))
     }
 
-    "shift biz day forward when start day is working day" in {
-      Calendar.shiftBizDay(Date(2014, 4, 10), 10, WeekendCalendar) should be(Date(2014, 4, 24))
+    "shift working day forward when start day is working day" in {
+      Calendar.shiftWorkingDay(Date(2014, 4, 10), 10, WeekendCalendar) should be(Date(2014, 4, 24))
     }
 
-    "shift biz day backward when start day is working day" in {
-      Calendar.shiftBizDay(Date(2014, 4, 10), -5, WeekendCalendar) should be(Date(2014, 4, 3))
+    "shift working day backward when start day is working day" in {
+      Calendar.shiftWorkingDay(Date(2014, 4, 10), -5, WeekendCalendar) should be(Date(2014, 4, 3))
     }
 
-    "shift biz day forward when start day is NOT working day" in {
-      Calendar.shiftBizDay(Date(2014, 4, 11), 3, WeekendCalendar) should be(Date(2014, 4, 16))
-      Calendar.shiftBizDay(Date(2014, 4, 12), 3, WeekendCalendar) should be(Date(2014, 4, 16))
-      Calendar.shiftBizDay(Date(2014, 4, 13), 3, WeekendCalendar) should be(Date(2014, 4, 16))
+    "shift working day forward when start day is NOT working day" in {
+      Calendar.shiftWorkingDay(Date(2014, 4, 11), 3, WeekendCalendar) should be(Date(2014, 4, 16))
+      Calendar.shiftWorkingDay(Date(2014, 4, 12), 3, WeekendCalendar) should be(Date(2014, 4, 16))
+      Calendar.shiftWorkingDay(Date(2014, 4, 13), 3, WeekendCalendar) should be(Date(2014, 4, 16))
     }
 
-    "shift biz day backward when start day is NOT working day" in {
-      Calendar.shiftBizDay(Date(2014, 4, 12), -3, WeekendCalendar) should be(Date(2014, 4, 9))
-      Calendar.shiftBizDay(Date(2014, 4, 13), -3, WeekendCalendar) should be(Date(2014, 4, 9))
-      Calendar.shiftBizDay(Date(2014, 4, 14), -3, WeekendCalendar) should be(Date(2014, 4, 9))
+    "shift working day backward when start day is NOT working day" in {
+      Calendar.shiftWorkingDay(Date(2014, 4, 12), -3, WeekendCalendar) should be(Date(2014, 4, 9))
+      Calendar.shiftWorkingDay(Date(2014, 4, 13), -3, WeekendCalendar) should be(Date(2014, 4, 9))
+      Calendar.shiftWorkingDay(Date(2014, 4, 14), -3, WeekendCalendar) should be(Date(2014, 4, 9))
     }
   }
 
