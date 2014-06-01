@@ -7,23 +7,17 @@ import Duration._
  *
  */
 trait Recurrence {
-  /**
-   * recurrence duration
-   */
-  val n: Int
-
-  require(n > 0)
 
   /**
    * generate recurrence date based on start and end date
    *
-   * @param start
-   * @param end
+   * @param start schedule start date
+   * @param end schedule end date
    * @return list of recurrence date (period end dates)
    */
-  def endDays(start: Date, end: Date) = {
-    val end0 = start - 1
-    gen(end0, end) match {
+  def periodEndDays(start: Date, end: Date) = {
+    val end0 = start - 1  // last period end day (period 0)
+    recur(end0, end) match {
       case Nil => Nil
       case `end0` :: endDays => endDays
       case endDays => endDays
@@ -31,11 +25,11 @@ trait Recurrence {
   }
 
   /**
-   * @param end0 last end day before start day (period 0 end day)
-   * @param end final end day
-   * @return list of recurrence date (period end date)
+   * @param from recur from date
+   * @param to recur to date
+   * @return list of recurrence date
    */
-  private[lamma] def gen(end0: Date, end: Date): List[Date]
+  private[lamma] def recur(from: Date, to: Date): List[Date]
 }
 
 /**
@@ -45,20 +39,20 @@ object Recurrence {
 
   // ============= shared methods =========
   @tailrec
-  private[lamma] def genForward(current: Date, end: Date, freq: Int, acc: List[Date] = Nil): List[Date] = {
-    if (current > end) {
+  private[lamma] def recurForward(current: Date, to: Date, freq: Int, acc: List[Date] = Nil): List[Date] = {
+    if (current > to) {
       acc
     } else {
-      genForward(current + freq, end, freq, acc :+ current)
+      recurForward(current + freq, to, freq, acc :+ current)
     }
   }
 
   @tailrec
-  private[lamma] def genBackward(end0: Date, current: Date, freq: Int, acc: List[Date] = Nil): List[Date] = {
-    if (current < end0) {
+  private[lamma] def recurBackward(from: Date, current: Date, freq: Int, acc: List[Date] = Nil): List[Date] = {
+    if (current < from) {
       acc
     } else {
-      genBackward(end0, current - freq, freq, current :: acc)
+      recurBackward(from, current - freq, freq, current :: acc)
     }
   }
 
@@ -68,11 +62,15 @@ object Recurrence {
   val EveryOtherDay = Days(2)
 
   case class Days(n: Int) extends Recurrence {
-    private[lamma] override def gen(end0: Date, end: Date) = genForward(end0, end, n)
+    require(n > 0)
+
+    private[lamma] override def recur(from: Date, to: Date) = recurForward(from, to, n)
   }
 
   case class DaysBackward(n: Int) extends Recurrence {
-    private[lamma] override def gen(end0: Date, end: Date) = genBackward(end0, end, n)
+    require(n > 0)
+
+    private[lamma] override def recur(from: Date, to: Date) = recurBackward(from, to, n)
   }
 
   // ========= weekly ==========
@@ -85,11 +83,13 @@ object Recurrence {
    * @param weekday which weekday to recur
    */
   case class Weeks(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
+    require(n > 0)
+
     private val freq = n * 7
 
-    private[lamma] override def gen(end0: Date, end: Date) = weekday match {
-      case None => genForward(end0, end, freq)
-      case Some(wd) => genForward(end0.nextWeekday(wd), end, freq)
+    private[lamma] override def recur(from: Date, to: Date) = weekday match {
+      case None => recurForward(from, to, freq)
+      case Some(wd) => recurForward(from.nextWeekday(wd), to, freq)
     }
   }
 
@@ -100,11 +100,13 @@ object Recurrence {
   }
 
   case class WeeksBackward(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
+    require(n > 0)
+
     val freq = n * 7
 
-    private[lamma] override def gen(end0: Date, end: Date) = weekday match {
-      case None => genBackward(end0, end, freq)
-      case Some(wd) => genBackward(end0, end.previousWeekday(wd), freq)
+    private[lamma] override def recur(from: Date, to: Date) = weekday match {
+      case None => recurBackward(from, to, freq)
+      case Some(wd) => recurBackward(from, to.previousWeekday(wd), freq)
     }
   }
 
@@ -120,14 +122,16 @@ object Recurrence {
   val EveryOtherMonth = Months(2)
 
   case class Months(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
-    private[lamma] override def gen(end0: Date, end: Date) = {
+    require(n > 0)
+
+    private[lamma] override def recur(from: Date, to: Date) = {
       val dates = pom match {
         case Some(p) =>
-          val days = (end0 to end).filter(p.isValidDOM).toList
+          val days = (from to to).filter(p.isValidDOM).toList
           for (i <- 0 until days.size by n) yield days(i)
         case None =>
-          val totalMonths = Date.monthsBetween(end0, end)
-          for (i <- 0 to totalMonths by n) yield end0 + (i months)
+          val totalMonths = Date.monthsBetween(from, to)
+          for (i <- 0 to totalMonths by n) yield from + (i months)
       }
       dates.toList
     }
@@ -140,14 +144,16 @@ object Recurrence {
   }
 
   case class MonthsBackward(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
-    private[lamma] override def gen(end0: Date, end: Date) = {
+    require(n > 0)
+
+    private[lamma] override def recur(from: Date, to: Date) = {
       val dates = pom match {
         case Some(p) =>
-          val days = (end0 to end).filter(p.isValidDOM).toList
+          val days = (from to to).filter(p.isValidDOM).toList
           for (i <- days.size - 1 to 0 by -n) yield days(i)
         case None =>
-          val totalMonths = Date.monthsBetween(end0, end)
-          for (i <- 0 to totalMonths by n) yield end - (i months)
+          val totalMonths = Date.monthsBetween(from, to)
+          for (i <- 0 to totalMonths by n) yield to - (i months)
       }
       dates.reverse.toList
     }
@@ -165,13 +171,15 @@ object Recurrence {
   val EveryOtherYear = Years(2)
 
   case class Years(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
-    private[lamma] override def gen(end0: Date, end: Date) = {
+    require(n > 0)
+
+    private[lamma] override def recur(from: Date, to: Date) = {
       val dates = poy match {
         case Some(p) =>
-          val days = (end0 to end).filter(p.isValidDOY).toList
+          val days = (from to to).filter(p.isValidDOY).toList
           for (i <- 0 until days.size by n) yield days(i)
         case None =>
-          for (i <- 0 to Date.yearsBetween(end0, end) by n) yield end0 + (i years)
+          for (i <- 0 to Date.yearsBetween(from, to) by n) yield from + (i years)
       }
       dates.toList
     }
@@ -184,13 +192,15 @@ object Recurrence {
   }
 
   case class YearsBackward(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
-    private[lamma] override def gen(end0: Date, end: Date) = {
+    require(n > 0)
+
+    private[lamma] override def recur(from: Date, to: Date) = {
       val dates = poy match {
         case Some(p) =>
-          val days = (end0 to end).filter(p.isValidDOY).toList
+          val days = (from to to).filter(p.isValidDOY).toList
           for (i <- days.size - 1 to 0 by -n) yield days(i)
         case None =>
-          for (i <- 0 to Date.yearsBetween(end0, end) by n) yield end - (i years)
+          for (i <- 0 to Date.yearsBetween(from, to) by n) yield to - (i years)
       }
       dates.reverse.toList
     }

@@ -22,7 +22,7 @@ case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
 
   val tableRows = rows.zip(periods).zipWithIndex.map {
     case ((row, p), index) =>
-      (index + 1).toString :: p.from.toISOString :: p.to.toISOString :: row.dates.map(_.toISOString)
+      (index + 1).toString :: p.start.toISOString :: p.end.toISOString :: row.dates.map(_.toISOString)
   }
 
   val printableString = Schedule.toPrintableString(tableHeaders, tableRows)

@@ -16,8 +16,8 @@ case class DateDef(name: String,
    */
   def populate(period: Period, populated: Map[String, Date] = Map.empty) = {
     val anchorDate = relativeTo match {
-      case PeriodStart => period.from
-      case PeriodEnd => period.to
+      case PeriodStart => period.start
+      case PeriodEnd => period.end
       case OtherDateDef(name) => populated(name)
     }
 

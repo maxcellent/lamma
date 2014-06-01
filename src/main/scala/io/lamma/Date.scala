@@ -154,8 +154,8 @@ object Date {
   }
 
   private[lamma] def unpack(pair: ((Int, Int, Int), (Int, Int, Int))) = {
-    val ((fy, fm, fd), (ty, tm, td)) = pair
-    Date(fy, fm, fd) -> Date(ty, tm, td)
+    val ((y1, m1, d1), (y2, m2, d2)) = pair
+    Date(y1, m1, d1) -> Date(y2, m2, d2)
   }
 }
 

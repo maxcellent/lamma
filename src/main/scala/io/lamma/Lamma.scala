@@ -39,10 +39,12 @@ object Lamma {
                pattern: Recurrence,
                startRule: StartRule = NoStartRule,
                endRule: EndRule = NoEndRule,
-               dateDefs: List[DateDef]) = {
+               dateDefs: List[DateDef] = Nil) = {
+    require(start <= end, s"start date $start must be on or before end date $end")
+
     DateDef.validate(dateDefs)
 
-    val dates = pattern.endDays(start, end)
+    val dates = pattern.periodEndDays(start, end)
 
     val periods = {
       Period.fromDates(dates) match {
@@ -57,8 +59,8 @@ object Lamma {
   /**
    * Generate a list of dates from the input criteria
    *
-   * @param start start date
-   * @param end end date
+   * @param from from date
+   * @param to to date
    * @param pattern recurrence pattern. Determine how next date will be generated from the previous one
    * @param shifter how to shift the date once it's generated? eg, no shift, 2 days later, 2 working days later
    * @param selector How to select the date once the date is generated? eg, same day, following working day?
@@ -67,12 +69,14 @@ object Lamma {
    *
    * @since 1.0
    */
-  def sequence(start: Date,
-               end: Date,
+  def sequence(from: Date,
+               to: Date,
                pattern: Recurrence = EveryDay,
                shifter: Shifter = NoShift,
                selector: Selector = SameDay,
                cal: Calendar = NoHoliday) = {
-    pattern.gen(start, end).map(shifter.shift).map(selector.select)
+    require(from <= to, s"from date $from must be on or before to date $to")
+
+    pattern.recur(from, to).map(shifter.shift).map(selector.select)
   }
 }

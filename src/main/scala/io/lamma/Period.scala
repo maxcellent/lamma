@@ -2,13 +2,13 @@ package io.lamma
 
 /**
  *
- * @param from from date inclusive
- * @param to to date inclusive
+ * @param start period start date inclusive
+ * @param end period end date inclusive
  */
-case class Period(from: Date, to: Date) {
-  require(from <= to)
+case class Period(start: Date, end: Date) {
+  require(start <= end, s"period start day $start must be on or before end day $end")
 
-  val length = to - from + 1
+  val length = end - start + 1
 }
 
 object Period {
@@ -22,7 +22,7 @@ object Period {
     case Nil => Nil
     case dts =>
       (dts.dropRight(1) zip dts.drop(1)) map {
-        case (from, to) => Period(from + 1, to)
+        case (from, to) => Period(start = from + 1, end = to)
       }
   }
 }

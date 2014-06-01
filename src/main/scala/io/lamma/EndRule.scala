@@ -11,7 +11,7 @@ trait EndRule {
   def applyRule(end: Date, nakedPeriods: List[Period]) = {
     require(nakedPeriods.size > 0)
 
-    if (end > nakedPeriods.last.to) {
+    if (end > nakedPeriods.last.end) {
       doApplyRule(end, nakedPeriods)
     } else {
       nakedPeriods
@@ -31,10 +31,10 @@ object EndRule {
       case Nil => Nil
       case rest :+ last =>
         val max = maxOpt.map(_.toDouble).getOrElse(last.length * 1.5)
-        if (end - last.from + 1 <= max) {
-          rest :+ Period(last.from, end)
+        if (end - last.start + 1 <= max) {
+          rest :+ Period(last.start, end)
         } else {
-          nakedPeriods :+ Period(last.to + 1, end)
+          nakedPeriods :+ Period(last.end + 1, end)
         }
     }
   }
@@ -49,10 +49,10 @@ object EndRule {
       case Nil => Nil
       case rest :+ last =>
         val min = minOpt.map(_.toDouble).getOrElse(last.length * 0.5)
-        if (end - last.to >= min) {
-          nakedPeriods :+ Period(last.to + 1, end)
+        if (end - last.end >= min) {
+          nakedPeriods :+ Period(last.end + 1, end)
         } else {
-          rest :+ Period(last.from, end)
+          rest :+ Period(last.start, end)
         }
     }
   }
