@@ -229,7 +229,7 @@ class LammaSpec extends WordSpec with Matchers {
        * this is just a reference for demo purpose, some logics like validations are skipped
        */
       case object CustomRecurrence extends Recurrence {
-        override private[lamma] def recur(from: Date, to: Date) = {
+        override def recur(from: Date, to: Date) = {
           from :: from + 7 :: from + 7 + 5 :: to :: Nil
         }
       }

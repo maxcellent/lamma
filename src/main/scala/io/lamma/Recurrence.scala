@@ -31,7 +31,7 @@ trait Recurrence {
    * @param to recur to date
    * @return list of recurrence date
    */
-  private[lamma] def recur(from: Date, to: Date): List[Date]
+  def recur(from: Date, to: Date): List[Date]
 }
 
 /**
@@ -75,7 +75,7 @@ object Recurrence {
       case ShiftWorkingDays(n, _) => require(n > 0, s"Working day shifter $shifter should have a positive delta. Otherwise an infinite loop is likely to happen. ")
     }
 
-    override private[lamma] def recur(from: Date, to: Date) = shift(selector.select(from), to)
+    override def recur(from: Date, to: Date) = shift(selector.select(from), to)
 
     @tailrec
     private def shift(current: Date, to: Date, acc: List[Date] = Nil): List[Date] = {
@@ -112,7 +112,7 @@ object Recurrence {
       case ShiftWorkingDays(n, _) => require(n < 0, s"Working day shifter $shifter should have a negative delta. Otherwise an infinite loop is likely to happen. ")
     }
 
-    private[lamma] override def recur(from: Date, to: Date) = shift(from, selector.select(to))
+    override def recur(from: Date, to: Date) = shift(from, selector.select(to))
 
     @tailrec
     private def shift(from: Date, current: Date, acc: List[Date] = Nil): List[Date] = {
@@ -150,7 +150,7 @@ object Recurrence {
 
     private val freq = n * 7
 
-    private[lamma] override def recur(from: Date, to: Date) = weekday match {
+    override def recur(from: Date, to: Date) = weekday match {
       case None => recurForward(from, to, freq)
       case Some(wd) => recurForward(from.nextWeekday(wd), to, freq)
     }
@@ -167,7 +167,7 @@ object Recurrence {
 
     val freq = n * 7
 
-    private[lamma] override def recur(from: Date, to: Date) = weekday match {
+    override def recur(from: Date, to: Date) = weekday match {
       case None => recurBackward(from, to, freq)
       case Some(wd) => recurBackward(from, to.previousWeekday(wd), freq)
     }
@@ -187,7 +187,7 @@ object Recurrence {
   case class Months(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
     require(n > 0)
 
-    private[lamma] override def recur(from: Date, to: Date) = {
+    override def recur(from: Date, to: Date) = {
       val dates = pom match {
         case Some(p) =>
           val days = (from to to).filter(p.isValidDOM).toList
@@ -209,7 +209,7 @@ object Recurrence {
   case class MonthsBackward(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
     require(n > 0)
 
-    private[lamma] override def recur(from: Date, to: Date) = {
+    override def recur(from: Date, to: Date) = {
       val dates = pom match {
         case Some(p) =>
           val days = (from to to).filter(p.isValidDOM).toList
@@ -236,7 +236,7 @@ object Recurrence {
   case class Years(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
     require(n > 0)
 
-    private[lamma] override def recur(from: Date, to: Date) = {
+    override def recur(from: Date, to: Date) = {
       val dates = poy match {
         case Some(p) =>
           val days = (from to to).filter(p.isValidDOY).toList
@@ -257,7 +257,7 @@ object Recurrence {
   case class YearsBackward(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
     require(n > 0)
 
-    private[lamma] override def recur(from: Date, to: Date) = {
+    override def recur(from: Date, to: Date) = {
       val dates = poy match {
         case Some(p) =>
           val days = (from to to).filter(p.isValidDOY).toList
