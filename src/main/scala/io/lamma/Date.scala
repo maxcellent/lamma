@@ -9,7 +9,7 @@ import io.lamma.Duration.DayDuration
 import io.lamma.Duration.MonthDuration
 import io.lamma.Duration.YearDuration
 
-case class Date(yyyy: Int, mm: Int, dd: Int) {
+case class Date(yyyy: Int, mm: Int, dd: Int) extends Ordered[Date] {
 
   private val internal = new LocalDate(yyyy, mm, dd)
 
@@ -32,14 +32,6 @@ case class Date(yyyy: Int, mm: Int, dd: Int) {
   }
 
   def -(that: Date) = JDays.daysBetween(that.internal, this.internal).getDays
-
-  def <(that: Date) = internal.isBefore(that.internal)
-
-  def <=(that: Date) = this < that || this == that
-
-  def >(that: Date) = internal.isAfter(that.internal)
-
-  def >=(that: Date) = this > that || this == that
 
   lazy val weekday: Weekday = internal.getDayOfWeek match {
     case DateTimeConstants.MONDAY => Monday
@@ -101,6 +93,8 @@ case class Date(yyyy: Int, mm: Int, dd: Int) {
   def previousWeekday(wd: Weekday) = Date.previousWeekday(this, wd)
 
   val toISOString = f"$yyyy%04d-$mm%02d-$dd%02d"
+
+  def compare(that: Date) = this.toISOString.compare(that.toISOString)
 }
 
 object Date {
