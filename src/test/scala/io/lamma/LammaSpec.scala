@@ -14,6 +14,8 @@ import io.lamma.EndRule.LongEnd
 /**
  * this spec is written in tutorial order in order to verify and maintain everything used in tutorial
  * please don't reorder them
+ *
+ * this Spec is also used as functional test, because library users are always supposed to use Lamma.xxx
  */
 class LammaSpec extends WordSpec with Matchers {
 
@@ -21,10 +23,6 @@ class LammaSpec extends WordSpec with Matchers {
     "generate date sequence" in {
       val expected = Date(2014, 5, 10) :: Date(2014, 5, 11) :: Date(2014, 5, 12) :: Nil
       Lamma.sequence(Date(2014, 5, 10), Date(2014, 5, 12)) should be(expected)
-    }
-
-    "generate empty sequence when start day is later than end day" in {
-      Lamma.sequence(Date(2014, 5, 10), Date(2014, 5, 5)) should be('empty)
     }
 
     "generate sequence by week" in {
@@ -130,6 +128,22 @@ class LammaSpec extends WordSpec with Matchers {
       val expected = Date(2014,1,29) :: Date(2014,2,26) :: Date(2014,3,31) :: Nil   // last date is different
       Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(1, LastDayOfMonth), ShiftCalendarDays(-2), Forward(WeekendCalendar)) should be(expected)
     }
+
+    // some edge cases
+    "if the recurrence pattern is too long, then there will be only one day generated, based on the direction (forward or backward?)" in {
+      Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(6)) should(be(List(Date(2014, 1, 1))))
+      Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), MonthsBackward(6)) should(be(List(Date(2014, 3, 31))))
+    }
+
+    "single date will be generated, when start date equals to the end date" in {
+      Lamma.sequence(Date(2014, 1, 1), Date(2014, 1, 1), MonthsBackward(6)) should(be(List(Date(2014, 1, 1))))
+    }
+
+    "exception will be thrown when start date is before end date" in {
+      intercept[IllegalArgumentException] {
+        Lamma.sequence(Date(2014, 1, 1), Date(2013, 12, 31))
+      }
+    }
   }
 
   "advanced: generate a full schedule" should {
@@ -171,6 +185,28 @@ class LammaSpec extends WordSpec with Matchers {
 
       val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(WeekendCalendar)) :: Nil
       Lamma.schedule(Date(2015, 1, 1), Date(2017, 1, 31), Months(6, LastDayOfMonth), endRule = LongEnd(270), dateDefs = dateDefs).rows should be(expected)
+    }
+
+    // edge cases
+
+    "single row with end day will be generated when the duration between start and end day is too short" in {
+      val expected = Row(2015, 3, 30) :: Nil
+      val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd) :: Nil
+
+      Lamma.schedule(Date(2015, 1, 1), Date(2015, 3, 30), Months(6), dateDefs = dateDefs).rows should be(expected)
+      Lamma.schedule(Date(2015, 1, 1), Date(2015, 3, 30), MonthsBackward(6), dateDefs = dateDefs).rows should be(expected)
+    }
+
+    "and if start date is end date" in {
+      val expected = Row(2015, 1, 1) :: Nil
+      val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd) :: Nil
+      Lamma.schedule(Date(2015, 1, 1), Date(2015, 1, 1), EveryMonth, dateDefs = dateDefs).rows should be(expected)
+    }
+
+    "throw exception when input start date is later than end date" in {
+      intercept[IllegalArgumentException] {
+        Lamma.schedule(Date(2015, 1, 1), Date(2014, 3, 30), EveryMonth)
+      }
     }
   }
 
