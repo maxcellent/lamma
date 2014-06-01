@@ -8,7 +8,7 @@ import io.lamma.Month.February
 import io.lamma.PositionOfYear.{NthMonthOfYear, LastWeekdayOfYear}
 import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 import io.lamma.Selector.{ModifiedFollowing, Forward}
-import io.lamma.Anchor.{OtherDateDef, PeriodEnd}
+import io.lamma.Anchor.{OtherDate, PeriodEnd}
 import io.lamma.StubRulePeriodBuilder.LongEnd
 
 /**
@@ -173,7 +173,7 @@ class LammaSpec extends WordSpec with Matchers {
 
       val dateDefs = List(
         DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(WeekendCalendar)),
-        DateDef("SettlementDate", relativeTo = OtherDateDef("CouponDate"), shifter = ShiftWorkingDays(2, WeekendCalendar))
+        DateDef("SettlementDate", relativeTo = OtherDate("CouponDate"), shifter = ShiftWorkingDays(2, WeekendCalendar))
       )
       Lamma.schedule(Date(2015, 1, 1), Date(2016, 12, 31), Months(6, LastDayOfMonth), dateDefs = dateDefs).rows should be(expected)
     }

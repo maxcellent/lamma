@@ -1,7 +1,7 @@
 package io.lamma
 
 import org.scalatest.{Matchers, FlatSpec}
-import io.lamma.Anchor.{OtherDateDef, PeriodEnd}
+import io.lamma.Anchor.{OtherDate, PeriodEnd}
 import io.lamma.Selector.Forward
 import io.lamma.Shifter.ShiftCalendarDays
 
@@ -23,9 +23,9 @@ class DateDefSpec extends FlatSpec with Matchers {
     }
   }
 
-  "validate" should "throw exception when OtherDateDef.name does not exist" in {
+  "validate" should "throw exception when OtherDate.name does not exist" in {
     val def1 = DateDef("Date1", PeriodEnd, ShiftCalendarDays(2), Forward())
-    val def2 = DateDef("Date2", OtherDateDef("Date4"), ShiftCalendarDays(2), Forward())
+    val def2 = DateDef("Date2", OtherDate("Date4"), ShiftCalendarDays(2), Forward())
     val def3 = DateDef("Date3", PeriodEnd, ShiftCalendarDays(2), Forward())
     val defs = def1 :: def2 :: def3 :: Nil
     intercept[IllegalArgumentException] {
@@ -33,9 +33,9 @@ class DateDefSpec extends FlatSpec with Matchers {
     }
   }
 
-  "validate" should "throw exception when OtherDateDef.name comes later" in {
+  "validate" should "throw exception when OtherDate.name comes later" in {
     val def1 = DateDef("Date1", PeriodEnd, ShiftCalendarDays(2), Forward())
-    val def2 = DateDef("Date2", OtherDateDef("Date3"), ShiftCalendarDays(2), Forward())
+    val def2 = DateDef("Date2", OtherDate("Date3"), ShiftCalendarDays(2), Forward())
     val def3 = DateDef("Date3", PeriodEnd, ShiftCalendarDays(2), Forward())
     val defs = def1 :: def2 :: def3 :: Nil
     intercept[IllegalArgumentException] {

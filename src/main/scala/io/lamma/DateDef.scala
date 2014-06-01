@@ -2,7 +2,7 @@ package io.lamma
 
 import io.lamma.Shifter.NoShift
 import io.lamma.Selector.SameDay
-import io.lamma.Anchor.{OtherDateDef, PeriodEnd, PeriodStart}
+import io.lamma.Anchor.{OtherDate, PeriodEnd, PeriodStart}
 
 case class DateDef(name: String,
                    relativeTo: Anchor = PeriodEnd,
@@ -18,7 +18,7 @@ case class DateDef(name: String,
     val anchorDate = relativeTo match {
       case PeriodStart => period.start
       case PeriodEnd => period.end
-      case OtherDateDef(name) => populated(name)
+      case OtherDate(name) => populated(name)
     }
 
     selector.select(shifter.shift(anchorDate))
@@ -30,11 +30,11 @@ object DateDef {
     val names = defs.map(_.name)
     require(names.size == names.toSet.size, s"Name of DateDef should be unique. Defined names: ${names.mkString(",")}")
 
-    // validate OtherDateDef position
+    // validate OtherDate position
     (Set.empty[String] /: defs) {
       (availableName, dateDef) =>
         dateDef.relativeTo match {
-          case OtherDateDef(name) =>
+          case OtherDate(name) =>
             if (! availableName.contains(name)) {
               if (names.contains(name)) {
                 throw new IllegalArgumentException(s"$dateDef should come after anchor date $name")
