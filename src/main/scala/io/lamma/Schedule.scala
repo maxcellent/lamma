@@ -4,6 +4,8 @@ import Schedule._
 
 case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
 
+  val dateDefNames = dateDefs.map(_.name)
+
   val rows = periods.map {
     period =>
       val populatedDates = (List.empty[Date] /: dateDefs) {
@@ -18,7 +20,7 @@ case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
       Row(populatedDates)
   }
 
-  val tableHeaders = PeriodHeader :: FromHeader :: ToHeader :: dateDefs.map(_.name)
+  val tableHeaders = PeriodHeader :: FromHeader :: ToHeader :: dateDefNames
 
   val tableRows = rows.zip(periods).zipWithIndex.map {
     case ((row, p), index) =>
@@ -26,6 +28,13 @@ case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
   }
 
   val printableString = Schedule.toPrintableString(tableHeaders, tableRows)
+
+  def apply(dateDefName: String) = {
+    require(dateDefNames.contains(dateDefName), s"$dateDefName is not defined in the schedule. Dates defined: $dateDefNames")
+
+    val idx = dateDefNames.indexOf(dateDefName)
+    rows.map(_.dates(idx))
+  }
 }
 
 object Schedule {

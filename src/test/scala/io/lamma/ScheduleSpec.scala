@@ -44,4 +44,15 @@ class ScheduleSpec extends FlatSpec with Matchers {
       """.stripMargin
     Schedule.toPrintableString(header, rows) should be(expected.trim)
   }
+
+  "apply" should "throw exception when load undefined def" in {
+    intercept[IllegalArgumentException] {
+      schedule("SomeDate")
+    }
+  }
+
+  "apply" should "return a list of dates" in {
+    val expected = Date(2014, 5, 2) :: Date(2014, 6, 4) :: Nil
+    schedule("SettlementDate") should be(expected)
+  }
 }
