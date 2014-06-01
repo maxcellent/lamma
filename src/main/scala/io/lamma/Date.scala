@@ -1,8 +1,13 @@
 package io.lamma
 
-import org.joda.time.{Period => JPeriod, PeriodType, LocalDate, Days => JDays}
+import org.joda.time.{Period => JPeriod, Days => JDays, DateTimeConstants, PeriodType, LocalDate}
 import annotation.tailrec
 import io.lamma.Duration._
+import io.lamma.Weekday._
+import io.lamma.Duration.WeekDuration
+import io.lamma.Duration.DayDuration
+import io.lamma.Duration.MonthDuration
+import io.lamma.Duration.YearDuration
 
 case class Date(yyyy: Int, mm: Int, dd: Int) {
 
@@ -36,7 +41,15 @@ case class Date(yyyy: Int, mm: Int, dd: Int) {
 
   def >=(that: Date) = this > that || this == that
 
-  lazy val weekday = Weekday.fromJoda(internal)
+  lazy val weekday: Weekday = internal.getDayOfWeek match {
+    case DateTimeConstants.MONDAY => Monday
+    case DateTimeConstants.TUESDAY => Tuesday
+    case DateTimeConstants.WEDNESDAY => Wednesday
+    case DateTimeConstants.THURSDAY => Thursday
+    case DateTimeConstants.FRIDAY => Friday
+    case DateTimeConstants.SATURDAY => Saturday
+    case DateTimeConstants.SUNDAY => Sunday
+  }
 
   lazy val month = Month(mm)
 
