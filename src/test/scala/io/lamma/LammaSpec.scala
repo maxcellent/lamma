@@ -9,7 +9,7 @@ import io.lamma.PositionOfYear.{NthMonthOfYear, LastWeekdayOfYear}
 import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 import io.lamma.Selector.{ModifiedFollowing, Forward}
 import io.lamma.Anchor.{OtherDate, PeriodEnd}
-import io.lamma.StubRulePeriodBuilder.LongEnd
+import io.lamma.StubRulePeriodBuilder._
 
 /**
  * this spec is written in tutorial order in order to verify and maintain everything used in tutorial
@@ -324,6 +324,59 @@ class LammaSpec extends WordSpec with Matchers {
   }
 
   "topic: period builder / stub rules" should {
+    // start / end + recurrence pattern will generate a list of recurrence date
+    // you will need a PeriodBuilder to build your period
+    "the default one will just work as expected" in {
+      val start = Date(2014, 10, 1)
+      val end = Date(2014, 10, 30)
+      val pattern = Days(10)
+
+      val expected = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 20)) :: Period((2014, 10, 21) -> (2014, 10, 30)) :: Nil
+
+      Lamma.schedule(start, end, pattern).periods should be(expected)
+    }
+
+    "but sometimes the scenario is a little bit complicated, for example this will generate an extra end stub: last period only have 5 days" in {
+      val start = Date(2014, 10, 1)
+      val end = Date(2014, 10, 25)
+      val pattern = Days(10)
+
+      val expected = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 20)) :: Period((2014, 10, 21) -> (2014, 10, 25)) :: Nil
+
+      Lamma.schedule(start, end, pattern).periods should be(expected)
+    }
+
+    "and for this case, the first period only have 5 days" in {
+      val start = Date(2014, 10, 1)
+      val end = Date(2014, 10, 25)
+      val pattern = DaysBackward(10)
+
+      val expected = Period((2014, 10, 1) -> (2014, 10, 5)) :: Period((2014, 10, 6) -> (2014, 10, 15)) :: Period((2014, 10, 16) -> (2014, 10, 25)) :: Nil
+
+      Lamma.schedule(start, end, pattern).periods should be(expected)
+    }
+
+    "and for this case, both first and last period are very short" in {
+      val start = Date(2014, 10, 7)
+      val end = Date(2014, 10, 26)
+      val pattern = Weeks(Wednesday)
+
+      val expected = List(
+        Period((2014, 10, 7) -> (2014, 10, 8)),    // 2 days period
+        Period((2014, 10, 9) -> (2014, 10, 15)),   // 7 days period
+        Period((2014, 10, 16) -> (2014, 10, 22)),  // 7 days period
+        Period((2014, 10, 23) -> (2014, 10, 26))   // 4 days period
+      )
+
+      Lamma.schedule(start, end, pattern).periods should be(expected)
+    }
+
+//    "in order to merge them, you will need a stub rule" in {
+//
+//    }
+
+    // because StubRulePeriodBuilder is too tightly coupled with start / end rules,
+    // we do not allow you to override single start or end rule
     "you can customize your period builder" in {
 
       /**
@@ -341,6 +394,95 @@ class LammaSpec extends WordSpec with Matchers {
       // first two periods are merged together
       val expected = Period((2015, 10, 1) -> (2015, 10, 3)) :: Period((2015, 10, 4) -> (2015, 10, 9)) :: Period((2015, 10, 10) -> (2015, 10, 10)) :: Nil
       Lamma.schedule(Date(2015, 10, 1), Date(2015, 10, 10), Days(3), CustomPeriodBuilder).periods should be(expected)
+    }
+
+    // ==== edge cases ====
+
+    "when there are no recurrence date generated (most likely your recurrence pattern is too long), Lamma will simply return single Period(start, end)" in {
+      val start = Date(2014, 10, 1)
+      val end = Date(2014, 10, 5)
+      val expected = Period(start, end) :: Nil
+
+      Lamma.schedule(start, end, EveryMonth).periods should be(expected)
+      Lamma.schedule(start, end, MonthsBackward(1)).periods should be(expected)
+    }
+
+    "when there are one or two recurrence date generated then there will be racing condition. Just remember one rule: start rule always " should {
+
+      "when there are only one recurrence date generated" should {
+        val start = Date(2014, 10, 1)
+        val end = Date(2014, 10, 10)
+        val pom = NthDayOfMonth(5)  // single recurrence date Date(2014, 10, 5)
+
+        val split = Period((2014, 10, 1) -> (2014, 10, 5)) :: Period((2014, 10, 6) -> (2014, 10, 10)) :: Nil
+        val merged = Period((2014, 10, 1) -> (2014, 10, 10)) :: Nil
+
+        def period(startRule: StartRule, endRule: EndRule) = {
+          Lamma.schedule(start, end, Months(1, pom), StubRulePeriodBuilder(startRule, endRule)).periods
+        }
+
+        "if Start Rule will merge, then end rule will not split too (always be ignored)" in {
+          period(LongStart(10), ShortEnd(5)) should be(merged)
+          period(LongStart(10), ShortEnd(6)) should be(merged)
+          period(LongStart(10), LongEnd(9)) should be(merged)
+          period(LongStart(10), LongEnd(10)) should be(merged)
+
+          period(ShortStart(6), ShortEnd(5)) should be(merged)
+          period(ShortStart(6), ShortEnd(6)) should be(merged)
+          period(ShortStart(6), LongEnd(9)) should be(merged)
+          period(ShortStart(6), LongEnd(10)) should be(merged)
+        }
+
+        "if start rule will not merge, then end rule will not merge too (always be ignored)" in {
+          period(LongStart(9), ShortEnd(5)) should be(split)
+          period(LongStart(9), ShortEnd(6)) should be(split)
+          period(LongStart(9), LongEnd(9)) should be(split)
+          period(LongStart(9), LongEnd(10)) should be(split)
+
+          period(ShortStart(5), ShortEnd(5)) should be(split)
+          period(ShortStart(5), ShortEnd(6)) should be(split)
+          period(ShortStart(5), LongEnd(9)) should be(split)
+          period(ShortStart(5), LongEnd(10)) should be(split)
+        }
+      }
+
+      "when there are two recurrence date generated" should {
+        val start = Date(2014, 10, 1)
+        val end = Date(2014, 10, 30)
+        val pattern = Days(10)    // two recurrence dates, 2014-10-10, 2014-10-20
+
+        val allSplit = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 20)) :: Period((2014, 10, 21) -> (2014, 10, 30)) :: Nil
+        val headMerged = Period((2014, 10, 1) -> (2014, 10, 20)) :: Period((2014, 10, 21) -> (2014, 10, 30)) :: Nil
+        val tailMerged = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 30)) :: Nil
+
+        def period(startRule: StartRule, endRule: EndRule) = {
+          Lamma.schedule(start, end, pattern, StubRulePeriodBuilder(startRule, endRule)).periods
+        }
+
+        "if start rule will merge, then the end rule will always be split" in {
+          period(LongStart(20), ShortEnd(10)) should be(headMerged)
+          period(LongStart(20), ShortEnd(11)) should be(headMerged)
+          period(LongStart(20), LongEnd(19)) should be(headMerged)
+          period(LongStart(20), LongEnd(20)) should be(headMerged)
+
+          period(ShortStart(11), ShortEnd(10)) should be(headMerged)
+          period(ShortStart(11), ShortEnd(11)) should be(headMerged)
+          period(ShortStart(11), LongEnd(19)) should be(headMerged)
+          period(ShortStart(11), LongEnd(20)) should be(headMerged)
+        }
+
+        "if start rule will NOT merge, then the end rule will be applied normally" in {
+          period(LongStart(19), ShortEnd(10)) should be(allSplit)
+          period(LongStart(19), ShortEnd(11)) should be(tailMerged)
+          period(LongStart(19), LongEnd(19)) should be(allSplit)
+          period(LongStart(19), LongEnd(20)) should be(tailMerged)
+
+          period(ShortStart(10), ShortEnd(10)) should be(allSplit)
+          period(ShortStart(10), ShortEnd(11)) should be(tailMerged)
+          period(ShortStart(10), LongEnd(19)) should be(allSplit)
+          period(ShortStart(10), LongEnd(20)) should be(tailMerged)
+        }
+      }
     }
   }
 }
