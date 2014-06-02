@@ -13,7 +13,7 @@ class JavaDateUtilSpec extends WordSpec with Matchers {
     }
 
     "construct date properly" in {
-      val expectedMillis = 1420113600000l   // Thu Jan 01 12:00:00 GMT 2015
+      val expectedMillis = 1420070400000l   // Thu Jan 01 00:00:00 GMT 2015
       calendar(2015, 1, 1).getTimeInMillis should be(expectedMillis)
     }
   }
