@@ -2,8 +2,8 @@ package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.Recurrence._
-import io.lamma.Weekday.{Wednesday, Friday, Tuesday}
-import io.lamma.PositionOfMonth.{LastDayOfMonth, NthWeekdayOfMonth, NthDayOfMonth}
+import io.lamma.Weekday.{Saturday, Wednesday, Friday, Tuesday}
+import io.lamma.PositionOfMonth.{LastWeekdayOfMonth, LastDayOfMonth, NthWeekdayOfMonth, NthDayOfMonth}
 import io.lamma.Month.February
 import io.lamma.PositionOfYear.{NthMonthOfYear, LastWeekdayOfYear}
 import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
@@ -18,6 +18,22 @@ import io.lamma.StubRulePeriodBuilder._
  * this Spec is also used as functional test, because library users are always supposed to use Lamma.xxx
  */
 class LammaSpec extends WordSpec with Matchers {
+
+  "homepage: schedule generation for a 37m tenor FCN" in {
+    val cal = WeekendCalendar // of course, we will use the real business calendar in production
+    val couponDate = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(cal))
+    val settlementDate = DateDef("SettlementDate", relativeTo = OtherDate("CouponDate"), shifter = ShiftWorkingDays(2, cal))
+
+    val s = Lamma.schedule(
+      start = Date(2014, 3, 1),
+      end = Date(2017, 3, 31),
+      pattern = Months(6, LastDayOfMonth),
+      periodBuilder = StubRulePeriodBuilder(endRule = LongEnd(270)),
+      dateDefs = couponDate :: settlementDate :: Nil
+    )
+
+    println(s.printableString)
+  }
 
   "get started: generate a list if date" should {
     "generate date sequence" in {
