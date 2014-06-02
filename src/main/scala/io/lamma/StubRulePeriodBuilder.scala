@@ -41,9 +41,9 @@ case class StubRulePeriodBuilder(startRule: StartRule = NoStartRule, endRule: En
 
 object StubRulePeriodBuilder {
   /**
-   * always create a new start period, identical with LongStart(0)
+   * always create a new start period
    */
-  val NoStartRule = LongStart(0)
+  val NoStartRule = ShortStart(0)
 
   sealed trait StartRule {
     def start(end0: Date, end1: Date, end2: Date): List[Date]
@@ -80,9 +80,9 @@ object StubRulePeriodBuilder {
   }
 
   /**
-   * always create a new end period, identical with LongEnd(0)
+   * always create a new end period
    */
-  val NoEndRule = LongEnd(0)
+  val NoEndRule = ShortEnd(0)
 
   sealed trait EndRule {
     def end(endx: Date, endy: Date, endz: Date): List[Date]

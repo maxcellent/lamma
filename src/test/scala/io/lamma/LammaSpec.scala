@@ -371,9 +371,83 @@ class LammaSpec extends WordSpec with Matchers {
       Lamma.schedule(start, end, pattern).periods should be(expected)
     }
 
-//    "in order to merge them, you will need a stub rule" in {
-//
-//    }
+    "in order to merge them, you will need a stub rule" in {
+      val start = Date(2014, 10, 1)
+      val end = Date(2014, 10, 25)
+      val pattern = Days(10)
+
+      val expected = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 25)) :: Nil
+
+      // LongEnd(15) means: I am ok with a longer end period, as long as it's no more than 15 days
+      val periodBuilder = StubRulePeriodBuilder(endRule = LongEnd(15))
+
+      Lamma.schedule(start, end, pattern, periodBuilder).periods should be(expected)
+    }
+
+    "similarly we have stub rule for starting period" in {
+      val start = Date(2014, 10, 1)
+      val end = Date(2014, 10, 25)
+      val pattern = DaysBackward(10)
+
+      val expected = Period((2014, 10, 1) -> (2014, 10, 15)) :: Period((2014, 10, 16) -> (2014, 10, 25)) :: Nil
+
+      // LongStart(15) means: I am ok with a longer start period, as long as it's no more than 15 days
+      val periodBuilder = StubRulePeriodBuilder(startRule = LongStart(15))
+
+      Lamma.schedule(start, end, pattern, periodBuilder).periods should be(expected)
+    }
+
+    "we can apply both at the same time" in {
+      val start = Date(2014, 10, 7)
+      val end = Date(2014, 10, 26)
+      val pattern = Weeks(Wednesday)
+      val periodBuilder = StubRulePeriodBuilder(LongStart(10), LongEnd(10))
+
+      val expected = List(
+        Period((2014, 10, 7) -> (2014, 10, 15)),   // merged start period
+        Period((2014, 10, 16) -> (2014, 10, 22)),  // 7 days period
+
+        // end period is not merged, because the merged period will have 11 days, which exceeds longest end stub: 10 days
+        Period((2014, 10, 23) -> (2014, 10, 26))   // 4 days period
+      )
+
+      Lamma.schedule(start, end, pattern, periodBuilder).periods should be(expected)
+    }
+
+    "not like LongStart / LongEnd rule, ShortStart / ShortEnd rule is looking to split start / end period. For example" in {
+      val start = Date(2014, 10, 7)
+      val end = Date(2014, 10, 26)
+      val pattern = Weeks(Wednesday)
+      // ShortStart(2) => split a separated starting period as long as there are 2 days
+      // ShortEnd(2) => split a separated end period as long as there are 2 days
+      val periodBuilder = StubRulePeriodBuilder(ShortStart(2), ShortEnd(2))
+
+      val expected = List(
+        Period((2014, 10, 7) -> (2014, 10, 8)),    // 2 days short starting period (2 >= 2)
+        Period((2014, 10, 9) -> (2014, 10, 15)),   // 7 days period
+        Period((2014, 10, 16) -> (2014, 10, 22)),  // 7 days period
+        Period((2014, 10, 23) -> (2014, 10, 26))   // 4 days short ending period (4 >= 2)
+      )
+
+      Lamma.schedule(start, end, pattern, periodBuilder).periods should be(expected)
+    }
+
+    // this is exactly as our first defaulting example
+    "yes, the default behavior is ShortStart(0) + ShortEnd(0), which means Lamma will always create start / end period" in {
+      val start = Date(2014, 10, 1)
+      val end = Date(2014, 10, 30)
+      val pattern = Days(10)
+      val periodBuilder = StubRulePeriodBuilder(ShortStart(0), ShortEnd(0))
+      val expected = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 20)) :: Period((2014, 10, 21) -> (2014, 10, 30)) :: Nil
+
+      Lamma.schedule(start, end, pattern, periodBuilder).periods should be(expected)
+    }
+
+    // so why do we need long rule and short rule? aren't they completely interchangable?
+    //  for example, for a pattern Days(30), LongStart(45) and ShortStart(15) are exactly the same right?
+    // yes, in this case indeed. But in some rare case, period length varies a lot.
+    //  In order to have more control on the generated schedule, we decide to keep both of them.
+    //  If your use case is mainly on fixed length period, then you can always Short rule or Long rule, whichever convenient to you.
 
     // because StubRulePeriodBuilder is too tightly coupled with start / end rules,
     // we do not allow you to override single start or end rule
