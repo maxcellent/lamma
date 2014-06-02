@@ -15,7 +15,7 @@ object JavaDateUtil {
   def calendar(yyyy: Int, mm: Int, dd: Int) = {
     val cal = JCalendar.getInstance(TimeZone.getTimeZone("UTC"))
     cal.set(yyyy, mm - 1, dd)   // java month starts from 0. ie, Jan = 0
-    cal.clear(HOUR_OF_DAY)
+    cal.set(HOUR_OF_DAY, 0)     // somehow cal.clear(HOUR_OF_DAY) does not quite work
     cal.clear(HOUR)
     cal.clear(MINUTE)
     cal.clear(SECOND)
