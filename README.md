@@ -3,10 +3,11 @@ Lamma
 
 Lamma schedule generator is a professional schedule generation library for financial instruments schedules like mortgage repayment schedule, fixed income coupon payment, equity derivative fixing date generation etc.
 
-Get Started
------------
+### Get Started: 
 
-Say we want to generate the schedule for following Fixed Coupon Note. Schedule related terms are:
+#### Say we want to generate the schedule for a Fixed Coupon Note.
+
+Schedule related terms are:
 ```
 Issue Date      : 2014-03-01
 Expiry Date     : 2017-03-31        // last period will be longer
@@ -16,7 +17,7 @@ Coupon Date     : Last day of month, modified following (last working day of the
 Settlement Date : Coupon Date + 2 working days
 ```
 
-Schedule generation code looks like this:
+#### Schedule generation code looks like this:
 
 ```scala
 import io.lamma._
@@ -34,16 +35,22 @@ Lamma.schedule(
     )
 ```
 
-Done!
+#### Done! 
 
 |    Period |  From Date |    To Date | CouponDate | SettlementDate |
 | --------: | ---------: | ---------: | ---------: | -------------: |
-|         1 | 2014-03-01 | 2014-08-31 | 2014-08-29 |     2014-09-02 |
-|         2 | 2014-09-01 | 2015-02-28 | 2015-02-27 |     2015-03-03 |
+|         1 | 2014-03-01 | 2014-08-31 |_2014-08-29_|    _2014-09-02_|
+|         2 | 2014-09-01 | 2015-02-28 |_2015-02-27_|    _2015-03-03_|
 |         3 | 2015-03-01 | 2015-08-31 | 2015-08-31 |     2015-09-02 |
-|         4 | 2015-09-01 | 2016-02-29 | 2016-02-29 |     2016-03-02 |
+|         4 | 2015-09-01 |_2016-02-29_|_2016-02-29_|     2016-03-02 |
 |         5 | 2016-03-01 | 2016-08-31 | 2016-08-31 |     2016-09-02 |
-|         6 | 2016-09-01 | 2017-03-31 | 2017-03-31 |     2017-04-04 |
+|         6 | 2016-09-01 | 2017-03-31 | 2017-03-31 |    _2017-04-04_|
+
+#### What do you get?
+1. in Period 1 and 2, Modified following convention is applied based on holiday calendar
+2. in Period 4, leap year is handled properly
+3. despite of 6m frequency. Last stub month (2017-03) is merged automatially to the last period.
+4. working days are considered when generating settlement date
 
 Coming soon
 -----------
