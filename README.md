@@ -3,7 +3,21 @@ Lamma
 
 Lamma schedule generator is a professional schedule generation library for financial instruments schedules like mortgage repayment schedule, fixed income coupon payment, equity derivative fixing date generation etc.
 
-### Get Started: 
+### Install
+
+```
+libraryDependencies += "io.lamma" %% "lamma" % "1.0"
+```
+or if you are using maven
+```
+<dependency>
+    <groupId>io.lamma</groupId>
+    <artifactId>lamma_2.10</artifactId>
+    <version>1.0</version>
+</dependency>
+```
+
+### Get Started
 
 #### Say we want to generate the schedule for a Fixed Coupon Note.
 
