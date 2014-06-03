@@ -47,7 +47,7 @@ Lamma.schedule(
 |         6 | 2016-09-01 | 2017-03-31 | 2017-03-31 |    _2017-04-04_|
 
 #### What do you get?
-1. in Period 1 and 2, Modified following convention is applied based on holiday calendar
+1. in Period 1 and 2, modified following convention is applied based on holiday calendar
 2. in Period 4, leap year is handled properly
 3. despite of 6m frequency. Last stub month (2017-03) is merged automatially to the last period.
 4. working days are considered when generating settlement date

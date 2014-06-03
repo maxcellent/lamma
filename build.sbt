@@ -1,3 +1,5 @@
+organization := "io.lamma"
+
 name := "lamma"
 
 version := "1.0"
@@ -10,7 +12,7 @@ libraryDependencies += "junit" % "junit" % "4.11" % "test"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.6" % "test"
 
-// ============ publish to public maven repos ================
+// ============ publish / release related ================
 
 publishMavenStyle := true
 
