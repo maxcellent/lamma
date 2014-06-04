@@ -63,7 +63,7 @@ object Recurrence {
 
   val EveryOtherDay = Days(2)
 
-  def EveryWorkingDay(cal: Calendar) = Days.workingDays(1, cal)
+  def EveryWorkingDay(cal: Calendar = WeekendCalendar) = Days.workingDays(1, cal)
 
   /**
    * @param shifter only ShiftCalendarDays / ShiftWorkingDays are allowed
