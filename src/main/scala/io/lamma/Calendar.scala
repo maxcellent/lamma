@@ -72,13 +72,6 @@ case object WeekendCalendar extends Calendar {
 }
 
 /**
- * only consider Sunday as holiday
- */
-case object SundayCalendar extends Calendar {
-  override def isHoliday(d: Date) = d.weekday == Sunday
-}
-
-/**
  * a calendar composed of multiple calendars.
  * this calendar will treat a day as holiday if any one of underlying calendar returns true
  *
