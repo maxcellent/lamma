@@ -1,5 +1,7 @@
 package io.lamma
 
+import io.lamma.Month.{December, January}
+
 /**
  * for each PositionOfYear implementation
  * Lamma expect there is one and only one day match the criteria in each year
@@ -67,9 +69,13 @@ object PositionOfYear {
 
   def LastWeekdayOfYear(weekday: Weekday) = NthWeekdayOfYear(53, weekday)
 
+  def FirstMonthOfYear(pom: PositionOfMonth) = NthMonthOfYear(January, pom)
+
   case class NthMonthOfYear(m: Month, pom: PositionOfMonth) extends PositionOfYear {
     override def isValidDOY(d: Date) = d.month == m && pom.isValidDOM(d)
   }
+
+  def LastMonthOfYear(pom: PositionOfMonth) = NthMonthOfYear(December, pom)
 }
 
 class InvalidPositionOfYearException(poy: PositionOfYear, failingYear: Int, result: List[Date])
