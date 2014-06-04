@@ -83,7 +83,7 @@ class LammaSpec extends WordSpec with Matchers {
 
     "working day generation is also supported, in this case WeekendCalendar is used which means all weekend will be skipped" in {
       val expected = Date(2015, 10, 5) :: Date(2015, 10, 12) :: Date(2015, 10, 19) :: Nil
-      Lamma.sequence(Date(2015, 10, 5), Date(2015, 10, 20), Days.workingDay(5, WeekendCalendar)) should be(expected)
+      Lamma.sequence(Date(2015, 10, 5), Date(2015, 10, 20), Days.workingDays(5, WeekendCalendar)) should be(expected)
     }
 
     "you can also generate date in backward direction, for example, use our last example" in {
@@ -335,7 +335,7 @@ class LammaSpec extends WordSpec with Matchers {
       // 2014-04-18 is a UK holiday
       // 2014-04-20 is Sunday
       val expected = Date(2014, 4, 16) :: Date(2014, 4, 22) :: Date(2014, 4, 24) :: Nil
-      Lamma.sequence(Date(2014, 4, 16), Date(2014, 4, 24), Days.workingDay(2, composedCalendar)) should be(expected)
+      Lamma.sequence(Date(2014, 4, 16), Date(2014, 4, 24), Days.workingDays(2, composedCalendar)) should be(expected)
     }
   }
 

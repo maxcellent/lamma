@@ -46,12 +46,12 @@ class RecurrenceSpec extends WordSpec with Matchers {
 
     "generate working days properly" in {
       val expected = Date(2015, 10, 5) :: Date(2015, 10, 12) :: Date(2015, 10, 19) :: Nil
-      Days.workingDay(5).recur(Date(2015, 10, 5), Date(2015, 10, 20)) should be(expected)
+      Days.workingDays(5).recur(Date(2015, 10, 5), Date(2015, 10, 20)) should be(expected)
     }
 
     "generate working days properly even when start day is a holiday" in {
       val expected = Date(2015, 10, 5) :: Date(2015, 10, 12) :: Date(2015, 10, 19) :: Nil
-      Days.workingDay(5).recur(Date(2015, 10, 3), Date(2015, 10, 20)) should be(expected)
+      Days.workingDays(5).recur(Date(2015, 10, 3), Date(2015, 10, 20)) should be(expected)
     }
 
     "throw exception when NoShift is used" in {
@@ -86,13 +86,13 @@ class RecurrenceSpec extends WordSpec with Matchers {
 
     "throw exception when 0 working day is specified" in {
       intercept[IllegalArgumentException] {
-        Days.workingDay(0)
+        Days.workingDays(0)
       }
     }
 
     "throw exception when netative working day is specified" in {
       intercept[IllegalArgumentException] {
-        Days.workingDay(-1)
+        Days.workingDays(-1)
       }
     }
   }
@@ -105,12 +105,12 @@ class RecurrenceSpec extends WordSpec with Matchers {
 
     "generate working days properly" in {
       val expected = Date(2015, 10, 6) :: Date(2015, 10, 13) :: Date(2015, 10, 20) :: Nil
-      DaysBackward.workingDay(5).recur(Date(2015, 10, 5), Date(2015, 10, 20)) should be(expected)
+      DaysBackward.workingDays(5).recur(Date(2015, 10, 5), Date(2015, 10, 20)) should be(expected)
     }
 
     "generate working days properly even when start day is a holiday" in {
       val expected = Date(2015, 10, 9) :: Date(2015, 10, 16) :: Date(2015, 10, 23) :: Nil
-      DaysBackward.workingDay(5).recur(Date(2015, 10, 5), Date(2015, 10, 25)) should be(expected)
+      DaysBackward.workingDays(5).recur(Date(2015, 10, 5), Date(2015, 10, 25)) should be(expected)
     }
 
     "throw exception when NoShift is used" in {
@@ -145,13 +145,13 @@ class RecurrenceSpec extends WordSpec with Matchers {
 
     "throw exception when 0 working day is specified" in {
       intercept[IllegalArgumentException] {
-        Days.workingDay(0)
+        Days.workingDays(0)
       }
     }
 
     "throw exception when netative working day is specified" in {
       intercept[IllegalArgumentException] {
-        Days.workingDay(-1)
+        Days.workingDays(-1)
       }
     }
   }
