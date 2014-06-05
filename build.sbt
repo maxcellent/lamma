@@ -10,6 +10,8 @@ crossScalaVersions := Seq("2.10.4", "2.11.1")
 
 libraryDependencies += "junit" % "junit" % "4.11" % "test"
 
+libraryDependencies += "com.google.guava" % "guava" % "17.0" % "test"
+
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.6" % "test"
 
 // ============ publish / release related ================
