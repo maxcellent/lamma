@@ -162,8 +162,16 @@ public class LammaConversion {
         return PositionOfYear$.MODULE$.LastWeekdayOfYear(weekday);
     }
 
+    public static PositionOfYear firstMonthOfYear(PositionOfMonth pom) {
+        return PositionOfYear$.MODULE$.FirstMonthOfYear(pom);
+    }
+
     public static PositionOfYear nthMonthOfYear(Month m, PositionOfMonth pom) {
         return new PositionOfYear.NthMonthOfYear(m, pom);
+    }
+
+    public static PositionOfYear lastMonthOfYear(PositionOfMonth pom) {
+        return PositionOfYear$.MODULE$.LastMonthOfYear(pom);
     }
 
     // ========== recurrence pattern ==============
@@ -177,6 +185,10 @@ public class LammaConversion {
 
     public static Recurrence.Days days(int days) {
         return Recurrence.Days$.MODULE$.apply(days);
+    }
+
+    public static Recurrence.Days everyWorkingDay()  {
+        return Recurrence$.MODULE$.EveryWorkingDay(Recurrence$.MODULE$.EveryWorkingDay$default$1());
     }
 
     public static Recurrence.Days everyWorkingDay(Calendar calendar) {

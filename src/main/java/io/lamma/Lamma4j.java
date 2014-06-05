@@ -2,15 +2,6 @@ package io.lamma;
 
 import static io.lamma.LammaConversion.javaList;
 
-import io.lamma.Calendar;
-import io.lamma.Date;
-import io.lamma.DateDef;
-import io.lamma.Lamma;
-import io.lamma.PeriodBuilder;
-import io.lamma.Recurrence;
-import io.lamma.Schedule;
-import io.lamma.Selector;
-import io.lamma.Shifter;
 import scala.collection.immutable.List;
 
 public class Lamma4j {

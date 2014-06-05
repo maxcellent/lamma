@@ -159,8 +159,16 @@ class LammaConversionSpec extends FlatSpec with Matchers {
     lastWeekdayOfYear(MONDAY) should be(LastWeekdayOfYear(Monday))
   }
 
+  "firstMonthOfYear" should "be the same as lamma version" in {
+    firstMonthOfYear(lastDayOfMonth()) should be(FirstMonthOfYear(LastDayOfMonth))
+  }
+
   "nthMonthOfYear" should "be the same as lamma version" in {
     nthMonthOfYear(FEBRUARY, lastDayOfMonth()) should be(NthMonthOfYear(February, LastDayOfMonth))
+  }
+
+  "lastMonthOfYear" should "be the same as lamma version" in {
+    lastMonthOfYear(firstDayOfMonth()) should be(LastMonthOfYear(FirstDayOfMonth))
   }
 
   // ========== recurrence pattern: day patterns ==============
@@ -177,6 +185,7 @@ class LammaConversionSpec extends FlatSpec with Matchers {
   }
 
   "everyWorkingDay" should "be the same as lamma version" in {
+    everyWorkingDay() should be(EveryWorkingDay())
     everyWorkingDay(noHoliday()) should be(EveryWorkingDay(NoHoliday))
   }
 
