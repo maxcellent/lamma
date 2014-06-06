@@ -20,7 +20,8 @@ import io.lamma.StubRulePeriodBuilder._
 class LammaHomepageSpec extends WordSpec with Matchers {
 
   "homepage: schedule generation for a 37m tenor FCN" in {
-    val cal = WeekendCalendar // of course, we will use the real business calendar in production
+    // a real business calendar will be used in production
+    val cal = WeekendCalendar
     val couponDate = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(cal))
     val settlementDate = DateDef("SettlementDate", relativeTo = OtherDate("CouponDate"), shifter = ShiftWorkingDays(2, cal))
 
@@ -40,11 +41,11 @@ class LammaHomepageSpec extends WordSpec with Matchers {
       Date(2015, 9, 2), Date(2016, 3, 2), Date(2016, 9, 2), Date(2017, 4, 4))
 
     val result = Lamma.schedule(
-      start = Date(2014, 3, 1),
-      end = Date(2017, 3, 31),
-      pattern = Months(6, LastDayOfMonth),
-      periodBuilder = StubRulePeriodBuilder(endRule = LongEnd(270)),
-      dateDefs = couponDate :: settlementDate :: Nil
+      start = Date(2014, 3, 1),   // issue date = 2014-03-01
+      end = Date(2017, 3, 31),    // expiry date = 2017-03-31
+      pattern = Months(6, LastDayOfMonth),  // recurring the last day of every 6 months
+      periodBuilder = StubRulePeriodBuilder(endRule = LongEnd(270)),  // merge last stub if the merged period is no longer than 270 days
+      dateDefs = couponDate :: settlementDate :: Nil   // generate coupon date and settlement date for each period
     )
 
     result.periods should be(expectedPeriods)
