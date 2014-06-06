@@ -17,14 +17,29 @@ import io.lamma.StubRulePeriodBuilder._
  *
  * this Spec is also used as functional test, because library users are always supposed to use Lamma.xxx
  */
-class LammaSpec extends WordSpec with Matchers {
+class LammaHomepageSpec extends WordSpec with Matchers {
 
   "homepage: schedule generation for a 37m tenor FCN" in {
     val cal = WeekendCalendar // of course, we will use the real business calendar in production
     val couponDate = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(cal))
     val settlementDate = DateDef("SettlementDate", relativeTo = OtherDate("CouponDate"), shifter = ShiftWorkingDays(2, cal))
 
-    val s = Lamma.schedule(
+    val expectedPeriods = List(
+      Period((2014, 3, 1) -> (2014, 8, 31)),
+      Period((2014, 9, 1) -> (2015, 2, 28)),
+      Period((2015, 3, 1) -> (2015, 8, 31)),
+      Period((2015, 9, 1) -> (2016, 2, 29)),
+      Period((2016, 3, 1) -> (2016, 8, 31)),
+      Period((2016, 9, 1) -> (2017, 3, 31))
+    )
+
+    val expectedCouponDates = List(Date(2014, 8, 29), Date(2015, 2, 27),
+      Date(2015, 8, 31), Date(2016, 2, 29), Date(2016, 8, 31), Date(2017, 3, 31))
+
+    val expectedSettlementDates = List(Date(2014, 9, 2), Date(2015, 3, 3),
+      Date(2015, 9, 2), Date(2016, 3, 2), Date(2016, 9, 2), Date(2017, 4, 4))
+
+    val result = Lamma.schedule(
       start = Date(2014, 3, 1),
       end = Date(2017, 3, 31),
       pattern = Months(6, LastDayOfMonth),
@@ -32,7 +47,9 @@ class LammaSpec extends WordSpec with Matchers {
       dateDefs = couponDate :: settlementDate :: Nil
     )
 
-    println(s.printableString)
+    result.periods should be(expectedPeriods)
+    result("CouponDate") should be(expectedCouponDates)
+    result("SettlementDate") should be(expectedSettlementDates)
   }
 
   "get started: generate a list if date" should {
