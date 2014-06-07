@@ -10,7 +10,7 @@ crossScalaVersions := Seq("2.10.4", "2.11.1")
 
 libraryDependencies += "junit" % "junit" % "4.11" % "test"
 
-libraryDependencies += "com.novocode" % "junit-interface" % "0.9" % "test"
+libraryDependencies += "com.novocode" % "junit-interface" % "0.9" % "test"  // we need to have this lib in order to run junit with sbt test
 
 libraryDependencies += "com.google.guava" % "guava" % "17.0" % "test"
 
