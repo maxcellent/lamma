@@ -1,23 +1,28 @@
-package io.lamma
+package io.lammaweb
 
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.Recurrence._
-import io.lamma.Weekday.{Saturday, Wednesday, Friday, Tuesday}
-import io.lamma.PositionOfMonth.{LastWeekdayOfMonth, LastDayOfMonth, NthWeekdayOfMonth, NthDayOfMonth}
+import io.lamma.Weekday.{Wednesday, Friday, Tuesday}
+import io.lamma.PositionOfMonth.LastDayOfMonth
 import io.lamma.Month.February
-import io.lamma.PositionOfYear.{NthMonthOfYear, LastWeekdayOfYear}
-import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
-import io.lamma.Selector.{ModifiedFollowing, Forward}
-import io.lamma.Anchor.{OtherDate, PeriodEnd}
+import io.lamma.PositionOfYear.LastWeekdayOfYear
+import io.lamma.Anchor.PeriodEnd
 import io.lamma.StubRulePeriodBuilder._
+import io.lamma._
+import io.lamma.Anchor.OtherDate
+import io.lamma.PositionOfMonth.NthWeekdayOfMonth
+import io.lamma.Shifter.ShiftCalendarDays
+import io.lamma.CompositeCalendar
+import io.lamma.PositionOfYear.NthMonthOfYear
+import io.lamma.Selector.ModifiedFollowing
+import io.lamma.PositionOfMonth.NthDayOfMonth
+import io.lamma.Selector.Forward
+import io.lamma.Shifter.ShiftWorkingDays
 
 /**
- * this spec is written in tutorial order in order to verify and maintain everything used in tutorial
- * please don't reorder them
- *
- * this Spec is also used as functional test, because library users are always supposed to use Lamma.xxx
+ * used in homepage
  */
-class LammaHomepageSpec extends WordSpec with Matchers {
+class HomepageSpec extends WordSpec with Matchers {
 
   "homepage: schedule generation for a 37m tenor FCN" in {
     // a real business calendar will be used in production

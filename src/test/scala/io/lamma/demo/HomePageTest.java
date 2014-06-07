@@ -1,4 +1,4 @@
-package io.lamma;
+package io.lamma.demo;
 
 // always import this when coding Lamma with Java
 import static io.lamma.LammaConversion.*;
@@ -6,6 +6,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 import com.google.common.collect.Lists;
+import io.lamma.*;
 import org.junit.Test;
 
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * this test is written for home page sample
  */
-public class Lamma4jHomePageTest {
+public class HomePageTest {
 
     @Test
     public void scheduleGenerationForA37mTenorFCN() {
