@@ -16,6 +16,8 @@ import static org.junit.Assert.assertThat;
 
 public class SequenceTest {
 
+    // ========= Basic Sequence Generation =========
+
     @Test
     public void testGenerateDateSequence() {
         List<Date> expected = Lists.newArrayList(date(2014, 5, 10), date(2014, 5, 11), date(2014, 5, 12));
@@ -107,9 +109,10 @@ public class SequenceTest {
         assertThat(actual, is(expected));
     }
 
+    // ========= Advanced Sequence Generation =========
+
     @Test
     public void testWeekday() {
-        // a list of every 3 Tuesday from 2014-05-05 to 2014-07-01
         List<Date> expected = Lists.newArrayList(date(2014, 5, 13), date(2014, 6, 3), date(2014, 6, 24));
         List<Date> actual = Lamma4j.sequence(date(2014, 5, 10), date(2014, 7, 1), weeks(3, TUESDAY));
         assertThat(actual, is(expected));
@@ -129,6 +132,20 @@ public class SequenceTest {
         assertThat(actual, is(expected));
     }
 
+    @Test
+    public void testPositionOfYear() {
+        List<Date> expected = Lists.newArrayList(date(2014, 12, 30), date(2015, 12, 29), date(2016, 12, 27));
+        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2016, 12, 31), years(1, lastWeekdayOfYear(TUESDAY)));
+        assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void testComplicatedExample() {
+        List<Date> expected = Lists.newArrayList(date(2010,2,19), date(2013,2,15), date(2016,2,19), date(2019,2,15));
+        List<Date> actual = Lamma4j.sequence(date(2010, 1, 1), date(2019, 12, 31), years(3, nthMonthOfYear(FEBRUARY, nthWeekdayOfMonth(3, FRIDAY))));
+        assertThat(actual, is(expected));
+    }
+
     /**
      * match first day in Feb, 3rd day for other months
      */
@@ -143,28 +160,12 @@ public class SequenceTest {
     @Test
     public void testCustomPosition() {
         List<Date> expected = Lists.newArrayList(date(2014, 1, 3), date(2014, 2, 1), date(2014, 3, 3));
-        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 30), months(1, new MyPositionOfMonth()));
-        assertThat(actual, is(expected));
-    }
-
-    @Test
-    public void testPositionOfYear() {
-        List<Date> expected = Lists.newArrayList(date(2014, 12, 30), date(2015, 12, 29), date(2016, 12, 27));
-        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2016, 12, 31), years(1, lastWeekdayOfYear(TUESDAY)));
-        assertThat(actual, is(expected));
-    }
-
-    @Test
-    public void testComplicatedExample() {
-        //  find all 3rd Friday of February for every 3 years in 2010s
-        List<Date> expected = Lists.newArrayList(date(2010,2,19), date(2013,2,15), date(2016,2,19), date(2019,2,15));
-        List<Date> actual = Lamma4j.sequence(date(2010, 1, 1), date(2019, 12, 31), years(3, nthMonthOfYear(FEBRUARY, nthWeekdayOfMonth(3, FRIDAY))));
+        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 31), months(1, new MyPositionOfMonth()));
         assertThat(actual, is(expected));
     }
 
     @Test
     public void testShiftor() {
-        // I want 3rd last day of every month
         List<Date> expected = Lists.newArrayList(date(2014,1,29), date(2014,2,26), date(2014,3,29));
         List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 31), months(1, lastDayOfMonth()), shiftCalendarDays(-2));
         assertThat(actual, is(expected));
@@ -188,18 +189,6 @@ public class SequenceTest {
     // ========= edge cases ======
 
     @Test
-    public void testSameFromAndToDate() {
-        List<Date> expected = Lists.newArrayList(date(2014, 1, 1));
-        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 1, 1), monthsBackward(6));
-        assertThat(actual, is(expected));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testExceptionCase() {
-        Lamma4j.sequence(date(2014, 1, 1), date(2013, 12, 31));
-    }
-
-    @Test
     public void testRecurrencePatternTooLongForward() {
         List<Date> expected = Lists.newArrayList(date(2014, 1, 1));
         List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 31), months(6));
@@ -211,5 +200,17 @@ public class SequenceTest {
         List<Date> expected = Lists.newArrayList(date(2014, 3, 31));
         List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 31), monthsBackward(6));
         assertThat(actual, is(expected));
+    }
+
+    @Test
+    public void testSameFromAndToDate() {
+        List<Date> expected = Lists.newArrayList(date(2014, 1, 1));
+        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 1, 1), months(6));
+        assertThat(actual, is(expected));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testExceptionCase() {
+        Lamma4j.sequence(date(2014, 1, 1), date(2013, 12, 31));
     }
 }

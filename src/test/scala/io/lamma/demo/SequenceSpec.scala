@@ -15,6 +15,8 @@ import org.scalatest.{WordSpec, Matchers}
 
 class SequenceSpec extends WordSpec with Matchers {
 
+  // ========= Basic Sequence Generation =========
+
   "generate date sequence" in {
     val expected = Date(2014, 5, 10) :: Date(2014, 5, 11) :: Date(2014, 5, 12) :: Nil
     Lamma.sequence(Date(2014, 5, 10), Date(2014, 5, 12)) should be(expected)
@@ -75,8 +77,9 @@ class SequenceSpec extends WordSpec with Matchers {
     Lamma.sequence(Date(2014, 5, 10), Date(2014, 10, 20), MonthsBackward(3)) should be(Date(2014, 7, 20) :: Date(2014, 10, 20) :: Nil)
   }
 
+  // ========= Advanced Sequence Generation =========
+
   "you can specify weekday when generating with Weeks or WeeksBackward" in {
-    // a list of every 3 Tuesday from 2014-05-05 to 2014-07-01
     val expected = Date(2014, 5, 13) :: Date(2014, 6, 3) :: Date(2014, 6, 24) :: Nil
     Lamma.sequence(Date(2014, 5, 10), Date(2014, 7, 1), Weeks(3, Tuesday)) should be(expected)
   }
@@ -91,7 +94,17 @@ class SequenceSpec extends WordSpec with Matchers {
     Lamma.sequence(Date(2014, 5, 1), Date(2014, 9, 30), Months(2, NthWeekdayOfMonth(2, Friday))) should be(expected)
   }
 
-  "it's very easy to implement your own PositionOfMonth" in {
+  "similarly, year" in {
+    val expected = Date(2014, 12, 30) :: Date(2015, 12, 29) :: Date(2016, 12, 27) :: Nil
+    Lamma.sequence(Date(2014, 1, 1), Date(2016, 12, 31), Years(1, LastWeekdayOfYear(Tuesday))) should be(expected)
+  }
+
+  "find all 3rd Friday of February for every 3 years in 2010s" in {
+    val expected = Date(2010,2,19) :: Date(2013,2,15) :: Date(2016,2,19) :: Date(2019,2,15) :: Nil
+    Lamma.sequence(Date(2010, 1, 1), Date(2019, 12, 31), Years(3, NthMonthOfYear(February, NthWeekdayOfMonth(3, Friday)))) should be(expected)
+  }
+
+  "you can implement your own PositionOfMonth" in {
     /**
      * match first day in Feb, 3rd day for other months
      */
@@ -106,17 +119,7 @@ class SequenceSpec extends WordSpec with Matchers {
     }
 
     val expected = Date(2014, 1, 3) :: Date(2014, 2, 1) :: Date(2014, 3, 3) :: Nil
-    Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 30), Months(1, MyPositionOfMonth)) should be(expected)
-  }
-
-  "similarly, year" in {
-    val expected = Date(2014, 12, 30) :: Date(2015, 12, 29) :: Date(2016, 12, 27) :: Nil
-    Lamma.sequence(Date(2014, 1, 1), Date(2016, 12, 31), Years(1, LastWeekdayOfYear(Tuesday))) should be(expected)
-  }
-
-  "find all 3rd Friday of February for every 3 years in 2010s" in {
-    val expected = Date(2010,2,19) :: Date(2013,2,15) :: Date(2016,2,19) :: Date(2019,2,15) :: Nil
-    Lamma.sequence(Date(2010, 1, 1), Date(2019, 12, 31), Years(3, NthMonthOfYear(February, NthWeekdayOfMonth(3, Friday)))) should be(expected)
+    Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(1, MyPositionOfMonth)) should be(expected)
   }
 
   "you can shift a date based on the result. For example, I want 3rd last day of every month" in {
@@ -141,7 +144,7 @@ class SequenceSpec extends WordSpec with Matchers {
   }
 
   "single date will be generated, when start date equals to the end date" in {
-    Lamma.sequence(Date(2014, 1, 1), Date(2014, 1, 1), MonthsBackward(6)) should(be(List(Date(2014, 1, 1))))
+    Lamma.sequence(Date(2014, 1, 1), Date(2014, 1, 1), Months(6)) should(be(List(Date(2014, 1, 1))))
   }
 
   "exception will be thrown when start date is before end date" in {
