@@ -32,7 +32,7 @@ publishTo := {
 
 pomIncludeRepository := { _ => false }
 
-licenses := Seq("The Apache Software License, Version 2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0.txt"))
+licenses := Seq("WTFPL, Version 2" -> url("http://www.wtfpl.net/txt/copying/"))
 
 homepage := Some(url("https://github.com/maxcellent/lamma"))
 
