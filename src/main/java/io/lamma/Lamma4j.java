@@ -1,8 +1,9 @@
 package io.lamma;
 
-import static io.lamma.LammaConversion.javaList;
+import static io.lamma.LammaConversion.*;
 
 import scala.collection.immutable.List;
+import scala.collection.JavaConverters;
 
 public class Lamma4j {
 
@@ -36,6 +37,10 @@ public class Lamma4j {
         return new Schedule4j(schedule);
     }
 
+    public static Schedule4j schedule(Date start, Date end, Recurrence pattern, java.util.List<DateDef> dateDefs) {
+        return schedule(start, end, pattern, Lamma.schedule$default$4(), JavaConverters.asScalaIterableConverter(dateDefs).asScala().toList());
+    }
+
     public static Schedule4j schedule(Date start, Date end, Recurrence pattern, List<DateDef> dateDefs) {
         Schedule schedule = Lamma.schedule(start, end, pattern, Lamma.schedule$default$4(), dateDefs);
         return new Schedule4j(schedule);
@@ -44,6 +49,10 @@ public class Lamma4j {
     public static Schedule4j schedule(Date start, Date end, Recurrence pattern, PeriodBuilder periodBuilder) {
         Schedule schedule = Lamma.schedule(start, end, pattern, periodBuilder, Lamma.schedule$default$5());
         return new Schedule4j(schedule);
+    }
+
+    public static Schedule4j schedule(Date start, Date end, Recurrence pattern, PeriodBuilder periodBuilder, java.util.List<DateDef> dateDefs) {
+        return schedule(start, end, pattern, periodBuilder, JavaConverters.asScalaIterableConverter(dateDefs).asScala().toList());
     }
 
     public static Schedule4j schedule(Date start, Date end, Recurrence pattern, PeriodBuilder periodBuilder, List<DateDef> dateDefs) {
