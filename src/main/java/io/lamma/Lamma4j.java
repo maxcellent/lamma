@@ -36,6 +36,11 @@ public class Lamma4j {
         return new Schedule4j(schedule);
     }
 
+    public static Schedule4j schedule(Date start, Date end, Recurrence pattern, List<DateDef> dateDefs) {
+        Schedule schedule = Lamma.schedule(start, end, pattern, Lamma.schedule$default$4(), dateDefs);
+        return new Schedule4j(schedule);
+    }
+
     public static Schedule4j schedule(Date start, Date end, Recurrence pattern, PeriodBuilder periodBuilder) {
         Schedule schedule = Lamma.schedule(start, end, pattern, periodBuilder, Lamma.schedule$default$5());
         return new Schedule4j(schedule);
