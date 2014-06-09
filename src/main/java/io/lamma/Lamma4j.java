@@ -38,7 +38,7 @@ public class Lamma4j {
     }
 
     public static Schedule4j schedule(Date start, Date end, Recurrence pattern, java.util.List<DateDef> dateDefs) {
-        return schedule(start, end, pattern, Lamma.schedule$default$4(), JavaConverters.asScalaIterableConverter(dateDefs).asScala().toList());
+        return schedule(start, end, pattern, Lamma.schedule$default$4(), JavaConverters.asScalaBufferConverter(dateDefs).asScala().toList());
     }
 
     public static Schedule4j schedule(Date start, Date end, Recurrence pattern, List<DateDef> dateDefs) {
@@ -52,7 +52,7 @@ public class Lamma4j {
     }
 
     public static Schedule4j schedule(Date start, Date end, Recurrence pattern, PeriodBuilder periodBuilder, java.util.List<DateDef> dateDefs) {
-        return schedule(start, end, pattern, periodBuilder, JavaConverters.asScalaIterableConverter(dateDefs).asScala().toList());
+        return schedule(start, end, pattern, periodBuilder, JavaConverters.asScalaBufferConverter(dateDefs).asScala().toList());
     }
 
     public static Schedule4j schedule(Date start, Date end, Recurrence pattern, PeriodBuilder periodBuilder, List<DateDef> dateDefs) {
