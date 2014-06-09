@@ -6,6 +6,7 @@ import java.sql.{Date => SDate}
 import io.lamma.Weekday._
 import io.lamma.PositionOfMonth._
 import io.lamma.PositionOfYear._
+import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
 
 case class Date(yyyy: Int, mm: Int, dd: Int) extends Ordered[Date] {
 
@@ -21,6 +22,34 @@ case class Date(yyyy: Int, mm: Int, dd: Int) extends Ordered[Date] {
   def -(d: Duration) = JavaDateUtil.minus(this, d)
 
   def -(that: Date) = JavaDateUtil.daysBetween(that, this)
+
+  /**
+   * select the date with forward convention for given calendar.
+   *
+   * @see io.lamma.Selector.Forward
+   */
+  def forward(cal: Calendar) = Forward(cal).select(this)
+
+  /**
+   * select the date with backward convention for given calendar.
+   *
+   * @see io.lamma.Selector.Backward
+   */
+  def backward(cal: Calendar) = Backward(cal).select(this)
+
+  /**
+   * select the date with modified following convention for given calendar.
+   *
+   * @see io.lamma.Selector.ModifiedFollowing
+   */
+  def modifiedFollowing(cal: Calendar) = ModifiedFollowing(cal).select(this)
+
+  /**
+   * select the date with modified preceding convention for given calendar.
+   *
+   * @see io.lamma.Selector.ModifiedPreceding
+   */
+  def modifiedPreceding(cal: Calendar) = ModifiedPreceding(cal).select(this)
 
   lazy val weekday = JavaDateUtil.dayOfWeek(this)
 

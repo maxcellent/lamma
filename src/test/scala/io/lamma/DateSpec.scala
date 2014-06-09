@@ -84,6 +84,26 @@ class DateSpec extends FlatSpec with Matchers {
     Date(2014, 4, 10) <= Date(2014, 4, 12) should be(true)
   }
 
+  "forward" should "work" in {
+    Date(2016, 2, 5).forward(WeekendCalendar) should be(Date(2016, 2, 5))
+    Date(2016, 2, 6).forward(WeekendCalendar) should be(Date(2016, 2, 8))
+  }
+
+  "backward" should "work" in {
+    Date(2016, 2, 5).backward(WeekendCalendar) should be(Date(2016, 2, 5))
+    Date(2016, 2, 6).backward(WeekendCalendar) should be(Date(2016, 2, 5))
+  }
+
+  "modifiedFollowing" should "work" in {
+    Date(2016, 2, 27).modifiedFollowing(WeekendCalendar) should be(Date(2016, 2, 29))
+    Date(2016, 4, 30).modifiedFollowing(WeekendCalendar) should be(Date(2016, 4, 29))
+  }
+
+  "modifiedPreceding" should "work" in {
+    Date(2016, 2, 27).modifiedPreceding(WeekendCalendar) should be(Date(2016, 2, 26))
+    Date(2016, 5, 1).modifiedPreceding(WeekendCalendar) should be(Date(2016, 5, 2))
+  }
+
   "weekday" should "work" in {
     Date(2014, 4, 10).weekday should be(Thursday)
   }
