@@ -2,8 +2,9 @@ package io.lamma
 
 import org.scalatest.{Matchers, FlatSpec}
 import Duration._
-import io.lamma.PositionOfMonth.LastWeekdayOfMonth
-import io.lamma.Weekday.{Tuesday, Monday, Thursday}
+import io.lamma.PositionOfMonth._
+import io.lamma.PositionOfYear._
+import io.lamma.Weekday._
 
 class DateSpec extends FlatSpec with Matchers {
 
@@ -87,17 +88,125 @@ class DateSpec extends FlatSpec with Matchers {
     Date(2014, 4, 10).weekday should be(Thursday)
   }
 
-  "nextWeekday" should "work" in {
-    Date(2014, 4, 10).nextWeekday(Monday) should be(Date(2014, 4, 14))
-    Date(2014, 4, 10).nextWeekday(Thursday) should be(Date(2014, 4, 10))
+  "thisMonthBegin" should "work" in {
+    Date(2014, 4, 10).thisMonthBegin should be(Date(2014, 4, 1))
+    Date(2014, 4, 1).thisMonthBegin should be(Date(2014, 4, 1))
   }
 
-  "previousWeekday" should "work" in {
-    Date(2014, 4, 10).previousWeekday(Monday) should be(Date(2014, 4, 7))
-    Date(2014, 4, 10).previousWeekday(Thursday) should be(Date(2014, 4, 10))
+  "thisMonthEnd" should "work" in {
+    Date(2014, 4, 10).thisMonthEnd should be(Date(2014, 4, 30))
+    Date(2014, 2, 10).thisMonthEnd should be(Date(2014, 2, 28))
+    Date(2016, 2, 10).thisMonthEnd should be(Date(2016, 2, 29))
   }
 
-  "monthsBetween" should "work" in {
+  "thisYearBegin" should "work" in {
+    Date(2014, 4, 10).thisYearBegin should be(Date(2014, 1, 1))
+    Date(2014, 1, 1).thisYearBegin should be(Date(2014, 1, 1))
+  }
+
+  "thisYearEnd" should "work" in {
+    Date(2014, 4, 10).thisYearEnd should be(Date(2014, 12, 31))
+    Date(2014, 12, 31).thisYearEnd should be(Date(2014, 12, 31))
+  }
+
+  "sameWeekdaysOfMonth" should "work" in {
+    val expected = Date(2016, 2, 1) :: Date(2016, 2, 8) :: Date(2016, 2, 15) :: Date(2016, 2, 22) :: Date(2016, 2, 29) :: Nil
+    Date(2016, 2, 15).sameWeekdaysOfMonth should be(expected)
+  }
+
+  "sameWeekdaysOfYear" should "contain leap day" in {
+    Date(2016, 3, 21).sameWeekdaysOfYear should contain(Date(2016, 2, 29))
+  }
+
+  "comingWeekday" should "work" in {
+    Date(2014, 4, 10).comingWeekday(Monday) should be(Date(2014, 4, 14))
+    Date(2014, 4, 10).comingWeekday(Thursday) should be(Date(2014, 4, 17))
+
+    Date(2014, 4, 10).comingMonday should be(Date(2014, 4, 14))
+    Date(2014, 4, 10).comingTuesday should be(Date(2014, 4, 15))
+    Date(2014, 4, 10).comingWednesday should be(Date(2014, 4, 16))
+    Date(2014, 4, 10).comingThursday should be(Date(2014, 4, 17))
+    Date(2014, 4, 10).comingFriday should be(Date(2014, 4, 11))
+    Date(2014, 4, 10).comingSaturday should be(Date(2014, 4, 12))
+    Date(2014, 4, 10).comingSunday should be(Date(2014, 4, 13))
+  }
+
+  "pastWeekday" should "work" in {
+    Date(2014, 4, 10).pastWeekday(Monday) should be(Date(2014, 4, 7))
+    Date(2014, 4, 10).pastWeekday(Thursday) should be(Date(2014, 4, 3))
+
+    Date(2014, 4, 10).pastMonday should be(Date(2014, 4, 7))
+    Date(2014, 4, 10).pastTuesday should be(Date(2014, 4, 8))
+    Date(2014, 4, 10).pastWednesday should be(Date(2014, 4, 9))
+    Date(2014, 4, 10).pastThursday should be(Date(2014, 4, 3))
+    Date(2014, 4, 10).pastFriday should be(Date(2014, 4, 4))
+    Date(2014, 4, 10).pastSaturday should be(Date(2014, 4, 5))
+    Date(2014, 4, 10).pastSunday should be(Date(2014, 4, 6))
+  }
+
+  "comingDayOfMonth" should "work" in {
+    Date(2014, 4, 10).comingDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 5, 10))
+    Date(2014, 4, 9).comingDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 11).comingDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 5, 10))
+  }
+
+  "comingMonthEnd" should "work" in {
+    Date(2014, 7, 30).comingMonthEnd should be(Date(2014, 7, 31))
+    Date(2014, 7, 31).comingMonthEnd should be(Date(2014, 8, 31))
+  }
+
+  "comingMonthBegin" should "work" in {
+    Date(2014, 7, 31).comingMonthBegin should be(Date(2014, 8, 1))
+    Date(2014, 8,  1).comingMonthBegin should be(Date(2014, 9, 1))
+  }
+
+  "pastDayOfMonth" should "work" in {
+    Date(2014, 4, 10).pastDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 3, 10))
+    Date(2014, 4, 9).pastDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 3, 10))
+    Date(2014, 4, 11).pastDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+  }
+
+  "pastMonthEnd" should "work" in {
+    Date(2014, 8, 5).pastMonthEnd should be(Date(2014, 7, 31))
+    Date(2014, 7, 31).pastMonthEnd should be(Date(2014, 6, 30))
+  }
+
+  "pastMonthBegin" should "work" in {
+    Date(2014, 8, 2).pastMonthBegin should be(Date(2014, 8, 1))
+    Date(2014, 8, 1).pastMonthBegin should be(Date(2014, 7, 1))
+  }
+
+  "comingDayOfYear" should "work" in {
+    Date(2014, 4, 10).comingDayOfYear(FirstDayOfYear) should be(Date(2015, 1, 1))
+    Date(2014, 1, 1).comingDayOfYear(FirstDayOfYear) should be(Date(2015, 1, 1))
+  }
+
+  "comingYearEnd" should "work" in {
+    Date(2014, 8, 2).comingYearEnd should be(Date(2014, 12, 31))
+    Date(2014, 12, 31).comingYearEnd should be(Date(2015, 12, 31))
+  }
+
+  "comingYearBegin" should "work" in {
+    Date(2014, 8, 2).comingYearBegin should be(Date(2015, 1, 1))
+    Date(2015, 1, 1).comingYearBegin should be(Date(2016, 1, 1))
+  }
+
+  "pastDayOfYear" should "work" in {
+    Date(2014, 4, 10).pastDayOfYear(FirstDayOfYear) should be(Date(2014, 1, 1))
+    Date(2014, 1, 1).pastDayOfYear(FirstDayOfYear) should be(Date(2013, 1, 1))
+  }
+
+  "pastYearEnd" should "work" in {
+    Date(2014, 8, 2).pastYearEnd should be(Date(2013, 12, 31))
+    Date(2013, 12, 31).pastYearEnd should be(Date(2012, 12, 31))
+  }
+
+  "pastYearBegin" should "work" in {
+    Date(2014, 8, 2).pastYearBegin should be(Date(2014, 1, 1))
+    Date(2014, 1, 1).pastYearBegin should be(Date(2013, 1, 1))
+  }
+
+  "Date.monthsBetween" should "work" in {
     Date.monthsBetween((2014, 4, 10) -> (2014, 4, 20)) should be(0)
     Date.monthsBetween((2014, 4, 10) -> (2014, 5, 10)) should be(1)
     Date.monthsBetween((2014, 4, 10) -> (2014, 6,  9)) should be(1)
@@ -131,10 +240,6 @@ class DateSpec extends FlatSpec with Matchers {
   "daysInTheSameMonthWithSameWeekday" should "work" in {
     val expected = Seq(Date(2014, 2, 5), Date(2014, 2, 12), Date(2014, 2, 19), Date(2014, 2, 26))
     Date(2014, 2, 12).sameWeekdaysOfMonth should be(expected)
-  }
-
-  "nextMonthPosition" should "work" in {
-    Date(2014, 1, 5).nextMonthPosition(LastWeekdayOfMonth(Tuesday)) should be(Date(2014, 1, 28))
   }
 
   "DateRange" should "work" in {

@@ -158,7 +158,7 @@ object Recurrence {
 
     override def recur(from: Date, to: Date) = weekday match {
       case None => recurForward(from, to, freq)
-      case Some(wd) => recurForward(from.nextWeekday(wd), to, freq)
+      case Some(wd) => recurForward((from - 1).comingWeekday(wd), to, freq)
     }
   }
 
@@ -175,7 +175,7 @@ object Recurrence {
 
     override def recur(from: Date, to: Date) = weekday match {
       case None => recurBackward(from, to, freq)
-      case Some(wd) => recurBackward(from, to.previousWeekday(wd), freq)
+      case Some(wd) => recurBackward(from, (to + 1).pastWeekday(wd), freq)
     }
   }
 
