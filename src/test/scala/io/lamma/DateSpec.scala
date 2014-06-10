@@ -108,6 +108,16 @@ class DateSpec extends FlatSpec with Matchers {
     Date(2014, 4, 10).weekday should be(Thursday)
   }
 
+  "thisWeekBegin" should "work" in {
+    Date(2014, 6, 9).thisWeekBegin should be(Date(2014, 6, 9))
+    Date(2014, 6, 12).thisWeekBegin should be(Date(2014, 6, 9))
+  }
+
+  "thisWeekEnd" should "work" in {
+    Date(2014, 6, 8).thisWeekEnd should be(Date(2014, 6, 8))
+    Date(2014, 6, 5).thisWeekEnd should be(Date(2014, 6, 8))
+  }
+
   "thisMonthBegin" should "work" in {
     Date(2014, 4, 10).thisMonthBegin should be(Date(2014, 4, 1))
     Date(2014, 4, 1).thisMonthBegin should be(Date(2014, 4, 1))

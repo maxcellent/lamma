@@ -90,6 +90,24 @@ case class Date(yyyy: Int, mm: Int, dd: Int) extends Ordered[Date] {
   lazy val monthSinceBC = yyyy * 12 + mm
 
   /**
+   * The first day of this week (Monday) <br>
+   *   http://en.wikipedia.org/wiki/ISO_week_date
+   */
+  lazy val thisWeekBegin = (this + 1).pastMonday
+
+  /**
+   * The last day of this week (Sunday) <br>
+   *   http://en.wikipedia.org/wiki/ISO_week_date
+   */
+  lazy val thisWeekEnd = (this - 1).comingSunday
+
+  /**
+   * an iterable for every day in this week <br>
+   *   (week starts on Monday according to ISO 8601: http://en.wikipedia.org/wiki/ISO_week_date)
+   */
+  lazy val thisWeed = thisWeekBegin to thisWeekEnd
+
+  /**
    * first day of the month
    */
   lazy val thisMonthBegin = Date(yyyy, mm, 1)
