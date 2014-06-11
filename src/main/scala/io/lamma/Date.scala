@@ -325,9 +325,17 @@ case class Date(yyyy: Int, mm: Int, dd: Int) extends Ordered[Date] {
 
   /**
    * generate a DateRange iterable, which can be used similar as scala.collection.immutable.Range. eg, <br>
+   * both <em>this</em> date and <em>that</em> date included <br>
    *   for (d <- Date(2014, 5, 5) to Date(2014, 5, 10)) println(d)
    */
   def to(that: Date) = DateRange(this, that)
+
+  /**
+   * generate a DateRange iterable, which can be used similar as scala.collection.immutable.Range. eg, <br>
+   * <em>this</em> date is included but <em>that</em> date isn't <br>
+   *   for (d <- Date(2014, 5, 5) until Date(2014, 5, 10)) println(d)
+   */
+  def until(that: Date) = DateRange(this, that - 1)
 
   /**
    * standard ISO string in yyyy-mm-dd. eg, 2014-05-23 or 2014-11-02
