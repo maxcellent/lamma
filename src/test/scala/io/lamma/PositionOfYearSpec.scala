@@ -2,7 +2,7 @@ package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.PositionOfYear.{NthWeekdayOfYear, NthDayOfYear}
-import io.lamma.Weekday.{Monday, Tuesday, Wednesday}
+import io.lamma.DayOfWeek.{Monday, Tuesday, Wednesday}
 
 class PositionOfYearSpec extends WordSpec with Matchers {
 
@@ -33,20 +33,20 @@ class PositionOfYearSpec extends WordSpec with Matchers {
       PositionOfYear.validate(NthWeekdayOfYear(40, Monday))
     }
 
-    "return false if weekday does not match" in {
+    "return false if dow does not match" in {
       NthWeekdayOfYear(10, Wednesday).isValidDOY(Date(2014, 3, 4)) should be(false)
     }
 
-    "return true if weekday does match" in {
+    "return true if dow does match" in {
       NthWeekdayOfYear(10, Wednesday).isValidDOY(Date(2014, 3, 5)) should be(true)
       NthWeekdayOfYear(53, Wednesday).isValidDOY(Date(2014, 12, 31)) should be(true)
     }
 
-    "return false if number of weekdays of year < n, but weekday is not the last weekday" in {
+    "return false if number of dow of year < n, but dow is not the last weekday" in {
       NthWeekdayOfYear(53, Tuesday).isValidDOY(Date(2014, 12, 23)) should be(false)
     }
 
-    "return true if number of weekdays of year < n and weekday is the last weekday" in {
+    "return true if number of dow of year < n and dow is the last dow" in {
       NthWeekdayOfYear(53, Tuesday).isValidDOY(Date(2014, 12, 30)) should be(true)
     }
   }

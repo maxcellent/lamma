@@ -2,20 +2,20 @@ package io.lammaweb
 
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.Recurrence._
-import io.lamma.Weekday.{Wednesday, Friday, Tuesday}
-import io.lamma.PositionOfMonth.LastDayOfMonth
+import io.lamma.DayOfWeek.{Wednesday, Friday, Tuesday}
+import io.lamma.DayOfMonth.LastDayOfMonth
 import io.lamma.Month.February
 import io.lamma.PositionOfYear.LastWeekdayOfYear
 import io.lamma.Anchor.PeriodEnd
 import io.lamma.StubRulePeriodBuilder._
 import io.lamma._
 import io.lamma.Anchor.OtherDate
-import io.lamma.PositionOfMonth.NthWeekdayOfMonth
+import io.lamma.DayOfMonth.NthWeekdayOfMonth
 import io.lamma.Shifter.ShiftCalendarDays
 import io.lamma.CompositeCalendar
 import io.lamma.PositionOfYear.NthMonthOfYear
 import io.lamma.Selector.ModifiedFollowing
-import io.lamma.PositionOfMonth.NthDayOfMonth
+import io.lamma.DayOfMonth.NthDayOfMonth
 import io.lamma.Selector.Forward
 import io.lamma.Shifter.ShiftWorkingDays
 
@@ -145,7 +145,7 @@ class HomepageSpec extends WordSpec with Matchers {
        * all Wednesdays are now holiday :)
        */
       case object WednesdayCalendar extends Calendar {
-        override def isHoliday(d: Date) = d.weekday == Wednesday
+        override def isHoliday(d: Date) = d.dayOfWeek == Wednesday
       }
 
       "let's use it to generate a sequence" in {

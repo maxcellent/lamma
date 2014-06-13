@@ -1,7 +1,7 @@
 package io.lamma.partial.date
 
-import io.lamma.{JavaDateUtil, Date, Weekday}
-import io.lamma.Weekday._
+import io.lamma.{JavaDateUtil, Date, DayOfWeek}
+import io.lamma.DayOfWeek._
 
 import scala.annotation.tailrec
 
@@ -26,30 +26,32 @@ private[lamma] trait WeekOps {
    */
   lazy val thisWeed = thisWeekBegin to thisWeekEnd
 
-  lazy val weekday = JavaDateUtil.dayOfWeek(this)
+  lazy val dayOfWeek = JavaDateUtil.dayOfWeek(this)
 
-  lazy val isMonday = weekday == Monday
+  lazy val isMonday = dayOfWeek == Monday
 
-  lazy val isTuesday = weekday == Tuesday
+  lazy val isTuesday = dayOfWeek == Tuesday
 
-  lazy val isWednesday = weekday == Wednesday
+  lazy val isWednesday = dayOfWeek == Wednesday
 
-  lazy val isThursday = weekday == Thursday
+  lazy val isThursday = dayOfWeek == Thursday
 
-  lazy val isFriday = weekday == Friday
+  lazy val isFriday = dayOfWeek == Friday
 
-  lazy val isSaturday = weekday == Saturday
+  lazy val isSaturday = dayOfWeek == Saturday
 
-  lazy val isSunday = weekday == Sunday
+  lazy val isSunday = dayOfWeek == Sunday
+
+  lazy val isWeekend = isSaturday || isSunday
 
   /**
-   * calculate the coming weekday excluding this date: <br>
+   * calculate the coming day of week excluding this date: <br>
    *   <br>
    *   For example: <br>
    *   Date(2014-07-05).comingWeekday(Monday) => Date(2014-07-07) <br>
    *   Date(2014-07-05).comingWeekday(Saturday) => Date(2014-07-12) // note 2014-07-05 itself is already Saturday <br>
    */
-  def comingWeekday(wd: Weekday) = WeekOps.comingWeekday(this + 1, wd)
+  def comingWeekday(wd: DayOfWeek) = WeekOps.comingWeekday(this + 1, wd)
 
   /**
    * shorthand of comingWeekday(Monday)
@@ -87,13 +89,13 @@ private[lamma] trait WeekOps {
   lazy val comingSunday = comingWeekday(Sunday)
 
   /**
-   * past weekday excluding this date<br>
+   * past day of week excluding this date<br>
    *   <br>
    *   For example: <br>
    *   Date(2014-07-05).pastWeekday(Monday) => Date(2014-06-30) <br>
    *   Date(2014-07-05).pastWeekday(Saturday) => Date(2014-06-28) // note 2014-07-05 itself is already Saturday <br>
    */
-  def pastWeekday(wd: Weekday) = WeekOps.pastWeekday(this - 1, wd)
+  def pastWeekday(wd: DayOfWeek) = WeekOps.pastWeekday(this - 1, wd)
 
   /**
    * shorthand of pastWeekday(Monday)
@@ -135,8 +137,8 @@ private[lamma] trait WeekOps {
 private object WeekOps {
 
   @tailrec
-  private def comingWeekday(d: Date, target: Weekday): Date = {
-    if (d.weekday == target) {
+  private def comingWeekday(d: Date, target: DayOfWeek): Date = {
+    if (d.dayOfWeek == target) {
       d
     } else {
       comingWeekday(d + 1, target)
@@ -144,8 +146,8 @@ private object WeekOps {
   }
 
   @tailrec
-  private def pastWeekday(d: Date, target: Weekday): Date = {
-    if (d.weekday == target) {
+  private def pastWeekday(d: Date, target: DayOfWeek): Date = {
+    if (d.dayOfWeek == target) {
       d
     } else {
       pastWeekday(d - 1, target)

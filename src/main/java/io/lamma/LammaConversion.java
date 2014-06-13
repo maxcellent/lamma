@@ -109,28 +109,28 @@ public class LammaConversion {
     }
 
     // ========== position of month ==============
-    public static PositionOfMonth firstDayOfMonth() {
-        return PositionOfMonth$.MODULE$.FirstDayOfMonth();
+    public static DayOfMonth firstDayOfMonth() {
+        return DayOfMonth$.MODULE$.FirstDayOfMonth();
     }
 
-    public static PositionOfMonth nthDayOfMonth(int n) {
-        return new PositionOfMonth.NthDayOfMonth(n);
+    public static DayOfMonth nthDayOfMonth(int n) {
+        return new DayOfMonth.NthDayOfMonth(n);
     }
 
-    public static PositionOfMonth lastDayOfMonth() {
-        return PositionOfMonth.LastDayOfMonth$.MODULE$;
+    public static DayOfMonth lastDayOfMonth() {
+        return DayOfMonth.LastDayOfMonth$.MODULE$;
     }
 
-    public static PositionOfMonth firstWeekdayOfMonth(Weekday weekday) {
-        return PositionOfMonth$.MODULE$.FirstWeekdayOfMonth(weekday);
+    public static DayOfMonth firstWeekdayOfMonth(DayOfWeek dow) {
+        return DayOfMonth$.MODULE$.FirstWeekdayOfMonth(dow);
     }
 
-    public static PositionOfMonth nthWeekdayOfMonth(int n, Weekday weekday) {
-        return new PositionOfMonth.NthWeekdayOfMonth(n, weekday);
+    public static DayOfMonth nthWeekdayOfMonth(int n, DayOfWeek dow) {
+        return new DayOfMonth.NthWeekdayOfMonth(n, dow);
     }
 
-    public static PositionOfMonth lastWeekdayOfMonth(Weekday weekday) {
-        return new PositionOfMonth.LastWeekdayOfMonth(weekday);
+    public static DayOfMonth lastWeekdayOfMonth(DayOfWeek dow) {
+        return new DayOfMonth.LastWeekdayOfMonth(dow);
     }
 
     // ========== position of year ==============
@@ -150,27 +150,27 @@ public class LammaConversion {
         return PositionOfYear.LastDayOfYear$.MODULE$;
     }
 
-    public static PositionOfYear firstWeekDayOfYear(Weekday weekday) {
-        return PositionOfYear$.MODULE$.FirstWeekDayOfYear(weekday);
+    public static PositionOfYear firstWeekDayOfYear(DayOfWeek dow) {
+        return PositionOfYear$.MODULE$.FirstWeekDayOfYear(dow);
     }
 
-    public static PositionOfYear nthWeekdayOfYear(int n, Weekday weekday) {
-        return new PositionOfYear.NthWeekdayOfYear(n, weekday);
+    public static PositionOfYear nthWeekdayOfYear(int n, DayOfWeek dow) {
+        return new PositionOfYear.NthWeekdayOfYear(n, dow);
     }
 
-    public static PositionOfYear lastWeekdayOfYear(Weekday weekday) {
-        return PositionOfYear$.MODULE$.LastWeekdayOfYear(weekday);
+    public static PositionOfYear lastWeekdayOfYear(DayOfWeek dow) {
+        return PositionOfYear$.MODULE$.LastWeekdayOfYear(dow);
     }
 
-    public static PositionOfYear firstMonthOfYear(PositionOfMonth pom) {
+    public static PositionOfYear firstMonthOfYear(DayOfMonth pom) {
         return PositionOfYear$.MODULE$.FirstMonthOfYear(pom);
     }
 
-    public static PositionOfYear nthMonthOfYear(Month m, PositionOfMonth pom) {
+    public static PositionOfYear nthMonthOfYear(Month m, DayOfMonth pom) {
         return new PositionOfYear.NthMonthOfYear(m, pom);
     }
 
-    public static PositionOfYear lastMonthOfYear(PositionOfMonth pom) {
+    public static PositionOfYear lastMonthOfYear(DayOfMonth pom) {
         return PositionOfYear$.MODULE$.LastMonthOfYear(pom);
     }
 
@@ -227,24 +227,24 @@ public class LammaConversion {
         return new Recurrence.Weeks(weeks, Recurrence.Weeks$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Weeks weeks(Weekday weekday) {
-        return Recurrence.Weeks$.MODULE$.apply(weekday);
+    public static Recurrence.Weeks weeks(DayOfWeek dow) {
+        return Recurrence.Weeks$.MODULE$.apply(dow);
     }
 
-    public static Recurrence.Weeks weeks(int weeks, Weekday weekday) {
-        return Recurrence.Weeks$.MODULE$.apply(weeks, weekday);
+    public static Recurrence.Weeks weeks(int weeks, DayOfWeek dow) {
+        return Recurrence.Weeks$.MODULE$.apply(weeks, dow);
     }
 
     public static Recurrence.WeeksBackward weeksBackward(int weeks) {
         return new Recurrence.WeeksBackward(weeks, Recurrence.WeeksBackward$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.WeeksBackward weeksBackward(Weekday weekday) {
-        return Recurrence.WeeksBackward$.MODULE$.apply(weekday);
+    public static Recurrence.WeeksBackward weeksBackward(DayOfWeek dow) {
+        return Recurrence.WeeksBackward$.MODULE$.apply(dow);
     }
 
-    public static Recurrence.WeeksBackward weeksBackward(int weeks, Weekday weekday) {
-        return Recurrence.WeeksBackward$.MODULE$.apply(weeks, weekday);
+    public static Recurrence.WeeksBackward weeksBackward(int weeks, DayOfWeek dow) {
+        return Recurrence.WeeksBackward$.MODULE$.apply(weeks, dow);
     }
 
     public static Recurrence.Months everyMonth() {
@@ -259,11 +259,11 @@ public class LammaConversion {
         return Recurrence.Months$.MODULE$.apply(n, Recurrence.Months$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Months months(PositionOfMonth pom) {
+    public static Recurrence.Months months(DayOfMonth pom) {
         return Recurrence.Months$.MODULE$.apply(pom);
     }
 
-    public static Recurrence.Months months(int n, PositionOfMonth pom) {
+    public static Recurrence.Months months(int n, DayOfMonth pom) {
         return Recurrence.Months$.MODULE$.apply(n, pom);
     }
 
@@ -271,11 +271,11 @@ public class LammaConversion {
         return Recurrence.MonthsBackward$.MODULE$.apply(n, Recurrence.MonthsBackward$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.MonthsBackward monthsBackward(PositionOfMonth pom) {
+    public static Recurrence.MonthsBackward monthsBackward(DayOfMonth pom) {
         return Recurrence.MonthsBackward$.MODULE$.apply(pom);
     }
 
-    public static Recurrence.MonthsBackward monthsBackward(int n, PositionOfMonth pom) {
+    public static Recurrence.MonthsBackward monthsBackward(int n, DayOfMonth pom) {
         return Recurrence.MonthsBackward$.MODULE$.apply(n, pom);
     }
 

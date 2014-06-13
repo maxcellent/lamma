@@ -2,9 +2,6 @@ package io.lamma
 
 import org.scalatest.{Matchers, FlatSpec}
 import Duration._
-import io.lamma.PositionOfMonth._
-import io.lamma.PositionOfYear._
-import io.lamma.Weekday._
 
 class DateSpec extends FlatSpec with Matchers {
 

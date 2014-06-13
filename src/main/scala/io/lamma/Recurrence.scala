@@ -149,40 +149,40 @@ object Recurrence {
 
   /**
    * @param n
-   * @param weekday which weekday to recur
+   * @param dow which dow to recur
    */
-  case class Weeks(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
+  case class Weeks(n: Int, dow: Option[DayOfWeek] = None) extends Recurrence {
     require(n > 0)
 
     private val freq = n * 7
 
-    override def recur(from: Date, to: Date) = weekday match {
+    override def recur(from: Date, to: Date) = dow match {
       case None => recurForward(from, to, freq)
       case Some(wd) => recurForward((from - 1).comingWeekday(wd), to, freq)
     }
   }
 
   object Weeks {
-    def apply(weekday: Weekday): Weeks = Weeks(1, weekday)
+    def apply(dow: DayOfWeek): Weeks = Weeks(1, dow)
 
-    def apply(n: Int, weekday: Weekday): Weeks = Weeks(n, Some(weekday))
+    def apply(n: Int, dow: DayOfWeek): Weeks = Weeks(n, Some(dow))
   }
 
-  case class WeeksBackward(n: Int, weekday: Option[Weekday] = None) extends Recurrence {
+  case class WeeksBackward(n: Int, dow: Option[DayOfWeek] = None) extends Recurrence {
     require(n > 0)
 
     val freq = n * 7
 
-    override def recur(from: Date, to: Date) = weekday match {
+    override def recur(from: Date, to: Date) = dow match {
       case None => recurBackward(from, to, freq)
       case Some(wd) => recurBackward(from, (to + 1).pastWeekday(wd), freq)
     }
   }
 
   object WeeksBackward {
-    def apply(weekday: Weekday): WeeksBackward = WeeksBackward(1, weekday)
+    def apply(dow: DayOfWeek): WeeksBackward = WeeksBackward(1, dow)
 
-    def apply(n: Int, weekday: Weekday): WeeksBackward = WeeksBackward(n, Some(weekday))
+    def apply(n: Int, dow: DayOfWeek): WeeksBackward = WeeksBackward(n, Some(dow))
   }
 
   // ========= monthly ========
@@ -190,7 +190,7 @@ object Recurrence {
 
   val EveryOtherMonth = Months(2)
 
-  case class Months(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
+  case class Months(n: Int, pom: Option[DayOfMonth] = None) extends Recurrence {
     require(n > 0)
 
     override def recur(from: Date, to: Date) = {
@@ -207,12 +207,12 @@ object Recurrence {
   }
 
   object Months {
-    def apply(pom: PositionOfMonth): Months = Months(1, pom)
+    def apply(pom: DayOfMonth): Months = Months(1, pom)
 
-    def apply(n: Int, pom: PositionOfMonth): Months = Months(n, Some(pom))
+    def apply(n: Int, pom: DayOfMonth): Months = Months(n, Some(pom))
   }
 
-  case class MonthsBackward(n: Int, pom: Option[PositionOfMonth] = None) extends Recurrence {
+  case class MonthsBackward(n: Int, pom: Option[DayOfMonth] = None) extends Recurrence {
     require(n > 0)
 
     override def recur(from: Date, to: Date) = {
@@ -229,9 +229,9 @@ object Recurrence {
   }
 
   object MonthsBackward {
-    def apply(pom: PositionOfMonth): MonthsBackward = MonthsBackward(1, pom)
+    def apply(pom: DayOfMonth): MonthsBackward = MonthsBackward(1, pom)
 
-    def apply(n: Int, pom: PositionOfMonth): MonthsBackward = MonthsBackward(n, Some(pom))
+    def apply(n: Int, pom: DayOfMonth): MonthsBackward = MonthsBackward(n, Some(pom))
   }
 
   // ========= yearly ==========

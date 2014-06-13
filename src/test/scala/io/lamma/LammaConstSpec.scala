@@ -4,13 +4,13 @@ import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import LammaConst._
-import io.lamma.Weekday._
+import io.lamma.DayOfWeek._
 import io.lamma.Month._
 
 @RunWith(classOf[JUnitRunner])
 class LammaConstSpec extends FlatSpec with Matchers {
 
-   "WeekDay" should "match lamma version" in {
+   "DateOfWeek" should "match lamma version" in {
      MONDAY should be(Monday)
      TUESDAY should be(Tuesday)
      WEDNESDAY should be(Wednesday)

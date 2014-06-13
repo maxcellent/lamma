@@ -6,7 +6,7 @@ import Duration._
  * for each PositionOfMonth implementation
  * Lamma expect there is one and only one day match the criteria
  */
-trait PositionOfMonth {
+trait DayOfMonth {
 
   /**
    * @return true if the input date is valid to the currently defined position of month
@@ -15,8 +15,8 @@ trait PositionOfMonth {
 
 }
 
-object PositionOfMonth {
-  def validate(pom: PositionOfMonth) = {
+object DayOfMonth {
+  def validate(pom: DayOfMonth) = {
 
     def validate(yyyy: Int, mm: Int) = {
       val start = Date(yyyy, mm, 1)
@@ -38,7 +38,7 @@ object PositionOfMonth {
 
   val FirstDayOfMonth = NthDayOfMonth(1)
 
-  case class NthDayOfMonth(n: Int) extends PositionOfMonth {
+  case class NthDayOfMonth(n: Int) extends DayOfMonth {
     require(n > 0 && n <= 31, "Day of month is valid from 1 to 31")
 
     override def isValidDOM(d: Date) = if (n > d.maxDayOfMonth) {
@@ -48,17 +48,17 @@ object PositionOfMonth {
     }
   }
 
-  case object LastDayOfMonth extends PositionOfMonth {
+  case object LastDayOfMonth extends DayOfMonth {
     override def isValidDOM(d: Date) = d.isLastDayOfMonth
   }
 
-  def FirstWeekdayOfMonth(weekday: Weekday) = NthWeekdayOfMonth(1, weekday)
+  def FirstWeekdayOfMonth(dow: DayOfWeek) = NthWeekdayOfMonth(1, dow)
 
-  case class NthWeekdayOfMonth(n: Int, weekday: Weekday) extends PositionOfMonth {
+  case class NthWeekdayOfMonth(n: Int, dow: DayOfWeek) extends DayOfMonth {
     require(n > 0 && n <= 5, "Week of month is valid from 1 to 5")
 
     override def isValidDOM(d: Date) = {
-      if (d.weekday == weekday) {
+      if (d.dayOfWeek == dow) {
         if (d.sameWeekdaysOfMonth.size < n) {
           d.sameWeekdaysOfMonth.last == d
         } else {
@@ -70,10 +70,10 @@ object PositionOfMonth {
     }
   }
 
-  case class LastWeekdayOfMonth(weekday: Weekday) extends PositionOfMonth {
-    override def isValidDOM(d: Date) = d.weekday == weekday && d.sameWeekdaysOfMonth.last == d
+  case class LastWeekdayOfMonth(dow: DayOfWeek) extends DayOfMonth {
+    override def isValidDOM(d: Date) = d.dayOfWeek == dow && d.sameWeekdaysOfMonth.last == d
   }
 }
 
-class InvalidPositionOfMonthException(pom: PositionOfMonth, failingYear: Int, failingMonth: Int, result: List[Date])
+class InvalidPositionOfMonthException(pom: DayOfMonth, failingYear: Int, failingMonth: Int, result: List[Date])
   extends RuntimeException(s"${pom.toString} does not work for $failingYear-$failingMonth. Please make sure there is one and only one day matches for each month. Actual result: $result")

@@ -3,7 +3,7 @@ package io.lamma.demo;
 import com.google.common.collect.Lists;
 import io.lamma.Date;
 import io.lamma.Lamma4j;
-import io.lamma.PositionOfMonth;
+import io.lamma.DayOfMonth;
 import org.junit.Test;
 
 import java.util.List;
@@ -56,7 +56,7 @@ public class Sequence2Test {
     /**
      * match first day in Feb, 3rd day for other months
      */
-    static class MyPositionOfMonth implements PositionOfMonth {
+    static class MyPositionOfMonth implements DayOfMonth {
 
         @Override
         public boolean isValidDOM(Date d) {

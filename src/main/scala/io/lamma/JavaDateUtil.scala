@@ -3,7 +3,7 @@ package io.lamma
 import java.util.{Calendar => JCalendar, TimeZone}
 import JCalendar._
 import io.lamma.Duration.{YearDuration, MonthDuration, WeekDuration, DayDuration}
-import io.lamma.Weekday._
+import io.lamma.DayOfWeek._
 
 /**
  * all operations requiring java.util.Date are maintained here
@@ -100,7 +100,7 @@ object JavaDateUtil {
     }
   }
 
-  def dayOfWeek(d: Date): Weekday = calendar(d).get(DAY_OF_WEEK) match {
+  def dayOfWeek(d: Date): DayOfWeek = calendar(d).get(DAY_OF_WEEK) match {
     case 1 => Sunday
     case 2 => Monday
     case 3 => Tuesday

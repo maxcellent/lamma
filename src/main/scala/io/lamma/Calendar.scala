@@ -1,6 +1,6 @@
 package io.lamma
 
-import io.lamma.Weekday.{Sunday, Saturday}
+import io.lamma.DayOfWeek.{Sunday, Saturday}
 
 trait Calendar {
 
@@ -67,7 +67,7 @@ object SimpleCalendar {
  */
 case object WeekendCalendar extends Calendar {
   override def isHoliday(d: Date) = {
-    d.weekday == Saturday || d.weekday == Sunday
+    d.dayOfWeek == Saturday || d.dayOfWeek == Sunday
   }
 }
 

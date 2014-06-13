@@ -3,19 +3,19 @@ package io.lamma;
 public class LammaConst {
 
     // =========== weekdays ==========
-    public static final Weekday MONDAY = Weekday.Monday$.MODULE$;
+    public static final DayOfWeek MONDAY = DayOfWeek.Monday$.MODULE$;
 
-    public static final Weekday TUESDAY = Weekday.Tuesday$.MODULE$;
+    public static final DayOfWeek TUESDAY = DayOfWeek.Tuesday$.MODULE$;
 
-    public static final Weekday WEDNESDAY = Weekday.Wednesday$.MODULE$;
+    public static final DayOfWeek WEDNESDAY = DayOfWeek.Wednesday$.MODULE$;
 
-    public static final Weekday THURSDAY = Weekday.Thursday$.MODULE$;
+    public static final DayOfWeek THURSDAY = DayOfWeek.Thursday$.MODULE$;
 
-    public static final Weekday FRIDAY = Weekday.Friday$.MODULE$;
+    public static final DayOfWeek FRIDAY = DayOfWeek.Friday$.MODULE$;
 
-    public static final Weekday SATURDAY = Weekday.Saturday$.MODULE$;
+    public static final DayOfWeek SATURDAY = DayOfWeek.Saturday$.MODULE$;
 
-    public static final Weekday SUNDAY = Weekday.Sunday$.MODULE$;
+    public static final DayOfWeek SUNDAY = DayOfWeek.Sunday$.MODULE$;
 
     // ============ months ==========
     public static final Month JANUARY = Month.January$.MODULE$;

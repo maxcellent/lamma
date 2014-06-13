@@ -1,15 +1,15 @@
 package io.lamma.demo
 
 import org.scalatest.{Matchers, WordSpec}
-import io.lamma.{WeekendCalendar, PositionOfMonth, Lamma, Date}
+import io.lamma.{WeekendCalendar, DayOfMonth, Lamma, Date}
 import io.lamma.Recurrence.{MonthsBackward, Years, Months, Weeks}
-import io.lamma.Weekday.{Friday, Tuesday}
-import io.lamma.PositionOfMonth._
+import io.lamma.DayOfWeek.{Friday, Tuesday}
+import io.lamma.DayOfMonth._
 import io.lamma.PositionOfYear._
 import io.lamma.Month.February
-import io.lamma.PositionOfMonth.NthWeekdayOfMonth
+import io.lamma.DayOfMonth.NthWeekdayOfMonth
 import io.lamma.PositionOfYear.NthMonthOfYear
-import io.lamma.PositionOfMonth.NthDayOfMonth
+import io.lamma.DayOfMonth.NthDayOfMonth
 import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 import io.lamma.Selector.Forward
 
@@ -17,7 +17,7 @@ import io.lamma.Selector.Forward
  * this class covers all scala code used in Tutorial 2: Advanced Sequence Generation
  */
 class Sequence2Spec extends WordSpec with Matchers {
-  "you can specify weekday when generating with Weeks or WeeksBackward" in {
+  "you can specify day of week when generating with Weeks or WeeksBackward" in {
     val expected = Date(2014, 5, 13) :: Date(2014, 6, 3) :: Date(2014, 6, 24) :: Nil
     Lamma.sequence(Date(2014, 5, 10), Date(2014, 7, 1), Weeks(3, Tuesday)) should be(expected)
   }
@@ -27,7 +27,7 @@ class Sequence2Spec extends WordSpec with Matchers {
     Lamma.sequence(Date(2014, 5, 1), Date(2014, 7, 30), Months(1, NthDayOfMonth(10))) should be(expected)
   }
 
-  "you can also select weekday inside a month" in {
+  "you can also select day of week inside a month" in {
     val expected = Date(2014, 5, 9) :: Date(2014, 7, 11) :: Date(2014, 9, 12) :: Nil
     Lamma.sequence(Date(2014, 5, 1), Date(2014, 9, 30), Months(2, NthWeekdayOfMonth(2, Friday))) should be(expected)
   }
@@ -46,7 +46,7 @@ class Sequence2Spec extends WordSpec with Matchers {
     /**
      * match first day in Feb, 3rd day for other months
      */
-    case object MyPositionOfMonth extends PositionOfMonth {
+    case object MyPositionOfMonth extends DayOfMonth {
       override def isValidDOM(d: Date) = {
         if (d.month == February) {
           d.dd == 1

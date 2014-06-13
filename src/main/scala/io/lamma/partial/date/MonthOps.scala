@@ -1,7 +1,7 @@
 package io.lamma.partial.date
 
-import io.lamma.PositionOfMonth._
-import io.lamma.{JavaDateUtil, Month, PositionOfMonth, Date}
+import io.lamma.DayOfMonth._
+import io.lamma.{JavaDateUtil, Month, DayOfMonth, Date}
 
 import scala.annotation.tailrec
 
@@ -19,7 +19,7 @@ private[lamma] trait MonthOps {
 
   lazy val isLastDayOfMonth = dd == maxDayOfMonth
 
-  lazy val dayOfMonth = JavaDateUtil.dayOfMonth(this)
+  lazy val dayOfMonth = dd
 
   /**
    * first day of the month
@@ -37,15 +37,15 @@ private[lamma] trait MonthOps {
   lazy val thisMonth = thisMonthBegin to thisMonthEnd
 
   /**
-   * Every day in the same month with same weekday <br>
-   * eg, if this.weekday == Wednesday, then this is a list of all Wednesday in the same month
+   * Every day in the same month with same dow <br>
+   * eg, if this.dayOfWeek == Wednesday, then this is a list of all Wednesday in the same month
    */
-  lazy val sameWeekdaysOfMonth = thisMonth.filter(_.weekday == weekday).toList
+  lazy val sameWeekdaysOfMonth = thisMonth.filter(_.dayOfWeek == dayOfWeek).toList
 
   /**
    * coming day of month excluding this date
    */
-  def comingDayOfMonth(pom: PositionOfMonth) = MonthOps.comingDayOfMonth(this + 1, pom)
+  def comingDayOfMonth(pom: DayOfMonth) = MonthOps.comingDayOfMonth(this + 1, pom)
 
   /**
    * shorthand of comingDayOfMonth(LastDayOfMonth)<br>
@@ -66,7 +66,7 @@ private[lamma] trait MonthOps {
   /**
    * past day of month excluding this date
    */
-  def pastDayOfMonth(pom: PositionOfMonth) = MonthOps.pastDayOfMonth(this - 1, pom)
+  def pastDayOfMonth(pom: DayOfMonth) = MonthOps.pastDayOfMonth(this - 1, pom)
 
   /**
    * shorthand of pastDayOfMonth(LastDayOfMonth)<br>
@@ -87,7 +87,7 @@ private[lamma] trait MonthOps {
 
 private object MonthOps {
   @tailrec
-  private def comingDayOfMonth(d: Date, pom: PositionOfMonth): Date = {
+  private def comingDayOfMonth(d: Date, pom: DayOfMonth): Date = {
     if (pom.isValidDOM(d)) {
       d
     } else {
@@ -96,7 +96,7 @@ private object MonthOps {
   }
 
   @tailrec
-  private def pastDayOfMonth(d: Date, pom: PositionOfMonth): Date = {
+  private def pastDayOfMonth(d: Date, pom: DayOfMonth): Date = {
     if (pom.isValidDOM(d)) {
       d
     } else {

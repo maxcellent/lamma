@@ -4,7 +4,7 @@ import org.scalatest.{Matchers, WordSpec}
 import io.lamma._
 import io.lamma.Anchor.PeriodEnd
 import io.lamma.Recurrence._
-import io.lamma.PositionOfMonth.LastDayOfMonth
+import io.lamma.DayOfMonth.LastDayOfMonth
 import io.lamma.StubRulePeriodBuilder.LongEnd
 import io.lamma.Anchor.OtherDate
 import io.lamma.Shifter.ShiftWorkingDays

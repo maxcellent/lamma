@@ -1,7 +1,7 @@
 package io.lamma.partial.date
 
 import io.lamma.Date
-import io.lamma.PositionOfMonth.NthDayOfMonth
+import io.lamma.DayOfMonth.NthDayOfMonth
 import org.scalatest.{Matchers, FlatSpec}
 
 class MonthOpsSpec extends FlatSpec with Matchers {

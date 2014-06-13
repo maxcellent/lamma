@@ -2,8 +2,8 @@ package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.Recurrence._
-import io.lamma.PositionOfMonth.{LastDayOfMonth, LastWeekdayOfMonth}
-import io.lamma.Weekday.{Tuesday, Friday}
+import io.lamma.DayOfMonth.{LastDayOfMonth, LastWeekdayOfMonth}
+import io.lamma.DayOfWeek.{Tuesday, Friday}
 import io.lamma.PositionOfYear.{LastDayOfYear, NthWeekdayOfYear}
 import io.lamma.Shifter.{ShiftCalendarDays, NoShift, ShiftWorkingDays}
 
@@ -162,12 +162,12 @@ class RecurrenceSpec extends WordSpec with Matchers {
       Weeks(Tuesday) should be(Weeks(1, Some(Tuesday)))
     }
 
-    "generate end days if weekday is NOT defined" in {
+    "generate end days if dow is NOT defined" in {
       val expected = Date(2014, 4, 24) :: Nil
       Weeks(2).periodEndDays(Date(2014, 4, 11), Date(2014, 5, 1)) should be(expected)
     }
 
-    "generate end days if weekday is already defined" in {
+    "generate end days if dow is already defined" in {
       val expected = Date(2014,4,11) :: Date(2014,4,25) :: Nil
       Weeks(2, Some(Friday)).periodEndDays(Date(2014, 4, 10), Date(2014, 5, 1)) should be(expected)
     }
@@ -179,12 +179,12 @@ class RecurrenceSpec extends WordSpec with Matchers {
       WeeksBackward(Tuesday) should be(WeeksBackward(1, Some(Tuesday)))
     }
 
-    "generate end days if weekday is NOT defined" in {
+    "generate end days if dow is NOT defined" in {
       val expected = Date(2014, 4, 16) :: Date(2014, 4, 30) :: Nil
       WeeksBackward(2).periodEndDays(Date(2014, 4, 10), Date(2014, 4, 30)) should be(expected)
     }
 
-    "generate end days if weekday is already defined" in {
+    "generate end days if dow is already defined" in {
       val expected = Date(2014,4,18) :: Date(2014, 5, 2) :: Nil
       WeeksBackward(2, Some(Friday)).periodEndDays(Date(2014, 4, 10), Date(2014, 5, 2)) should be(expected)
     }

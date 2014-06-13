@@ -33,10 +33,10 @@ private[lamma] trait YearOps {
   lazy val thisYear = thisYearBegin to thisYearEnd
 
   /**
-   * Every day in the same year with same weekday <br>
-   * eg, if this.weekday == Wednesday, then this is a list of all Wednesday in the same year
+   * Every day in the same year with same dow <br>
+   * eg, if this.dayOfWeek == Wednesday, then this is a list of all Wednesday in the same year
    */
-  lazy val sameWeekdaysOfYear = thisYear.filter(_.weekday == weekday).toList
+  lazy val sameWeekdaysOfYear = thisYear.filter(_.dayOfWeek == dayOfWeek).toList
 
   /**
    * coming day of year excluding this date

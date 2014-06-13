@@ -49,13 +49,13 @@ object PositionOfYear {
     override def isValidDOY(d: Date) = d.isLastDayOfYear
   }
 
-  def FirstWeekDayOfYear(weekday: Weekday) = NthWeekdayOfYear(1, weekday)
+  def FirstWeekDayOfYear(dow: DayOfWeek) = NthWeekdayOfYear(1, dow)
 
-  case class NthWeekdayOfYear(n: Int, weekday: Weekday) extends PositionOfYear {
+  case class NthWeekdayOfYear(n: Int, dow: DayOfWeek) extends PositionOfYear {
     require(n > 0 && n <= 53, "Weekday of year is valid from 1 to 53")
     
     override def isValidDOY(d: Date) = {
-      if (d.weekday == weekday) {
+      if (d.dayOfWeek == dow) {
         if (d.sameWeekdaysOfYear.size < n) {
           d.sameWeekdaysOfYear.last == d
         } else {
@@ -67,15 +67,15 @@ object PositionOfYear {
     }
   }
 
-  def LastWeekdayOfYear(weekday: Weekday) = NthWeekdayOfYear(53, weekday)
+  def LastWeekdayOfYear(weekday: DayOfWeek) = NthWeekdayOfYear(53, weekday)
 
-  def FirstMonthOfYear(pom: PositionOfMonth) = NthMonthOfYear(January, pom)
+  def FirstMonthOfYear(pom: DayOfMonth) = NthMonthOfYear(January, pom)
 
-  case class NthMonthOfYear(m: Month, pom: PositionOfMonth) extends PositionOfYear {
+  case class NthMonthOfYear(m: Month, pom: DayOfMonth) extends PositionOfYear {
     override def isValidDOY(d: Date) = d.month == m && pom.isValidDOM(d)
   }
 
-  def LastMonthOfYear(pom: PositionOfMonth) = NthMonthOfYear(December, pom)
+  def LastMonthOfYear(pom: DayOfMonth) = NthMonthOfYear(December, pom)
 }
 
 class InvalidPositionOfYearException(poy: PositionOfYear, failingYear: Int, result: List[Date])
