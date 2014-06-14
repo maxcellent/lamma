@@ -84,9 +84,9 @@ class Sequence2Spec extends WordSpec with Matchers {
     Lamma.sequence(Date(2014, 1, 1), Date(2014, 1, 1), Months(6)) should(be(List(Date(2014, 1, 1))))
   }
 
-  "exception will be thrown when start date is before end date" in {
-    intercept[IllegalArgumentException] {
-      Lamma.sequence(Date(2014, 1, 1), Date(2013, 12, 31))
-    }
-  }
+//  "exception will be thrown when start date is before end date" in {
+//    intercept[IllegalArgumentException] {
+//      Lamma.sequence(Date(2014, 1, 1), Date(2013, 12, 31))
+//    }
+//  }
 }

@@ -116,8 +116,8 @@ public class Sequence2Test {
         assertThat(actual, is(expected));
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testExceptionCase() {
-        Lamma4j.sequence(date(2014, 1, 1), date(2013, 12, 31));
-    }
+//    @Test(expected = IllegalArgumentException.class)
+//    public void testExceptionCase() {
+//        Lamma4j.sequence(date(2014, 1, 1), date(2013, 12, 31));
+//    }
 }

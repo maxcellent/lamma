@@ -35,10 +35,16 @@ import collection.JavaConverters._
 case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: HolidayRule = NoHoliday, loc: Option[Locator] = None) extends Traversable[Date] {
   require(step.n != 0, "step cannot be 0.")
 
-  override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step, holiday)
+//  override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step, holiday)
+
+  lazy val generatedDates = if (step.n > 0) {
+    Lamma.sequence(from, to, pattern, holiday = holiday)
+  } else {
+    Lamma.sequence(to, from, pattern, holiday = holiday).reverse
+  }
 
   // TODO: need to refactor all recurrence patterns, REMOVE all backward patterns
-//  override def foreach[U](f: Date => U) = Lamma.sequence(from, to, pattern, holiday = holiday).foreach(f)
+  override def foreach[U](f: Date => U) = generatedDates.foreach(f)
 
   def by(step: Int): DateRange = by(step days)
 
@@ -53,26 +59,32 @@ case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: Holi
   }
 
   // TODO: test
+  // TODO: refactor out backward recurrence patterns so that we don't need to adjust From / To date accordingly
   /**
    * create recurrence pattern based on step and location
+   *
+   * aFrom: adjusted from
+   * aTo: adjusted to date
    */
-  lazy val pattern = step match {
-    case DayDuration(n) if n > 0 => Days(n)
-    case DayDuration(n) if n < 0 => DaysBackward(-n)
+  lazy val (aFrom, aTo, pattern) = step match {
+    case DayDuration(n) if n > 0 => (from, to, Days(n))
+    case DayDuration(n) if n < 0 => (to, from, DaysBackward(-n))
     case WeekDuration(n) if n > 0 =>
-      loc match {
+      val pattern = loc match {
         case Some(Locator(_, Some(dow), _)) => Weeks(n, dow)
         case _ => Weeks(n)
       }
+      (from, to, pattern)
     case WeekDuration(n) if n < 0 =>
-      loc match {
+      val pattern = loc match {
         case Some(Locator(_, Some(dow), _)) => WeeksBackward(-n, dow)
         case _ => WeeksBackward(-n)
       }
-    case MonthDuration(n) if n > 0 => Months(n, loc.map(_.pom))
-    case MonthDuration(n) if n < 0 => MonthsBackward(-n, loc.map(_.pom))
-    case YearDuration(n) if n > 0 => Years(n, loc.map(_.poy))
-    case YearDuration(n) if n < 0 => YearsBackward(-n, loc.map(_.poy))
+      (to, from, pattern)
+    case MonthDuration(n) if n > 0 => (from, to, Months(n, loc.map(_.pom)))
+    case MonthDuration(n) if n < 0 => (to, from, MonthsBackward(-n, loc.map(_.pom)))
+    case YearDuration(n) if n > 0 => (from, to, Years(n, loc.map(_.poy)))
+    case YearDuration(n) if n < 0 => (to, from, YearsBackward(-n, loc.map(_.poy)))
   }
 
   /**
