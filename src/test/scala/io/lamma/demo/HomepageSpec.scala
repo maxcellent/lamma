@@ -2,7 +2,7 @@ package io.lammaweb
 
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.Recurrence._
-import io.lamma.DayOfWeek.{Wednesday, Friday, Tuesday}
+import io.lamma.{Wednesday, Friday, Tuesday}
 import io.lamma.DayOfMonth.LastDayOfMonth
 import io.lamma.Month.February
 import io.lamma.PositionOfYear.LastWeekdayOfYear

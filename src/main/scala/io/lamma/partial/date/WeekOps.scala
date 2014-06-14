@@ -1,7 +1,6 @@
 package io.lamma.partial.date
 
-import io.lamma.{JavaDateUtil, Date, DayOfWeek}
-import io.lamma.DayOfWeek._
+import io.lamma._
 
 import scala.annotation.tailrec
 

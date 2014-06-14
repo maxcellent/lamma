@@ -2,7 +2,6 @@ package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.PositionOfYear.{NthWeekdayOfYear, NthDayOfYear}
-import io.lamma.DayOfWeek.{Monday, Tuesday, Wednesday}
 
 class PositionOfYearSpec extends WordSpec with Matchers {
 

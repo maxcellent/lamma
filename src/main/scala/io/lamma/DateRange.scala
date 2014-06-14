@@ -1,5 +1,7 @@
 package io.lamma
 
+import io.lamma.Duration.{WeekDuration}
+
 import annotation.tailrec
 import collection.JavaConverters._
 
@@ -39,6 +41,14 @@ case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: Holi
   def by(step: Duration) = this.copy(step = step)
 
   def except(holiday: HolidayRule) = this.copy(holiday = this.holiday and holiday)
+
+  def on(dow: DayOfWeek) = {
+    require(step.isInstanceOf[WeekDuration])
+  }
+
+  def on(dom: DayOfMonth) = {
+
+  }
 
   /**
    * return an instance of java.lang.Iterable can be used in java for comprehension

@@ -10,7 +10,7 @@ import LammaConst._
 import DayOfMonth._
 import PositionOfYear._
 import Recurrence._
-import io.lamma.DayOfWeek._
+import io.lamma._
 import io.lamma.Month.February
 import io.lamma.DayOfMonth.LastWeekdayOfMonth
 import io.lamma.DayOfMonth.NthWeekdayOfMonth

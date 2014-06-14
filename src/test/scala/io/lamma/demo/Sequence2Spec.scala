@@ -1,9 +1,7 @@
 package io.lamma.demo
 
 import org.scalatest.{Matchers, WordSpec}
-import io.lamma.{Weekends, DayOfMonth, Lamma, Date}
 import io.lamma.Recurrence.{MonthsBackward, Years, Months, Weeks}
-import io.lamma.DayOfWeek.{Friday, Tuesday}
 import io.lamma.DayOfMonth._
 import io.lamma.PositionOfYear._
 import io.lamma.Month.February
@@ -12,6 +10,7 @@ import io.lamma.PositionOfYear.NthMonthOfYear
 import io.lamma.DayOfMonth.NthDayOfMonth
 import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 import io.lamma.Selector.Forward
+import io.lamma._
 
 /**
  * this class covers all scala code used in Tutorial 2: Advanced Sequence Generation

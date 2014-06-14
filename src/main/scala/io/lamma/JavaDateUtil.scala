@@ -3,7 +3,6 @@ package io.lamma
 import java.util.{Calendar => JCalendar, TimeZone}
 import JCalendar._
 import io.lamma.Duration.{YearDuration, MonthDuration, WeekDuration, DayDuration}
-import io.lamma.DayOfWeek._
 
 /**
  * all operations requiring java.util.Date are maintained here

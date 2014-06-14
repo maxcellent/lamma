@@ -1,7 +1,6 @@
 package io.lamma.partial.date
 
-import io.lamma.Date
-import io.lamma.DayOfWeek.{Monday, Thursday}
+import io.lamma._
 import org.scalatest.{Matchers, FlatSpec}
 
 class WeekOpsSpec extends FlatSpec with Matchers {

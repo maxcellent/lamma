@@ -4,7 +4,6 @@ import org.scalatest.{Matchers, FlatSpec}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import LammaConst._
-import io.lamma.DayOfWeek._
 import io.lamma.Month._
 
 @RunWith(classOf[JUnitRunner])

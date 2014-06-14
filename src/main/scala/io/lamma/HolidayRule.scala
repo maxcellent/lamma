@@ -1,7 +1,5 @@
 package io.lamma
 
-import io.lamma.DayOfWeek.{Sunday, Saturday}
-
 trait HolidayRule {
 
   def isHoliday(d: Date): Boolean
@@ -33,6 +31,7 @@ trait HolidayRule {
     }
   }
 
+  // TODO: tests
   /**
    * merge holiday with another holiday, NoHoliday will be ignored
    */
