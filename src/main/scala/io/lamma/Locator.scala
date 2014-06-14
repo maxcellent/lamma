@@ -1,49 +1,11 @@
 package io.lamma
-//
-///**
-// *
-// */
-//sealed trait Locator
-//
-//trait Ordinal {
-//  val n: Int
-//
-//  def day = DayOrdinal(n)
-//
-//  def week = WeekOrdinal(n)
-//
-//  def month = MonthOrdinal(n)
-//
-//  def year = YearOrdinal(n)
-//}
-//
-///**
-// * every nth day
-// */
-//case class DayOrdinal(n: Int) extends Ordinal
-//
-///**
-// * every nth week
-// * every nth week + day of week (eg, nth Friday)
-// */
-//case class WeekOrdinal(n: Int, dow: Option[DayOfWeek] = None) extends Ordinal {
-//  def of(month: Month) = ???
-//}
-//
-///**
-// * every nth month
-// * every nth month + day of month
-// */
-//case class MonthOrdinal(n: Int, dom: Option[DayOfMonth] = None) extends Ordinal
-//
-//case class YearOrdinal(n: Int, doy: Option[PositionOfYear] = None) extends Ordinal
 
-import Locator._
 import io.lamma.DayOfMonth.{NthWeekdayOfMonth, LastWeekdayOfMonth, NthDayOfMonth, LastDayOfMonth}
 import io.lamma.PositionOfYear.{NthWeekdayOfYear, NthMonthOfYear, NthDayOfYear, LastDayOfYear}
+import Locator._
 
 /**
- * cannot be created directly
+ * This should not be created directly
  *
  * @param pos if dow is defined, it means ordinal of weekday
  * @param dow
