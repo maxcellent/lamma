@@ -22,13 +22,11 @@ import io.lamma.Locator.Last
 package object lamma {
 
   // =========== durations ===============
-//  val day = 1 day
-//
-//  val week = 1 week
-//
-//  val month = 1 month
-//
-//  val year = 1 year
+  val week = 1 week
+
+  val month = 1 month
+
+  val year = 1 year
 
   implicit class DurationInt(n: Int) {
 

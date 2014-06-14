@@ -1,7 +1,10 @@
 package io.lamma
 
 import io.lamma.Duration.{YearDuration, WeekDuration, MonthDuration, DayDuration}
+import io.lamma.Locator.Last
 import io.lamma.Recurrence._
+import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
+import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 
 import annotation.tailrec
 import collection.JavaConverters._
@@ -32,25 +35,37 @@ import collection.JavaConverters._
  *  @param holiday  a collection of Holiday calendars
  *
  */
-case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: HolidayRule = NoHoliday, loc: Option[Locator] = None) extends Traversable[Date] {
+case class DateRange(from: Date,
+                     to: Date,
+                     step: Duration = 1 day,
+                     holiday: HolidayRule = NoHoliday,
+                     loc: Option[Locator] = None,
+                     shifters: List[Shifter] = Nil,
+                     selectors: List[Selector] = Nil) extends Traversable[Date] {
   require(step.n != 0, "step cannot be 0.")
 
 //  override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step, holiday)
 
-  lazy val generatedDates = if (step.n > 0) {
+  lazy val generated = if (step.n > 0) {
     Lamma.sequence(from, to, pattern, holiday = holiday)
   } else {
     Lamma.sequence(to, from, pattern, holiday = holiday).reverse
   }
 
+  lazy val shifted = generated.map { d => (d /: shifters) {_ shift _} }
+
+  lazy val selected = shifted.map { d => (d /: selectors) {_ select _} }
+
   // TODO: need to refactor all recurrence patterns, REMOVE all backward patterns
-  override def foreach[U](f: Date => U) = generatedDates.foreach(f)
+  override def foreach[U](f: Date => U) = selected.foreach(f)
 
   def by(step: Int): DateRange = by(step days)
 
   def by(step: Duration) = this.copy(step = step)
 
   def except(holiday: HolidayRule) = this.copy(holiday = this.holiday and holiday)
+
+  def on(dow: DayOfWeek): DateRange = on(Locator(Last, dow = Some(dow)))
 
   // TODO: test
   def on(loc: Locator) = {
@@ -91,6 +106,18 @@ case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: Holi
    * return an instance of java.lang.Iterable can be used in java for comprehension
    */
   lazy val javaIterable = this.toIterable.asJava
+
+  def shift(d: Int) = this.copy(shifters = shifters :+ ShiftCalendarDays(d))
+
+  def shift(d: Int, holiday: HolidayRule) = this.copy(shifters = shifters :+ ShiftWorkingDays(d, holiday))
+
+  def forward(holiday: HolidayRule) = this.copy(selectors = selectors :+ Forward(holiday))
+
+  def backward(holiday: HolidayRule) = this.copy(selectors = selectors :+ Backward(holiday))
+
+  def modifiedFollowing(holiday: HolidayRule) = this.copy(selectors = selectors :+ ModifiedFollowing(holiday))
+
+  def modifiedPreceding(holiday: HolidayRule) = this.copy(selectors = selectors :+ ModifiedPreceding(holiday))
 }
 
 object DateRange {

@@ -22,6 +22,10 @@ case class Date(yyyy: Int, mm: Int, dd: Int)
 
   def -(that: Date) = JavaDateUtil.daysBetween(that, this)
 
+  def shift(shifter: Shifter) = shifter.shift(this)
+
+  def select(selector: Selector) = selector.select(this)
+
   /**
    * select the date with forward convention for given holiday.
    *
