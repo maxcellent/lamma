@@ -1,7 +1,7 @@
 package io.lamma
 
 import io.lamma.Duration.{YearDuration, WeekDuration, MonthDuration, DayDuration}
-import io.lamma.Locator.Every
+import io.lamma.Recurrence._
 
 import annotation.tailrec
 import collection.JavaConverters._
@@ -32,10 +32,13 @@ import collection.JavaConverters._
  *  @param holiday  a collection of Holiday calendars
  *
  */
-case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: HolidayRule = NoHoliday, loc: Locator = Locator(Every)) extends Traversable[Date] {
+case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: HolidayRule = NoHoliday, loc: Option[Locator] = None) extends Traversable[Date] {
   require(step.n != 0, "step cannot be 0.")
 
   override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step, holiday)
+
+  // TODO: need to refactor all recurrence patterns, REMOVE all backward patterns
+//  override def foreach[U](f: Date => U) = Lamma.sequence(from, to, pattern, holiday = holiday).foreach(f)
 
   def by(step: Int): DateRange = by(step days)
 
@@ -46,11 +49,30 @@ case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: Holi
   // TODO: test
   def on(loc: Locator) = {
     // TODO: validation, make sure the locator is compatible with the step
-    this.copy(loc = loc)
+    this.copy(loc = Some(loc))
   }
 
-  def on(dom: DayOfMonth) = {
-
+  // TODO: test
+  /**
+   * create recurrence pattern based on step and location
+   */
+  lazy val pattern = step match {
+    case DayDuration(n) if n > 0 => Days(n)
+    case DayDuration(n) if n < 0 => DaysBackward(-n)
+    case WeekDuration(n) if n > 0 =>
+      loc match {
+        case Some(Locator(_, Some(dow), _)) => Weeks(n, dow)
+        case _ => Weeks(n)
+      }
+    case WeekDuration(n) if n < 0 =>
+      loc match {
+        case Some(Locator(_, Some(dow), _)) => WeeksBackward(-n, dow)
+        case _ => WeeksBackward(-n)
+      }
+    case MonthDuration(n) if n > 0 => Months(n, loc.map(_.pom))
+    case MonthDuration(n) if n < 0 => MonthsBackward(-n, loc.map(_.pom))
+    case YearDuration(n) if n > 0 => Years(n, loc.map(_.poy))
+    case YearDuration(n) if n < 0 => YearsBackward(-n, loc.map(_.poy))
   }
 
   /**
