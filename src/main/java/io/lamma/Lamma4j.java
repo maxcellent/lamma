@@ -27,8 +27,8 @@ public class Lamma4j {
         return javaList(result);
     }
 
-    public static java.util.List<Date> sequence(Date from, Date to, Recurrence pattern, Shifter shifter, Selector selector, Calendar calendar) {
-        List<Date> result = Lamma.sequence(from, to, pattern, shifter, selector, calendar);
+    public static java.util.List<Date> sequence(Date from, Date to, Recurrence pattern, Shifter shifter, Selector selector, HolidayRule rule) {
+        List<Date> result = Lamma.sequence(from, to, pattern, shifter, selector, rule);
         return javaList(result);
     }
 

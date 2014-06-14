@@ -63,7 +63,7 @@ object Recurrence {
 
   val EveryOtherDay = Days(2)
 
-  def EveryWorkingDay(cal: Calendar = WeekendCalendar) = Days.workingDays(1, cal)
+  def EveryWorkingDay(cal: HolidayRule = Weekends) = Days.workingDays(1, cal)
 
   /**
    * @param shifter only ShiftCalendarDays / ShiftWorkingDays are allowed
@@ -97,7 +97,7 @@ object Recurrence {
       Days(ShiftCalendarDays(n))
     }
 
-    def workingDays(n: Int, cal: Calendar = WeekendCalendar) = {
+    def workingDays(n: Int, cal: HolidayRule = Weekends) = {
       require(n > 0, s"Number of working days must be a positive number. Otherwise an infinite loop is likely to happen. Actual value = $n")
       Days(ShiftWorkingDays(n, cal), Forward(cal))
     }
@@ -136,7 +136,7 @@ object Recurrence {
       DaysBackward(ShiftCalendarDays(-n))
     }
 
-    def workingDays(n: Int, cal: Calendar = WeekendCalendar) = {
+    def workingDays(n: Int, cal: HolidayRule = Weekends) = {
       require(n > 0, s"Number of working days must be a positive number. Otherwise an infinite loop is likely to happen. Actual value = $n")
       DaysBackward(ShiftWorkingDays(-n, cal), Backward(cal))
     }

@@ -34,24 +34,24 @@ public class LammaConversion {
         return new Date(yyyy, mm, dd);
     }
 
-    public static Calendar noHoliday() {
+    public static HolidayRule noHoliday() {
         return NoHoliday$.MODULE$;
     }
 
-    public static Calendar weekendCalendar() {
-        return WeekendCalendar$.MODULE$;
+    public static HolidayRule weekendCalendar() {
+        return Weekends$.MODULE$;
     }
 
-    public static Calendar simpleCalendar(Date ... holidays) {
+    public static HolidayRule simpleCalendar(Date ... holidays) {
         return new SimpleCalendar(iterable(holidays).<Date>toSet());
     }
 
-    public static Calendar simpleCalendar(Set<Date> holidays) {
+    public static HolidayRule simpleCalendar(Set<Date> holidays) {
         return new SimpleCalendar(holidays);
     }
 
-    public static Calendar compositeCalendar(Calendar ... calendars) {
-        return CompositeCalendar$.MODULE$.apply(iterable(calendars).<Calendar>toSeq());
+    public static HolidayRule compositeCalendar(HolidayRule... calendars) {
+        return CompositeHolidayRules$.MODULE$.apply(iterable(calendars).<HolidayRule>toSeq());
     }
 
     // ========= shifters =========
@@ -67,8 +67,8 @@ public class LammaConversion {
         return new Shifter.ShiftWorkingDays(days, Shifter.ShiftWorkingDays$.MODULE$.apply$default$2());
     }
 
-    public static Shifter shiftWorkingDays(int days, Calendar calendar) {
-        return new Shifter.ShiftWorkingDays(days, calendar);
+    public static Shifter shiftWorkingDays(int days, HolidayRule rule) {
+        return new Shifter.ShiftWorkingDays(days, rule);
     }
 
     // ========= selectors =========
@@ -80,32 +80,32 @@ public class LammaConversion {
         return new Selector.Forward(Selector.Forward$.MODULE$.apply$default$1());
     }
 
-    public static Selector forward(Calendar calendar) {
-        return new Selector.Forward(calendar);
+    public static Selector forward(HolidayRule rule) {
+        return new Selector.Forward(rule);
     }
 
     public static Selector backward() {
         return new Selector.Backward(Selector.Backward$.MODULE$.apply$default$1());
     }
 
-    public static Selector backward(Calendar calendar) {
-        return new Selector.Backward(calendar);
+    public static Selector backward(HolidayRule rule) {
+        return new Selector.Backward(rule);
     }
 
     public static Selector modifiedFollowing() {
         return new Selector.ModifiedFollowing(Selector.ModifiedFollowing$.MODULE$.apply$default$1());
     }
 
-    public static Selector modifiedFollowing(Calendar calendar) {
-        return new Selector.ModifiedFollowing(calendar);
+    public static Selector modifiedFollowing(HolidayRule rule) {
+        return new Selector.ModifiedFollowing(rule);
     }
 
     public static Selector modifiedPreceding() {
         return new Selector.ModifiedPreceding(Selector.ModifiedPreceding$.MODULE$.apply$default$1());
     }
 
-    public static Selector modifiedPreceding(Calendar calendar) {
-        return new Selector.ModifiedPreceding(calendar);
+    public static Selector modifiedPreceding(HolidayRule rule) {
+        return new Selector.ModifiedPreceding(rule);
     }
 
     // ========== position of month ==============
@@ -191,16 +191,16 @@ public class LammaConversion {
         return Recurrence$.MODULE$.EveryWorkingDay(Recurrence$.MODULE$.EveryWorkingDay$default$1());
     }
 
-    public static Recurrence.Days everyWorkingDay(Calendar calendar) {
-        return Recurrence$.MODULE$.EveryWorkingDay(calendar);
+    public static Recurrence.Days everyWorkingDay(HolidayRule rule) {
+        return Recurrence$.MODULE$.EveryWorkingDay(rule);
     }
 
     public static Recurrence.Days workingDays(int days) {
         return Recurrence.Days$.MODULE$.workingDays(days, Recurrence.Days$.MODULE$.workingDays$default$2());
     }
 
-    public static Recurrence.Days workingDays(int days, Calendar calendar) {
-        return Recurrence.Days$.MODULE$.workingDays(days, calendar);
+    public static Recurrence.Days workingDays(int days, HolidayRule rule) {
+        return Recurrence.Days$.MODULE$.workingDays(days, rule);
     }
 
     public static Recurrence.DaysBackward daysBackward(int days) {
@@ -211,8 +211,8 @@ public class LammaConversion {
         return Recurrence.DaysBackward$.MODULE$.workingDays(days, Recurrence.Days$.MODULE$.workingDays$default$2());
     }
 
-    public static Recurrence.DaysBackward workingDaysBackward(int days, Calendar calendar) {
-        return Recurrence.DaysBackward$.MODULE$.workingDays(days, calendar);
+    public static Recurrence.DaysBackward workingDaysBackward(int days, HolidayRule rule) {
+        return Recurrence.DaysBackward$.MODULE$.workingDays(days, rule);
     }
 
     public static Recurrence.Weeks everyWeek() {

@@ -20,6 +20,15 @@ import io.lamma.Duration.{YearDuration, MonthDuration, WeekDuration, DayDuration
  */
 package object lamma {
 
+  // =========== durations ===============
+  val day = 1 day
+
+  val week = 1 week
+
+  val month = 1 month
+
+  val year = 1 year
+
   implicit class DurationInt(n: Int) {
 
     def day = DayDuration(n)
@@ -39,4 +48,8 @@ package object lamma {
     def years = YearDuration(n)
   }
 
+  // =========== holiday rules ==================
+  val weekends = new HolidayRule {
+    override def isHoliday(d: Date) = d.isWeekend
+  }
 }

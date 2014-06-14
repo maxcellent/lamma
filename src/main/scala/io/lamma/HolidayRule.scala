@@ -2,13 +2,13 @@ package io.lamma
 
 import io.lamma.DayOfWeek.{Sunday, Saturday}
 
-trait Calendar {
+trait HolidayRule {
 
   def isHoliday(d: Date): Boolean
 
   def shiftWorkingDay(d: Date, by: Int) = {
     require(by != 0)
-    Calendar.shiftWorkingDay(d, by, this)
+    HolidayRule.shiftWorkingDay(d, by, this)
   }
 
   def forward(d: Date) = if (isHoliday(d)) shiftWorkingDay(d, 1) else d
@@ -36,18 +36,18 @@ trait Calendar {
   /**
    * merge holiday with another holiday, NoHoliday will be ignored
    */
-  def and(that: Calendar) = (this, that) match {
+  def and(that: HolidayRule) = (this, that) match {
     case (NoHoliday, cal2) => cal2
     case (cal1, NoHoliday) => cal1
-    case (CompositeCalendar(cals1), CompositeCalendar(cals2)) => CompositeCalendar(cals1 ++ cals2)
-    case (CompositeCalendar(cals1), cal2) => CompositeCalendar(cals1 + cal2)
-    case (cal1, CompositeCalendar(cals2)) => CompositeCalendar(cals2 + cal1)
-    case (cal1, cal2) => CompositeCalendar(cal1, cal2)
+    case (CompositeHolidayRules(cals1), CompositeHolidayRules(cals2)) => CompositeHolidayRules(cals1 ++ cals2)
+    case (CompositeHolidayRules(cals1), cal2) => CompositeHolidayRules(cals1 + cal2)
+    case (cal1, CompositeHolidayRules(cals2)) => CompositeHolidayRules(cals2 + cal1)
+    case (cal1, cal2) => CompositeHolidayRules(cal1, cal2)
   }
 }
 
-object Calendar {
-  def shiftWorkingDay(d: Date, by: Int, cal: Calendar): Date = by match {
+object HolidayRule {
+  def shiftWorkingDay(d: Date, by: Int, cal: HolidayRule): Date = by match {
     case 0 => d
     case by if by < 0 =>
       val nextDay = d - 1
@@ -62,11 +62,11 @@ object Calendar {
   }
 }
 
-case object NoHoliday extends Calendar {
+case object NoHoliday extends HolidayRule {
   override def isHoliday(d: Date) = false
 }
 
-case class SimpleCalendar(holidays: Set[Date]) extends Calendar {
+case class SimpleCalendar(holidays: Set[Date]) extends HolidayRule {
   override def isHoliday(d: Date) = holidays.contains(d)
 }
 
@@ -77,23 +77,24 @@ object SimpleCalendar {
 /**
  * consider all weekend as holiday
  */
-case object WeekendCalendar extends Calendar {
+@deprecated
+case object Weekends extends HolidayRule {
   override def isHoliday(d: Date) = {
     d.dayOfWeek == Saturday || d.dayOfWeek == Sunday
   }
 }
 
 /**
- * a calendar composed of multiple calendars.
- * this calendar will treat a day as holiday if any one of underlying calendar returns true
+ * a holiday rule composed of multiple holiday rules.
+ * this rule will treat a day as holiday if any one of underlying rule returns true
  *
  * @param cals list of calendars
  */
-case class CompositeCalendar(cals: Set[Calendar] = Set.empty) extends Calendar {
+case class CompositeHolidayRules(cals: Set[HolidayRule] = Set.empty) extends HolidayRule {
   override def isHoliday(d: Date) = cals.exists(_.isHoliday(d))
 }
 
-object CompositeCalendar {
-  def apply(cals: Calendar*) = new CompositeCalendar(cals.toSet)
+object CompositeHolidayRules {
+  def apply(cals: HolidayRule*) = new CompositeHolidayRules(cals.toSet)
 }
 

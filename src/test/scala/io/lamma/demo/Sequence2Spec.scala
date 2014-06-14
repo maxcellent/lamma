@@ -1,7 +1,7 @@
 package io.lamma.demo
 
 import org.scalatest.{Matchers, WordSpec}
-import io.lamma.{WeekendCalendar, DayOfMonth, Lamma, Date}
+import io.lamma.{Weekends, DayOfMonth, Lamma, Date}
 import io.lamma.Recurrence.{MonthsBackward, Years, Months, Weeks}
 import io.lamma.DayOfWeek.{Friday, Tuesday}
 import io.lamma.DayOfMonth._
@@ -67,12 +67,12 @@ class Sequence2Spec extends WordSpec with Matchers {
 
   "you can also shift by working days" in {
     val expected = Date(2014,1,29) :: Date(2014,2,26) :: Date(2014,3,27) :: Nil
-    Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(1, LastDayOfMonth), ShiftWorkingDays(-2, WeekendCalendar)) should be(expected)
+    Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(1, LastDayOfMonth), ShiftWorkingDays(-2, Weekends)) should be(expected)
   }
 
   "you can further select result date after the date is shifted" in {
     val expected = Date(2014,1,29) :: Date(2014,2,26) :: Date(2014,3,31) :: Nil   // last date is different
-    Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(1, LastDayOfMonth), ShiftCalendarDays(-2), Forward(WeekendCalendar)) should be(expected)
+    Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(1, LastDayOfMonth), ShiftCalendarDays(-2), Forward(Weekends)) should be(expected)
   }
 
   // some edge cases

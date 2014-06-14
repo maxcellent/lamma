@@ -29,7 +29,7 @@ import collection.JavaConverters._
  *  @param holiday  a collection of Holiday calendars
  *
  */
-case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: Calendar = NoHoliday) extends Traversable[Date] {
+case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: HolidayRule = NoHoliday) extends Traversable[Date] {
   require(step.n != 0, "step cannot be 0.")
 
   override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step, holiday)
@@ -38,7 +38,7 @@ case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: Cale
 
   def by(step: Duration) = this.copy(step = step)
 
-  def except(holiday: Calendar) = this.copy(holiday = this.holiday and holiday)
+  def except(holiday: HolidayRule) = this.copy(holiday = this.holiday and holiday)
 
   /**
    * return an instance of java.lang.Iterable can be used in java for comprehension
@@ -48,7 +48,7 @@ case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: Cale
 
 object DateRange {
   @tailrec
-  private def eachDate[U](f: Date => U, current: Date, to: Date, step: Duration, holiday: Calendar): Unit = {
+  private def eachDate[U](f: Date => U, current: Date, to: Date, step: Duration, holiday: HolidayRule): Unit = {
     if ((step.n > 0 && current <= to) || (step.n < 0 && current >= to)) {
       if (! holiday.isHoliday(current)) {
         f(current)

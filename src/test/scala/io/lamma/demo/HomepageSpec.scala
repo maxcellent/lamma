@@ -12,7 +12,7 @@ import io.lamma._
 import io.lamma.Anchor.OtherDate
 import io.lamma.DayOfMonth.NthWeekdayOfMonth
 import io.lamma.Shifter.ShiftCalendarDays
-import io.lamma.CompositeCalendar
+import io.lamma.CompositeHolidayRules
 import io.lamma.PositionOfYear.NthMonthOfYear
 import io.lamma.Selector.ModifiedFollowing
 import io.lamma.DayOfMonth.NthDayOfMonth
@@ -26,7 +26,7 @@ class HomepageSpec extends WordSpec with Matchers {
 
   "homepage: schedule generation for a 37m tenor FCN" in {
     // a real business calendar will be used in production
-    val cal = WeekendCalendar
+    val cal = Weekends
     val couponDate = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(cal))
     val settlementDate = DateDef("SettlementDate", relativeTo = OtherDate("CouponDate"), shifter = ShiftWorkingDays(2, cal))
 
@@ -139,12 +139,12 @@ class HomepageSpec extends WordSpec with Matchers {
     }
   }
 
-  "topic: holiday calendar" should {
-    "you can customize your own calendar" should {
+  "topic: holiday rule" should {
+    "you can customize your own holiday rule" should {
       /**
        * all Wednesdays are now holiday :)
        */
-      case object WednesdayCalendar extends Calendar {
+      case object WednesdayCalendar extends HolidayRule {
         override def isHoliday(d: Date) = d.dayOfWeek == Wednesday
       }
 
@@ -158,7 +158,7 @@ class HomepageSpec extends WordSpec with Matchers {
       val ukHolidays2014 = SimpleCalendar(Date(2014, 1, 1), Date(2014, 4, 18), Date(2014, 4, 21),
         Date(2014, 5, 5), Date(2014, 5, 26), Date(2014, 8, 25), Date(2014, 12, 25), Date(2014, 12, 26))
 
-      val composedCalendar = CompositeCalendar(ukHolidays2014, WeekendCalendar)
+      val composedCalendar = CompositeHolidayRules(ukHolidays2014, Weekends)
 
       // 2014-04-18 is a UK holiday
       // 2014-04-20 is Sunday

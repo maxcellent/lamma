@@ -53,7 +53,7 @@ class LammaConversionSpec extends FlatSpec with Matchers {
   }
 
   "weekendCalendar" should "be the same as lamma version" in {
-    weekendCalendar() should be(WeekendCalendar)
+    weekendCalendar() should be(Weekends)
   }
 
   "simpeCalendar" should "be the same as lamma version" in {
@@ -63,7 +63,7 @@ class LammaConversionSpec extends FlatSpec with Matchers {
   }
 
   "compositeCalendar" should "be the same as lamma version" in {
-    compositeCalendar(noHoliday(), weekendCalendar()) should be(CompositeCalendar(NoHoliday, WeekendCalendar))
+    compositeCalendar(noHoliday(), weekendCalendar()) should be(CompositeHolidayRules(NoHoliday, Weekends))
   }
 
   // ========== shifters ==========

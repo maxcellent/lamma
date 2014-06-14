@@ -1,6 +1,6 @@
 package io.lamma.demo
 
-import io.lamma.{WeekendCalendar, Lamma, Date}
+import io.lamma.{Weekends, Lamma, Date}
 import io.lamma.Recurrence._
 import org.scalatest.{WordSpec, Matchers}
 
@@ -56,7 +56,7 @@ class Sequence1Spec extends WordSpec with Matchers {
 
   "working day generation is also supported, in this case WeekendCalendar is used which means all weekend will be skipped" in {
     val expected = Date(2015, 10, 5) :: Date(2015, 10, 12) :: Date(2015, 10, 19) :: Nil
-    Lamma.sequence(Date(2015, 10, 5), Date(2015, 10, 19), Days.workingDays(5, WeekendCalendar)) should be(expected)
+    Lamma.sequence(Date(2015, 10, 5), Date(2015, 10, 19), Days.workingDays(5, Weekends)) should be(expected)
   }
 
   "recurring backward" in {

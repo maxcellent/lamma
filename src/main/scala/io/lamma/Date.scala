@@ -23,32 +23,32 @@ case class Date(yyyy: Int, mm: Int, dd: Int)
   def -(that: Date) = JavaDateUtil.daysBetween(that, this)
 
   /**
-   * select the date with forward convention for given calendar.
+   * select the date with forward convention for given holiday.
    *
    * @see io.lamma.Selector.Forward
    */
-  def forward(cal: Calendar) = Forward(cal).select(this)
+  def forward(cal: HolidayRule) = Forward(cal).select(this)
 
   /**
-   * select the date with backward convention for given calendar.
+   * select the date with backward convention for given holiday.
    *
    * @see io.lamma.Selector.Backward
    */
-  def backward(cal: Calendar) = Backward(cal).select(this)
+  def backward(cal: HolidayRule) = Backward(cal).select(this)
 
   /**
-   * select the date with modified following convention for given calendar.
+   * select the date with modified following convention for given holiday.
    *
    * @see io.lamma.Selector.ModifiedFollowing
    */
-  def modifiedFollowing(cal: Calendar) = ModifiedFollowing(cal).select(this)
+  def modifiedFollowing(cal: HolidayRule) = ModifiedFollowing(cal).select(this)
 
   /**
-   * select the date with modified preceding convention for given calendar.
+   * select the date with modified preceding convention for given holiday.
    *
    * @see io.lamma.Selector.ModifiedPreceding
    */
-  def modifiedPreceding(cal: Calendar) = ModifiedPreceding(cal).select(this)
+  def modifiedPreceding(cal: HolidayRule) = ModifiedPreceding(cal).select(this)
 
   def compare(that: Date) = this.toISOString.compare(that.toISOString)
 

@@ -21,9 +21,9 @@ object Shifter {
 
   /**
    * @param n number of working days to shift
-   * @param cal holiday calendar applied to determine working days
+   * @param cal holiday rule applied to determine working days
    */
-  case class ShiftWorkingDays(n: Int, cal: Calendar = WeekendCalendar) extends Shifter {
+  case class ShiftWorkingDays(n: Int, cal: HolidayRule = Weekends) extends Shifter {
     override def shift(d: Date) = cal.shiftWorkingDay(d, n)
   }
 }
