@@ -1,6 +1,7 @@
 package io.lamma
 
-import io.lamma.Duration.{WeekDuration}
+import io.lamma.Duration.{YearDuration, WeekDuration, MonthDuration, DayDuration}
+import io.lamma.Locator.Every
 
 import annotation.tailrec
 import collection.JavaConverters._
@@ -31,7 +32,7 @@ import collection.JavaConverters._
  *  @param holiday  a collection of Holiday calendars
  *
  */
-case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: HolidayRule = NoHoliday) extends Traversable[Date] {
+case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: HolidayRule = NoHoliday, loc: Locator = Locator(Every)) extends Traversable[Date] {
   require(step.n != 0, "step cannot be 0.")
 
   override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step, holiday)
@@ -42,8 +43,10 @@ case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: Holi
 
   def except(holiday: HolidayRule) = this.copy(holiday = this.holiday and holiday)
 
-  def on(dow: DayOfWeek) = {
-    require(step.isInstanceOf[WeekDuration])
+  // TODO: test
+  def on(loc: Locator) = {
+    // TODO: validation, make sure the locator is compatible with the step
+    this.copy(loc = loc)
   }
 
   def on(dom: DayOfMonth) = {

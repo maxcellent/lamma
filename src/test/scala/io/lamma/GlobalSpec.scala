@@ -1,7 +1,7 @@
 package io.lamma
 
 import io.lamma.Locator.{Last, Ordinal}
-import io.lamma.Month.{February, January}
+import io.lamma.Month.February
 import org.scalatest.{Matchers, WordSpec}
 
 /**
@@ -30,36 +30,46 @@ class GlobalSpec extends WordSpec with Matchers {
     //   on ordinal weekday + month (eg, on first Friday of June) => Locator(First, Some(Friday), Some(June))
     //   on last weekday + month (eg, on last Saturday of June)   => Locator(Last, Some(Saturday), Some(June))
 
+    // used in both month and year location
     "work with nth day" in {
       val expected = Locator(Ordinal(10))
       10 th day should be(expected)
     }
 
-//    "work with last day of month" in {
-//      val expected = Locator(Last)
-//      val actual: Locator = last(day)
-//      actual should be(expected)
-//    }
+    "work with last day" in {
+      val expected = Locator(Last)
+      lastDay should be(expected)
+    }
 
     "work with nth weekday" in {
       val expected = Locator(Ordinal(2), Some(Friday))
       2 nd Friday should be(expected)
     }
 
-//    "work with last weekday of month" in {
-//      val expected = Locator(Last, Some(Friday))
-//      val actual = last Friday
-//      actual should be(expected)
-//    }
+    "work with last weekday" in {
+      val expected = Locator(Last, Some(Friday))
+      lastFriday should be(expected)
+    }
 
+    // used in year location
     "work with nth day of month" in {
       val expected = Locator(Ordinal(10), month = Some(February))
       10 th day of February should be(expected)
     }
 
+    "work with last day of month" in {
+      val expected = Locator(Last, month = Some(February))
+      lastDay of February should be(expected)
+    }
+
     "work with nth weekday of month" in {
       val expected = Locator(Ordinal(3), Some(Friday), Some(February))
       3 rd Friday of February should be(expected)
+    }
+
+    "work with last weekday of month" in {
+      val expected = Locator(Last, Some(Friday), Some(February))
+      lastFriday of February should be(expected)
     }
   }
 }

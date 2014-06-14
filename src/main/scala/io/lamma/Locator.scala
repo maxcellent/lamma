@@ -40,9 +40,8 @@ package io.lamma
 
 import Locator._
 
-
-
 /**
+ * cannot be created directly
  *
  * @param pos if dow is defined, it means ordinal of weekday
  * @param dow
@@ -50,6 +49,8 @@ import Locator._
  */
 case class Locator(pos: Position, dow: Option[DayOfWeek] = None, month: Option[Month] = None) {
   def of(m: Month) = this.copy(month = Some(m))
+
+  val day = this
 }
 
 object Locator {

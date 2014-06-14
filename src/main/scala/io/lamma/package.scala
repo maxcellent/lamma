@@ -1,6 +1,7 @@
 package io
 
 import io.lamma.Duration.{YearDuration, MonthDuration, WeekDuration, DayDuration}
+import io.lamma.Locator.Last
 
 /**
  * <b>Lamma schedule generator</b> is a professional financial schedule generation library. <br>
@@ -56,17 +57,16 @@ package object lamma {
   // ======== ordinal =================
 
   // this is only used as a place holder to complete expression like `10 th day`
-  case class DayKeyword()
-  val day = DayKeyword()
+  object day
 
   implicit class LocatorImplicit(n: Int) {
-    def st(d: DayKeyword) = th(d)
+    def st(d: day.type) = th(d)
 
-    def nd(d: DayKeyword) = th(d)
+    def nd(d: day.type) = th(d)
 
-    def rd(d: DayKeyword) = th(d)
+    def rd(d: day.type) = th(d)
 
-    def th(d: DayKeyword) = Locator(n)
+    def th(d: day.type) = Locator(n)
 
     def st(dow: DayOfWeek) = th(dow)
 
@@ -77,13 +77,24 @@ package object lamma {
     def th(dow: DayOfWeek) = Locator(n, dow)
   }
 
-  // this is ONLY used as a place holder to complete expression like 'last day / last Friday'
-//  case class LastKeyword() {
-//    def day = Locator(Last)
-//
-//    def apply(dow: DayOfWeek) = Locator(Last, Some(dow))
-//  }
-//  val last = LastKeyword()
 
-  val last = Int.MaxValue th day
+  // because of the way scala works
+  // we cannot make this like: last day / last Friday
+  // http://stackoverflow.com/questions/20163450/scala-does-not-take-parameters-when-chaining-method-calls-without-periods
+
+  val lastDay = Locator(Last)
+
+  val lastMonday = Locator(Last, Some(Monday))
+
+  val lastTuesday = Locator(Last, Some(Tuesday))
+
+  val lastWednesday = Locator(Last, Some(Wednesday))
+
+  val lastThursday = Locator(Last, Some(Thursday))
+
+  val lastFriday = Locator(Last, Some(Friday))
+
+  val lastSaturday = Locator(Last, Some(Saturday))
+
+  val lastSunday = Locator(Last, Some(Sunday))
 }
