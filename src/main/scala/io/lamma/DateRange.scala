@@ -26,14 +26,19 @@ import collection.JavaConverters._
  *  @param from      the start of this range.
  *  @param to        the exclusive end of the range.
  *  @param step      the step for the range, default 1
+ *  @param holiday  a collection of Holiday calendars
  *
  */
-case class DateRange(from: Date, to: Date, step: Int = 1) extends Traversable[Date] {
-  require(step != 0, "step cannot be 0.")
+case class DateRange(from: Date, to: Date, step: Duration = 1 day, holiday: Calendar = NoHoliday) extends Traversable[Date] {
+  require(step.n != 0, "step cannot be 0.")
 
-  override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step)
+  override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step, holiday)
 
-  def by(step: Int) = DateRange(from, to, step)
+  def by(step: Int): DateRange = by(step days)
+
+  def by(step: Duration) = this.copy(step = step)
+
+  def except(holiday: Calendar) = this.copy(holiday = this.holiday and holiday)
 
   /**
    * return an instance of java.lang.Iterable can be used in java for comprehension
@@ -43,10 +48,12 @@ case class DateRange(from: Date, to: Date, step: Int = 1) extends Traversable[Da
 
 object DateRange {
   @tailrec
-  private def eachDate[U](f: Date => U, current: Date, to: Date, step: Int): Unit = {
-    if ((step > 0 && current <= to) || (step < 0 && current >= to)) {
-      f(current)
-      eachDate(f, current + step, to, step)
+  private def eachDate[U](f: Date => U, current: Date, to: Date, step: Duration, holiday: Calendar): Unit = {
+    if ((step.n > 0 && current <= to) || (step.n < 0 && current >= to)) {
+      if (! holiday.isHoliday(current)) {
+        f(current)
+      }
+      eachDate(f, current + step, to, step, holiday)
     }
   }
 }

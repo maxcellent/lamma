@@ -51,7 +51,7 @@ public class LammaConversion {
     }
 
     public static Calendar compositeCalendar(Calendar ... calendars) {
-        return new CompositeCalendar(iterable(calendars).<Calendar>toSeq());
+        return CompositeCalendar$.MODULE$.apply(iterable(calendars).<Calendar>toSeq());
     }
 
     // ========= shifters =========

@@ -1,5 +1,7 @@
 package io
 
+import io.lamma.Duration.{YearDuration, MonthDuration, WeekDuration, DayDuration}
+
 /**
  * <b>Lamma schedule generator</b> is a professional financial schedule generation library. <br>
  * <br>
@@ -16,4 +18,25 @@ package io
  *
  * @see <a href="http://www.lamma.io" target="_blank">http://www.lamma.io</a> for samples and tutorials
  */
-package object lamma {}
+package object lamma {
+
+  implicit class DurationInt(n: Int) {
+
+    def day = DayDuration(n)
+
+    def days = DayDuration(n)
+
+    def week = WeekDuration(n)
+
+    def weeks = WeekDuration(n)
+
+    def month = MonthDuration(n)
+
+    def months = MonthDuration(n)
+
+    def year = YearDuration(n)
+
+    def years = YearDuration(n)
+  }
+
+}

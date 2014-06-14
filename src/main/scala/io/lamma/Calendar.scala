@@ -32,6 +32,18 @@ trait Calendar {
       forward(d)
     }
   }
+
+  /**
+   * merge holiday with another holiday, NoHoliday will be ignored
+   */
+  def and(that: Calendar) = (this, that) match {
+    case (NoHoliday, cal2) => cal2
+    case (cal1, NoHoliday) => cal1
+    case (CompositeCalendar(cals1), CompositeCalendar(cals2)) => CompositeCalendar(cals1 ++ cals2)
+    case (CompositeCalendar(cals1), cal2) => CompositeCalendar(cals1 + cal2)
+    case (cal1, CompositeCalendar(cals2)) => CompositeCalendar(cals2 + cal1)
+    case (cal1, cal2) => CompositeCalendar(cal1, cal2)
+  }
 }
 
 object Calendar {
@@ -77,7 +89,11 @@ case object WeekendCalendar extends Calendar {
  *
  * @param cals list of calendars
  */
-case class CompositeCalendar(cals: Calendar*) extends Calendar {
+case class CompositeCalendar(cals: Set[Calendar] = Set.empty) extends Calendar {
   override def isHoliday(d: Date) = cals.exists(_.isHoliday(d))
+}
+
+object CompositeCalendar {
+  def apply(cals: Calendar*) = new CompositeCalendar(cals.toSet)
 }
 
