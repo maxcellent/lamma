@@ -1,10 +1,25 @@
 package io.lamma.partial.date
 
-import io.lamma.Date
-import io.lamma.PositionOfYear._
+import io.lamma.Month.February
+import io.lamma.{DayOfYear, Date}
+import io.lamma.DayOfYear._
 import org.scalatest.{Matchers, FlatSpec}
 
 class YearOpsSpec extends FlatSpec with Matchers {
+
+  "dayOfThisYear" should "throw exception when input DayOfMonth is invalid" in {
+    val dom = new DayOfYear {
+      override def isValidDOY(d: Date) = d.dd == 29 && d.month == February
+    }
+    intercept[IllegalArgumentException] {
+      Date(2014, 4, 10).dayOfThisYear(dom)
+    }
+  }
+
+  "dayOfThisYear" should "work" in {
+    Date(2014, 4, 10).dayOfThisYear(FirstDayOfYear) should be(Date(2014, 1, 1))
+    Date(2014, 1, 1).dayOfThisYear(FirstDayOfYear) should be(Date(2014, 1, 1))
+  }
 
   "thisYearBegin" should "work" in {
     Date(2014, 4, 10).thisYearBegin should be(Date(2014, 1, 1))

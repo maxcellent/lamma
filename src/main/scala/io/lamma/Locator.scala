@@ -1,7 +1,7 @@
 package io.lamma
 
 import io.lamma.DayOfMonth.{NthWeekdayOfMonth, LastWeekdayOfMonth, NthDayOfMonth, LastDayOfMonth}
-import io.lamma.PositionOfYear.{NthWeekdayOfYear, NthMonthOfYear, NthDayOfYear, LastDayOfYear}
+import io.lamma.DayOfYear.{NthWeekdayOfYear, NthMonthOfYear, NthDayOfYear, LastDayOfYear}
 import Locator._
 
 /**
@@ -14,19 +14,21 @@ import Locator._
 case class Locator(pos: Position, dow: Option[DayOfWeek] = None, month: Option[Month] = None) {
   def of(m: Month) = this.copy(month = Some(m))
 
-  lazy val pom: DayOfMonth = (pos, dow) match {
+  // TODO: how about on matched cases
+  lazy val dom: DayOfMonth = (pos, dow) match {
     case (Ordinal(n), None) => NthDayOfMonth(n)
     case (Last, None) => LastDayOfMonth
     case (Ordinal(n), Some(dow)) => NthWeekdayOfMonth(n, dow)
     case (Last, Some(dow)) => LastWeekdayOfMonth(dow)
   }
 
-  lazy val poy = (pos, dow, month) match {
+  // TODO: how about on matched cases
+  lazy val doy = (pos, dow, month) match {
     case (Ordinal(n), None, None) => NthDayOfYear(n)
     case (Last, None, None) => LastDayOfYear
     case (Ordinal(n), Some(dow), None) => NthWeekdayOfYear(n, dow)
-    case (Last, Some(dow), None) => PositionOfYear.LastWeekdayOfYear(dow)
-    case (_, _, Some(m)) => NthMonthOfYear(m, pom)
+    case (Last, Some(dow), None) => DayOfYear.LastWeekdayOfYear(dow)
+    case (_, _, Some(m)) => NthMonthOfYear(m, dom)
   }
 }
 

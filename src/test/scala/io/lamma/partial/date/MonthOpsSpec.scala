@@ -1,10 +1,25 @@
 package io.lamma.partial.date
 
-import io.lamma.Date
+import io.lamma.{DayOfMonth, Date}
 import io.lamma.DayOfMonth.NthDayOfMonth
 import org.scalatest.{Matchers, FlatSpec}
 
 class MonthOpsSpec extends FlatSpec with Matchers {
+
+  "dayOfThisMonth" should "throw exception when input DayOfMonth is invalid" in {
+    val dom = new DayOfMonth {
+      override def isValidDOM(d: Date) = d.dd == 31
+    }
+    intercept[IllegalArgumentException] {
+      Date(2014, 4, 10).dayOfThisMonth(dom)
+    }
+  }
+
+  "dayOfThisMonth" should "work" in {
+    Date(2014, 4, 10).dayOfThisMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 9).dayOfThisMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 11).dayOfThisMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+  }
 
   "thisMonthBegin" should "work" in {
     Date(2014, 4, 10).thisMonthBegin should be(Date(2014, 4, 1))

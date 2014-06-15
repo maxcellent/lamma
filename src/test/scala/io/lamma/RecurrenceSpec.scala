@@ -3,7 +3,7 @@ package io.lamma
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.Recurrence._
 import io.lamma.DayOfMonth.{LastDayOfMonth, LastWeekdayOfMonth}
-import io.lamma.PositionOfYear.{LastDayOfYear, NthWeekdayOfYear}
+import io.lamma.DayOfYear.{LastDayOfYear, NthWeekdayOfYear}
 import io.lamma.Shifter.{ShiftCalendarDays, NoShift, ShiftWorkingDays}
 
 class RecurrenceSpec extends WordSpec with Matchers {

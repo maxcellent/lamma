@@ -8,7 +8,7 @@ import io.lamma.Shifter.NoShift
 import io.lamma.Selector._
 import LammaConst._
 import DayOfMonth._
-import PositionOfYear._
+import DayOfYear._
 import Recurrence._
 import io.lamma._
 import io.lamma.Month.February
@@ -17,13 +17,13 @@ import io.lamma.DayOfMonth.NthWeekdayOfMonth
 import io.lamma.Selector.ModifiedPreceding
 import io.lamma.Shifter.ShiftCalendarDays
 import io.lamma.Selector.Backward
-import io.lamma.PositionOfYear.NthMonthOfYear
+import io.lamma.DayOfYear.NthMonthOfYear
 import io.lamma.Selector.ModifiedFollowing
 import io.lamma.DayOfMonth.NthDayOfMonth
 import io.lamma.Selector.Forward
 import io.lamma.Shifter.ShiftWorkingDays
-import io.lamma.PositionOfYear.NthWeekdayOfYear
-import io.lamma.PositionOfYear.NthDayOfYear
+import io.lamma.DayOfYear.NthWeekdayOfYear
+import io.lamma.DayOfYear.NthDayOfYear
 import io.lamma.StubRulePeriodBuilder.{ShortEnd, LongEnd, ShortStart, LongStart}
 import io.lamma.Anchor.{PeriodEnd, PeriodStart, OtherDate}
 import com.google.common.collect.Lists

@@ -4,9 +4,7 @@ import annotation.tailrec
 import io.lamma.Selector.{Backward, Forward, SameDay}
 import io.lamma.Shifter.{NoShift, ShiftWorkingDays, ShiftCalendarDays}
 
-/**
- *
- */
+@deprecated
 trait Recurrence {
 
   /**
@@ -157,7 +155,7 @@ object Recurrence {
 
     override def recur(from: Date, to: Date) = dow match {
       case None => recurForward(from, to, freq)
-      case Some(wd) => recurForward((from - 1).comingWeekday(wd), to, freq)
+      case Some(wd) => recurForward((from - 1).comingDayOfWeek(wd), to, freq)
     }
   }
 
@@ -174,7 +172,7 @@ object Recurrence {
 
     override def recur(from: Date, to: Date) = dow match {
       case None => recurBackward(from, to, freq)
-      case Some(wd) => recurBackward(from, (to + 1).pastWeekday(wd), freq)
+      case Some(wd) => recurBackward(from, (to + 1).pastDayOfWeek(wd), freq)
     }
   }
 
@@ -238,7 +236,7 @@ object Recurrence {
 
   val EveryOtherYear = Years(2)
 
-  case class Years(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
+  case class Years(n: Int, poy: Option[DayOfYear] = None) extends Recurrence {
     require(n > 0)
 
     override def recur(from: Date, to: Date) = {
@@ -254,12 +252,12 @@ object Recurrence {
   }
 
   object Years {
-    def apply(poy: PositionOfYear): Years = Years(1, poy)
+    def apply(poy: DayOfYear): Years = Years(1, poy)
 
-    def apply(n: Int, poy: PositionOfYear): Years = Years(n, Some(poy))
+    def apply(n: Int, poy: DayOfYear): Years = Years(n, Some(poy))
   }
 
-  case class YearsBackward(n: Int, poy: Option[PositionOfYear] = None) extends Recurrence {
+  case class YearsBackward(n: Int, poy: Option[DayOfYear] = None) extends Recurrence {
     require(n > 0)
 
     override def recur(from: Date, to: Date) = {
@@ -275,9 +273,9 @@ object Recurrence {
   }
 
   object YearsBackward {
-    def apply(poy: PositionOfYear): YearsBackward = YearsBackward(1, poy)
+    def apply(poy: DayOfYear): YearsBackward = YearsBackward(1, poy)
 
-    def apply(n: Int, poy: PositionOfYear): YearsBackward = YearsBackward(n, Some(poy))
+    def apply(n: Int, poy: DayOfYear): YearsBackward = YearsBackward(n, Some(poy))
   }
 }
 

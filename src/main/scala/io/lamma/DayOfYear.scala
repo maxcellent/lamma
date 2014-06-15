@@ -3,10 +3,10 @@ package io.lamma
 import io.lamma.Month.{December, January}
 
 /**
- * for each PositionOfYear implementation
+ * for each DayOfYear implementation
  * Lamma expect there is one and only one day match the criteria in each year
  */
-trait PositionOfYear {
+trait DayOfYear {
 
   /**
    * @return true if the input date is valid to the currently defined position of year
@@ -14,9 +14,9 @@ trait PositionOfYear {
   def isValidDOY(d: Date): Boolean
 }
 
-object PositionOfYear {
+object DayOfYear {
 
-  def validate(poy: PositionOfYear) = {
+  def validate(poy: DayOfYear) = {
     def validate(yyyy: Int) = {
       val result = (Date(yyyy, 1, 1) to Date(yyyy, 12, 31)).filter(poy.isValidDOY).toList
       if (result.size != 1) {
@@ -33,7 +33,7 @@ object PositionOfYear {
 
   val SecondDayOfYear = NthDayOfYear(2)
 
-  case class NthDayOfYear(n: Int) extends PositionOfYear {
+  case class NthDayOfYear(n: Int) extends DayOfYear {
     require(n > 0 && n <= 366, "Day of year is valid from 1 to 366")
 
     override def isValidDOY(d: Date) = {
@@ -45,13 +45,13 @@ object PositionOfYear {
     }
   }
 
-  case object LastDayOfYear extends PositionOfYear {
+  case object LastDayOfYear extends DayOfYear {
     override def isValidDOY(d: Date) = d.isLastDayOfYear
   }
 
   def FirstWeekDayOfYear(dow: DayOfWeek) = NthWeekdayOfYear(1, dow)
 
-  case class NthWeekdayOfYear(n: Int, dow: DayOfWeek) extends PositionOfYear {
+  case class NthWeekdayOfYear(n: Int, dow: DayOfWeek) extends DayOfYear {
     require(n > 0 && n <= 53, "Weekday of year is valid from 1 to 53")
     
     override def isValidDOY(d: Date) = {
@@ -71,12 +71,12 @@ object PositionOfYear {
 
   def FirstMonthOfYear(pom: DayOfMonth) = NthMonthOfYear(January, pom)
 
-  case class NthMonthOfYear(m: Month, pom: DayOfMonth) extends PositionOfYear {
+  case class NthMonthOfYear(m: Month, pom: DayOfMonth) extends DayOfYear {
     override def isValidDOY(d: Date) = d.month == m && pom.isValidDOM(d)
   }
 
   def LastMonthOfYear(pom: DayOfMonth) = NthMonthOfYear(December, pom)
 }
 
-class InvalidPositionOfYearException(poy: PositionOfYear, failingYear: Int, result: List[Date])
+class InvalidPositionOfYearException(poy: DayOfYear, failingYear: Int, result: List[Date])
   extends RuntimeException(s"${poy.toString} does not work for year $failingYear. Please make sure there is one and only one day matches for each year. Actual result: $result")

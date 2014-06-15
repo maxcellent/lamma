@@ -1,9 +1,9 @@
 package io.lamma.partial.date
 
-import io.lamma.PositionOfYear._
-import io.lamma.{JavaDateUtil, PositionOfYear, Date}
+import io.lamma.DayOfYear._
+import io.lamma.{JavaDateUtil, DayOfYear, Date}
 
-import scala.annotation.tailrec
+import scala.annotation.tailrec                  
 
 private[lamma] trait YearOps {
   this: Date =>
@@ -17,6 +17,18 @@ private[lamma] trait YearOps {
 
   lazy val isLastDayOfYear = dayOfYear == maxDayOfYear
 
+  def thisDayOfYear(doy: DayOfYear) = dayOfThisYear(doy)
+
+  /**
+   * find the day of this year matching input DayOfYear <br>
+   * an IllegalArgumentException will be thrown if there is no or more than one dates.
+   */
+  def dayOfThisYear(doy: DayOfYear) = {
+    val matched = thisYear.filter(doy.isValidDOY)
+    require(matched.size == 1, s"Invalid DayOfYear: $doy. Matched dates: $matched")
+    matched.head
+  }
+  
   /**
    * first day of the year
    */
@@ -41,7 +53,7 @@ private[lamma] trait YearOps {
   /**
    * coming day of year excluding this date
    */
-  def comingDayOfYear(poy: PositionOfYear) = YearOps.comingDayOfYear(this + 1, poy)
+  def comingDayOfYear(doy: DayOfYear) = YearOps.comingDayOfYear(this + 1, doy)
 
   /**
    * shorthand of comingDayOfYear(LastDayOfYear)<br>
@@ -62,7 +74,7 @@ private[lamma] trait YearOps {
   /**
    * past day of year excluding this date
    */
-  def pastDayOfYear(poy: PositionOfYear) = YearOps.pastDayOfYear(this - 1, poy)
+  def pastDayOfYear(doy: DayOfYear) = YearOps.pastDayOfYear(this - 1, doy)
 
   /**
    * shorthand of pastDayOfYear(LastDayOfYear)<br>
@@ -84,20 +96,20 @@ private[lamma] trait YearOps {
 private object YearOps {
 
   @tailrec
-  private def comingDayOfYear(d: Date, poy: PositionOfYear): Date = {
-    if (poy.isValidDOY(d)) {
+  private def comingDayOfYear(d: Date, doy: DayOfYear): Date = {
+    if (doy.isValidDOY(d)) {
       d
     } else {
-      comingDayOfYear(d + 1, poy)
+      comingDayOfYear(d + 1, doy)
     }
   }
 
   @tailrec
-  private def pastDayOfYear(d: Date, poy: PositionOfYear): Date = {
-    if (poy.isValidDOY(d)) {
+  private def pastDayOfYear(d: Date, doy: DayOfYear): Date = {
+    if (doy.isValidDOY(d)) {
       d
     } else {
-      pastDayOfYear(d - 1, poy)
+      pastDayOfYear(d - 1, doy)
     }
   }
 }

@@ -5,7 +5,7 @@ import io.lamma.Recurrence._
 import io.lamma.{Wednesday, Friday, Tuesday}
 import io.lamma.DayOfMonth.LastDayOfMonth
 import io.lamma.Month.February
-import io.lamma.PositionOfYear.LastWeekdayOfYear
+import io.lamma.DayOfYear.LastWeekdayOfYear
 import io.lamma.Anchor.PeriodEnd
 import io.lamma.StubRulePeriodBuilder._
 import io.lamma._
@@ -13,7 +13,7 @@ import io.lamma.Anchor.OtherDate
 import io.lamma.DayOfMonth.NthWeekdayOfMonth
 import io.lamma.Shifter.ShiftCalendarDays
 import io.lamma.CompositeHolidayRules
-import io.lamma.PositionOfYear.NthMonthOfYear
+import io.lamma.DayOfYear.NthMonthOfYear
 import io.lamma.Selector.ModifiedFollowing
 import io.lamma.DayOfMonth.NthDayOfMonth
 import io.lamma.Selector.Forward

@@ -137,44 +137,44 @@ public class LammaConversion {
     }
 
     // ========== position of year ==============
-    public static PositionOfYear firstDayOfYear() {
-        return PositionOfYear$.MODULE$.FirstDayOfYear();
+    public static DayOfYear firstDayOfYear() {
+        return DayOfYear$.MODULE$.FirstDayOfYear();
     }
 
-    public static PositionOfYear secondDayOfYear() {
-        return PositionOfYear$.MODULE$.SecondDayOfYear();
+    public static DayOfYear secondDayOfYear() {
+        return DayOfYear$.MODULE$.SecondDayOfYear();
     }
 
-    public static PositionOfYear nthDayOfYear(int n) {
-        return new PositionOfYear.NthDayOfYear(n);
+    public static DayOfYear nthDayOfYear(int n) {
+        return new DayOfYear.NthDayOfYear(n);
     }
 
-    public static PositionOfYear lastDayOfYear() {
-        return PositionOfYear.LastDayOfYear$.MODULE$;
+    public static DayOfYear lastDayOfYear() {
+        return DayOfYear.LastDayOfYear$.MODULE$;
     }
 
-    public static PositionOfYear firstWeekDayOfYear(DayOfWeek dow) {
-        return PositionOfYear$.MODULE$.FirstWeekDayOfYear(dow);
+    public static DayOfYear firstWeekDayOfYear(DayOfWeek dow) {
+        return DayOfYear$.MODULE$.FirstWeekDayOfYear(dow);
     }
 
-    public static PositionOfYear nthWeekdayOfYear(int n, DayOfWeek dow) {
-        return new PositionOfYear.NthWeekdayOfYear(n, dow);
+    public static DayOfYear nthWeekdayOfYear(int n, DayOfWeek dow) {
+        return new DayOfYear.NthWeekdayOfYear(n, dow);
     }
 
-    public static PositionOfYear lastWeekdayOfYear(DayOfWeek dow) {
-        return PositionOfYear$.MODULE$.LastWeekdayOfYear(dow);
+    public static DayOfYear lastWeekdayOfYear(DayOfWeek dow) {
+        return DayOfYear$.MODULE$.LastWeekdayOfYear(dow);
     }
 
-    public static PositionOfYear firstMonthOfYear(DayOfMonth pom) {
-        return PositionOfYear$.MODULE$.FirstMonthOfYear(pom);
+    public static DayOfYear firstMonthOfYear(DayOfMonth pom) {
+        return DayOfYear$.MODULE$.FirstMonthOfYear(pom);
     }
 
-    public static PositionOfYear nthMonthOfYear(Month m, DayOfMonth pom) {
-        return new PositionOfYear.NthMonthOfYear(m, pom);
+    public static DayOfYear nthMonthOfYear(Month m, DayOfMonth pom) {
+        return new DayOfYear.NthMonthOfYear(m, pom);
     }
 
-    public static PositionOfYear lastMonthOfYear(DayOfMonth pom) {
-        return PositionOfYear$.MODULE$.LastMonthOfYear(pom);
+    public static DayOfYear lastMonthOfYear(DayOfMonth pom) {
+        return DayOfYear$.MODULE$.LastMonthOfYear(pom);
     }
 
     // ========== recurrence pattern ==============
@@ -294,11 +294,11 @@ public class LammaConversion {
         return Recurrence.Years$.MODULE$.apply(n, Recurrence.Years$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Years years(PositionOfYear poy) {
+    public static Recurrence.Years years(DayOfYear poy) {
         return Recurrence.Years$.MODULE$.apply(poy);
     }
 
-    public static Recurrence.Years years(int n, PositionOfYear poy) {
+    public static Recurrence.Years years(int n, DayOfYear poy) {
         return Recurrence.Years$.MODULE$.apply(n, poy);
     }
 
@@ -306,11 +306,11 @@ public class LammaConversion {
         return Recurrence.YearsBackward$.MODULE$.apply(n, Recurrence.YearsBackward$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.YearsBackward yearsBackward(PositionOfYear poy) {
+    public static Recurrence.YearsBackward yearsBackward(DayOfYear poy) {
         return Recurrence.YearsBackward$.MODULE$.apply(poy);
     }
 
-    public static Recurrence.YearsBackward yearsBackward(int n, PositionOfYear poy) {
+    public static Recurrence.YearsBackward yearsBackward(int n, DayOfYear poy) {
         return Recurrence.YearsBackward$.MODULE$.apply(n, poy);
     }
 

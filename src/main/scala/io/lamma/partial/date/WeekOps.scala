@@ -50,42 +50,42 @@ private[lamma] trait WeekOps {
    *   Date(2014-07-05).comingWeekday(Monday) => Date(2014-07-07) <br>
    *   Date(2014-07-05).comingWeekday(Saturday) => Date(2014-07-12) // note 2014-07-05 itself is already Saturday <br>
    */
-  def comingWeekday(wd: DayOfWeek) = WeekOps.comingWeekday(this + 1, wd)
+  def comingDayOfWeek(wd: DayOfWeek) = WeekOps.comingWeekday(this + 1, wd)
 
   /**
    * shorthand of comingWeekday(Monday)
    */
-  lazy val comingMonday = comingWeekday(Monday)
+  lazy val comingMonday = comingDayOfWeek(Monday)
 
   /**
    * shorthand of comingWeekday(Tuesday)
    */
-  lazy val comingTuesday = comingWeekday(Tuesday)
+  lazy val comingTuesday = comingDayOfWeek(Tuesday)
 
   /**
    * shorthand of comingWeekday(Wednesday)
    */
-  lazy val comingWednesday = comingWeekday(Wednesday)
+  lazy val comingWednesday = comingDayOfWeek(Wednesday)
 
   /**
    * shorthand of comingWeekday(Thursday)
    */
-  lazy val comingThursday = comingWeekday(Thursday)
+  lazy val comingThursday = comingDayOfWeek(Thursday)
 
   /**
    * shorthand of comingWeekday(Friday)
    */
-  lazy val comingFriday = comingWeekday(Friday)
+  lazy val comingFriday = comingDayOfWeek(Friday)
 
   /**
    * shorthand of comingWeekday(Saturday)
    */
-  lazy val comingSaturday = comingWeekday(Saturday)
+  lazy val comingSaturday = comingDayOfWeek(Saturday)
 
   /**
    * shorthand of comingWeekday(Sunday)
    */
-  lazy val comingSunday = comingWeekday(Sunday)
+  lazy val comingSunday = comingDayOfWeek(Sunday)
 
   /**
    * past day of week excluding this date<br>
@@ -94,42 +94,42 @@ private[lamma] trait WeekOps {
    *   Date(2014-07-05).pastWeekday(Monday) => Date(2014-06-30) <br>
    *   Date(2014-07-05).pastWeekday(Saturday) => Date(2014-06-28) // note 2014-07-05 itself is already Saturday <br>
    */
-  def pastWeekday(wd: DayOfWeek) = WeekOps.pastWeekday(this - 1, wd)
+  def pastDayOfWeek(wd: DayOfWeek) = WeekOps.pastWeekday(this - 1, wd)
 
   /**
    * shorthand of pastWeekday(Monday)
    */
-  lazy val pastMonday = pastWeekday(Monday)
+  lazy val pastMonday = pastDayOfWeek(Monday)
 
   /**
    * shorthand of pastWeekday(Tuesday)
    */
-  lazy val pastTuesday = pastWeekday(Tuesday)
+  lazy val pastTuesday = pastDayOfWeek(Tuesday)
 
   /**
    * shorthand of pastWeekday(Wednesday)
    */
-  lazy val pastWednesday = pastWeekday(Wednesday)
+  lazy val pastWednesday = pastDayOfWeek(Wednesday)
 
   /**
    * shorthand of pastWeekday(Thursday)
    */
-  lazy val pastThursday = pastWeekday(Thursday)
+  lazy val pastThursday = pastDayOfWeek(Thursday)
 
   /**
    * shorthand of pastWeekday(Friday)
    */
-  lazy val pastFriday = pastWeekday(Friday)
+  lazy val pastFriday = pastDayOfWeek(Friday)
 
   /**
    * shorthand of pastWeekday(Saturday)
    */
-  lazy val pastSaturday = pastWeekday(Saturday)
+  lazy val pastSaturday = pastDayOfWeek(Saturday)
 
   /**
    * shorthand of pastWeekday(Sunday)
    */
-  lazy val pastSunday = pastWeekday(Sunday)
+  lazy val pastSunday = pastDayOfWeek(Sunday)
 
 }
 

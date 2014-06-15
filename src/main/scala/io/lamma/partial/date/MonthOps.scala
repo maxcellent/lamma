@@ -21,6 +21,18 @@ private[lamma] trait MonthOps {
 
   lazy val dayOfMonth = dd
 
+  def thisDayOfMonth(dom: DayOfMonth) = dayOfThisMonth(dom)
+
+  /**
+   * find the day of this month matching input DayOfMonth <br>
+   * an IllegalArgumentException will be thrown if there is no or more than one dates.
+   */
+  def dayOfThisMonth(dom: DayOfMonth) = {
+    val matched = thisMonth.filter(dom.isValidDOM)
+    require(matched.size == 1, s"Invalid DayOfMonth: $dom. Matched dates: $matched")
+    matched.head
+  }
+
   /**
    * first day of the month
    */
@@ -45,7 +57,7 @@ private[lamma] trait MonthOps {
   /**
    * coming day of month excluding this date
    */
-  def comingDayOfMonth(pom: DayOfMonth) = MonthOps.comingDayOfMonth(this + 1, pom)
+  def comingDayOfMonth(dom: DayOfMonth) = MonthOps.comingDayOfMonth(this + 1, dom)
 
   /**
    * shorthand of comingDayOfMonth(LastDayOfMonth)<br>
@@ -66,7 +78,7 @@ private[lamma] trait MonthOps {
   /**
    * past day of month excluding this date
    */
-  def pastDayOfMonth(pom: DayOfMonth) = MonthOps.pastDayOfMonth(this - 1, pom)
+  def pastDayOfMonth(dom: DayOfMonth) = MonthOps.pastDayOfMonth(this - 1, dom)
 
   /**
    * shorthand of pastDayOfMonth(LastDayOfMonth)<br>
@@ -87,20 +99,20 @@ private[lamma] trait MonthOps {
 
 private object MonthOps {
   @tailrec
-  private def comingDayOfMonth(d: Date, pom: DayOfMonth): Date = {
-    if (pom.isValidDOM(d)) {
+  private def comingDayOfMonth(d: Date, dom: DayOfMonth): Date = {
+    if (dom.isValidDOM(d)) {
       d
     } else {
-      comingDayOfMonth(d + 1, pom)
+      comingDayOfMonth(d + 1, dom)
     }
   }
 
   @tailrec
-  private def pastDayOfMonth(d: Date, pom: DayOfMonth): Date = {
-    if (pom.isValidDOM(d)) {
+  private def pastDayOfMonth(d: Date, dom: DayOfMonth): Date = {
+    if (dom.isValidDOM(d)) {
       d
     } else {
-      pastDayOfMonth(d - 1, pom)
+      pastDayOfMonth(d - 1, dom)
     }
   }
 }

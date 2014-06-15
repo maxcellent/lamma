@@ -46,13 +46,17 @@ case class DateRange(from: Date,
 
 //  override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step, holiday)
 
-  lazy val generated = if (step.n > 0) {
-    pattern.recur(from, to)
-  } else {
-    pattern.recur(to, from).reverse
-  }
+//  lazy val generated = if (step.n > 0) {
+//    patternD.recur(from, to)
+//  } else {
+//    patternD.recur(to, from).reverse
+//  }
 
-  lazy val shifted = generated.map { d => (d /: shifters) {_ shift _} }
+  lazy val generated = pattern.recur(from, to)
+
+  lazy val filtered = generated.filterNot(holiday.isHoliday)
+
+  lazy val shifted = filtered.map { d => (d /: shifters) {_ shift _} }
 
   lazy val selected = shifted.map { d => (d /: selectors) {_ select _} }
 
@@ -73,7 +77,13 @@ case class DateRange(from: Date,
     this.copy(loc = Some(loc))
   }
 
-  // TODO: test
+  lazy val pattern: Pattern = step match {
+    case DayDuration(step) => Daily(step)
+    case WeekDuration(step) => Weekly(step, loc.flatMap(_.dow))
+    case MonthDuration(step) => Monthly(step, loc.map(_.dom))
+    case YearDuration(step) => Yearly(step, loc.map(_.doy))
+  }
+
   // TODO: refactor out backward recurrence patterns so that we don't need to adjust From / To date accordingly
   /**
    * create recurrence pattern based on step and location
@@ -81,7 +91,7 @@ case class DateRange(from: Date,
    * aFrom: adjusted from
    * aTo: adjusted to date
    */
-  lazy val (aFrom, aTo, pattern) = step match {
+  lazy val (aFrom, aTo, patternD) = step match {
     case DayDuration(n) if n > 0 => (from, to, Days(n))
     case DayDuration(n) if n < 0 => (to, from, DaysBackward(-n))
     case WeekDuration(n) if n > 0 =>
@@ -96,10 +106,10 @@ case class DateRange(from: Date,
         case _ => WeeksBackward(-n)
       }
       (to, from, pattern)
-    case MonthDuration(n) if n > 0 => (from, to, Months(n, loc.map(_.pom)))
-    case MonthDuration(n) if n < 0 => (to, from, MonthsBackward(-n, loc.map(_.pom)))
-    case YearDuration(n) if n > 0 => (from, to, Years(n, loc.map(_.poy)))
-    case YearDuration(n) if n < 0 => (to, from, YearsBackward(-n, loc.map(_.poy)))
+    case MonthDuration(n) if n > 0 => (from, to, Months(n, loc.map(_.dom)))
+    case MonthDuration(n) if n < 0 => (to, from, MonthsBackward(-n, loc.map(_.dom)))
+    case YearDuration(n) if n > 0 => (from, to, Years(n, loc.map(_.doy)))
+    case YearDuration(n) if n < 0 => (to, from, YearsBackward(-n, loc.map(_.doy)))
   }
 
   /**
@@ -122,6 +132,7 @@ case class DateRange(from: Date,
 
 object DateRange {
   @tailrec
+  @deprecated
   private def eachDate[U](f: Date => U, current: Date, to: Date, step: Duration, holiday: HolidayRule): Unit = {
     if ((step.n > 0 && current <= to) || (step.n < 0 && current >= to)) {
       if (! holiday.isHoliday(current)) {

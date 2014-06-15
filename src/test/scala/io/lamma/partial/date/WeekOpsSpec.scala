@@ -19,9 +19,9 @@ class WeekOpsSpec extends FlatSpec with Matchers {
     Date(2014, 6, 5).thisWeekEnd should be(Date(2014, 6, 8))
   }
 
-  "comingWeekday" should "work" in {
-    Date(2014, 4, 10).comingWeekday(Monday) should be(Date(2014, 4, 14))
-    Date(2014, 4, 10).comingWeekday(Thursday) should be(Date(2014, 4, 17))
+  "comingDayOfWeek" should "work" in {
+    Date(2014, 4, 10).comingDayOfWeek(Monday) should be(Date(2014, 4, 14))
+    Date(2014, 4, 10).comingDayOfWeek(Thursday) should be(Date(2014, 4, 17))
 
     Date(2014, 4, 10).comingMonday should be(Date(2014, 4, 14))
     Date(2014, 4, 10).comingTuesday should be(Date(2014, 4, 15))
@@ -32,9 +32,9 @@ class WeekOpsSpec extends FlatSpec with Matchers {
     Date(2014, 4, 10).comingSunday should be(Date(2014, 4, 13))
   }
 
-  "pastWeekday" should "work" in {
-    Date(2014, 4, 10).pastWeekday(Monday) should be(Date(2014, 4, 7))
-    Date(2014, 4, 10).pastWeekday(Thursday) should be(Date(2014, 4, 3))
+  "pastDayOfWeek" should "work" in {
+    Date(2014, 4, 10).pastDayOfWeek(Monday) should be(Date(2014, 4, 7))
+    Date(2014, 4, 10).pastDayOfWeek(Thursday) should be(Date(2014, 4, 3))
 
     Date(2014, 4, 10).pastMonday should be(Date(2014, 4, 7))
     Date(2014, 4, 10).pastTuesday should be(Date(2014, 4, 8))

@@ -1,13 +1,13 @@
 package io.lamma
 
 import org.scalatest.{Matchers, WordSpec}
-import io.lamma.PositionOfYear.{NthWeekdayOfYear, NthDayOfYear}
+import io.lamma.DayOfYear.{NthWeekdayOfYear, NthDayOfYear}
 
 class PositionOfYearSpec extends WordSpec with Matchers {
 
   "NthDayOfYear" should {
     "be valid" in {
-      PositionOfYear.validate(NthDayOfYear(40))
+      DayOfYear.validate(NthDayOfYear(40))
     }
 
     "return false when input is not correct" in {
@@ -29,7 +29,7 @@ class PositionOfYearSpec extends WordSpec with Matchers {
 
   "NthWeekdayOfYear" should {
     "be valid" in {
-      PositionOfYear.validate(NthWeekdayOfYear(40, Monday))
+      DayOfYear.validate(NthWeekdayOfYear(40, Monday))
     }
 
     "return false if dow does not match" in {
@@ -56,12 +56,12 @@ class PositionOfYearSpec extends WordSpec with Matchers {
       /**
        * this POM will match last day of every month
        */
-      case object InvalidPOY extends PositionOfYear {
+      case object InvalidPOY extends DayOfYear {
         override def isValidDOY(d: Date) = d.isLastDayOfMonth
       }
 
       intercept[InvalidPositionOfYearException] {
-        PositionOfYear.validate(InvalidPOY)
+        DayOfYear.validate(InvalidPOY)
       }
     }
   }
