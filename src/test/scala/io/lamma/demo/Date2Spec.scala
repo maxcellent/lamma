@@ -1,6 +1,5 @@
 package io.lamma.demo
 
-import language.postfixOps
 import io.lamma.DayOfMonth.LastDayOfMonth
 import io.lamma.Month.February
 import io.lamma.Recurrence.Months

@@ -1,6 +1,5 @@
 package io.lamma.demo
 
-import language.postfixOps
 import io.lamma._
 import io.lamma.Recurrence._
 import io.lamma.{Weekends, Lamma, Date}

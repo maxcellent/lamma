@@ -1,6 +1,5 @@
 package io.lamma
 
-import language.postfixOps
 import org.scalatest.{Matchers, FlatSpec}
 
 class DurationSpec extends FlatSpec with Matchers {

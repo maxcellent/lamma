@@ -1,6 +1,5 @@
 package io.lamma
 
-import language.postfixOps
 import org.scalatest.{WordSpec, Matchers}
 import JavaDateUtil._
 import java.util.TimeZone

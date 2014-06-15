@@ -1,6 +1,5 @@
 package io.lamma
 
-import language.postfixOps
 import org.scalatest.{Matchers, FlatSpec}
 
 class DateSpec extends FlatSpec with Matchers {

@@ -1,7 +1,5 @@
 package io.lamma
 
-import language.postfixOps
-
 /**
  * for each PositionOfMonth implementation
  * Lamma expect there is one and only one day match the criteria
