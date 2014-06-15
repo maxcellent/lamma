@@ -1,45 +1,95 @@
 package io.lamma
 
-import io.lamma.DayOfMonth.{NthWeekdayOfMonth, LastWeekdayOfMonth, NthDayOfMonth, LastDayOfMonth}
-import io.lamma.DayOfYear.{NthWeekdayOfYear, NthMonthOfYear, NthDayOfYear, LastDayOfYear}
 import Locator._
+import io.lamma.DayOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
+import io.lamma.DayOfYear.{NthMonthOfYear, NthWeekdayOfYear, LastDayOfYear, NthDayOfYear}
+import io.lamma.Month.December
+
+sealed trait Locator
+
+object Locator {
+  case object Last
+
+  def apply(n: Int) = OrdinalLocator(Left(n))
+
+  def apply(l: Last.type) = OrdinalLocator(Right(Last))
+
+  def apply(n: Int, dow: DayOfWeek) = OrdinalWeekLocator(Left(n), dow)
+
+  def apply(l: Last.type, dow: DayOfWeek) = OrdinalWeekLocator(Right(Last), dow)
+
+  def apply(n: Int, m: Month) = OrdinalMonthLocator(Left(m.ordinal), OrdinalLocator(Left(n)))
+
+  def apply(l: Last.type, m: Month) = OrdinalMonthLocator(Left(m.ordinal), OrdinalLocator(Right(Last)))
+
+  def apply(n: Int, dow: DayOfWeek, m: Month): OrdinalMonthLocator = OrdinalMonthLocator(Left(m.ordinal), Locator(n, dow))
+
+  def apply(l: Last.type, dow: DayOfWeek, m: Month): OrdinalMonthLocator = OrdinalMonthLocator(Left(m.ordinal), Locator(Last, dow))
+}
+
+sealed trait DayOfWeekSupport {
+  this: Locator =>
+
+  def dow: DayOfWeek
+}
+
+sealed trait DayOfMonthSupport {
+  this: Locator =>
+
+  def dom: DayOfMonth
+
+  def of(m: Month) = OrdinalMonthLocator(Left(m.ordinal), this)
+}
+
+sealed trait DayOfYearSupport {
+  this: Locator =>
+
+  def doy: DayOfYear
+}
 
 /**
- * This should not be created directly
- *
- * @param pos if dow is defined, it means ordinal of weekday
- * @param dow
- * @param month
+ * works for Weekly, Monthly and Yearly patterns
  */
-case class Locator(pos: Position, dow: Option[DayOfWeek] = None, month: Option[Month] = None) {
-  def of(m: Month) = this.copy(month = Some(m))
-
-  // TODO: how about on matched cases
-  lazy val dom: DayOfMonth = (pos, dow) match {
-    case (Ordinal(n), None) => NthDayOfMonth(n)
-    case (Last, None) => LastDayOfMonth
-    case (Ordinal(n), Some(dow)) => NthWeekdayOfMonth(n, dow)
-    case (Last, Some(dow)) => LastWeekdayOfMonth(dow)
+case class OrdinalLocator(o: Either[Int, Last.type]) extends Locator with DayOfWeekSupport with DayOfMonthSupport with DayOfYearSupport {
+  lazy val dow = o match {
+    case Left(n) => DayOfWeek(n)
+    case Right(Last) => Sunday
   }
 
-  // TODO: how about on matched cases
-  lazy val doy = (pos, dow, month) match {
-    case (Ordinal(n), None, None) => NthDayOfYear(n)
-    case (Last, None, None) => LastDayOfYear
-    case (Ordinal(n), Some(dow), None) => NthWeekdayOfYear(n, dow)
-    case (Last, Some(dow), None) => DayOfYear.LastWeekdayOfYear(dow)
-    case (_, _, Some(m)) => NthMonthOfYear(m, dom)
+  lazy val dom = o match {
+    case Left(n) => NthDayOfMonth(n)
+    case Right(Last) => LastDayOfMonth
+  }
+
+  lazy val doy = o match {
+    case Left(n) => NthDayOfYear(n)
+    case Right(Last) => LastDayOfYear
   }
 }
 
-object Locator {
-  def apply(n: Int) = new Locator(Ordinal(n))
+/**
+ * works for Monthly and Yearly patterns
+ */
+case class OrdinalWeekLocator(o: Either[Int, Last.type], dow: DayOfWeek) extends Locator with DayOfMonthSupport with DayOfYearSupport {
+  lazy val dom = o match {
+    case Left(n) => NthWeekdayOfMonth(n, dow)
+    case Right(Last) => LastWeekdayOfMonth(dow)
+  }
 
-  def apply(n: Int, dow: DayOfWeek) = new Locator(Ordinal(n), Some(dow))
+  lazy val doy = o match {
+    case Left(n) => NthWeekdayOfYear(n, dow)
+    case Right(Last) => NthWeekdayOfYear(53, dow)
+  }
+}
 
-  sealed trait Position
-
-  case object Last extends Position
-
-  case class Ordinal(n: Int) extends Position
+/**
+ * works for Yearly pattern only
+ * @param o ordinal of the month
+ * @param dom
+ */
+case class OrdinalMonthLocator(o: Either[Int, Last.type], dom: DayOfMonthSupport) extends Locator with DayOfYearSupport {
+  lazy val doy = o match {
+    case Left(n) => NthMonthOfYear(Month(n), dom.dom)
+    case Right(Last) => NthMonthOfYear(December, dom.dom)
+  }
 }

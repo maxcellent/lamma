@@ -1,6 +1,19 @@
 package io.lamma
 
-sealed trait DayOfWeek
+sealed trait DayOfWeek {
+  def ordinal = DayOfWeek.DayOfWeeks.indexOf(this) + 1
+}
+
+object DayOfWeek {
+  final val DayOfWeeks = List(Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday)
+
+  /**
+   *
+   * @param n Monday == 1
+   * @return
+   */
+  def apply(n: Int) = DayOfWeeks(n - 1)
+}
 
 case object Monday extends DayOfWeek
 

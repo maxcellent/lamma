@@ -1,22 +1,18 @@
 package io.lamma
 
-sealed trait Month
+sealed trait Month {
+  def ordinal = Month.Months.indexOf(this) + 1
+}
 
 object Month {
-  def apply(n: Int): Month = n match {
-    case 1 => January
-    case 2 => February
-    case 3 => March
-    case 4 => April
-    case 5 => May
-    case 6 => June
-    case 7 => July
-    case 8 => August
-    case 9 => September
-    case 10 => October
-    case 11 => November
-    case 12 => December
-  }
+  /**
+   * get month from int, starting from 1
+   * @param n
+   * @return
+   */
+  def apply(n: Int): Month = Months(n - 1)
+
+  final val Months = List(January, February, March, April, May, June, July, August, September, October, November, December)
 
   case object January extends Month
 

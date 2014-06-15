@@ -1,6 +1,6 @@
 package io.lamma
 
-import io.lamma.Locator.{Last, Ordinal}
+import io.lamma.Locator.Last
 import io.lamma.Month.February
 import org.scalatest.{Matchers, WordSpec}
 
@@ -32,7 +32,7 @@ class GlobalSpec extends WordSpec with Matchers {
 
     // used in both month and year location
     "work with nth day" in {
-      val expected = Locator(Ordinal(10))
+      val expected = Locator(10)
       10 th day should be(expected)
     }
 
@@ -42,33 +42,33 @@ class GlobalSpec extends WordSpec with Matchers {
     }
 
     "work with nth weekday" in {
-      val expected = Locator(Ordinal(2), Some(Friday))
+      val expected = Locator(2, Friday)
       2 nd Friday should be(expected)
     }
 
     "work with last weekday" in {
-      val expected = Locator(Last, Some(Friday))
+      val expected = Locator(Last, Friday)
       lastFriday should be(expected)
     }
 
     // used in year location
     "work with nth day of month" in {
-      val expected = Locator(Ordinal(10), month = Some(February))
+      val expected = Locator(10, February)
       10 th day of February should be(expected)
     }
 
     "work with last day of month" in {
-      val expected = Locator(Last, month = Some(February))
+      val expected = Locator(Last, February)
       lastDay of February should be(expected)
     }
 
     "work with nth weekday of month" in {
-      val expected = Locator(Ordinal(3), Some(Friday), Some(February))
+      val expected = Locator(3, Friday, February)
       3 rd Friday of February should be(expected)
     }
 
     "work with last weekday of month" in {
-      val expected = Locator(Last, Some(Friday), Some(February))
+      val expected = Locator(Last, Friday, February)
       lastFriday of February should be(expected)
     }
   }

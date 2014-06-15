@@ -82,17 +82,17 @@ package object lamma {
 
   val lastDay = Locator(Last)
 
-  val lastMonday = Locator(Last, Some(Monday))
+  val lastMonday = Locator(Last, Monday)
 
-  val lastTuesday = Locator(Last, Some(Tuesday))
+  val lastTuesday = Locator(Last, Tuesday)
 
-  val lastWednesday = Locator(Last, Some(Wednesday))
+  val lastWednesday = Locator(Last, Wednesday)
 
-  val lastThursday = Locator(Last, Some(Thursday))
+  val lastThursday = Locator(Last, Thursday)
 
-  val lastFriday = Locator(Last, Some(Friday))
+  val lastFriday = Locator(Last, Friday)
 
-  val lastSaturday = Locator(Last, Some(Saturday))
+  val lastSaturday = Locator(Last, Saturday)
 
-  val lastSunday = Locator(Last, Some(Sunday))
+  val lastSunday = Locator(Last, Sunday)
 }

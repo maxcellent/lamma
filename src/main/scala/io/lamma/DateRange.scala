@@ -1,12 +1,9 @@
 package io.lamma
 
 import io.lamma.Duration.{YearDuration, WeekDuration, MonthDuration, DayDuration}
-import io.lamma.Locator.Last
-import io.lamma.Recurrence._
 import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
 import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 
-import annotation.tailrec
 import collection.JavaConverters._
 
 
@@ -60,7 +57,7 @@ case class DateRange(from: Date,
 
   def except(holiday: HolidayRule) = this.copy(holiday = this.holiday and holiday)
 
-  def on(dow: DayOfWeek): DateRange = on(Locator(Last, dow = Some(dow)))
+  def on(dow: DayOfWeek): DateRange = on(Locator(dow.ordinal))
 
   // TODO: test
   def on(loc: Locator) = {
@@ -68,11 +65,14 @@ case class DateRange(from: Date,
     this.copy(loc = Some(loc))
   }
 
-  lazy val pattern: Pattern = step match {
-    case DayDuration(step) => Daily(step)
-    case WeekDuration(step) => Weekly(step, loc.flatMap(_.dow))
-    case MonthDuration(step) => Monthly(step, loc.map(_.dom))
-    case YearDuration(step) => Yearly(step, loc.map(_.doy))
+  lazy val pattern: Pattern = (step, loc) match {
+    case (DayDuration(step), _) => Daily(step)
+    case (WeekDuration(step), Some(s: DayOfWeekSupport)) => Weekly(step, s.dow)
+    case (WeekDuration(step), _) => Weekly(step)
+    case (MonthDuration(step), Some(s: DayOfMonthSupport)) => Monthly(step, s.dom)
+    case (MonthDuration(step), _) => Monthly(step)
+    case (YearDuration(step), Some(s: DayOfYearSupport)) => Yearly(step, s.doy)
+    case (YearDuration(step), _) => Yearly(step)
   }
 
   /**
