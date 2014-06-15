@@ -58,13 +58,14 @@ object Lamma {
    *
    * @since 1.0
    */
+  @deprecated
   def sequence(from: Date,
                to: Date,
                pattern: Recurrence = EveryDay,
                shifter: Shifter = NoShift,
                selector: Selector = SameDay,
                holiday: HolidayRule = NoHoliday) = {
-//    require(from <= to, s"from date $from must be on or before to date $to")
+    require(from <= to, s"from date $from must be on or before to date $to")
 
     pattern.recur(from, to).map(shifter.shift).map(selector.select)
   }

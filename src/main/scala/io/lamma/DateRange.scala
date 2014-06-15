@@ -47,9 +47,9 @@ case class DateRange(from: Date,
 //  override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step, holiday)
 
   lazy val generated = if (step.n > 0) {
-    Lamma.sequence(from, to, pattern, holiday = holiday)
+    pattern.recur(from, to)
   } else {
-    Lamma.sequence(to, from, pattern, holiday = holiday).reverse
+    pattern.recur(to, from).reverse
   }
 
   lazy val shifted = generated.map { d => (d /: shifters) {_ shift _} }
