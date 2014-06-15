@@ -1,6 +1,5 @@
 package io.lamma
 
-import io.lamma.Duration.{YearDuration, WeekDuration, MonthDuration, DayDuration}
 import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
 import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 

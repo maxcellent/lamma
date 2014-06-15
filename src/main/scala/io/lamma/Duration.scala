@@ -4,16 +4,10 @@ sealed trait Duration {
   val n: Int
 }
 
-object Duration {
+case class DayDuration(n: Int) extends Duration
 
-  // TODO: move to root package (io.lamma)
+case class WeekDuration(n: Int) extends Duration
 
-  case class DayDuration(n: Int) extends Duration
+case class MonthDuration(n: Int) extends Duration
 
-  case class WeekDuration(n: Int) extends Duration
-
-  case class MonthDuration(n: Int) extends Duration
-
-  case class YearDuration(n: Int) extends Duration
-}
-
+case class YearDuration(n: Int) extends Duration

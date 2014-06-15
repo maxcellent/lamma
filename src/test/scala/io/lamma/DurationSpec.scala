@@ -5,8 +5,6 @@ import org.scalatest.{Matchers, FlatSpec}
 class DurationSpec extends FlatSpec with Matchers {
 
   "implicit duration" should "work" in {
-    import Duration._
-
     (1 day) should be(DayDuration(1))
     (5 days) should be(DayDuration(5))
     (1 week) should be(WeekDuration(1))
