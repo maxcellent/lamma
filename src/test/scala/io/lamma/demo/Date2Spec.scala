@@ -69,13 +69,10 @@ class Date2Spec extends WordSpec with Matchers {
     actual.toList should be(expected)
   }
 
-  // ================TODO shall we have this use case implemented in new Date object ??? =============
   "you can also shift by working days" in {
     val expected = Date(2014,1,29) :: Date(2014,2,26) :: Date(2014,3,27) :: Nil
-
     val actual = Date(2014, 1, 1) to Date(2014, 3, 31) by month on lastDay shift(-2, weekends)
-
-    Lamma.sequence(Date(2014, 1, 1), Date(2014, 3, 31), Months(1, LastDayOfMonth), ShiftWorkingDays(-2, Weekends)) should be(expected)
+    actual.toList should be(expected)
   }
 
   "you can further select result date after the date is shifted" in {
