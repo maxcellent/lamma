@@ -8,27 +8,22 @@ import scala.collection.JavaConverters;
 public class Lamma4j {
 
     public static java.util.List<Date> sequence(Date from, Date to) {
-        List<Date> result = Lamma.sequence(from, to, Lamma.sequence$default$3(), Lamma.sequence$default$4(), Lamma.sequence$default$5(), Lamma.sequence$default$6());
+        List<Date> result = Lamma.sequence(from, to, Lamma.sequence$default$3(), Lamma.sequence$default$4(), Lamma.sequence$default$5());
         return javaList(result);
     }
 
     public static java.util.List<Date> sequence(Date from, Date to, Recurrence pattern) {
-        List<Date> result = Lamma.sequence(from, to, pattern, Lamma.sequence$default$4(), Lamma.sequence$default$5(), Lamma.sequence$default$6());
+        List<Date> result = Lamma.sequence(from, to, pattern, Lamma.sequence$default$4(), Lamma.sequence$default$5());
         return javaList(result);
     }
 
     public static java.util.List<Date> sequence(Date from, Date to, Recurrence pattern, Shifter shifter) {
-        List<Date> result = Lamma.sequence(from, to, pattern, shifter, Lamma.sequence$default$5(), Lamma.sequence$default$6());
+        List<Date> result = Lamma.sequence(from, to, pattern, shifter, Lamma.sequence$default$5());
         return javaList(result);
     }
 
     public static java.util.List<Date> sequence(Date from, Date to, Recurrence pattern, Shifter shifter, Selector selector) {
-        List<Date> result = Lamma.sequence(from, to, pattern, shifter, selector, Lamma.sequence$default$6());
-        return javaList(result);
-    }
-
-    public static java.util.List<Date> sequence(Date from, Date to, Recurrence pattern, Shifter shifter, Selector selector, HolidayRule rule) {
-        List<Date> result = Lamma.sequence(from, to, pattern, shifter, selector, rule);
+        List<Date> result = Lamma.sequence(from, to, pattern, shifter, selector);
         return javaList(result);
     }
 
