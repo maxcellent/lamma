@@ -8,6 +8,8 @@ scalaVersion := "2.10.4"
 
 crossScalaVersions := Seq("2.10.4", "2.11.1")
 
+scalacOptions := Seq("-feature", "-deprecation")
+
 libraryDependencies += "junit" % "junit" % "4.11" % "test"
 
 libraryDependencies += "com.novocode" % "junit-interface" % "0.9" % "test"  // we need to have this lib in order to run junit with sbt test

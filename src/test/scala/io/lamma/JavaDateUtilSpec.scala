@@ -1,8 +1,8 @@
 package io.lamma
 
+import language.postfixOps
 import org.scalatest.{WordSpec, Matchers}
 import JavaDateUtil._
-import Duration._
 import java.util.TimeZone
 
 class JavaDateUtilSpec extends WordSpec with Matchers {

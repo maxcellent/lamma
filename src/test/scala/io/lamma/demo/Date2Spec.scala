@@ -1,11 +1,10 @@
 package io.lamma.demo
 
-import io.lamma.DayOfMonth.{LastDayOfMonth, NthWeekdayOfMonth, NthDayOfMonth}
+import language.postfixOps
+import io.lamma.DayOfMonth.LastDayOfMonth
 import io.lamma.Month.February
-import io.lamma.PositionOfYear._
-import io.lamma.Recurrence.{MonthsBackward, Years, Months}
-import io.lamma.Selector.Forward
-import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
+import io.lamma.Recurrence.Months
+import io.lamma.Shifter.ShiftWorkingDays
 import io.lamma._
 import org.scalatest.{Matchers, WordSpec}
 

@@ -7,6 +7,7 @@ import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forwar
 import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 
 import annotation.tailrec
+import language.postfixOps
 import collection.JavaConverters._
 
 

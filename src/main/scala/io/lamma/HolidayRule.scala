@@ -76,7 +76,6 @@ object SimpleCalendar {
 /**
  * consider all weekend as holiday
  */
-@deprecated
 case object Weekends extends HolidayRule {
   override def isHoliday(d: Date) = {
     d.dayOfWeek == Saturday || d.dayOfWeek == Sunday

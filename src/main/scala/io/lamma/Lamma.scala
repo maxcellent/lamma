@@ -53,12 +53,10 @@ object Lamma {
    * @param pattern recurrence pattern. Determine how next date will be generated from the previous one
    * @param shifter how to shift the date once it's generated? eg, no shift, 2 days later, 2 working days later
    * @param selector How to select the date once the date is generated? eg, same day, following working day?
-   * @param holiday holiday rule used to shift and select date
    * @return a list of generated dates
    *
    * @since 1.0
    */
-  @deprecated
   def sequence(from: Date,
                to: Date,
                pattern: Recurrence = EveryDay,

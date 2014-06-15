@@ -1,7 +1,7 @@
 package io.lamma
 
-import scala.annotation.tailrec
-import Duration._
+import language.postfixOps
+import annotation.tailrec
 import io.lamma.Selector.{Backward, Forward, SameDay}
 import io.lamma.Shifter.{NoShift, ShiftWorkingDays, ShiftCalendarDays}
 

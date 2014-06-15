@@ -1,9 +1,8 @@
 package io.lamma
 
-import io.lamma.partial.date.{YearOps, MonthOps, WeekOps}
-
-import io.lamma.Duration._
+import language.postfixOps
 import java.sql.{Date => SDate}
+import io.lamma.partial.date.{YearOps, MonthOps, WeekOps}
 import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
 
 case class Date(yyyy: Int, mm: Int, dd: Int)

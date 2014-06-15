@@ -1,5 +1,6 @@
 package io
 
+import language.postfixOps
 import io.lamma.Duration.{YearDuration, MonthDuration, WeekDuration, DayDuration}
 import io.lamma.Locator.Last
 
