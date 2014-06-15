@@ -1,7 +1,6 @@
 package io.lamma.partial.date
 
-import io.lamma.Month.February
-import io.lamma.{DayOfYear, Date}
+import io.lamma.{February, DayOfYear, Date}
 import io.lamma.DayOfYear._
 import org.scalatest.{Matchers, FlatSpec}
 

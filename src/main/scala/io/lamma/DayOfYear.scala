@@ -1,7 +1,5 @@
 package io.lamma
 
-import io.lamma.Month.{December, January}
-
 /**
  * for each DayOfYear implementation
  * Lamma expect there is one and only one day match the criteria in each year

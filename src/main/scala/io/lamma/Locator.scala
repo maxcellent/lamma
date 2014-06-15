@@ -3,7 +3,6 @@ package io.lamma
 import Locator._
 import io.lamma.DayOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
 import io.lamma.DayOfYear.{NthMonthOfYear, NthWeekdayOfYear, LastDayOfYear, NthDayOfYear}
-import io.lamma.Month.December
 
 sealed trait Locator
 

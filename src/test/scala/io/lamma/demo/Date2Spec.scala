@@ -1,6 +1,5 @@
 package io.lamma.demo
 
-import io.lamma.Month.February
 import io.lamma._
 import org.scalatest.{Matchers, WordSpec}
 

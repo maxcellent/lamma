@@ -1,7 +1,6 @@
 package io.lamma
 
 import io.lamma.Locator.Last
-import io.lamma.Month.February
 import org.scalatest.{Matchers, WordSpec}
 
 /**

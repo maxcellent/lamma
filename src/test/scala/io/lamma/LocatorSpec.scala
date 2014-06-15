@@ -2,7 +2,6 @@ package io.lamma
 
 import io.lamma.DayOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
 import io.lamma.DayOfYear.{NthMonthOfYear, NthWeekdayOfYear, LastDayOfYear, NthDayOfYear}
-import io.lamma.Month.February
 import org.scalatest.{WordSpec, Matchers}
 
 class LocatorSpec extends WordSpec with Matchers {

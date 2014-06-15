@@ -18,27 +18,27 @@ public class LammaConst {
     public static final DayOfWeek SUNDAY = Sunday$.MODULE$;
 
     // ============ months ==========
-    public static final Month JANUARY = Month.January$.MODULE$;
+    public static final Month JANUARY = January$.MODULE$;
 
-    public static final Month FEBRUARY = Month.February$.MODULE$;
+    public static final Month FEBRUARY = February$.MODULE$;
 
-    public static final Month MARCH = Month.March$.MODULE$;
+    public static final Month MARCH = March$.MODULE$;
 
-    public static final Month APRIL = Month.April$.MODULE$;
+    public static final Month APRIL = April$.MODULE$;
 
-    public static final Month MAY = Month.May$.MODULE$;
+    public static final Month MAY = May$.MODULE$;
 
-    public static final Month JUNE = Month.June$.MODULE$;
+    public static final Month JUNE = June$.MODULE$;
 
-    public static final Month JULY = Month.July$.MODULE$;
+    public static final Month JULY = July$.MODULE$;
 
-    public static final Month AUGUST = Month.August$.MODULE$;
+    public static final Month AUGUST = August$.MODULE$;
 
-    public static final Month SEPTEMBER = Month.September$.MODULE$;
+    public static final Month SEPTEMBER = September$.MODULE$;
 
-    public static final Month OCTOBER = Month.October$.MODULE$;
+    public static final Month OCTOBER = October$.MODULE$;
 
-    public static final Month NOVEMBER = Month.November$.MODULE$;
+    public static final Month NOVEMBER = November$.MODULE$;
 
-    public static final Month DECEMBER = Month.December$.MODULE$;
+    public static final Month DECEMBER = December$.MODULE$;
 }
