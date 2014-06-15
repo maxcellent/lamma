@@ -44,14 +44,6 @@ case class DateRange(from: Date,
                      selectors: List[Selector] = Nil) extends Traversable[Date] {
   require(step.n != 0, "step cannot be 0.")
 
-//  override def foreach[U](f: Date => U) = DateRange.eachDate(f, from, to, step, holiday)
-
-//  lazy val generated = if (step.n > 0) {
-//    patternD.recur(from, to)
-//  } else {
-//    patternD.recur(to, from).reverse
-//  }
-
   lazy val generated = pattern.recur(from, to)
 
   lazy val filtered = generated.filterNot(holiday.isHoliday)
@@ -60,7 +52,6 @@ case class DateRange(from: Date,
 
   lazy val selected = shifted.map { d => (d /: selectors) {_ select _} }
 
-  // TODO: need to refactor all recurrence patterns, REMOVE all backward patterns
   override def foreach[U](f: Date => U) = selected.foreach(f)
 
   def by(step: Int): DateRange = by(step days)
@@ -84,34 +75,6 @@ case class DateRange(from: Date,
     case YearDuration(step) => Yearly(step, loc.map(_.doy))
   }
 
-  // TODO: refactor out backward recurrence patterns so that we don't need to adjust From / To date accordingly
-  /**
-   * create recurrence pattern based on step and location
-   *
-   * aFrom: adjusted from
-   * aTo: adjusted to date
-   */
-  lazy val (aFrom, aTo, patternD) = step match {
-    case DayDuration(n) if n > 0 => (from, to, Days(n))
-    case DayDuration(n) if n < 0 => (to, from, DaysBackward(-n))
-    case WeekDuration(n) if n > 0 =>
-      val pattern = loc match {
-        case Some(Locator(_, Some(dow), _)) => Weeks(n, dow)
-        case _ => Weeks(n)
-      }
-      (from, to, pattern)
-    case WeekDuration(n) if n < 0 =>
-      val pattern = loc match {
-        case Some(Locator(_, Some(dow), _)) => WeeksBackward(-n, dow)
-        case _ => WeeksBackward(-n)
-      }
-      (to, from, pattern)
-    case MonthDuration(n) if n > 0 => (from, to, Months(n, loc.map(_.dom)))
-    case MonthDuration(n) if n < 0 => (to, from, MonthsBackward(-n, loc.map(_.dom)))
-    case YearDuration(n) if n > 0 => (from, to, Years(n, loc.map(_.doy)))
-    case YearDuration(n) if n < 0 => (to, from, YearsBackward(-n, loc.map(_.doy)))
-  }
-
   /**
    * return an instance of java.lang.Iterable can be used in java for comprehension
    */
@@ -128,17 +91,4 @@ case class DateRange(from: Date,
   def modifiedFollowing(holiday: HolidayRule) = this.copy(selectors = selectors :+ ModifiedFollowing(holiday))
 
   def modifiedPreceding(holiday: HolidayRule) = this.copy(selectors = selectors :+ ModifiedPreceding(holiday))
-}
-
-object DateRange {
-  @tailrec
-  @deprecated
-  private def eachDate[U](f: Date => U, current: Date, to: Date, step: Duration, holiday: HolidayRule): Unit = {
-    if ((step.n > 0 && current <= to) || (step.n < 0 && current >= to)) {
-      if (! holiday.isHoliday(current)) {
-        f(current)
-      }
-      eachDate(f, current + step, to, step, holiday)
-    }
-  }
 }

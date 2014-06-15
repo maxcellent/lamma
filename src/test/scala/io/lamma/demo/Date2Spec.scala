@@ -1,9 +1,6 @@
 package io.lamma.demo
 
-import io.lamma.DayOfMonth.LastDayOfMonth
 import io.lamma.Month.February
-import io.lamma.Recurrence.Months
-import io.lamma.Shifter.ShiftWorkingDays
 import io.lamma._
 import org.scalatest.{Matchers, WordSpec}
 
