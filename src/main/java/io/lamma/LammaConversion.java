@@ -17,14 +17,17 @@ public class LammaConversion {
     }
 
     // =========== collections ================
+    @SafeVarargs
     public static <E> Iterable<E> iterable(E ... elems) {
         return collectionAsScalaIterableConverter(new ArrayList<E>(Arrays.asList(elems))).asScala();
     }
 
+    @SafeVarargs
     public static <E> List<E> list(E ... elems) {
         return iterable(elems).toList();
     }
 
+    @SafeVarargs
     public static <E> Set<E> set(E ... elems) {
         return iterable(elems).toSet();
     }

@@ -8,6 +8,8 @@ scalaVersion := "2.10.4"
 
 crossScalaVersions := Seq("2.10.4", "2.11.1")
 
+javacOptions := Seq("-Xlint:unchecked")
+
 scalacOptions := Seq("-feature", "-deprecation", "-language:postfixOps")
 
 libraryDependencies += "junit" % "junit" % "4.11" % "test"

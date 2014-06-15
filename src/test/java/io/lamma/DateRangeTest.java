@@ -20,7 +20,7 @@ public class DateRangeTest {
         Date toDate = date(2014, 5, 8);
         DateRange range = fromDate.to(toDate);
 
-        List<Date> actual = new LinkedList();
+        List<Date> actual = new LinkedList<Date>();
         for (Date d: range.javaIterable()) {
             actual.add(d);
         }
