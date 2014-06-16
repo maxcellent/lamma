@@ -76,7 +76,7 @@ class HomepageSpec extends WordSpec with Matchers {
       }
 
       "let's use it to generate a schedule" in {
-        val expected = Row(2015, 1, 7) :: Row(2015, 1, 12) :: Row(2015, 1, 31) :: Nil
+        val expected = DRow(2015, 1, 7) :: DRow(2015, 1, 12) :: DRow(2015, 1, 31) :: Nil
 
         val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd) :: Nil
         Lamma.schedule(Date(2015, 1, 1), Date(2015, 1, 31), CustomRecurrence, dateDefs = dateDefs).rows should be(expected)
@@ -100,7 +100,7 @@ class HomepageSpec extends WordSpec with Matchers {
       }
 
       "let's use it to generate a schedule" in {
-        val expected = Row(2015, 10, 8) :: Row(2015, 10, 17) :: Row(2015, 10, 22) :: Row(2015, 10, 29) :: Nil
+        val expected = DRow(2015, 10, 8) :: DRow(2015, 10, 17) :: DRow(2015, 10, 22) :: DRow(2015, 10, 29) :: Nil
 
         val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, shifter = CustomShifter) :: Nil
         Lamma.schedule(Date(2015, 10, 2), Date(2015, 10, 29), EveryWeek, dateDefs = dateDefs).rows should be(expected)

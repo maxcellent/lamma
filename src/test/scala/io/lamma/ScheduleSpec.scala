@@ -18,7 +18,7 @@ class ScheduleSpec extends FlatSpec with Matchers {
   }
 
   "rows" should "be generated properly" in {
-    val expected = Row(Date(2014, 4, 30), Date(2014, 5, 2)) :: Row(Date(2014, 6, 2), Date(2014, 6, 4)) :: Nil
+    val expected = DRow(Date(2014, 4, 30), Date(2014, 5, 2)) :: DRow(Date(2014, 6, 2), Date(2014, 6, 4)) :: Nil
     schedule.rows should be(expected)
   }
 

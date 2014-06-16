@@ -17,7 +17,7 @@ case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
           dates :+ dateDef.populate(period, populatedMap)
       }
 
-      Row(populatedDates)
+      DRow(populatedDates)
   }
 
   val tableHeaders = PeriodHeader :: FromHeader :: ToHeader :: dateDefNames
@@ -61,10 +61,10 @@ object Schedule {
   }
 }
 
-case class Row(dates: List[Date])
+case class DRow(dates: List[Date])
 
-object Row {
-  def apply(dates: Date*) = new Row(dates.toList)
+object DRow {
+  def apply(dates: Date*) = new DRow(dates.toList)
 
-  def apply(yyyy: Int, mm: Int, dd: Int): Row = Row(Date(yyyy, mm, dd))
+  def apply(yyyy: Int, mm: Int, dd: Int): DRow = DRow(Date(yyyy, mm, dd))
 }
