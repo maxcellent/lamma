@@ -28,7 +28,7 @@ import collection.JavaConverters._
  *  @param from      the start of this range.
  *  @param to        the exclusive end of the range.
  *  @param step      the step for the range, default 1
- *  @param holiday  a collection of Holiday calendars
+ *  @param holiday   except which holidays
  *
  */
 case class DateRange(from: Date,
@@ -75,7 +75,8 @@ case class DateRange(from: Date,
   }
 
   /**
-   * return an instance of java.lang.Iterable can be used in java for comprehension
+   * return an instance of {{{ java.lang.Iterable }}}
+   * can be used in java for comprehension
    */
   lazy val javaIterable = this.toIterable.asJava
 
