@@ -2,7 +2,7 @@ package io.lamma;
 
 public class LammaConst {
 
-    // =========== weekdays ==========
+    // =========== day of week ==========
     public static final DayOfWeek MONDAY = Monday$.MODULE$;
 
     public static final DayOfWeek TUESDAY = Tuesday$.MODULE$;
