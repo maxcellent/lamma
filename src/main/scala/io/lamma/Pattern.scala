@@ -10,10 +10,6 @@ import scala.annotation.tailrec
  */
 trait Pattern {
 
-  def step: Int
-
-  require(step != 0, "step cannot be 0.")
-
   /**
    * @param from recur from date
    * @param to recur to date
@@ -54,6 +50,8 @@ object Pattern {
  * @param step in days
  */
 case class Daily(step: Int) extends Pattern {
+  require(step != 0, "step cannot be 0.")
+
   override def recur(from: Date, to: Date) = Pattern.recur(from, to, step)
 }
 
@@ -62,6 +60,7 @@ case class Daily(step: Int) extends Pattern {
  * @param dowOpt
  */
 case class Weekly(step: Int, dowOpt: Option[DayOfWeek] = None) extends Pattern {
+  require(step != 0, "step cannot be 0.")
 
   val stepInDay = step * 7
 
@@ -99,6 +98,7 @@ object Weekly {
  * @param domOpt
  */
 case class Monthly(step: Int, domOpt: Option[DayOfMonth] = None) extends Pattern {
+  require(step != 0, "step cannot be 0.")
 
   override def recur(from: Date, to: Date) = {
     val dom = domOpt.getOrElse(NthDayOfMonth(from.dd))
@@ -132,6 +132,7 @@ object Monthly {
 }
 
 case class Yearly(step: Int, doyOpt: Option[DayOfYear] = None) extends Pattern {
+  require(step != 0, "step cannot be 0.")
 
   override def recur(from: Date, to: Date): List[Date] = {
     val doy = doyOpt.getOrElse(NthMonthOfYear(from.month, NthDayOfMonth(from.dd)))

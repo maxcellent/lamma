@@ -7,14 +7,6 @@ import Pattern.recur
 
 class PatternSpec extends WordSpec with Matchers {
 
-  "init" should {
-    "throw exception when step is 0" in {
-      intercept[IllegalArgumentException] {
-        Daily(0)
-      }
-    }
-  }
-
   "recur" should {
     "throw exception when step is 0" in {
       intercept[IllegalArgumentException] {
@@ -66,6 +58,12 @@ class PatternSpec extends WordSpec with Matchers {
   }
 
   "Daily" should {
+    "throw exception when step is 0" in {
+      intercept[IllegalArgumentException] {
+        Daily(0)
+      }
+    }
+
     "work" in {
       val expected = Date(2014, 5, 10) :: Date(2014, 5, 12) :: Date(2014, 5, 14) :: Nil
       Daily(2).recur(Date(2014, 5, 10), Date(2014, 5, 15)) should be(expected)
@@ -73,6 +71,12 @@ class PatternSpec extends WordSpec with Matchers {
   }
 
   "Weekly" should {
+    "throw exception when step is 0" in {
+      intercept[IllegalArgumentException] {
+        Daily(0)
+      }
+    }
+
     "construct object properly with apply function" in {
       Weekly(5, Wednesday) should be(Weekly(5, Some(Wednesday)))
     }
@@ -110,6 +114,12 @@ class PatternSpec extends WordSpec with Matchers {
   }
 
   "Monthly" should {
+    "throw exception when step is 0" in {
+      intercept[IllegalArgumentException] {
+        Daily(0)
+      }
+    }
+
     "construct object properly with apply function" in {
       Monthly(5, LastDayOfMonth) should be(Monthly(5, Some(LastDayOfMonth)))
     }
@@ -161,6 +171,12 @@ class PatternSpec extends WordSpec with Matchers {
   }
 
   "Yearly" should {
+    "throw exception when step is 0" in {
+      intercept[IllegalArgumentException] {
+        Daily(0)
+      }
+    }
+
     "construct object properly with apply function" in {
       Yearly(5, LastDayOfYear) should be(Yearly(5, Some(LastDayOfYear)))
     }
