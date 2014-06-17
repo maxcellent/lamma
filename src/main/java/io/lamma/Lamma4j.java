@@ -5,6 +5,7 @@ import static io.lamma.LammaConversion.*;
 import scala.collection.immutable.List;
 import scala.collection.JavaConverters;
 
+@Deprecated
 public class Lamma4j {
 
     public static java.util.List<Date> sequence(Date from, Date to) {

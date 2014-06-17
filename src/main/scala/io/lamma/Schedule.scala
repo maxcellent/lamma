@@ -4,6 +4,8 @@ import Schedule._
 
 case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
 
+  DateDef.validate(dateDefs)
+
   val dateDefNames = dateDefs.map(_.name)
 
   val tableHeaders = FromHeader :: ToHeader :: dateDefNames
@@ -40,4 +42,21 @@ object Schedule {
   val FromHeader = "From Date"
 
   val ToHeader = "To Date"
+
+  def apply(start: Date,
+            end: Date,
+            pattern: Pattern,
+            periodBuilder: PeriodBuilder = StubRulePeriodBuilder(),
+            dateDefs: List[DateDef] = Nil) = {
+    require(start <= end, s"start date $start must be on or before end date $end")
+
+    val end0 = start - 1  // last period end day (period 0)
+    val periodEndDays = pattern.recur(end0, end) match {
+      case Nil => Nil
+      case `end0` :: endDays => endDays
+      case endDays => endDays
+    }
+    val periods = periodBuilder.build(start, end, periodEndDays)
+    new Schedule(periods, dateDefs)
+  }
 }

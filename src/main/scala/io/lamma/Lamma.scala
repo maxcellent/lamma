@@ -38,8 +38,6 @@ object Lamma {
                dateDefs: List[DateDef] = Nil) = {
     require(start <= end, s"start date $start must be on or before end date $end")
 
-    DateDef.validate(dateDefs)
-
     val periodEndDays = pattern.periodEndDays(start, end)
     val periods = periodBuilder.build(start, end, periodEndDays)
     Schedule(periods, dateDefs)

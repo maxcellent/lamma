@@ -20,7 +20,7 @@ class ScheduleSpec extends WordSpec with Matchers {
     val expected = List(Date(2015, 6, 30)) :: List(Date(2015, 12, 31)) :: List(Date(2016, 6, 30)) :: List(Date(2016, 12, 30)) :: Nil  // 2016-12-31 is Saturday
 
     val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(Weekends)) :: Nil
-    Lamma.schedule(Date(2015, 1, 1), Date(2016, 12, 31), Months(6, LastDayOfMonth), dateDefs = dateDefs).generatedDates should be(expected)
+    Schedule(Date(2015, 1, 1), Date(2016, 12, 31), Monthly(6, LastDayOfMonth), dateDefs = dateDefs).generatedDates should be(expected)
   }
 
   "now settlement delay is 2 days" in {
@@ -35,20 +35,20 @@ class ScheduleSpec extends WordSpec with Matchers {
       DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(Weekends)),
       DateDef("SettlementDate", relativeTo = OtherDate("CouponDate"), shifter = ShiftWorkingDays(2, Weekends))
     )
-    Lamma.schedule(Date(2015, 1, 1), Date(2016, 12, 31), Months(6, LastDayOfMonth), dateDefs = dateDefs).generatedDates should be(expected)
+    Schedule(Date(2015, 1, 1), Date(2016, 12, 31), Monthly(6, LastDayOfMonth), dateDefs = dateDefs).generatedDates should be(expected)
   }
 
   "how about the schedule is fractional? for example, end day is 1 month later, then an extra row will be generated" in {
     val expected = List(Date(2015, 6, 30)) :: List(Date(2015, 12, 31)) :: List(Date(2016, 6, 30)) :: List(Date(2016, 12, 30)) :: List(Date(2017, 1, 31)) :: Nil
 
     val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(Weekends)) :: Nil
-    Lamma.schedule(Date(2015, 1, 1), Date(2017, 1, 31), Months(6, LastDayOfMonth), dateDefs = dateDefs).generatedDates should be(expected)
+    Schedule(Date(2015, 1, 1), Date(2017, 1, 31), Monthly(6, LastDayOfMonth), dateDefs = dateDefs).generatedDates should be(expected)
   }
 
   "let's merge it by applying a long end stub rule" in {
     val expected = List(Date(2015, 6, 30)) :: List(Date(2015, 12, 31)) :: List(Date(2016, 6, 30)) :: List(Date(2017, 1, 31)) :: Nil
     val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(Weekends)) :: Nil
-    val schedule = Lamma.schedule(Date(2015, 1, 1), Date(2017, 1, 31), Months(6, LastDayOfMonth), StubRulePeriodBuilder(endRule = LongEnd(270)), dateDefs = dateDefs)
+    val schedule = Schedule(Date(2015, 1, 1), Date(2017, 1, 31), Monthly(6, LastDayOfMonth), StubRulePeriodBuilder(endRule = LongEnd(270)), dateDefs = dateDefs)
     schedule.generatedDates should be(expected)
   }
 
@@ -58,19 +58,19 @@ class ScheduleSpec extends WordSpec with Matchers {
     val expected = List(Date(2015, 3, 30)) :: Nil
     val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd) :: Nil
 
-    Lamma.schedule(Date(2015, 1, 1), Date(2015, 3, 30), Months(6), dateDefs = dateDefs).generatedDates should be(expected)
-    Lamma.schedule(Date(2015, 1, 1), Date(2015, 3, 30), MonthsBackward(6), dateDefs = dateDefs).generatedDates should be(expected)
+    Schedule(Date(2015, 1, 1), Date(2015, 3, 30), Monthly(6), dateDefs = dateDefs).generatedDates should be(expected)
+    Schedule(Date(2015, 1, 1), Date(2015, 3, 30), Monthly(-6), dateDefs = dateDefs).generatedDates should be(expected)
   }
 
   "and if start date is end date" in {
     val expected = List(Date(2015, 1, 1)) :: Nil
     val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd) :: Nil
-    Lamma.schedule(Date(2015, 1, 1), Date(2015, 1, 1), EveryMonth, dateDefs = dateDefs).generatedDates should be(expected)
+    Schedule(Date(2015, 1, 1), Date(2015, 1, 1), Monthly(1), dateDefs = dateDefs).generatedDates should be(expected)
   }
 
   "throw exception when input start date is later than end date" in {
     intercept[IllegalArgumentException] {
-      Lamma.schedule(Date(2015, 1, 1), Date(2014, 3, 30), EveryMonth)
+      Schedule(Date(2015, 1, 1), Date(2014, 3, 30), Monthly(1))
     }
   }
 }

@@ -14,6 +14,7 @@ import io.lamma._
 /**
  * this class covers all scala code used in Tutorial 2: Advanced Sequence Generation
  */
+@deprecated
 class Sequence2Spec extends WordSpec with Matchers {
   "you can specify day of week when generating with Weeks or WeeksBackward" in {
     val expected = Date(2014, 5, 13) :: Date(2014, 6, 3) :: Date(2014, 6, 24) :: Nil

@@ -7,6 +7,7 @@ import org.scalatest.{WordSpec, Matchers}
 /**
  * this class covers all scala code used in Tutorial 1: Basic Sequence Generation
  */
+@deprecated
 class Sequence1Spec extends WordSpec with Matchers {
 
   "generate date sequence" in {
