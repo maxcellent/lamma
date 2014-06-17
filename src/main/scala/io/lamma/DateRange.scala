@@ -65,13 +65,13 @@ case class DateRange(from: Date,
   }
 
   lazy val pattern: Pattern = (step, loc) match {
-    case (DayDuration(step), _) => Daily(step)
-    case (WeekDuration(step), Some(s: DayOfWeekSupport)) => Weekly(step, s.dow)
-    case (WeekDuration(step), _) => Weekly(step)
-    case (MonthDuration(step), Some(s: DayOfMonthSupport)) => Monthly(step, s.dom)
-    case (MonthDuration(step), _) => Monthly(step)
-    case (YearDuration(step), Some(s: DayOfYearSupport)) => Yearly(step, s.doy)
-    case (YearDuration(step), _) => Yearly(step)
+    case (DayDuration(n), _) => Daily(n)
+    case (WeekDuration(n), Some(s: DayOfWeekSupport)) => Weekly(n, s.dow)
+    case (WeekDuration(n), _) => Weekly(n)
+    case (MonthDuration(n), Some(s: DayOfMonthSupport)) => Monthly(n, s.dom)
+    case (MonthDuration(n), _) => Monthly(n)
+    case (YearDuration(n), Some(s: DayOfYearSupport)) => Yearly(n, s.doy)
+    case (YearDuration(n), _) => Yearly(n)
   }
 
   /**
