@@ -64,10 +64,44 @@ class Date1Spec extends WordSpec with Matchers {
     actual.toList should be(expected)
   }
 
-  // TODO: working days is not supported
-  "working day generation is also supported, in this case WeekendCalendar is used which means all weekend will be skipped" in {
+  "filter out weekend from the result" in {
+    val expected = Date(2015, 10, 8) :: Date(2015, 10, 9) :: Date(2015, 10, 12) :: Nil
+    val workingDays = Date(2015, 10, 8) to Date(2015, 10, 12) except Weekends
+    workingDays.toList should be(expected)
+  }
+
+  "filter out weekend and other holiday" should {
+    val UKHoliday2015 = SimpleCalendar(
+      Date(2015, 1, 1),
+      Date(2015, 4, 3),
+      Date(2015, 4, 6),
+      Date(2015, 5, 4),
+      Date(2015, 5, 25),
+      Date(2015, 8, 31),
+      Date(2015, 12, 25),
+      Date(2015, 12, 28)
+    )
+
+    val expected = Date(2015, 12, 23) :: Date(2015, 12, 24) :: Date(2015, 12, 29) :: Date(2015, 12, 30) :: Nil
+
+    "we can chain except keywords" in {
+      val workingDays = Date(2015, 12, 23) to Date(2015, 12, 30) except Weekends except UKHoliday2015
+      workingDays.toList should be(expected)
+    }
+
+    "or composite with `and` keyword" in {
+      val workingDays = Date(2015, 12, 23) to Date(2015, 12, 30) except (Weekends and UKHoliday2015)
+      workingDays.toList should be(expected)
+    }
+  }
+
+  "generate every nth working day is not natively supported, but can be easily achieved by using together with Scala collection library" in {
     val expected = Date(2015, 10, 5) :: Date(2015, 10, 12) :: Date(2015, 10, 19) :: Nil
-    Lamma.sequence(Date(2015, 10, 5), Date(2015, 10, 19), Days.workingDays(5, Weekends)) should be(expected)
+    val workingDays = Date(2015, 10, 5) to Date(2015, 10, 19) except Weekends
+    val every5WorkingDays = workingDays.toList.zipWithIndex.collect {
+      case (d, i) if i % 5 == 0 => d
+    }
+    every5WorkingDays should be(expected)
   }
 
   "recurring backward" in {
