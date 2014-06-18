@@ -63,9 +63,11 @@ case class DateRangeBuilder(from: Date,
    */
   lazy val javaIterable = this.toIterable.asJava
 
-  def shift(d: Int) = this.copy(shifters = shifters :+ ShiftCalendarDays(d))
+  def shift(d: Int): DateRangeBuilder = shift(ShiftCalendarDays(d))
 
-  def shift(d: Int, holiday: HolidayRule) = this.copy(shifters = shifters :+ ShiftWorkingDays(d, holiday))
+  def shift(d: Int, holiday: HolidayRule): DateRangeBuilder = shift(ShiftWorkingDays(d, holiday))
+
+  def shift(shifter: Shifter) = this.copy(shifters = shifters :+ shifter)
 
   def forward(holiday: HolidayRule) = this.copy(selectors = selectors :+ Forward(holiday))
 
