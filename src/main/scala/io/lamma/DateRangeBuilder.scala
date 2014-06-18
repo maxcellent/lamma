@@ -69,11 +69,13 @@ case class DateRangeBuilder(from: Date,
 
   def shift(shifter: Shifter) = this.copy(shifters = shifters :+ shifter)
 
-  def forward(holiday: HolidayRule) = this.copy(selectors = selectors :+ Forward(holiday))
+  def forward(holiday: HolidayRule) = select(Forward(holiday))
 
-  def backward(holiday: HolidayRule) = this.copy(selectors = selectors :+ Backward(holiday))
+  def backward(holiday: HolidayRule) = select(Backward(holiday))
 
-  def modifiedFollowing(holiday: HolidayRule) = this.copy(selectors = selectors :+ ModifiedFollowing(holiday))
+  def modifiedFollowing(holiday: HolidayRule) = select(ModifiedFollowing(holiday))
 
-  def modifiedPreceding(holiday: HolidayRule) = this.copy(selectors = selectors :+ ModifiedPreceding(holiday))
+  def modifiedPreceding(holiday: HolidayRule) = select(ModifiedPreceding(holiday))
+
+  def select(selector: Selector) = this.copy(selectors = selectors :+ selector)
 }
