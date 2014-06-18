@@ -18,7 +18,7 @@ public class DateRangeTest {
 
         Date fromDate = date(2014, 5, 5);
         Date toDate = date(2014, 5, 8);
-        DateRange range = fromDate.to(toDate);
+        DateRangeBuilder range = fromDate.to(toDate);
 
         List<Date> actual = new LinkedList<Date>();
         for (Date d: range.javaIterable()) {

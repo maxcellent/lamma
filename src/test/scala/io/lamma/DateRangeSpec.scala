@@ -7,7 +7,7 @@ class DateRangeSpec extends WordSpec with Matchers {
   "DateRange" should {
     "work" in {
       val expected = Date(2014, 1, 5) :: Date(2014, 1, 6) :: Date(2014, 1, 7) :: Date(2014, 1, 8) :: Nil
-      DateRange(Date(2014, 1, 5), Date(2014, 1, 8)).toList should be(expected)
+      DateRangeBuilder(Date(2014, 1, 5), Date(2014, 1, 8)).toList should be(expected)
     }
 
     "return itself when from date equals to To date" in {
