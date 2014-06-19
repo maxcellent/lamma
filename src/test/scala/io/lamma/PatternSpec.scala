@@ -1,7 +1,7 @@
 package io.lamma
 
-import io.lamma.DayOfMonth.LastDayOfMonth
-import io.lamma.DayOfYear.LastDayOfYear
+import io.lamma.DayOfMonth.{NthWeekdayOfMonth, LastDayOfMonth}
+import io.lamma.DayOfYear.{NthMonthOfYear, LastDayOfYear}
 import org.scalatest.{Matchers, WordSpec}
 import Pattern.recur
 
@@ -111,6 +111,10 @@ class PatternSpec extends WordSpec with Matchers {
       val expected = Date(2014, 6, 15) :: Date(2014, 6, 22) :: Date(2014, 6, 29) :: Nil
       Weekly(1, Sunday).recur(Date(2014, 6, 13), Date(2014, 6, 30)) should be(expected)
     }
+
+    "work when creating with implicit conversions" in {
+      (5 weeks) on Tuesday should be(Weekly(5, Tuesday))
+    }
   }
 
   "Monthly" should {
@@ -168,6 +172,10 @@ class PatternSpec extends WordSpec with Matchers {
         Monthly(-1, LastDayOfMonth).recur(Date(2015, 4, 1), Date(2015, 1, 1)) should be(expected)
       }
     }
+
+    "work when creating with implicit conversions" in {
+      (5 months) on (2 nd Tuesday) should be(Monthly(5, NthWeekdayOfMonth(2, Tuesday)))
+    }
   }
 
   "Yearly" should {
@@ -224,6 +232,10 @@ class PatternSpec extends WordSpec with Matchers {
         val expected = Date(2016, 12, 31) :: Date(2015, 12, 31) :: Nil
         Yearly(-1, LastDayOfYear).recur(Date(2017, 4, 1), Date(2015, 1, 1)) should be(expected)
       }
+    }
+
+    "work when creating with implicit conversions" in {
+      (2 year) on (2 nd Tuesday of February) should be(Yearly(2, NthMonthOfYear(February, NthWeekdayOfMonth(2, Tuesday))))
     }
   }
 }

@@ -61,7 +61,7 @@ package object lamma {
     override def isHoliday(d: Date) = d.isWeekend
   }
 
-  // ======== ordinal =================
+  // =========== locators ======================
 
   // this is only used as a place holder to complete expression like `10 th day`
   object day
@@ -84,6 +84,7 @@ package object lamma {
     def th(dow: DayOfWeek) = Locator(n, dow)
   }
 
+  implicit def weekdayToLocator(weekday: DayOfWeek) = Locator(weekday.ordinal)
 
   // because of the way scala works
   // we cannot make this like: last day / last Friday

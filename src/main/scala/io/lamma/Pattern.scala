@@ -68,6 +68,8 @@ case class Weekly(step: Int, dowOpt: Option[DayOfWeek] = None) extends Pattern {
     case None => Pattern.recur(from, to, stepInDay)
     case Some(dow) => Pattern.recur(Weekly.adjustedFrom(from, step, dow), to, stepInDay)
   }
+
+  def on(s: DayOfWeekSupport) = this.copy(dowOpt = Some(s.dow))
 }
 
 object Weekly {
@@ -115,6 +117,8 @@ case class Monthly(step: Int, domOpt: Option[DayOfMonth] = None) extends Pattern
 
     doRecur(Monthly.adjustedFrom(from, step, dom), to)
   }
+
+  def on(s: DayOfMonthSupport) = this.copy(domOpt = Some(s.dom))
 }
 
 object Monthly {
@@ -150,6 +154,8 @@ case class Yearly(step: Int, doyOpt: Option[DayOfYear] = None) extends Pattern {
 
     doRecur(Yearly.adjustedFrom(from, step, doy), to)
   }
+
+  def on(s: DayOfYearSupport) = this.copy(doyOpt = Some(s.doy))
 }
 
 object Yearly {
