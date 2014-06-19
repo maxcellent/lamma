@@ -10,7 +10,7 @@ crossScalaVersions := Seq("2.10.4", "2.11.1")
 
 javacOptions := Seq("-Xlint:unchecked")
 
-scalacOptions := Seq("-feature", "-deprecation", "-language:postfixOps")
+scalacOptions := Seq("-feature", "-deprecation", "-language:postfixOps", "-language:implicitConversions")
 
 libraryDependencies += "junit" % "junit" % "4.11" % "test"
 
