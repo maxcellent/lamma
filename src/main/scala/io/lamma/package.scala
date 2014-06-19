@@ -46,6 +46,16 @@ package object lamma {
     def years = YearDuration(n)
   }
 
+  // ============ patterns ================
+  implicit def dayDurationToDailyPattern(d: DayDuration) = Daily(d.n)
+
+  implicit def weekDurationToWeeklyPattern(d: WeekDuration) = Weekly(d.n)
+
+  implicit def monthDurationToMonthlyPattern(d: MonthDuration) = Monthly(d.n)
+
+  implicit def yearDurationToYearlyPattern(d: YearDuration) = Yearly(d.n)
+
+
   // =========== holiday rules ==================
   val weekends = new HolidayRule {
     override def isHoliday(d: Date) = d.isWeekend

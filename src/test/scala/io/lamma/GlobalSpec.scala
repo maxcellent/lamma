@@ -8,6 +8,29 @@ import org.scalatest.{Matchers, WordSpec}
  */
 class GlobalSpec extends WordSpec with Matchers {
 
+  "Duration to Pattern conversion" should {
+    val d: Daily = 5 days
+    val w: Weekly = 2 weeks
+    val m: Monthly = -3 months
+    val y: Yearly = -5 years
+
+    "work for dayDurationToDailyPattern" in {
+      d should be(Daily(5))
+    }
+
+    "work for weekDurationToWeeklyPattern" in {
+      d should be(Daily(5))
+    }
+
+    "work for monthDurationToMonthlyPattern" in {
+      d should be(Daily(5))
+    }
+
+    "work for yearDurationToYearlyPattern" in {
+      d should be(Daily(5))
+    }
+  }
+
   "LocatorImplict" should {
     // weekly locator
     //   on weekday directly (eg, on Tuesday)  =>  Locator(Every, Some(Tuesday))
