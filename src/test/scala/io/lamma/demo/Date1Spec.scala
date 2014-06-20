@@ -9,7 +9,7 @@ import org.scalatest.{Matchers, WordSpec}
  *   it was Tutorial 1: Basic Sequence Generation in 1.x
  */
 class Date1Spec extends WordSpec with Matchers {
-  "generate date sequence" in {
+  "generate date sequence by day" in {
     val expected = Date(2014, 5, 10) :: Date(2014, 5, 11) :: Date(2014, 5, 12) :: Nil
     val actual = Date(2014, 5, 10) to Date(2014, 5, 12)
     actual.toList should be(expected)
@@ -39,15 +39,27 @@ class Date1Spec extends WordSpec with Matchers {
     actual.toList should be(expected)
   }
 
-  "leap year is considered" in {
+  "leap year is handled properly" in {
     val expected = Date(2012, 2, 29) :: Date(2013, 2, 28) :: Date(2014, 2, 28) :: Date(2015, 2, 28) :: Date(2016, 2, 29) :: Nil
     val actual = Date(2012, 2, 29) to Date(2016, 2, 29) by year
+    actual.toList should be(expected)
+  }
+
+  "the first example is equivalent to this example: `by day`" in {
+    val expected = Date(2014, 5, 10) :: Date(2014, 5, 11) :: Date(2014, 5, 12) :: Nil
+    val actual = Date(2014, 5, 10) to Date(2014, 5, 12) by day
     actual.toList should be(expected)
   }
 
   "not surprisingly, your can customize durations, for example, generate a date sequence every 3 days" in {
     val expected = Date(2014, 5, 10) :: Date(2014, 5, 13) :: Date(2014, 5, 16) :: Date(2014, 5, 19) :: Nil
     val actual = Date(2014, 5, 10) to Date(2014, 5, 19) by 3
+    actual.toList should be(expected)
+  }
+
+  "same as this" in {
+    val expected = Date(2014, 5, 10) :: Date(2014, 5, 13) :: Date(2014, 5, 16) :: Date(2014, 5, 19) :: Nil
+    val actual = Date(2014, 5, 10) to Date(2014, 5, 19) by (3 days)
     actual.toList should be(expected)
   }
 

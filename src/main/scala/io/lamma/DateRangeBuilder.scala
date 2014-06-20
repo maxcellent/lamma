@@ -29,6 +29,8 @@ case class DateRangeBuilder(from: Date,
 
   override def foreach[U](f: Date => U) = dateRange.foreach(f)
 
+  def by(d: day.type): DateRangeBuilder = by(1)
+
   def by(step: Int): DateRangeBuilder = by(step days)
 
   def by(step: Duration) = this.copy(step = step)
