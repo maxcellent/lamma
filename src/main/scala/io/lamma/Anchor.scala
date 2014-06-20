@@ -6,6 +6,9 @@ package io.lamma
 sealed trait Anchor
 
 object Anchor {
+
+  def apply(name: String) = OtherDate(name)
+
   case object PeriodStart extends Anchor
 
   case object PeriodEnd extends Anchor

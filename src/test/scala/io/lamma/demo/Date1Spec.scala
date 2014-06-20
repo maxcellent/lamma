@@ -121,7 +121,13 @@ class Date1Spec extends WordSpec with Matchers {
     actual.toList should be(expected)
   }
 
-  "the difference between forward and backward is when there is a fraction days" in {
+  "by week / month / year are all handled in the same way" in {
+    val expected = Date(2014, 5, 12) :: Date(2014, 5, 5) :: Nil
+    val actual = Date(2014, 5, 12) to Date(2014, 5, 1) by (-1 week)
+    actual.toList should be(expected)
+  }
+
+  "other than order, the difference between forward and backward is when there is a fraction days" in {
     (Date(2014, 5, 10) to Date(2014, 10, 20) by (3 months)).toList should be(Date(2014, 5, 10) :: Date(2014, 8, 10) :: Nil)
     (Date(2014, 10, 20) to Date(2014, 5, 10) by (-3 months)).toList should be(Date(2014, 10, 20) :: Date(2014, 7, 20) :: Nil)
   }

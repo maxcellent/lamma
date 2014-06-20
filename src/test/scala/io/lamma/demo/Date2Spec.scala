@@ -9,7 +9,7 @@ import org.scalatest.{Matchers, WordSpec}
  */
 class Date2Spec extends WordSpec with Matchers {
 
-  "you can specify day of week when generating with Weeks or WeeksBackward" in {
+  "you can specify day of week when generating with Weeks" in {
     val expected = Date(2014, 5, 13) :: Date(2014, 6, 3) :: Date(2014, 6, 24) :: Nil
     val actual = Date(2014, 5, 10) to Date(2014, 7, 1) by (3 weeks) on Tuesday
     actual.toList should be(expected)
@@ -39,6 +39,7 @@ class Date2Spec extends WordSpec with Matchers {
     actual.toList should be(expected)
   }
 
+  // TODO: move this part into separated Pattern page
   "you can implement your own PositionOfMonth" in {
     /**
      * match first day in Feb, 3rd day for other months
@@ -54,9 +55,8 @@ class Date2Spec extends WordSpec with Matchers {
     }
 
     val expected = Date(2014, 1, 3) :: Date(2014, 2, 1) :: Date(2014, 3, 3) :: Nil
-
-    val pattern = Monthly(1, MyPositionOfMonth)
-    DateRange(Date(2014, 1, 1), Date(2014, 3, 31), pattern).toList should be(expected)
+    val actual = DateRange(Date(2014, 1, 1), Date(2014, 3, 31), Monthly(MyPositionOfMonth))
+    actual.toList should be(expected)
   }
 
   "you can shift a date based on the result. For example, I want 3rd last day of every month" in {
