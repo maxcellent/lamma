@@ -38,7 +38,7 @@ pomIncludeRepository := { _ => false }
 
 licenses := Seq("DO WHAT YOU WANT TO PUBLIC LICENSE, Version 1" -> url("https://github.com/maxcellent/lamma/blob/master/LICENSE"))
 
-homepage := Some(url("https://github.com/maxcellent/lamma"))
+homepage := Some(url("http://lamma.io"))
 
 pomExtra := (
   <scm>
