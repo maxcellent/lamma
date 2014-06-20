@@ -78,6 +78,7 @@ class PatternSpec extends WordSpec with Matchers {
     }
 
     "construct object properly with apply function" in {
+      Weekly(Wednesday) should be(Weekly(1, Wednesday))
       Weekly(5, Wednesday) should be(Weekly(5, Some(Wednesday)))
     }
 
@@ -125,6 +126,7 @@ class PatternSpec extends WordSpec with Matchers {
     }
 
     "construct object properly with apply function" in {
+      Monthly(LastDayOfMonth) should be(Monthly(1, LastDayOfMonth))
       Monthly(5, LastDayOfMonth) should be(Monthly(5, Some(LastDayOfMonth)))
     }
 
@@ -186,6 +188,7 @@ class PatternSpec extends WordSpec with Matchers {
     }
 
     "construct object properly with apply function" in {
+      Yearly(LastDayOfYear) should be(Yearly(1, Some(LastDayOfYear)))
       Yearly(5, LastDayOfYear) should be(Yearly(5, Some(LastDayOfYear)))
     }
 

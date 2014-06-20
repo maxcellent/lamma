@@ -49,7 +49,7 @@ object Pattern {
  *
  * @param step in days
  */
-case class Daily(step: Int) extends Pattern {
+case class Daily(step: Int = 1) extends Pattern {
   require(step != 0, "step cannot be 0.")
 
   override def recur(from: Date, to: Date) = Pattern.recur(from, to, step)
@@ -73,6 +73,8 @@ case class Weekly(step: Int, dowOpt: Option[DayOfWeek] = None) extends Pattern {
 }
 
 object Weekly {
+  def apply(dow: DayOfWeek): Weekly = apply(1, dow)
+
   def apply(step: Int, dow: DayOfWeek) = new Weekly(step, Some(dow))
 
   /**
@@ -122,6 +124,8 @@ case class Monthly(step: Int, domOpt: Option[DayOfMonth] = None) extends Pattern
 }
 
 object Monthly {
+  def apply(dom: DayOfMonth): Monthly = apply(1, dom)
+
   def apply(step: Int, dom: DayOfMonth) = new Monthly(step, Some(dom))
 
   private[lamma] def adjustedFrom(from: Date, step: Int, dom: DayOfMonth) = {
@@ -159,6 +163,8 @@ case class Yearly(step: Int, doyOpt: Option[DayOfYear] = None) extends Pattern {
 }
 
 object Yearly {
+  def apply(doy: DayOfYear): Yearly = apply(1, doy)
+
   def apply(step: Int, doy: DayOfYear) = new Yearly(step, Some(doy))
 
   private[lamma] def adjustedFrom(from: Date, step: Int, doy: DayOfYear) = {
