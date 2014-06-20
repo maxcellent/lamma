@@ -82,7 +82,7 @@ class Date1Spec extends WordSpec with Matchers {
   }
 
   "filter out weekend and other holiday" should {
-    val UKHoliday2015 = SimpleCalendar(
+    val UKHoliday2015 = SimpleHolidayRule(
       Date(2015, 1, 1),
       Date(2015, 4, 3),
       Date(2015, 4, 6),

@@ -67,13 +67,13 @@ class Date2Spec extends WordSpec with Matchers {
 
   "you can also shift by working days" in {
     val expected = Date(2014,1,29) :: Date(2014,2,26) :: Date(2014,3,27) :: Nil
-    val actual = Date(2014, 1, 1) to Date(2014, 3, 31) by month on lastDay shift(-2, weekends)
+    val actual = Date(2014, 1, 1) to Date(2014, 3, 31) by month on lastDay shift(-2, Weekends)
     actual.toList should be(expected)
   }
 
   "you can further select result date after the date is shifted" in {
     val expected = Date(2014,1,29) :: Date(2014,2,26) :: Date(2014,3,31) :: Nil   // last date is different
-    val actual = Date(2014, 1, 1) to Date(2014, 3, 31) by month on lastDay shift -2 forward weekends
+    val actual = Date(2014, 1, 1) to Date(2014, 3, 31) by month on lastDay shift -2 forward Weekends
     actual.toList should be(expected)
   }
 

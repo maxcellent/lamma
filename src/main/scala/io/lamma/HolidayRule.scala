@@ -38,10 +38,10 @@ trait HolidayRule {
   def and(that: HolidayRule) = (this, that) match {
     case (NoHoliday, cal2) => cal2
     case (cal1, NoHoliday) => cal1
-    case (CompositeHolidayRules(cals1), CompositeHolidayRules(cals2)) => CompositeHolidayRules(cals1 ++ cals2)
-    case (CompositeHolidayRules(cals1), cal2) => CompositeHolidayRules(cals1 + cal2)
-    case (cal1, CompositeHolidayRules(cals2)) => CompositeHolidayRules(cals2 + cal1)
-    case (cal1, cal2) => CompositeHolidayRules(cal1, cal2)
+    case (CompositeHolidayRule(cals1), CompositeHolidayRule(cals2)) => CompositeHolidayRule(cals1 ++ cals2)
+    case (CompositeHolidayRule(cals1), cal2) => CompositeHolidayRule(cals1 + cal2)
+    case (cal1, CompositeHolidayRule(cals2)) => CompositeHolidayRule(cals2 + cal1)
+    case (cal1, cal2) => CompositeHolidayRule(cal1, cal2)
   }
 }
 
@@ -65,12 +65,12 @@ case object NoHoliday extends HolidayRule {
   override def isHoliday(d: Date) = false
 }
 
-case class SimpleCalendar(holidays: Set[Date]) extends HolidayRule {
+case class SimpleHolidayRule(holidays: Set[Date]) extends HolidayRule {
   override def isHoliday(d: Date) = holidays.contains(d)
 }
 
-object SimpleCalendar {
-  def apply(holidays: Date*): SimpleCalendar = SimpleCalendar(holidays.toSet)
+object SimpleHolidayRule {
+  def apply(holidays: Date*): SimpleHolidayRule = SimpleHolidayRule(holidays.toSet)
 }
 
 /**
@@ -86,13 +86,13 @@ case object Weekends extends HolidayRule {
  * a holiday rule composed of multiple holiday rules.
  * this rule will treat a day as holiday if any one of underlying rule returns true
  *
- * @param cals list of calendars
+ * @param rules list of holiday rules
  */
-case class CompositeHolidayRules(cals: Set[HolidayRule] = Set.empty) extends HolidayRule {
-  override def isHoliday(d: Date) = cals.exists(_.isHoliday(d))
+case class CompositeHolidayRule(rules: Set[HolidayRule] = Set.empty) extends HolidayRule {
+  override def isHoliday(d: Date) = rules.exists(_.isHoliday(d))
 }
 
-object CompositeHolidayRules {
-  def apply(cals: HolidayRule*) = new CompositeHolidayRules(cals.toSet)
+object CompositeHolidayRule {
+  def apply(rules: HolidayRule*) = new CompositeHolidayRule(rules.toSet)
 }
 

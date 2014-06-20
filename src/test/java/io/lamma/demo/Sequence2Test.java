@@ -81,7 +81,7 @@ public class Sequence2Test {
     @Test
     public void testShiftByWorkingDays() {
         List<Date> expected = Lists.newArrayList(date(2014,1,29), date(2014,2,26), date(2014,3,27));
-        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 31), months(1, lastDayOfMonth()), shiftWorkingDays(-2, weekendCalendar()));
+        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 31), months(1, lastDayOfMonth()), shiftWorkingDays(-2, weekends()));
         assertThat(actual, is(expected));
     }
 
@@ -89,7 +89,7 @@ public class Sequence2Test {
     public void testSelector() {
         // further select result date after the date is shifted
         List<Date> expected = Lists.newArrayList(date(2014,1,29), date(2014,2,26), date(2014,3,31));   // last date is different
-        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 31), months(1, lastDayOfMonth()), shiftCalendarDays(-2), forward(weekendCalendar()));
+        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 31), months(1, lastDayOfMonth()), shiftCalendarDays(-2), forward(weekends()));
         assertThat(actual, is(expected));
     }
 

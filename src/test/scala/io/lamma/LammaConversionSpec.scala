@@ -50,18 +50,18 @@ class LammaConversionSpec extends FlatSpec with Matchers {
     noHoliday() should be(NoHoliday)
   }
 
-  "weekendCalendar" should "be the same as lamma version" in {
-    weekendCalendar() should be(Weekends)
+  "weekends" should "be the same as lamma version" in {
+    weekends() should be(Weekends)
   }
 
-  "simpeCalendar" should "be the same as lamma version" in {
-    val expected = SimpleCalendar(Date(2014, 5, 1), Date(2014, 5, 2))
-    simpleCalendar(date(2014, 5, 1), date(2014, 5, 2)) should be(expected)
-    simpleCalendar(set(date(2014, 5, 1), date(2014, 5, 2))) should be(expected)
+  "simpeHolidayRule" should "be the same as lamma version" in {
+    val expected = SimpleHolidayRule(Date(2014, 5, 1), Date(2014, 5, 2))
+    simpleHolidayRule(date(2014, 5, 1), date(2014, 5, 2)) should be(expected)
+    simpleHolidayRule(set(date(2014, 5, 1), date(2014, 5, 2))) should be(expected)
   }
 
-  "compositeCalendar" should "be the same as lamma version" in {
-    compositeCalendar(noHoliday(), weekendCalendar()) should be(CompositeHolidayRules(NoHoliday, Weekends))
+  "compositeHolidayRules" should "be the same as lamma version" in {
+    compositeHolidayRules(noHoliday(), weekends()) should be(CompositeHolidayRule(NoHoliday, Weekends))
   }
 
   // ========== shifters ==========

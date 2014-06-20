@@ -137,19 +137,19 @@ class HomepageSpec extends WordSpec with Matchers {
       /**
        * all Wednesdays are now holiday :)
        */
-      case object WednesdayCalendar extends HolidayRule {
+      case object WednesdayHolidayRule extends HolidayRule {
         override def isHoliday(d: Date) = d.dayOfWeek == Wednesday
       }
 
       "let's use it to generate a sequence" in {
         val expected = Date(2015, 10, 13) :: Date(2015, 10, 15) :: Date(2015, 10, 16) :: Nil
-        val actual = Date(2015, 10, 13) to Date(2015, 10, 16) except WednesdayCalendar
+        val actual = Date(2015, 10, 13) to Date(2015, 10, 16) except WednesdayHolidayRule
         actual.toList should be(expected)
       }
     }
 
-    "you can compose multiple calendars with CompositeCalendar" in {
-      val ukHolidays2014 = SimpleCalendar(Date(2014, 1, 1), Date(2014, 4, 18), Date(2014, 4, 21),
+    "you can compose multiple holiday rules with CompositeHolidayRule" in {
+      val ukHolidays2014 = SimpleHolidayRule(Date(2014, 1, 1), Date(2014, 4, 18), Date(2014, 4, 21),
         Date(2014, 5, 5), Date(2014, 5, 26), Date(2014, 8, 25), Date(2014, 12, 25), Date(2014, 12, 26))
 
       val expected = List(Date(2014,4,16), Date(2014,4,17), Date(2014,4,22), Date(2014,4,23), Date(2014,4,24))

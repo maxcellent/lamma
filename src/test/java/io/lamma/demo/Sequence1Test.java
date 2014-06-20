@@ -85,7 +85,7 @@ public class Sequence1Test {
 //    @Test
 //    public void testWorkingDays() {
 //        List<Date> expected = Lists.newArrayList(date(2015, 10, 5), date(2015, 10, 12), date(2015, 10, 19));
-//        List<Date> actual = Lamma4j.sequence(date(2015, 10, 5), date(2015, 10, 19), workingDays(5, weekendCalendar()));
+//        List<Date> actual = Lamma4j.sequence(date(2015, 10, 5), date(2015, 10, 19), workingDays(5, weekends()));
 //        assertThat(actual, is(expected));
 //    }
 

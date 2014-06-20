@@ -82,14 +82,14 @@ class HolidayRuleSpec extends WordSpec with Matchers {
     }
   }
 
-  "CompositeCalendar" should {
+  "CompositeHolidayRule" should {
     "always return false if no underlying rule is defined" in {
-      (Date(2014, 1, 1) to Date(2014, 12, 31)).exists(CompositeHolidayRules().isHoliday) should be(false)
+      (Date(2014, 1, 1) to Date(2014, 12, 31)).exists(CompositeHolidayRule().isHoliday) should be(false)
     }
 
     "union results from underlying calendars" in {
-      val simpleCal = SimpleCalendar(Date(2014, 6, 1), Date(2014, 6, 2))
-      val compositeCal = CompositeHolidayRules(simpleCal, Weekends)
+      val simpleCal = SimpleHolidayRule(Date(2014, 6, 1), Date(2014, 6, 2))
+      val compositeCal = CompositeHolidayRule(simpleCal, Weekends)
 
       compositeCal.isHoliday(Date(2014, 5, 30)) should be(false)
       compositeCal.isHoliday(Date(2014, 5, 31)) should be(true)

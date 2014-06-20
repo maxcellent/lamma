@@ -32,7 +32,7 @@ public class LammaConversion {
         return iterable(elems).toSet();
     }
 
-    // ========= date & calendars ==========
+    // ========= date & holidays ==========
     public static Date date(int yyyy, int mm, int dd) {
         return new Date(yyyy, mm, dd);
     }
@@ -41,20 +41,20 @@ public class LammaConversion {
         return NoHoliday$.MODULE$;
     }
 
-    public static HolidayRule weekendCalendar() {
+    public static HolidayRule weekends() {
         return Weekends$.MODULE$;
     }
 
-    public static HolidayRule simpleCalendar(Date ... holidays) {
-        return new SimpleCalendar(iterable(holidays).<Date>toSet());
+    public static HolidayRule simpleHolidayRule(Date... holidays) {
+        return new SimpleHolidayRule(iterable(holidays).<Date>toSet());
     }
 
-    public static HolidayRule simpleCalendar(Set<Date> holidays) {
-        return new SimpleCalendar(holidays);
+    public static HolidayRule simpleHolidayRule(Set<Date> holidays) {
+        return new SimpleHolidayRule(holidays);
     }
 
-    public static HolidayRule compositeCalendar(HolidayRule... calendars) {
-        return CompositeHolidayRules$.MODULE$.apply(iterable(calendars).<HolidayRule>toSeq());
+    public static HolidayRule compositeHolidayRules(HolidayRule... rules) {
+        return CompositeHolidayRule$.MODULE$.apply(iterable(rules).<HolidayRule>toSeq());
     }
 
     // ========= shifters =========

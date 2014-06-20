@@ -11,7 +11,6 @@ import java.util.List;
 
 // always import these two lines when using Java, this will make our life a lot easier
 import static io.lamma.LammaConversion.*;
-import static io.lamma.LammaConst.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -25,8 +24,8 @@ public class ScheduleTest {
         List<Date> expectedCouponDates = Lists.newArrayList(date(2015, 6, 30), date(2015, 12, 31), date(2016, 6, 30), date(2016, 12, 30));
         List<Date> expectedSettlementDates = Lists.newArrayList(date(2015, 7, 2), date(2016, 1, 4), date(2016, 7, 4), date(2017, 1, 3));
 
-        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekendCalendar()));
-        DateDef settlementDate = dateDef("settlementDate", otherDate("CouponDate"), shiftWorkingDays(2, weekendCalendar()));
+        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekends()));
+        DateDef settlementDate = dateDef("settlementDate", otherDate("CouponDate"), shiftWorkingDays(2, weekends()));
 
         Schedule4j result = Lamma4j.schedule(date(2015, 1, 1), date(2016, 12, 31), months(6, lastDayOfMonth()), list(couponDate, settlementDate));
 
@@ -38,7 +37,7 @@ public class ScheduleTest {
     public void testDefaultStubHandling() {
         List<Date> expectedCouponDates = Lists.newArrayList(date(2015, 6, 30), date(2015, 12, 31), date(2016, 6, 30), date(2016, 12, 30), date(2017, 1, 31));
                 
-        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekendCalendar()));
+        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekends()));
         Schedule4j result = Lamma4j.schedule(date(2015, 1, 1), date(2017, 1, 31), months(6, lastDayOfMonth()), list(couponDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
@@ -48,7 +47,7 @@ public class ScheduleTest {
     public void testStubRules() {
         List<Date> expectedCouponDates = Lists.newArrayList(date(2015, 6, 30), date(2015, 12, 31), date(2016, 6, 30), date(2017, 1, 31));
 
-        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekendCalendar()));
+        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekends()));
         Schedule4j result = Lamma4j.schedule(date(2015, 1, 1), date(2017, 1, 31), months(6, lastDayOfMonth()), stubRulePeriodBuilder(longEnd(270)), list(couponDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));

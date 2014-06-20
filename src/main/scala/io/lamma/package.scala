@@ -55,12 +55,6 @@ package object lamma {
 
   implicit def yearDurationToYearlyPattern(d: YearDuration) = Yearly(d.n)
 
-
-  // =========== holiday rules ==================
-  val weekends = new HolidayRule {
-    override def isHoliday(d: Date) = d.isWeekend
-  }
-
   // =========== locators ======================
 
   // this is only used as a place holder to complete expression like `10 th day`
