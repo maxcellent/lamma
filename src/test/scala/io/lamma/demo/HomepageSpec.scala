@@ -188,7 +188,7 @@ class HomepageSpec extends WordSpec with Matchers {
 
       val expected = Period((2014, 10, 1) -> (2014, 10, 5)) :: Period((2014, 10, 6) -> (2014, 10, 15)) :: Period((2014, 10, 16) -> (2014, 10, 25)) :: Nil
 
-      Schedule(start, end, pattern, forward = false).periods should be(expected)
+      Schedule(start, end, pattern, direction = Direction.BACKWARD).periods should be(expected)
     }
 
     "and for this case, both first and last period are very short" in {
@@ -229,7 +229,7 @@ class HomepageSpec extends WordSpec with Matchers {
       // LongStart(15) means: I am ok with a longer start period, as long as it's no more than 15 days
       val periodBuilder = StubRulePeriodBuilder(startRule = LongStart(15))
 
-      Schedule(start, end, pattern, periodBuilder, forward = false).periods should be(expected)
+      Schedule(start, end, pattern, periodBuilder, direction = Direction.BACKWARD).periods should be(expected)
     }
 
     "we can apply both at the same time" in {

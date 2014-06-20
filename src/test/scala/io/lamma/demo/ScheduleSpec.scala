@@ -59,7 +59,7 @@ class ScheduleSpec extends WordSpec with Matchers {
     val couponDate = DateDef("CouponDate", relativeTo = PeriodEnd, selector = ModifiedFollowing(Weekends))
     val settlementDate = DateDef("SettlementDate", relativeTo = Anchor(couponDate.name), shifter = ShiftWorkingDays(2, Weekends))
     val dateDefs = couponDate :: settlementDate :: Nil
-    val schedule = Schedule(Date(2015, 1, 1), Date(2015, 12, 31), (-5 months) on (1 st Friday), dateDefs = dateDefs, forward = false)
+    val schedule = Schedule(Date(2015, 1, 1), Date(2015, 12, 31), (-5 months) on (1 st Friday), dateDefs = dateDefs, direction = Direction.BACKWARD)
 
     schedule("CouponDate") should be(expectedCouponDates)
     schedule(settlementDate.name) should be(expectedSettlementDates)

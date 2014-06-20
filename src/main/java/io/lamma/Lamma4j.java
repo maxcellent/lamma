@@ -55,12 +55,12 @@ public class Lamma4j {
         return new Schedule4j(schedule);
     }
 
-    public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder, java.util.List<DateDef> dateDefs, Boolean forward) {
-        return schedule(start, end, pattern, periodBuilder, JavaConverters.asScalaBufferConverter(dateDefs).asScala().toList(), forward);
+    public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder, java.util.List<DateDef> dateDefs, Direction direction) {
+        return schedule(start, end, pattern, periodBuilder, JavaConverters.asScalaBufferConverter(dateDefs).asScala().toList(), direction);
     }
 
-    public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder, List<DateDef> dateDefs, Boolean forward) {
-        Schedule schedule = Schedule$.MODULE$.apply(start, end, pattern, periodBuilder, dateDefs, forward);
+    public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder, List<DateDef> dateDefs, Direction direction) {
+        Schedule schedule = Schedule$.MODULE$.apply(start, end, pattern, periodBuilder, dateDefs, direction);
         return new Schedule4j(schedule);
     }
 }

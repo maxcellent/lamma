@@ -66,12 +66,15 @@ object Schedule {
             pattern: Pattern,
             periodBuilder: PeriodBuilder = StubRulePeriodBuilder(),
             dateDefs: List[DateDef] = Nil,
-            forward: Boolean = true) = {
+            direction: Direction = Direction.FORWARD) = {
     require(start <= end, s"start date $start must be on or before end date $end")
 
     val end0 = start - 1  // last period end day (period 0)
 
-    val recurringDates = if (forward) pattern.recur(end0, end) else pattern.recur(end, end0).reverse
+    val recurringDates = direction match {
+      case Direction.FORWARD => pattern.recur(end0, end)
+      case Direction.BACKWARD => pattern.recur(end, end0).reverse
+    }
 
     val periodEndDays = recurringDates match {
       case Nil => Nil
