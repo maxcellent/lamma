@@ -3,7 +3,6 @@ package io.lamma.demo
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma._
 import io.lamma.Anchor.PeriodEnd
-import io.lamma.Recurrence._
 import io.lamma.DayOfMonth.LastDayOfMonth
 import io.lamma.StubRulePeriodBuilder.LongEnd
 import io.lamma.Anchor.OtherDate

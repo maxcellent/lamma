@@ -165,153 +165,129 @@ public class LammaConversion {
         return DayOfYear$.MODULE$.LastWeekdayOfYear(dow);
     }
 
-    public static DayOfYear firstMonthOfYear(DayOfMonth pom) {
-        return DayOfYear$.MODULE$.FirstMonthOfYear(pom);
+    public static DayOfYear firstMonthOfYear(DayOfMonth dom) {
+        return DayOfYear$.MODULE$.FirstMonthOfYear(dom);
     }
 
-    public static DayOfYear nthMonthOfYear(Month m, DayOfMonth pom) {
-        return new DayOfYear.NthMonthOfYear(m, pom);
+    public static DayOfYear nthMonthOfYear(Month m, DayOfMonth dom) {
+        return new DayOfYear.NthMonthOfYear(m, dom);
     }
 
-    public static DayOfYear lastMonthOfYear(DayOfMonth pom) {
-        return DayOfYear$.MODULE$.LastMonthOfYear(pom);
+    public static DayOfYear lastMonthOfYear(DayOfMonth dom) {
+        return DayOfYear$.MODULE$.LastMonthOfYear(dom);
     }
 
     // ========== recurrence pattern ==============
-    public static Recurrence.Days everyDay() {
-        return Recurrence$.MODULE$.EveryDay();
+    public static Daily everyDay() {
+        return new Daily(1);
     }
 
-    public static Recurrence.Days everyOtherDay() {
-        return Recurrence$.MODULE$.EveryOtherDay();
+    public static Daily everyOtherDay() {
+        return new Daily(2);
     }
 
-    public static Recurrence.Days days(int days) {
-        return Recurrence.Days$.MODULE$.apply(days);
+    public static Daily days(int days) {
+        return new Daily(days);
     }
 
-    public static Recurrence.Days everyWorkingDay()  {
-        return Recurrence$.MODULE$.EveryWorkingDay(Recurrence$.MODULE$.EveryWorkingDay$default$1());
+    public static Daily daysBackward(int days) {
+        return new Daily(- days);
     }
 
-    public static Recurrence.Days everyWorkingDay(HolidayRule rule) {
-        return Recurrence$.MODULE$.EveryWorkingDay(rule);
+    public static Weekly everyWeek() {
+        return Weekly$.MODULE$.apply(1, Weekly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Days workingDays(int days) {
-        return Recurrence.Days$.MODULE$.workingDays(days, Recurrence.Days$.MODULE$.workingDays$default$2());
+    public static Weekly everyOtherWeek() {
+        return Weekly$.MODULE$.apply(2, Weekly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Days workingDays(int days, HolidayRule rule) {
-        return Recurrence.Days$.MODULE$.workingDays(days, rule);
+    public static Weekly weeks(int weeks) {
+        return Weekly$.MODULE$.apply(weeks, Weekly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.DaysBackward daysBackward(int days) {
-        return Recurrence.DaysBackward$.MODULE$.apply(days);
+    public static Weekly weeks(DayOfWeek dow) {
+        return Weekly$.MODULE$.apply(1, dow);
     }
 
-    public static Recurrence.DaysBackward workingDaysBackward(int days) {
-        return Recurrence.DaysBackward$.MODULE$.workingDays(days, Recurrence.Days$.MODULE$.workingDays$default$2());
+    public static Weekly weeks(int weeks, DayOfWeek dow) {
+        return Weekly$.MODULE$.apply(weeks, dow);
     }
 
-    public static Recurrence.DaysBackward workingDaysBackward(int days, HolidayRule rule) {
-        return Recurrence.DaysBackward$.MODULE$.workingDays(days, rule);
+    public static Weekly weeksBackward(int weeks) {
+        return Weekly$.MODULE$.apply(- weeks, Weekly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Weeks everyWeek() {
-        return Recurrence$.MODULE$.EveryWeek();
+    public static Weekly weeksBackward(DayOfWeek dow) {
+        return Weekly$.MODULE$.apply(-1, dow);
     }
 
-    public static Recurrence.Weeks everyOtherWeek() {
-        return Recurrence$.MODULE$.EveryOtherWeek();
+    public static Weekly weeksBackward(int weeks, DayOfWeek dow) {
+        return Weekly$.MODULE$.apply(- weeks, dow);
     }
 
-    public static Recurrence.Weeks weeks(int weeks) {
-        return new Recurrence.Weeks(weeks, Recurrence.Weeks$.MODULE$.apply$default$2());
+    public static Monthly everyMonth() {
+        return Monthly$.MODULE$.apply(1, Monthly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Weeks weeks(DayOfWeek dow) {
-        return Recurrence.Weeks$.MODULE$.apply(dow);
+    public static Monthly everyOtherMonth() {
+        return Monthly$.MODULE$.apply(2, Monthly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Weeks weeks(int weeks, DayOfWeek dow) {
-        return Recurrence.Weeks$.MODULE$.apply(weeks, dow);
+    public static Monthly months(int n) {
+        return Monthly$.MODULE$.apply(n, Monthly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.WeeksBackward weeksBackward(int weeks) {
-        return new Recurrence.WeeksBackward(weeks, Recurrence.WeeksBackward$.MODULE$.apply$default$2());
+    public static Monthly months(DayOfMonth dom) {
+        return Monthly$.MODULE$.apply(1, dom);
     }
 
-    public static Recurrence.WeeksBackward weeksBackward(DayOfWeek dow) {
-        return Recurrence.WeeksBackward$.MODULE$.apply(dow);
+    public static Monthly months(int n, DayOfMonth dom) {
+        return Monthly$.MODULE$.apply(n, dom);
     }
 
-    public static Recurrence.WeeksBackward weeksBackward(int weeks, DayOfWeek dow) {
-        return Recurrence.WeeksBackward$.MODULE$.apply(weeks, dow);
+    public static Monthly monthsBackward(int n) {
+        return Monthly$.MODULE$.apply(-n, Monthly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Months everyMonth() {
-        return Recurrence$.MODULE$.EveryMonth();
+    public static Monthly monthsBackward(DayOfMonth dom) {
+        return Monthly$.MODULE$.apply(-1, dom);
     }
 
-    public static Recurrence.Months everyOtherMonth() {
-        return Recurrence$.MODULE$.EveryOtherMonth();
+    public static Monthly monthsBackward(int n, DayOfMonth dom) {
+        return Monthly$.MODULE$.apply(-n, dom);
     }
 
-    public static Recurrence.Months months(int n) {
-        return Recurrence.Months$.MODULE$.apply(n, Recurrence.Months$.MODULE$.apply$default$2());
+    public static Yearly everyYear() {
+        return Yearly$.MODULE$.apply(1, Yearly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Months months(DayOfMonth pom) {
-        return Recurrence.Months$.MODULE$.apply(pom);
+    public static Yearly everyOtherYear() {
+        return Yearly$.MODULE$.apply(2, Yearly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Months months(int n, DayOfMonth pom) {
-        return Recurrence.Months$.MODULE$.apply(n, pom);
+    public static Yearly years(int n) {
+        return Yearly$.MODULE$.apply(n, Yearly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.MonthsBackward monthsBackward(int n) {
-        return Recurrence.MonthsBackward$.MODULE$.apply(n, Recurrence.MonthsBackward$.MODULE$.apply$default$2());
+    public static Yearly years(DayOfYear doy) {
+        return Yearly$.MODULE$.apply(1, doy);
     }
 
-    public static Recurrence.MonthsBackward monthsBackward(DayOfMonth pom) {
-        return Recurrence.MonthsBackward$.MODULE$.apply(pom);
+    public static Yearly years(int n, DayOfYear doy) {
+        return Yearly$.MODULE$.apply(n, doy);
     }
 
-    public static Recurrence.MonthsBackward monthsBackward(int n, DayOfMonth pom) {
-        return Recurrence.MonthsBackward$.MODULE$.apply(n, pom);
+    public static Yearly yearsBackward(int n) {
+        return Yearly$.MODULE$.apply(-n, Yearly$.MODULE$.apply$default$2());
     }
 
-    public static Recurrence.Years everyYear() {
-        return Recurrence$.MODULE$.EveryYear();
+    public static Yearly yearsBackward(DayOfYear doy) {
+        return Yearly$.MODULE$.apply(-1, doy);
     }
 
-    public static Recurrence.Years everyOtherYear() {
-        return Recurrence$.MODULE$.EveryOtherYear();
-    }
-
-    public static Recurrence.Years years(int n) {
-        return Recurrence.Years$.MODULE$.apply(n, Recurrence.Years$.MODULE$.apply$default$2());
-    }
-
-    public static Recurrence.Years years(DayOfYear poy) {
-        return Recurrence.Years$.MODULE$.apply(poy);
-    }
-
-    public static Recurrence.Years years(int n, DayOfYear poy) {
-        return Recurrence.Years$.MODULE$.apply(n, poy);
-    }
-
-    public static Recurrence.YearsBackward yearsBackward(int n) {
-        return Recurrence.YearsBackward$.MODULE$.apply(n, Recurrence.YearsBackward$.MODULE$.apply$default$2());
-    }
-
-    public static Recurrence.YearsBackward yearsBackward(DayOfYear poy) {
-        return Recurrence.YearsBackward$.MODULE$.apply(poy);
-    }
-
-    public static Recurrence.YearsBackward yearsBackward(int n, DayOfYear poy) {
-        return Recurrence.YearsBackward$.MODULE$.apply(n, poy);
+    public static Yearly yearsBackward(int n, DayOfYear doy) {
+        return Yearly$.MODULE$.apply(-n, doy);
     }
 
     // ============== period builder / stub rule ===============

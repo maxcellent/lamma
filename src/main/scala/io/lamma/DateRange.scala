@@ -1,5 +1,7 @@
 package io.lamma
 
+import collection.JavaConverters._
+
 /**
  * The `DateRange` class represents all date values in range. Both start and end date included. <br>
  *
@@ -23,13 +25,13 @@ package io.lamma
  *  @param to        the exclusive end of the range.
  *  @param pattern   pattern used to generate date range
  *  @param holiday   except which holidays
- *  @param shifters
- *  @param selectors
+ *  @param shifters  how to shift the date once it's generated? eg, no shift, 2 days later, 2 working days later
+ *  @param selectors How to select the date once the date is generated? eg, same day, following working day?
  *
  */
 case class DateRange(from: Date,
                      to: Date,
-                     pattern: Pattern,
+                     pattern: Pattern = Daily(1),
                      holiday: HolidayRule = NoHoliday,
                      shifters: List[Shifter] = Nil,
                      selectors: List[Selector] = Nil) extends Traversable[Date] {
@@ -43,4 +45,12 @@ case class DateRange(from: Date,
   lazy val selected = shifted.map { d => (d /: selectors) {_ select _} }
 
   override def foreach[U](f: Date => U) = selected.foreach(f)
+
+  /**
+   * return an instance of {{{ java.lang.Iterable }}}
+   * can be used in java for comprehension
+   */
+  lazy val javaIterable = this.toIterable.asJava
+
+  lazy val javaList = this.toList.asJava
 }

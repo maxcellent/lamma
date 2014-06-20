@@ -1,8 +1,7 @@
 package io.lamma.demo
 
 import io.lamma._
-import io.lamma.Recurrence._
-import io.lamma.{Weekends, Lamma, Date}
+import io.lamma.{Weekends, Date}
 import org.scalatest.{Matchers, WordSpec}
 
 /**

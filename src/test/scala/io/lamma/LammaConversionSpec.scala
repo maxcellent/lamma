@@ -9,7 +9,6 @@ import io.lamma.Selector._
 import LammaConst._
 import DayOfMonth._
 import DayOfYear._
-import Recurrence._
 import io.lamma._
 import io.lamma.DayOfMonth.LastWeekdayOfMonth
 import io.lamma.DayOfMonth.NthWeekdayOfMonth
@@ -172,97 +171,82 @@ class LammaConversionSpec extends FlatSpec with Matchers {
 
   // ========== recurrence pattern: day patterns ==============
   "everyDay" should "be the same as lamma version" in {
-    everyDay() should be(EveryDay)
+    everyDay() should be(Daily(1))
   }
 
   "everyOtherDay" should "be the same as lamma version" in {
-    everyOtherDay() should be(EveryOtherDay)
+    everyOtherDay() should be(Daily(2))
   }
 
   "days" should "be the same as lamma version" in {
-    days(22) should be(Days(22))
-  }
-
-  "everyWorkingDay" should "be the same as lamma version" in {
-    everyWorkingDay() should be(EveryWorkingDay())
-    everyWorkingDay(noHoliday()) should be(EveryWorkingDay(NoHoliday))
-  }
-
-  "workingDays" should "be the same as lamma version" in {
-    workingDays(5) should be(Days.workingDays(5))
-    workingDays(12, noHoliday()) should be(Days.workingDays(12, NoHoliday))
+    days(22) should be(Daily(22))
   }
 
   "daysBackward" should "be the same as lamma version" in {
-    daysBackward(22) should be(DaysBackward(22))
-  }
-
-  "workingDaysBackward" should "be the same as lamma version" in {
-    workingDaysBackward(5) should be(DaysBackward.workingDays(5))
-    workingDaysBackward(12, noHoliday()) should be(DaysBackward.workingDays(12, NoHoliday))
+    daysBackward(22) should be(Daily(-22))
   }
 
   // ========== recurrence pattern: week patterns ==============
   "everyWeek" should "be the same as lamma version" in {
-    everyWeek() should be(EveryWeek)
+    everyWeek() should be(Weekly(1))
   }
 
   "everyOtherWeek" should "be the same as lamma version" in {
-    everyOtherWeek() should be(EveryOtherWeek)
+    everyOtherWeek() should be(Weekly(2))
   }
 
   "weeks" should "be the same as lamma version" in {
-    weeks(5) should be(Weeks(5))
-    weeks(FRIDAY) should be(Weeks(Friday))
-    weeks(2, TUESDAY) should be(Weeks(2, Tuesday))
+    weeks(5) should be(Weekly(5))
+    weeks(FRIDAY) should be(Weekly(1, Friday))
+    weeks(2, TUESDAY) should be(Weekly(2, Tuesday))
   }
 
   "weeksBackward" should "be the same as lamma version" in {
-    weeksBackward(5) should be(WeeksBackward(5))
-    weeksBackward(FRIDAY) should be(WeeksBackward(Friday))
-    weeksBackward(2, TUESDAY) should be(WeeksBackward(2, Tuesday))
+    weeksBackward(5) should be(Weekly(-5))
+    weeksBackward(FRIDAY) should be(Weekly(-1, Friday))
+    weeksBackward(2, TUESDAY) should be(Weekly(-2, Tuesday))
   }
 
   // ========== recurrence pattern: month patterns ==============
   "everyMonth" should "be the same as lamma version" in {
-    everyMonth() should be(EveryMonth)
+    everyMonth() should be(Monthly(1))
   }
 
   "everyOtherMonth" should "be the same as lamma version" in {
-    everyOtherMonth() should be(EveryOtherMonth)
+    everyOtherMonth() should be(Monthly(2))
   }
 
   "months" should "be the same as lamma version" in {
-    months(3) should be(Months(3))
-    months(lastWeekdayOfMonth(FRIDAY)) should be(Months(LastWeekdayOfMonth(Friday)))
-    months(5, firstDayOfMonth()) should be(Months(5, FirstDayOfMonth))
+    months(3) should be(Monthly(3))
+    months(lastWeekdayOfMonth(FRIDAY)) should be(Monthly(1, LastWeekdayOfMonth(Friday)))
+    months(5, firstDayOfMonth()) should be(Monthly(5, FirstDayOfMonth))
   }
 
   "monthsBackward" should "be the same as lamma version" in {
-    monthsBackward(3) should be(MonthsBackward(3))
-    monthsBackward(lastWeekdayOfMonth(FRIDAY)) should be(MonthsBackward(LastWeekdayOfMonth(Friday)))
-    monthsBackward(5, firstDayOfMonth()) should be(MonthsBackward(5, FirstDayOfMonth))
+    monthsBackward(3) should be(Monthly(-3))
+    monthsBackward(lastWeekdayOfMonth(FRIDAY)) should be(Monthly(-1, LastWeekdayOfMonth(Friday)))
+    monthsBackward(5, firstDayOfMonth()) should be(Monthly(-5, FirstDayOfMonth))
   }
 
   // ========== recurrence pattern: year patterns ==============
   "everyYear" should "be the same as lamma version" in {
-    everyYear() should be(EveryYear)
+    everyYear() should be(Yearly(1))
   }
 
   "everyOtherYear" should "be the same as lamma version" in {
-    everyOtherYear() should be(EveryOtherYear)
+    everyOtherYear() should be(Yearly(2))
   }
 
   "years" should "be the same as lamma version" in {
-    years(5) should be(Years(5))
-    years(firstDayOfYear()) should be(Years(FirstDayOfYear))
-    years(2, lastDayOfYear()) should be(Years(2, LastDayOfYear))
+    years(5) should be(Yearly(5))
+    years(firstDayOfYear()) should be(Yearly(1, FirstDayOfYear))
+    years(2, lastDayOfYear()) should be(Yearly(2, LastDayOfYear))
   }
 
   "yearsBackward" should "be the same as lamma version" in {
-    yearsBackward(5) should be(YearsBackward(5))
-    yearsBackward(firstDayOfYear()) should be(YearsBackward(FirstDayOfYear))
-    yearsBackward(2, lastDayOfYear()) should be(YearsBackward(2, LastDayOfYear))
+    yearsBackward(5) should be(Yearly(-5))
+    yearsBackward(firstDayOfYear()) should be(Yearly(-1, FirstDayOfYear))
+    yearsBackward(2, lastDayOfYear()) should be(Yearly(-2, LastDayOfYear))
   }
 
   // ============== period builder / stub rule ===============

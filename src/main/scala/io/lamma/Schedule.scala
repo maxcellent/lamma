@@ -43,15 +43,37 @@ object Schedule {
 
   val ToHeader = "To Date"
 
+  /**
+   * generate a full schedule based on input arguments <br>
+   * <br>
+   * For example: <br>
+   *
+   * <pre>
+   * ||    Period | CouponDate | SettlementDate || <br>
+   * ||         1 | 2014-03-30 |     2014-05-02 || <br>
+   * ||         2 | 2014-06-02 |     2014-06-04 || <br>
+   * </pre>
+   *
+   * @param start start date
+   * @param end end date
+   * @param pattern recurrence pattern. Determine how anchor dates will be generated
+   * @param periodBuilder how do we build periods (rows) based on the result of recurrence pattern
+   * @param dateDefs a list of date definitions used to generate Date. In this case List(CouponDate, SettlementDate)
+   * @return generated schedule
+   */
   def apply(start: Date,
             end: Date,
             pattern: Pattern,
             periodBuilder: PeriodBuilder = StubRulePeriodBuilder(),
-            dateDefs: List[DateDef] = Nil) = {
+            dateDefs: List[DateDef] = Nil,
+            forward: Boolean = true) = {
     require(start <= end, s"start date $start must be on or before end date $end")
 
     val end0 = start - 1  // last period end day (period 0)
-    val periodEndDays = pattern.recur(end0, end) match {
+
+    val recurringDates = if (forward) pattern.recur(end0, end) else pattern.recur(end, end0).reverse
+
+    val periodEndDays = recurringDates match {
       case Nil => Nil
       case `end0` :: endDays => endDays
       case endDays => endDays

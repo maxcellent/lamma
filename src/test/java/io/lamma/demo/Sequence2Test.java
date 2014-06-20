@@ -105,7 +105,7 @@ public class Sequence2Test {
     @Test
     public void testRecurrencePatternTooLongBackward() {
         List<Date> expected = Lists.newArrayList(date(2014, 3, 31));
-        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 31), monthsBackward(6));
+        List<Date> actual = Lamma4j.sequence(date(2014, 3, 31), date(2014, 1, 1), monthsBackward(6));
         assertThat(actual, is(expected));
     }
 

@@ -81,17 +81,18 @@ public class Sequence1Test {
         assertThat(actual, is(expected));
     }
 
-    @Test
-    public void testWorkingDays() {
-        List<Date> expected = Lists.newArrayList(date(2015, 10, 5), date(2015, 10, 12), date(2015, 10, 19));
-        List<Date> actual = Lamma4j.sequence(date(2015, 10, 5), date(2015, 10, 19), workingDays(5, weekendCalendar()));
-        assertThat(actual, is(expected));
-    }
+    // TODO: comment this out when taking out working days from Java conversions
+//    @Test
+//    public void testWorkingDays() {
+//        List<Date> expected = Lists.newArrayList(date(2015, 10, 5), date(2015, 10, 12), date(2015, 10, 19));
+//        List<Date> actual = Lamma4j.sequence(date(2015, 10, 5), date(2015, 10, 19), workingDays(5, weekendCalendar()));
+//        assertThat(actual, is(expected));
+//    }
 
     @Test
     public void testBackward() {
-        List<Date> expected = Lists.newArrayList(date(2014, 5, 10), date(2014, 5, 11), date(2014, 5, 12));
-        List<Date> actual = Lamma4j.sequence(date(2014, 5, 10), date(2014, 5, 12), daysBackward(1));
+        List<Date> expected = Lists.newArrayList(date(2014, 5, 12), date(2014, 5, 11), date(2014, 5, 10));
+        List<Date> actual = Lamma4j.sequence(date(2014, 5, 12), date(2014, 5, 10), daysBackward(1));
         assertThat(actual, is(expected));
     }
 
@@ -104,8 +105,8 @@ public class Sequence1Test {
 
     @Test
     public void testBackwardWithFraction() {
-        List<Date> expected = Lists.newArrayList(date(2014, 7, 20), date(2014, 10, 20));
-        List<Date> actual = Lamma4j.sequence(date(2014, 5, 10), date(2014, 10, 20), monthsBackward(3));
+        List<Date> expected = Lists.newArrayList(date(2014, 10, 20), date(2014, 7, 20));
+        List<Date> actual = Lamma4j.sequence(date(2014, 10, 20), date(2014, 5, 10), monthsBackward(3));
         assertThat(actual, is(expected));
     }
 }

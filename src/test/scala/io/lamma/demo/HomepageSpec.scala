@@ -1,13 +1,11 @@
 package io.lammaweb
 
 import org.scalatest.{Matchers, WordSpec}
-import io.lamma.Recurrence._
 import io.lamma.DayOfMonth.LastDayOfMonth
 import io.lamma.Anchor.PeriodEnd
 import io.lamma.StubRulePeriodBuilder._
 import io.lamma._
 import io.lamma.Anchor.OtherDate
-import io.lamma.CompositeHolidayRules
 import io.lamma.Selector.ModifiedFollowing
 import io.lamma.DayOfMonth.NthDayOfMonth
 import io.lamma.Shifter.ShiftWorkingDays
@@ -38,10 +36,10 @@ class HomepageSpec extends WordSpec with Matchers {
     val expectedSettlementDates = List(Date(2014, 9, 2), Date(2015, 3, 3),
       Date(2015, 9, 2), Date(2016, 3, 2), Date(2016, 9, 2), Date(2017, 4, 4))
 
-    val result = Lamma.schedule(
+    val result = Schedule(
       start = Date(2014, 3, 1),   // issue date = 2014-03-01
       end = Date(2017, 3, 31),    // expiry date = 2017-03-31
-      pattern = Months(6, LastDayOfMonth),  // recurring the last day of every 6 months
+      pattern = Monthly(6, LastDayOfMonth),  // recurring the last day of every 6 months
       periodBuilder = StubRulePeriodBuilder(endRule = LongEnd(270)),  // merge last stub if the merged period is no longer than 270 days
       dateDefs = couponDate :: settlementDate :: Nil   // generate coupon date and settlement date for each period
     )
@@ -64,7 +62,7 @@ class HomepageSpec extends WordSpec with Matchers {
        *
        * this is just a reference for demo purpose, some logics like validations are skipped
        */
-      case object CustomRecurrence extends Recurrence {
+      case object CustomPattern extends Pattern {
         override def recur(from: Date, to: Date) = {
           from :: from + 7 :: from + 7 + 5 :: to :: Nil
         }
@@ -72,14 +70,14 @@ class HomepageSpec extends WordSpec with Matchers {
 
       "let's use it to generate a sequence" in {
         val expected = Date(2014, 1, 1) :: Date(2014, 1, 8) :: Date(2014, 1, 13) :: Date(2014, 1, 31) :: Nil
-        Lamma.sequence(Date(2014, 1, 1), Date(2014, 1, 31), CustomRecurrence) should be(expected)
+        DateRange(Date(2014, 1, 1), Date(2014, 1, 31), CustomPattern).toList should be(expected)
       }
 
       "let's use it to generate a schedule" in {
         val expected = List(Date(2015, 1, 7)) :: List(Date(2015, 1, 12)) :: List(Date(2015, 1, 31)) :: Nil
 
         val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd) :: Nil
-        Lamma.schedule(Date(2015, 1, 1), Date(2015, 1, 31), CustomRecurrence, dateDefs = dateDefs).generatedDates should be(expected)
+        Schedule(Date(2015, 1, 1), Date(2015, 1, 31), CustomPattern, dateDefs = dateDefs).generatedDates should be(expected)
       }
     }
   }
@@ -96,14 +94,15 @@ class HomepageSpec extends WordSpec with Matchers {
 
       "let's use it to generate a sequence" in {
         val expected = Date(2015, 10, 8) :: Date(2015, 10, 17) :: Date(2015, 10, 22) :: Date(2015, 10, 29) :: Nil
-        Lamma.sequence(Date(2015, 10, 8), Date(2015, 10, 30), EveryWeek, CustomShifter) should be(expected)
+        val actual = Date(2015, 10, 8) to Date(2015, 10, 30) by week shift CustomShifter
+        actual.toList should be(expected)
       }
 
       "let's use it to generate a schedule" in {
         val expected = List(Date(2015, 10, 8)) :: List(Date(2015, 10, 17)) :: List(Date(2015, 10, 22)) :: List(Date(2015, 10, 29)) :: Nil
 
         val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, shifter = CustomShifter) :: Nil
-        Lamma.schedule(Date(2015, 10, 2), Date(2015, 10, 29), EveryWeek, dateDefs = dateDefs).generatedDates should be(expected)
+        Schedule(Date(2015, 10, 2), Date(2015, 10, 29), Weekly(1), dateDefs = dateDefs).generatedDates should be(expected)
       }
     }
   }
@@ -120,14 +119,15 @@ class HomepageSpec extends WordSpec with Matchers {
 
       "let's use it to generate a sequence" in {
         val expected = Date(2015, 10, 1) :: Date(2015, 10, 3) :: Date(2015, 10, 7) :: Date(2015, 10, 9) :: Nil
-        Lamma.sequence(Date(2015, 10, 1), Date(2015, 10, 10), Days(3), selector = CustomSelector) should be(expected)
+        val actual = Date(2015, 10, 1) to Date(2015, 10, 10) by (3 days) select CustomSelector
+        actual.toList should be(expected)
       }
 
       "let's use it to generate a schedule" in {
         val expected = Date(2015, 10, 3) :: Date(2015, 10, 5) :: Date(2015, 10, 9) :: Nil
 
         val dateDefs = DateDef("CouponDate", relativeTo = PeriodEnd, selector = CustomSelector) :: Nil
-        Lamma.schedule(Date(2015, 10, 1), Date(2015, 10, 9), Days(3), dateDefs = dateDefs)("CouponDate") should be(expected)
+        Schedule(Date(2015, 10, 1), Date(2015, 10, 9), Daily(3), dateDefs = dateDefs)("CouponDate") should be(expected)
       }
     }
   }
@@ -143,7 +143,8 @@ class HomepageSpec extends WordSpec with Matchers {
 
       "let's use it to generate a sequence" in {
         val expected = Date(2015, 10, 13) :: Date(2015, 10, 15) :: Date(2015, 10, 16) :: Nil
-        Lamma.sequence(Date(2015, 10, 13), Date(2015, 10, 16), EveryWorkingDay(WednesdayCalendar)) should be(expected)
+        val actual = Date(2015, 10, 13) to Date(2015, 10, 16) except WednesdayCalendar
+        actual.toList should be(expected)
       }
     }
 
@@ -151,12 +152,9 @@ class HomepageSpec extends WordSpec with Matchers {
       val ukHolidays2014 = SimpleCalendar(Date(2014, 1, 1), Date(2014, 4, 18), Date(2014, 4, 21),
         Date(2014, 5, 5), Date(2014, 5, 26), Date(2014, 8, 25), Date(2014, 12, 25), Date(2014, 12, 26))
 
-      val composedCalendar = CompositeHolidayRules(ukHolidays2014, Weekends)
-
-      // 2014-04-18 is a UK holiday
-      // 2014-04-20 is Sunday
-      val expected = Date(2014, 4, 16) :: Date(2014, 4, 22) :: Date(2014, 4, 24) :: Nil
-      Lamma.sequence(Date(2014, 4, 16), Date(2014, 4, 24), Days.workingDays(2, composedCalendar)) should be(expected)
+      val expected = List(Date(2014,4,16), Date(2014,4,17), Date(2014,4,22), Date(2014,4,23), Date(2014,4,24))
+      val actual = Date(2014, 4, 16) to Date(2014, 4, 24) except ukHolidays2014 except Weekends
+      actual.toList should be(expected)
     }
   }
 
@@ -166,37 +164,37 @@ class HomepageSpec extends WordSpec with Matchers {
     "the default one will just work as expected" in {
       val start = Date(2014, 10, 1)
       val end = Date(2014, 10, 30)
-      val pattern = Days(10)
+      val pattern = Daily(10)
 
       val expected = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 20)) :: Period((2014, 10, 21) -> (2014, 10, 30)) :: Nil
 
-      Lamma.schedule(start, end, pattern).periods should be(expected)
+      Schedule(start, end, pattern).periods should be(expected)
     }
 
     "but sometimes the scenario is a little bit complicated, for example this will generate an extra end stub: last period only have 5 days" in {
       val start = Date(2014, 10, 1)
       val end = Date(2014, 10, 25)
-      val pattern = Days(10)
+      val pattern = Daily(10)
 
       val expected = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 20)) :: Period((2014, 10, 21) -> (2014, 10, 25)) :: Nil
 
-      Lamma.schedule(start, end, pattern).periods should be(expected)
+      Schedule(start, end, pattern).periods should be(expected)
     }
 
     "and for this case, the first period only have 5 days" in {
       val start = Date(2014, 10, 1)
       val end = Date(2014, 10, 25)
-      val pattern = DaysBackward(10)
+      val pattern = Daily(-10)
 
       val expected = Period((2014, 10, 1) -> (2014, 10, 5)) :: Period((2014, 10, 6) -> (2014, 10, 15)) :: Period((2014, 10, 16) -> (2014, 10, 25)) :: Nil
 
-      Lamma.schedule(start, end, pattern).periods should be(expected)
+      Schedule(start, end, pattern, forward = false).periods should be(expected)
     }
 
     "and for this case, both first and last period are very short" in {
       val start = Date(2014, 10, 7)
       val end = Date(2014, 10, 26)
-      val pattern = Weeks(Wednesday)
+      val pattern = Weekly(1, Wednesday)
 
       val expected = List(
         Period((2014, 10, 7) -> (2014, 10, 8)),    // 2 days period
@@ -205,39 +203,39 @@ class HomepageSpec extends WordSpec with Matchers {
         Period((2014, 10, 23) -> (2014, 10, 26))   // 4 days period
       )
 
-      Lamma.schedule(start, end, pattern).periods should be(expected)
+      Schedule(start, end, pattern).periods should be(expected)
     }
 
     "in order to merge them, you will need a stub rule" in {
       val start = Date(2014, 10, 1)
       val end = Date(2014, 10, 25)
-      val pattern = Days(10)
+      val pattern = Daily(10)
 
       val expected = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 25)) :: Nil
 
       // LongEnd(15) means: I am ok with a longer end period, as long as it's no more than 15 days
       val periodBuilder = StubRulePeriodBuilder(endRule = LongEnd(15))
 
-      Lamma.schedule(start, end, pattern, periodBuilder).periods should be(expected)
+      Schedule(start, end, pattern, periodBuilder).periods should be(expected)
     }
 
     "similarly we have stub rule for starting period" in {
       val start = Date(2014, 10, 1)
       val end = Date(2014, 10, 25)
-      val pattern = DaysBackward(10)
+      val pattern = Daily(-10)
 
       val expected = Period((2014, 10, 1) -> (2014, 10, 15)) :: Period((2014, 10, 16) -> (2014, 10, 25)) :: Nil
 
       // LongStart(15) means: I am ok with a longer start period, as long as it's no more than 15 days
       val periodBuilder = StubRulePeriodBuilder(startRule = LongStart(15))
 
-      Lamma.schedule(start, end, pattern, periodBuilder).periods should be(expected)
+      Schedule(start, end, pattern, periodBuilder, forward = false).periods should be(expected)
     }
 
     "we can apply both at the same time" in {
       val start = Date(2014, 10, 7)
       val end = Date(2014, 10, 26)
-      val pattern = Weeks(Wednesday)
+      val pattern = Weekly(1, Wednesday)
       val periodBuilder = StubRulePeriodBuilder(LongStart(10), LongEnd(10))
 
       val expected = List(
@@ -248,13 +246,13 @@ class HomepageSpec extends WordSpec with Matchers {
         Period((2014, 10, 23) -> (2014, 10, 26))   // 4 days period
       )
 
-      Lamma.schedule(start, end, pattern, periodBuilder).periods should be(expected)
+      Schedule(start, end, pattern, periodBuilder).periods should be(expected)
     }
 
     "not like LongStart / LongEnd rule, ShortStart / ShortEnd rule is looking to split start / end period. For example" in {
       val start = Date(2014, 10, 7)
       val end = Date(2014, 10, 26)
-      val pattern = Weeks(Wednesday)
+      val pattern = Weekly(1, Wednesday)
       // ShortStart(2) => split a separated starting period as long as there are 2 days
       // ShortEnd(2) => split a separated end period as long as there are 2 days
       val periodBuilder = StubRulePeriodBuilder(ShortStart(2), ShortEnd(2))
@@ -266,18 +264,18 @@ class HomepageSpec extends WordSpec with Matchers {
         Period((2014, 10, 23) -> (2014, 10, 26))   // 4 days short ending period (4 >= 2)
       )
 
-      Lamma.schedule(start, end, pattern, periodBuilder).periods should be(expected)
+      Schedule(start, end, pattern, periodBuilder).periods should be(expected)
     }
 
     // this is exactly as our first defaulting example
     "yes, the default behavior is ShortStart(0) + ShortEnd(0), which means Lamma will always create start / end period" in {
       val start = Date(2014, 10, 1)
       val end = Date(2014, 10, 30)
-      val pattern = Days(10)
+      val pattern = Daily(10)
       val periodBuilder = StubRulePeriodBuilder(ShortStart(0), ShortEnd(0))
       val expected = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 20)) :: Period((2014, 10, 21) -> (2014, 10, 30)) :: Nil
 
-      Lamma.schedule(start, end, pattern, periodBuilder).periods should be(expected)
+      Schedule(start, end, pattern, periodBuilder).periods should be(expected)
     }
 
     // so why do we need long rule and short rule? aren't they completely interchangable?
@@ -304,7 +302,7 @@ class HomepageSpec extends WordSpec with Matchers {
 
       // first two periods are merged together
       val expected = Period((2015, 10, 1) -> (2015, 10, 3)) :: Period((2015, 10, 4) -> (2015, 10, 9)) :: Period((2015, 10, 10) -> (2015, 10, 10)) :: Nil
-      Lamma.schedule(Date(2015, 10, 1), Date(2015, 10, 10), Days(3), CustomPeriodBuilder).periods should be(expected)
+      Schedule(Date(2015, 10, 1), Date(2015, 10, 10), Daily(3), CustomPeriodBuilder).periods should be(expected)
     }
 
     // ==== edge cases ====
@@ -314,8 +312,8 @@ class HomepageSpec extends WordSpec with Matchers {
       val end = Date(2014, 10, 5)
       val expected = Period(start, end) :: Nil
 
-      Lamma.schedule(start, end, EveryMonth).periods should be(expected)
-      Lamma.schedule(start, end, MonthsBackward(1)).periods should be(expected)
+      Schedule(start, end, Monthly(1)).periods should be(expected)
+      Schedule(start, end, Monthly(-1)).periods should be(expected)
     }
 
     "when there are one or two recurrence date generated then there will be racing condition. Just remember one rule: start rule always " should {
@@ -329,7 +327,7 @@ class HomepageSpec extends WordSpec with Matchers {
         val merged = Period((2014, 10, 1) -> (2014, 10, 10)) :: Nil
 
         def period(startRule: StartRule, endRule: EndRule) = {
-          Lamma.schedule(start, end, Months(1, pom), StubRulePeriodBuilder(startRule, endRule)).periods
+          Schedule(start, end, Monthly(1, pom), StubRulePeriodBuilder(startRule, endRule)).periods
         }
 
         "if Start Rule will merge, then end rule will not split too (always be ignored)" in {
@@ -360,14 +358,14 @@ class HomepageSpec extends WordSpec with Matchers {
       "when there are two recurrence date generated" should {
         val start = Date(2014, 10, 1)
         val end = Date(2014, 10, 30)
-        val pattern = Days(10)    // two recurrence dates, 2014-10-10, 2014-10-20
+        val pattern = Daily(10)    // two recurrence dates, 2014-10-10, 2014-10-20
 
         val allSplit = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 20)) :: Period((2014, 10, 21) -> (2014, 10, 30)) :: Nil
         val headMerged = Period((2014, 10, 1) -> (2014, 10, 20)) :: Period((2014, 10, 21) -> (2014, 10, 30)) :: Nil
         val tailMerged = Period((2014, 10, 1) -> (2014, 10, 10)) :: Period((2014, 10, 11) -> (2014, 10, 30)) :: Nil
 
         def period(startRule: StartRule, endRule: EndRule) = {
-          Lamma.schedule(start, end, pattern, StubRulePeriodBuilder(startRule, endRule)).periods
+          Schedule(start, end, pattern, StubRulePeriodBuilder(startRule, endRule)).periods
         }
 
         "if start rule will merge, then the end rule will always be split" in {
