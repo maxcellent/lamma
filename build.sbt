@@ -42,7 +42,7 @@ homepage := Some(url("https://github.com/maxcellent/lamma"))
 
 pomExtra := (
   <scm>
-    <url>git://github.com/maxcellent/lamma.git</url>
+    <url>http://github.com/maxcellent/lamma.git</url>
     <connection>scm:git://github.com/maxcellent/lamma.git</connection>
   </scm>
     <developers>
