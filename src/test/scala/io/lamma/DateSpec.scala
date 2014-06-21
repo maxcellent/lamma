@@ -118,4 +118,12 @@ class DateSpec extends FlatSpec with Matchers {
     Date(978, 1, 5).toISOString should be("0978-01-05")
     Date(2014, 11, 29).toISOString should be("2014-11-29")
   }
+
+  "apply" should "support ISO string" in {
+    Date("2014-05-20") should be(Date(2014, 5, 20))
+
+    intercept[IllegalArgumentException] {
+      Date("2014-0520")
+    }
+  }
 }

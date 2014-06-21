@@ -1,7 +1,10 @@
 package io.lamma
 
+import java.text.{ParseException, SimpleDateFormat}
 import java.util.{Calendar => JCalendar, TimeZone}
 import JCalendar._
+
+import scala.util.{Failure, Success, Try}
 
 /**
  * all operations requiring java.util.Date are maintained here
@@ -11,8 +14,34 @@ object JavaDateUtil {
   def calendar(d: Date): JCalendar = calendar(d.yyyy, d.mm, d.dd)
 
   def calendar(yyyy: Int, mm: Int, dd: Int) = {
-    val cal = JCalendar.getInstance(TimeZone.getTimeZone("UTC"))
+    val cal = newCalender()
     cal.set(yyyy, mm - 1, dd)   // java month starts from 0. ie, Jan = 0
+    cal
+  }
+
+  private val isoFmt = {
+    val fmt = new SimpleDateFormat("yyyy-MM-dd")
+    fmt.setCalendar(newCalender)  // specify UTC calendar here, to make sure the formatted date is also in UTC
+    fmt
+  }
+
+  def calendar(isoRepr: String): JCalendar = {
+    Try(isoFmt.parse(isoRepr)) match {
+      case Success(javaDate) =>
+        val javaDate = isoFmt.parse(isoRepr)
+        val cal = newCalender()
+        cal.setTime(javaDate)
+        cal
+      case Failure(_: ParseException) => throw new IllegalArgumentException(s"Unable to parse date from string '$isoRepr'. ISO 8601 date format is expected. eg, 2015-02-27")
+      case Failure(x) => throw x
+    }
+  }
+
+  /**
+   * new calendar with all hour / minutes / seconds / ms cleared
+   */
+  private def newCalender() = {
+    val cal = JCalendar.getInstance(TimeZone.getTimeZone("UTC"))
     cal.set(HOUR_OF_DAY, 0)     // somehow cal.clear(HOUR_OF_DAY) does not quite work
     cal.clear(HOUR)
     cal.clear(MINUTE)

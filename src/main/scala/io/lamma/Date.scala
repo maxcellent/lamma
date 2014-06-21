@@ -95,4 +95,9 @@ object Date {
     val ((y1, m1, d1), (y2, m2, d2)) = pair
     Date(y1, m1, d1) -> Date(y2, m2, d2)
   }
+
+  /**
+   * @param isoRepr in yyyy-MM-dd format, eg, 2014-02-26
+   */
+  def apply(isoRepr: String): Date = JavaDateUtil.date(JavaDateUtil.calendar(isoRepr))
 }
