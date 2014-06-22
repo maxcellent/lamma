@@ -89,4 +89,9 @@ case class DateRangeBuilder(from: Date,
   def modifiedPreceding(holiday: HolidayRule) = select(ModifiedPreceding(holiday))
 
   def select(selector: Selector) = this.copy(selector = selector)
+
+  /**
+   * override toString method so to make builder transparent
+   */
+  override def toString = dateRange.toString
 }
