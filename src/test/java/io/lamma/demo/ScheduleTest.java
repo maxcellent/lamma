@@ -3,7 +3,6 @@ package io.lamma.demo;
 import com.google.common.collect.Lists;
 import io.lamma.Date;
 import io.lamma.DateDef;
-import io.lamma.Lamma4j;
 import io.lamma.Schedule4j;
 import org.junit.Test;
 
@@ -27,7 +26,7 @@ public class ScheduleTest {
         DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekends()));
         DateDef settlementDate = dateDef("settlementDate", otherDate("CouponDate"), shiftWorkingDays(2, weekends()));
 
-        Schedule4j result = Lamma4j.schedule(date(2015, 1, 1), date(2016, 12, 31), months(6, lastDayOfMonth()), list(couponDate, settlementDate));
+        Schedule4j result = Schedule4j.schedule(date(2015, 1, 1), date(2016, 12, 31), months(6, lastDayOfMonth()), list(couponDate, settlementDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
         assertThat(result.get("settlementDate"), is(expectedSettlementDates));
@@ -38,7 +37,7 @@ public class ScheduleTest {
         List<Date> expectedCouponDates = Lists.newArrayList(date(2015, 6, 30), date(2015, 12, 31), date(2016, 6, 30), date(2016, 12, 30), date(2017, 1, 31));
                 
         DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekends()));
-        Schedule4j result = Lamma4j.schedule(date(2015, 1, 1), date(2017, 1, 31), months(6, lastDayOfMonth()), list(couponDate));
+        Schedule4j result = Schedule4j.schedule(date(2015, 1, 1), date(2017, 1, 31), months(6, lastDayOfMonth()), list(couponDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
     }
@@ -48,7 +47,7 @@ public class ScheduleTest {
         List<Date> expectedCouponDates = Lists.newArrayList(date(2015, 6, 30), date(2015, 12, 31), date(2016, 6, 30), date(2017, 1, 31));
 
         DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekends()));
-        Schedule4j result = Lamma4j.schedule(date(2015, 1, 1), date(2017, 1, 31), months(6, lastDayOfMonth()), stubRulePeriodBuilder(longEnd(270)), list(couponDate));
+        Schedule4j result = Schedule4j.schedule(date(2015, 1, 1), date(2017, 1, 31), months(6, lastDayOfMonth()), stubRulePeriodBuilder(longEnd(270)), list(couponDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
     }
