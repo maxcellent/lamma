@@ -52,24 +52,23 @@ public class Dates2Test {
         assertThat(actual, is(expected));
     }
 
-    // TODO: add support on Custom DayOfMonth later
     /**
      * match first day in Feb, 3rd day for other months
      */
-//    static class MyPositionOfMonth implements DayOfMonth {
-//
-//        @Override
-//        public boolean isValidDOM(Date d) {
-//            return d.month() == FEBRUARY ? d.dd() == 1 : d.dd() == 3;
-//        }
-//    }
-//
-//    @Test
-//    public void testCustomPosition() {
-//        List<Date> expected = Lists.newArrayList(date(2014, 1, 3), date(2014, 2, 1), date(2014, 3, 3));
-//        List<Date> actual = Lamma4j.sequence(date(2014, 1, 1), date(2014, 3, 31), months(1, new MyPositionOfMonth()));
-//        assertThat(actual, is(expected));
-//    }
+    static class MyPositionOfMonth implements DayOfMonth {
+
+        @Override
+        public boolean isValidDOM(Date d) {
+            return d.month() == FEBRUARY ? d.dd() == 1 : d.dd() == 3;
+        }
+    }
+
+    @Test
+    public void testCustomPosition() {
+        List<Date> expected = Lists.newArrayList(date(2014, 1, 3), date(2014, 2, 1), date(2014, 3, 3));
+        List<Date> actual = Dates.from(2014, 1, 1).to(2014, 3, 31).byMonth().on(new MyPositionOfMonth()).build();
+        assertThat(actual, is(expected));
+    }
 
     @Test
     public void testShiftor() {

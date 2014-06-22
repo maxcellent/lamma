@@ -24,7 +24,9 @@ case class DateRangeBuilder(from: Date,
                             holiday: HolidayRule = NoHoliday,
                             loc: Option[Locator] = None,
                             shifters: List[Shifter] = Nil,
-                            selectors: List[Selector] = Nil) extends Traversable[Date] {
+                            selectors: List[Selector] = Nil,
+                            customDom: Option[DayOfMonth] = None,
+                            customDoy: Option[DayOfYear] = None) extends Traversable[Date] {
   require(step.n != 0, "step cannot be 0.")
 
   lazy val dateRange = DateRange(from, to, pattern, holiday, shifters, selectors)
@@ -51,14 +53,20 @@ case class DateRangeBuilder(from: Date,
     }
   }
 
-  lazy val pattern: Pattern = (step, loc) match {
-    case (DayDuration(n), _) => Daily(n)
-    case (WeekDuration(n), Some(s: DayOfWeekSupport)) => Weekly(n, s.dow)
-    case (WeekDuration(n), _) => Weekly(n)
-    case (MonthDuration(n), Some(s: DayOfMonthSupport)) => Monthly(n, s.dom)
-    case (MonthDuration(n), _) => Monthly(n)
-    case (YearDuration(n), Some(s: DayOfYearSupport)) => Yearly(n, s.doy)
-    case (YearDuration(n), _) => Yearly(n)
+  def on(dom: DayOfMonth) = this.copy(customDom = Some(dom))
+
+  def on(doy: DayOfYear) = this.copy(customDoy = Some(doy))
+
+  lazy val pattern: Pattern = (step, loc, customDom, customDoy) match {
+    case (DayDuration(n), _, _, _) => Daily(n)
+    case (WeekDuration(n), Some(s: DayOfWeekSupport), _, _) => Weekly(n, s.dow)
+    case (WeekDuration(n), _, _, _) => Weekly(n)
+    case (MonthDuration(n), Some(s: DayOfMonthSupport), _, _) => Monthly(n, s.dom)
+    case (MonthDuration(n), _, Some(dom), _) => Monthly(n, Some(dom))
+    case (MonthDuration(n), _, _, _) => Monthly(n)
+    case (YearDuration(n), Some(s: DayOfYearSupport), _, _) => Yearly(n, s.doy)
+    case (YearDuration(n), _, _, Some(doy)) => Yearly(n, doy)
+    case (YearDuration(n), _, _, _) => Yearly(n)
   }
 
   /**

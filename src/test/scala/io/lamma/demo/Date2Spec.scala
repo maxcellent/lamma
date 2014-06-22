@@ -39,7 +39,6 @@ class Date2Spec extends WordSpec with Matchers {
     actual.toList should be(expected)
   }
 
-  // TODO: move this part into separated Pattern page
   "you can implement your own PositionOfMonth" in {
     /**
      * match first day in Feb, 3rd day for other months
@@ -55,7 +54,7 @@ class Date2Spec extends WordSpec with Matchers {
     }
 
     val expected = Date(2014, 1, 3) :: Date(2014, 2, 1) :: Date(2014, 3, 3) :: Nil
-    val actual = DateRange(Date(2014, 1, 1), Date(2014, 3, 31), Monthly(MyPositionOfMonth))
+    val actual = Date(2014, 1, 1) to Date(2014, 3, 31) by month on MyPositionOfMonth
     actual.toList should be(expected)
   }
 

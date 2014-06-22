@@ -112,6 +112,10 @@ public class Dates {
 
     private List<Selector> selectors = new LinkedList<Selector>();
 
+    private DayOfMonth customDayOfMonth;
+
+    private DayOfYear customDayOfYear;
+
     public Dates(Date from, Date to) {
         if (from == null) {
             throw new IllegalArgumentException("From date must not be null.");
@@ -125,7 +129,8 @@ public class Dates {
     }
 
     public List<Date> build() {
-        DateRangeBuilder builder = new DateRangeBuilder(from, to, duration, holiday, Option.apply(loc), scalaList(shifters), scalaList(selectors));
+        DateRangeBuilder builder = new DateRangeBuilder(from, to, duration, holiday, Option.apply(loc),
+                scalaList(shifters), scalaList(selectors), Option.apply(customDayOfMonth), Option.apply(customDayOfYear));
         return builder.javaList();
     }
 
@@ -215,6 +220,24 @@ public class Dates {
         }
 
         this.loc = locBuilder.build();
+        return this;
+    }
+
+    public Dates on(DayOfMonth customDayOfMonth) {
+        if (customDayOfMonth == null) {
+            throw new IllegalArgumentException("DayOfMonth must not be null.");
+        }
+
+        this.customDayOfMonth = customDayOfMonth;
+        return this;
+    }
+
+    public Dates on(DayOfYear customDayOfYear) {
+        if (customDayOfYear == null) {
+            throw new IllegalArgumentException("DayOfYear must not be null.");
+        }
+
+        this.customDayOfYear = customDayOfYear;
         return this;
     }
 
@@ -310,6 +333,14 @@ public class Dates {
         return new ArrayList<Selector>(selectors);
     }
 
+    public DayOfMonth getCustomDayOfMonth() {
+        return customDayOfMonth;
+    }
+
+    public DayOfYear getCustomDayOfYear() {
+        return customDayOfYear;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -317,6 +348,10 @@ public class Dates {
 
         Dates dates = (Dates) o;
 
+        if (customDayOfMonth != null ? !customDayOfMonth.equals(dates.customDayOfMonth) : dates.customDayOfMonth != null)
+            return false;
+        if (customDayOfYear != null ? !customDayOfYear.equals(dates.customDayOfYear) : dates.customDayOfYear != null)
+            return false;
         if (!duration.equals(dates.duration)) return false;
         if (!from.equals(dates.from)) return false;
         if (!holiday.equals(dates.holiday)) return false;
@@ -337,6 +372,8 @@ public class Dates {
         result = 31 * result + (loc != null ? loc.hashCode() : 0);
         result = 31 * result + shifters.hashCode();
         result = 31 * result + selectors.hashCode();
+        result = 31 * result + (customDayOfMonth != null ? customDayOfMonth.hashCode() : 0);
+        result = 31 * result + (customDayOfYear != null ? customDayOfYear.hashCode() : 0);
         return result;
     }
 
@@ -350,6 +387,8 @@ public class Dates {
                 ", loc=" + loc +
                 ", shifters=" + shifters +
                 ", selectors=" + selectors +
+                ", customDayOfMonth=" + customDayOfMonth +
+                ", customDayOfYear=" + customDayOfYear +
                 '}';
     }
 }
