@@ -20,6 +20,14 @@ import io.lamma.Locator.Last
  */
 package object lamma {
 
+  // =========== dates ==============
+  implicit def tupleToDate(t: (Int, Int, Int)) = {
+    val (yyyy, mm, dd) = t
+    Date(yyyy, mm, dd)
+  }
+
+  implicit def isoStrToDate(isoStr: String) = Date(isoStr)
+
   // =========== durations ===============
   val week = 1 week
 

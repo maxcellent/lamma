@@ -61,6 +61,10 @@ case class Date(yyyy: Int, mm: Int, dd: Int)
    */
   def to(that: Date) = DateRangeBuilder(this, that)
 
+  def to(isoRepr: String): DateRangeBuilder = to(Date(isoRepr))
+
+  def to(yyyy: Int, mm: Int, dd: Int): DateRangeBuilder = to(Date(yyyy, mm, dd))
+
   /**
    * generate a DateRange iterable, which can be used similar as scala.collection.immutable.Range. eg, <br>
    * <em>this</em> date is included but <em>that</em> date isn't <br>
