@@ -29,11 +29,17 @@ case class DateTable(headers: List[String], dates: List[List[Date]]) {
     formattedTokens.mkString("||", " | ", " ||")  // keep paddings between columns
   }
 
+  lazy val rowTokens = rows.map(_.strs)
+
   lazy val headerLine = genLine(allHeaders)
 
-  lazy val rowLines = rows.map(_.strs).map(genLine)
+  lazy val rowLines = rowTokens.map(genLine)
 
   lazy val printableString = (headerLine :: rowLines).mkString("\n")
+
+  lazy val headerLineHtml = allHeaders.mkString("<tr><th>", "</th><th>", "</th></tr>")
+
+  lazy val rowLinesHtml = rowTokens.map { _.mkString("<tr><td>", "</td><td>", "</td></tr>") }
 }
 
 /**

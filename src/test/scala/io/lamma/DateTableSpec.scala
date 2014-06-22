@@ -67,6 +67,12 @@ class DateTableSpec extends WordSpec with Matchers {
     }
   }
 
+  "headerLineHtml" should {
+    "be generated properly" in {
+      table.headerLineHtml should be("<tr><th></th><th>Coupon</th><th>SettlementDate</th></tr>")
+    }
+  }
+
   "rowLines" should {
     "be generated properly" in {
       val expected = List(
@@ -74,6 +80,16 @@ class DateTableSpec extends WordSpec with Matchers {
         "||         2 | 2014-06-02 |     2014-06-04 ||"
       )
       table.rowLines should be(expected)
+    }
+  }
+
+  "rowLinesHtml" should {
+    "be generated properly" in {
+      val expected = List(
+        "<tr><td>1</td><td>2014-04-30</td><td>2014-05-02</td></tr>",
+        "<tr><td>2</td><td>2014-06-02</td><td>2014-06-04</td></tr>"
+      )
+      table.rowLinesHtml should be(expected)
     }
   }
 
