@@ -41,7 +41,7 @@ public class HomePageTest {
                 date(2015, 9, 2), date(2016, 3, 2), date(2016, 9, 2), date(2017, 4, 4));
 
         // we are calling Lamma4j this time, it's a Java wrapper
-        Schedule4j result = Lamma4j.schedule(
+        Schedule4j result = Schedule4j.schedule(
                 date(2014, 3, 1),             // issue date = 2014-03-01
                 date(2017, 3, 31),            // expiry date = 2017-03-31
                 months(6, lastDayOfMonth()),      // recurring the last day of every 6 months

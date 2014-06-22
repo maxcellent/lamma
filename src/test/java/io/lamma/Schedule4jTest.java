@@ -7,52 +7,9 @@ import static org.junit.Assert.assertThat;
 import com.google.common.collect.Lists;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class Lamma4jTest {
-
-    @Test
-    public void testSequenceGenerationWith2Params() {
-        Date start = date(2014, 5, 10);
-        Date to = date(2014, 5, 12);
-        List<Date> expected = Arrays.asList(date(2014, 5, 10), date(2014, 5, 11), date(2014, 5, 12));
-        List<Date> actual = Lamma4j.sequence(start, to);
-        assertThat(actual, is(expected));
-    }
-
-    @Test
-    public void testSequenceGenerationWith3Params() {
-        Date start = date(2014, 5, 10);
-        Date to = date(2014, 5, 12);
-        Pattern pattern = everyDay();
-        List<Date> expected = Arrays.asList(date(2014, 5, 10), date(2014, 5, 11), date(2014, 5, 12));
-        List<Date> actual = Lamma4j.sequence(start, to, pattern);
-        assertThat(actual, is(expected));
-    }
-
-    @Test
-    public void testSequenceGenerationWith4Params() {
-        Date start = date(2014, 5, 10);
-        Date to = date(2014, 5, 12);
-        Pattern pattern = everyDay();
-        Shifter shifter = noShift();
-        List<Date> expected = Arrays.asList(date(2014, 5, 10), date(2014, 5, 11), date(2014, 5, 12));
-        List<Date> actual = Lamma4j.sequence(start, to, pattern, shifter);
-        assertThat(actual, is(expected));
-    }
-
-    @Test
-    public void testSequenceGenerationWith5Params() {
-        Date start = date(2014, 5, 10);
-        Date to = date(2014, 5, 12);
-        Pattern pattern = everyDay();
-        Shifter shifter = noShift();
-        Selector selector = sameDay();
-        List<Date> expected = Arrays.asList(date(2014, 5, 10), date(2014, 5, 11), date(2014, 5, 12));
-        List<Date> actual = Lamma4j.sequence(start, to, pattern, shifter, selector);
-        assertThat(actual, is(expected));
-    }
+public class Schedule4jTest {
 
     @Test
     public void testScheduleGenerationWith3Params() {
@@ -67,7 +24,7 @@ public class Lamma4jTest {
                 new Period(date(2014, 8, 1), date(2014, 8, 31))
         );
 
-        Schedule4j schedule = Lamma4j.schedule(start, end, pattern);
+        Schedule4j schedule = Schedule4j.schedule(start, end, pattern);
         assertThat(schedule.getPeriods(), is(expectedPeriods));
     }
 
@@ -85,7 +42,7 @@ public class Lamma4jTest {
                 new Period(date(2014, 8, 1), date(2014, 8, 31))
         );
 
-        Schedule4j schedule = Lamma4j.schedule(start, end, pattern, periodBuilder);
+        Schedule4j schedule = Schedule4j.schedule(start, end, pattern, periodBuilder);
         assertThat(schedule.getPeriods(), is(expectedPeriods));
     }
 
@@ -105,7 +62,7 @@ public class Lamma4jTest {
                 new Period(date(2014, 8, 1), date(2014, 8, 31))
         );
 
-        Schedule4j schedule = Lamma4j.schedule(start, end, pattern, periodBuilder, list(couponDate, settlementDate));
+        Schedule4j schedule = Schedule4j.schedule(start, end, pattern, periodBuilder, list(couponDate, settlementDate));
         assertThat(schedule.getPeriods(), is(expectedPeriods));
     }
 }
