@@ -1,5 +1,7 @@
 package io.lamma
 
+import io.lamma.Selector.SameDay
+
 import collection.JavaConverters._
 
 /**
@@ -26,7 +28,7 @@ import collection.JavaConverters._
  *  @param pattern   pattern used to generate date range
  *  @param holiday   except which holidays
  *  @param shifters  how to shift the date once it's generated? eg, no shift, 2 days later, 2 working days later
- *  @param selectors How to select the date once the date is generated? eg, same day, following working day?
+ *  @param selector  How to select the date once the date is generated? eg, same day, following working day?
  *
  */
 case class DateRange(from: Date,
@@ -34,7 +36,7 @@ case class DateRange(from: Date,
                      pattern: Pattern = Daily(1),
                      holiday: HolidayRule = NoHoliday,
                      shifters: List[Shifter] = Nil,
-                     selectors: List[Selector] = Nil) extends Traversable[Date] {
+                     selector: Selector = SameDay) extends Traversable[Date] {
 
   lazy val generated = pattern.recur(from, to)
 
@@ -42,7 +44,7 @@ case class DateRange(from: Date,
 
   lazy val shifted = filtered.map { d => (d /: shifters) {_ shift _} }
 
-  lazy val selected = shifted.map { d => (d /: selectors) {_ select _} }
+  lazy val selected = shifted.map { selector.select }
 
   override def foreach[U](f: Date => U) = selected.foreach(f)
 

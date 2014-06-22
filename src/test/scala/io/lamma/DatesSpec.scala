@@ -118,24 +118,24 @@ class DatesSpec extends WordSpec with Matchers {
 
   "select" should {
     "work with forward selector" in {
-      Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)).forward(Weekends).getSelectors.get(0) should be(Forward(Weekends))
+      Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)).forward(Weekends).getSelector should be(Forward(Weekends))
     }
 
     "work with backward selector" in {
-      Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)).backward(Weekends).getSelectors.get(0) should be(Backward(Weekends))
+      Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)).backward(Weekends).getSelector should be(Backward(Weekends))
     }
 
     "work with modifiedFollowing selector" in {
-      Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)).modifiedFollowing(Weekends).getSelectors.get(0) should be(ModifiedFollowing(Weekends))
+      Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)).modifiedFollowing(Weekends).getSelector should be(ModifiedFollowing(Weekends))
     }
 
     "work with modifiedPreceding selector" in {
-      Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)).modifiedPreceding(Weekends).getSelectors.get(0) should be(ModifiedPreceding(Weekends))
+      Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)).modifiedPreceding(Weekends).getSelector should be(ModifiedPreceding(Weekends))
     }
 
     "work with selector" in {
       val selector = ModifiedPreceding(Weekends)
-      Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)).select(selector).getSelectors.get(0) should be(selector)
+      Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)).select(selector).getSelector should be(selector)
     }
   }
 

@@ -27,7 +27,7 @@ public class Lamma4j {
 
     @Deprecated
     public static java.util.List<Date> sequence(Date from, Date to, Pattern pattern, Shifter shifter, Selector selector) {
-        DateRange range = new DateRange(from, to, pattern, DateRange$.MODULE$.apply$default$4(), list(shifter), list(selector));
+        DateRange range = new DateRange(from, to, pattern, DateRange$.MODULE$.apply$default$4(), list(shifter), selector);
         return range.javaList();
     }
 

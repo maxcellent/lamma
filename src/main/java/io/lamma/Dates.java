@@ -109,7 +109,7 @@ public class Dates {
 
     private List<Shifter> shifters = new LinkedList<Shifter>();
 
-    private List<Selector> selectors = new LinkedList<Selector>();
+    private Selector selector = DateRangeBuilder$.MODULE$.apply$default$7();
 
     private DayOfMonth customDayOfMonth;
 
@@ -129,7 +129,7 @@ public class Dates {
 
     public List<Date> build() {
         DateRangeBuilder builder = new DateRangeBuilder(from, to, duration, holiday, Option.apply(loc),
-                scalaList(shifters), scalaList(selectors), Option.apply(customDayOfMonth), Option.apply(customDayOfYear));
+                scalaList(shifters), selector, Option.apply(customDayOfMonth), Option.apply(customDayOfYear));
         return builder.javaList();
     }
 
@@ -300,7 +300,7 @@ public class Dates {
             throw new IllegalArgumentException("Selector must not be null.");
         }
 
-        this.selectors.add(selector);
+        this.selector = selector;
         return this;
     }
 
@@ -325,11 +325,11 @@ public class Dates {
     }
 
     public List<Shifter> getShifters() {
-        return new ArrayList<Shifter>(shifters);
+        return shifters;
     }
 
-    public List<Selector> getSelectors() {
-        return new ArrayList<Selector>(selectors);
+    public Selector getSelector() {
+        return selector;
     }
 
     public DayOfMonth getCustomDayOfMonth() {
@@ -355,7 +355,7 @@ public class Dates {
         if (!from.equals(dates.from)) return false;
         if (!holiday.equals(dates.holiday)) return false;
         if (loc != null ? !loc.equals(dates.loc) : dates.loc != null) return false;
-        if (!selectors.equals(dates.selectors)) return false;
+        if (!selector.equals(dates.selector)) return false;
         if (!shifters.equals(dates.shifters)) return false;
         if (!to.equals(dates.to)) return false;
 
@@ -370,7 +370,7 @@ public class Dates {
         result = 31 * result + holiday.hashCode();
         result = 31 * result + (loc != null ? loc.hashCode() : 0);
         result = 31 * result + shifters.hashCode();
-        result = 31 * result + selectors.hashCode();
+        result = 31 * result + selector.hashCode();
         result = 31 * result + (customDayOfMonth != null ? customDayOfMonth.hashCode() : 0);
         result = 31 * result + (customDayOfYear != null ? customDayOfYear.hashCode() : 0);
         return result;
@@ -385,7 +385,7 @@ public class Dates {
                 ", holiday=" + holiday +
                 ", loc=" + loc +
                 ", shifters=" + shifters +
-                ", selectors=" + selectors +
+                ", selector=" + selector +
                 ", customDayOfMonth=" + customDayOfMonth +
                 ", customDayOfYear=" + customDayOfYear +
                 '}';

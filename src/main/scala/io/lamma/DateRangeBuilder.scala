@@ -1,6 +1,6 @@
 package io.lamma
 
-import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
+import io.lamma.Selector._
 
 import collection.JavaConverters._
 
@@ -13,7 +13,7 @@ import collection.JavaConverters._
  * @param holiday
  * @param loc
  * @param shifters
- * @param selectors
+ * @param selector
  */
 case class DateRangeBuilder(from: Date,
                             to: Date,
@@ -21,12 +21,12 @@ case class DateRangeBuilder(from: Date,
                             holiday: HolidayRule = NoHoliday,
                             loc: Option[Locator] = None,
                             shifters: List[Shifter] = Nil,
-                            selectors: List[Selector] = Nil,
+                            selector: Selector = SameDay,
                             customDom: Option[DayOfMonth] = None,
                             customDoy: Option[DayOfYear] = None) extends Traversable[Date] {
   require(step.n != 0, "step cannot be 0.")
 
-  lazy val dateRange = DateRange(from, to, pattern, holiday, shifters, selectors)
+  lazy val dateRange = DateRange(from, to, pattern, holiday, shifters, selector)
 
   override def foreach[U](f: Date => U) = dateRange.foreach(f)
 
@@ -88,5 +88,5 @@ case class DateRangeBuilder(from: Date,
 
   def modifiedPreceding(holiday: HolidayRule) = select(ModifiedPreceding(holiday))
 
-  def select(selector: Selector) = this.copy(selectors = selectors :+ selector)
+  def select(selector: Selector) = this.copy(selector = selector)
 }
