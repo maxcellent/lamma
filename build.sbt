@@ -8,6 +8,8 @@ scalaVersion := "2.11.1"
 
 crossScalaVersions := Seq("2.10.4", "2.11.1")
 
+javaOptions := Seq("-Xmx1G")
+
 javacOptions := Seq("-Xlint:unchecked")
 
 scalacOptions := Seq("-feature", "-deprecation", "-language:postfixOps", "-language:implicitConversions")
