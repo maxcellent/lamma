@@ -8,7 +8,7 @@ scalaVersion := "2.11.1"
 
 crossScalaVersions := Seq("2.10.4", "2.11.1")
 
-javaOptions := Seq("-Xmx512m")
+javaOptions := Seq("-Xmx1g")
 
 javacOptions := Seq("-Xlint:unchecked")
 

@@ -29,16 +29,20 @@ import com.google.common.collect.Lists
 @RunWith(classOf[JUnitRunner])
 class LammaConversionSpec extends FlatSpec with Matchers {
 
-  "javaList" should "convert scala list to Java list" in {
-    javaList(List(1, 2, 3)) should be(Lists.newArrayList(1, 2, 3))
-  }
-
   "list" should "convert java array to scala iterable" in {
     list(1, 2, 3, 4, 5) should be(List(1, 2, 3, 4, 5))
   }
 
   "set" should "convert java array to scala set" in {
     set(1, 2, 3, 4, 5) should be(Set(1, 2, 3, 4, 5))
+  }
+
+  "scalaList" should "convert a java list to scala list" in {
+    scalaList(Lists.newArrayList(1, 2, 3)) should be(List(1, 2, 3))
+  }
+
+  "javaList" should "convert scala list to Java list" in {
+    javaList(List(1, 2, 3)) should be(Lists.newArrayList(1, 2, 3))
   }
 
   // ========== date & calendars ==========

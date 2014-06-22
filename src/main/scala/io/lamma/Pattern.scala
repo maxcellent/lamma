@@ -3,7 +3,7 @@ package io.lamma
 import io.lamma.DayOfMonth.NthDayOfMonth
 import io.lamma.DayOfYear.NthMonthOfYear
 
-import scala.annotation.tailrec
+import annotation.tailrec
 
 /**
  * recurrence pattern
@@ -37,6 +37,13 @@ object Pattern {
     } else {
       recur(current + step, to, step, acc :+ current)
     }
+  }
+
+  def apply(d: Duration): Pattern = d match {
+    case DayDuration(n) => Daily(n)
+    case WeekDuration(n) => Weekly(n)
+    case MonthDuration(n) => Monthly(n)
+    case YearDuration(n) => Yearly(n)
   }
 }
 

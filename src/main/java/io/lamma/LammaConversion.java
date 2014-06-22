@@ -12,9 +12,6 @@ import java.util.Arrays;
 
 public class LammaConversion {
 
-    public static <E> java.util.List<E> javaList(List<E> scalaList) {
-        return JavaConverters.seqAsJavaListConverter(scalaList).asJava();
-    }
 
     // =========== collections ================
     @SafeVarargs
@@ -30,6 +27,14 @@ public class LammaConversion {
     @SafeVarargs
     public static <E> Set<E> set(E ... elems) {
         return iterable(elems).toSet();
+    }
+
+    public static <E> List<E> scalaList(java.util.List<E> javaList) {
+        return collectionAsScalaIterableConverter(javaList).asScala().toList();
+    }
+
+    public static <E> java.util.List<E> javaList(List<E> scalaList) {
+        return JavaConverters.seqAsJavaListConverter(scalaList).asJava();
     }
 
     // ========= date & holidays ==========

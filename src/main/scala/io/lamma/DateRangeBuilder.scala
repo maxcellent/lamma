@@ -5,6 +5,8 @@ import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 
 import collection.JavaConverters._
 
+import DateRangeBuilder._
+
 /**
  * builder class to manipulate DateRange
  *
@@ -37,7 +39,7 @@ case class DateRangeBuilder(from: Date,
 
   def except(holiday: HolidayRule) = this.copy(holiday = this.holiday and holiday)
 
-  def on(dow: DayOfWeek): DateRangeBuilder = on(Locator(dow.ordinal))
+  def on(dow: DayOfWeek): DateRangeBuilder = on(dow2Loc(dow))
 
   def on(loc: Locator) = {
     step match {
@@ -65,9 +67,11 @@ case class DateRangeBuilder(from: Date,
    */
   lazy val javaIterable = this.toIterable.asJava
 
-  def shift(d: Int): DateRangeBuilder = shift(ShiftCalendarDays(d))
+  lazy val javaList = this.toList.asJava
 
-  def shift(d: Int, holiday: HolidayRule): DateRangeBuilder = shift(ShiftWorkingDays(d, holiday))
+  def shift(d: Int): DateRangeBuilder = shift(Shifter(d))
+
+  def shift(d: Int, holiday: HolidayRule): DateRangeBuilder = shift(Shifter(d, holiday))
 
   def shift(shifter: Shifter) = this.copy(shifters = shifters :+ shifter)
 
@@ -80,4 +84,8 @@ case class DateRangeBuilder(from: Date,
   def modifiedPreceding(holiday: HolidayRule) = select(ModifiedPreceding(holiday))
 
   def select(selector: Selector) = this.copy(selectors = selectors :+ selector)
+}
+
+object DateRangeBuilder {
+  private[lamma] def dow2Loc(dow: DayOfWeek) = Locator(dow.ordinal)
 }
