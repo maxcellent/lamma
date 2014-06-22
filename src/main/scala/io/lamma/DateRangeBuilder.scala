@@ -1,11 +1,8 @@
 package io.lamma
 
 import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
-import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays}
 
 import collection.JavaConverters._
-
-import DateRangeBuilder._
 
 /**
  * builder class to manipulate DateRange
@@ -41,7 +38,7 @@ case class DateRangeBuilder(from: Date,
 
   def except(holiday: HolidayRule) = this.copy(holiday = this.holiday and holiday)
 
-  def on(dow: DayOfWeek): DateRangeBuilder = on(dow2Loc(dow))
+  def on(dow: DayOfWeek): DateRangeBuilder = on(Locator(dow))
 
   def on(loc: Locator) = {
     step match {
@@ -92,8 +89,4 @@ case class DateRangeBuilder(from: Date,
   def modifiedPreceding(holiday: HolidayRule) = select(ModifiedPreceding(holiday))
 
   def select(selector: Selector) = this.copy(selectors = selectors :+ selector)
-}
-
-object DateRangeBuilder {
-  private[lamma] def dow2Loc(dow: DayOfWeek) = Locator(dow.ordinal)
 }

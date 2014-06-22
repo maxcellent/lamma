@@ -71,6 +71,8 @@ case class SimpleHolidayRule(holidays: Set[Date]) extends HolidayRule {
 
 object SimpleHolidayRule {
   def apply(holidays: Date*): SimpleHolidayRule = SimpleHolidayRule(holidays.toSet)
+
+  def fromISOStrings(holidays: String*): SimpleHolidayRule = SimpleHolidayRule(holidays.map(Date(_)).toSet)
 }
 
 /**

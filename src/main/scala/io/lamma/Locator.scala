@@ -9,6 +9,8 @@ sealed trait Locator
 object Locator {
   case object Last
 
+  def apply(dow: DayOfWeek): Locator = Locator(dow.ordinal)
+
   def apply(n: Int) = OrdinalLocator(Left(n))
 
   def apply(l: Last.type) = OrdinalLocator(Right(Last))

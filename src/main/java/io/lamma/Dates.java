@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-// TODO: test
 public class Dates {
 
-    private static Date date(String isoRepr) {
+    static Date date(String isoRepr) {
         if (isoRepr == null) {
             throw new IllegalArgumentException("From date must not be null. Expected: yyyy-MM-dd");
         }
@@ -19,7 +18,7 @@ public class Dates {
         return Date$.MODULE$.apply(isoRepr);
     }
 
-    private static Date date(Integer yyyy, Integer mm, Integer dd) {
+    static Date date(Integer yyyy, Integer mm, Integer dd) {
         if (yyyy == null) {
             throw new IllegalArgumentException("yyyy should not be null");
         }
@@ -116,7 +115,7 @@ public class Dates {
 
     private DayOfYear customDayOfYear;
 
-    public Dates(Date from, Date to) {
+    Dates(Date from, Date to) {
         if (from == null) {
             throw new IllegalArgumentException("From date must not be null.");
         }
@@ -201,7 +200,7 @@ public class Dates {
             throw new IllegalArgumentException("dayOfWeek must not be null.");
         }
 
-        this.loc = DateRangeBuilder$.MODULE$.dow2Loc(dayOfWeek);
+        this.loc = Locator$.MODULE$.apply(dayOfWeek);
         return this;
     }
 
