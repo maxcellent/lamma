@@ -10,6 +10,7 @@ class DateSpec extends FlatSpec with Matchers {
     }
   }
 
+  // + / - operators for Scala
   "+" should "work for int (days)" in {
     Date(2014, 4, 10) + 10 should be(Date(2014, 4, 20))
   }
@@ -56,6 +57,46 @@ class DateSpec extends FlatSpec with Matchers {
     Date(2014, 4, 10) - Date(2014, 4, 15) should be(-5)
   }
 
+  // + / - operators for Java
+  "plusDays" should "work" in {
+    Date(2014, 4, 10).plusDays(10) should be(Date(2014, 4, 20))
+  }
+
+  "plusWeeks" should "work" in {
+    Date(2014, 4, 10).plusWeeks(2) should be(Date(2014, 4, 24))
+  }
+
+  "plusMonths" should "work" in {
+    Date(2014, 4, 10).plusMonths(5) should be(Date(2014, 9, 10))
+  }
+
+  "plusYears" should "work" in {
+    Date(2014, 4, 10).plusYears(10) should be(Date(2024, 4, 10))
+  }
+
+  "minusDays" should "work" in {
+    Date(2014, 4, 10).minusDays(5) should be(Date(2014, 4, 5))
+  }
+
+  "minusWeeks" should "work for weeks" in {
+    Date(2014, 4, 10).minusWeeks(1) should be(Date(2014, 4, 3))
+  }
+
+  "minusMonths" should "work for months" in {
+    Date(2014, 4, 10).minusMonths(5) should be(Date(2013, 11, 10))
+  }
+
+  "minusYears" should "work for years" in {
+    Date(2014, 4, 10).minusYears(10) should be(Date(2004, 4, 10))
+  }
+
+  "minus" should "work" in {
+    (2014, 4, 10) minus (2014, 4, 10) should be(0)
+    (2014, 4, 10) minus (2014, 4, 5) should be(5)
+    (2014, 4, 10) minus (2014, 4, 15) should be(-5)
+  }
+
+  // comparators used for Scala
   ">" should "work" in {
     Date(2014, 4, 10) > Date(2014, 4, 5) should be(true)
     Date(2014, 4, 10) > Date(2014, 4, 10) should be(false)
@@ -78,6 +119,31 @@ class DateSpec extends FlatSpec with Matchers {
     Date(2014, 4, 10) <= Date(2014, 4, 5) should be(false)
     Date(2014, 4, 10) <= Date(2014, 4, 10) should be(true)
     Date(2014, 4, 10) <= Date(2014, 4, 12) should be(true)
+  }
+
+  // comparators used for Java
+  "isBefore" should "work" in {
+    (2014, 4, 10) isBefore (2014, 4, 5) should be(false)
+    (2014, 4, 10) isBefore (2014, 4, 10) should be(false)
+    (2014, 4, 10) isBefore (2014, 4, 12) should be(true)
+  }
+
+  "isAfter" should "work" in {
+    (2014, 4, 10) isAfter (2014, 4, 5) should be(true)
+    (2014, 4, 10) isAfter (2014, 4, 10) should be(false)
+    (2014, 4, 10) isAfter (2014, 4, 12) should be(false)
+  }
+
+  "isOnOrBefore" should "work" in {
+    (2014, 4, 10) isOnOrBefore (2014, 4, 5) should be(false)
+    (2014, 4, 10) isOnOrBefore (2014, 4, 10) should be(true)
+    (2014, 4, 10) isOnOrBefore (2014, 4, 12) should be(true)
+  }
+
+  "isOnOrAfter" should "work" in {
+    (2014, 4, 10) isOnOrAfter (2014, 4, 5) should be(true)
+    (2014, 4, 10) isOnOrAfter (2014, 4, 10) should be(true)
+    (2014, 4, 10) isOnOrAfter (2014, 4, 12) should be(false)
   }
 
   "forward" should "work" in {

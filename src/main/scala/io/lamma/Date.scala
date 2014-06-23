@@ -10,6 +10,7 @@ case class Date(yyyy: Int, mm: Int, dd: Int)
   // simply make sure yyyy-MM-dd is a valid date
   SDate.valueOf(toISOString)
 
+  // + / - operations for Scala use
   def +(n: Int): Date = this + (n days)
 
   def +(d: Duration) = JavaDateUtil.plus(this, d)
@@ -19,6 +20,34 @@ case class Date(yyyy: Int, mm: Int, dd: Int)
   def -(d: Duration) = JavaDateUtil.minus(this, d)
 
   def -(that: Date) = JavaDateUtil.daysBetween(that, this)
+
+  // + / - operations for Java use
+  def plusDays(n: Int) = this + n
+
+  def minusDays(n: Int) = this - n
+
+  def plusWeeks(n: Int) = this + (n weeks)
+
+  def minusWeeks(n: Int) = this - (n weeks)
+
+  def plusMonths(n: Int) = this + (n months)
+
+  def minusMonths(n: Int) = this - (n months)
+
+  def plusYears(n: Int) = this + (n years)
+
+  def minusYears(n: Int) = this - (n years)
+
+  def minus(that: Date) = this - that
+
+  // comparators for Java
+  def isBefore(that: Date) = this < that
+
+  def isAfter(that: Date) = this > that
+
+  def isOnOrBefore(that: Date) = this <= that
+
+  def isOnOrAfter(that: Date) = this >= that
 
   def shift(shifter: Shifter) = shifter.shift(this)
 
