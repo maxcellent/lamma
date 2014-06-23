@@ -50,6 +50,10 @@ class LammaConversionSpec extends FlatSpec with Matchers {
     date(2014, 5, 5) should be(Date(2014, 5, 5))
   }
 
+  "date" should "construct lamma date from ISO string" in {
+    date("2014-05-05") should be(Date(2014, 5, 5))
+  }
+
   "noHoliday" should "be the same as lamma version" in {
     noHoliday() should be(NoHoliday)
   }

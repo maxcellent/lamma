@@ -23,7 +23,7 @@ private[lamma] trait WeekOps {
    * an iterable for every day in this week <br>
    *   (week starts on Monday according to ISO 8601: http://en.wikipedia.org/wiki/ISO_week_date)
    */
-  lazy val thisWeed = thisWeekBegin to thisWeekEnd
+  lazy val thisWeek = thisWeekBegin to thisWeekEnd
 
   lazy val dayOfWeek = JavaDateUtil.dayOfWeek(this)
 

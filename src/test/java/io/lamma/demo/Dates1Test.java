@@ -3,12 +3,14 @@ package io.lamma.demo;
 import com.google.common.collect.Lists;
 import io.lamma.Date;
 import io.lamma.Dates;
+import io.lamma.HolidayRule;
 import org.junit.Test;
 
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static io.lamma.LammaConversion.*;
 
 /**
  * this class covers all java code used in Tutorial 1: Basic Date Generation
@@ -24,28 +26,28 @@ public class Dates1Test {
     }
 
     @Test
-    public void specifyWithNumber() {
-        List<Date> expected = Lists.newArrayList(new Date(2014, 5, 10), new Date(2014, 5, 11), new Date(2014, 5, 12));
-        List<Date> actual = Dates.from(2014, 5, 10).to(2014, 5, 12).build();
+    public void generateByStep() {
+        List<Date> expected = Lists.newArrayList(new Date(2014, 5, 10), new Date(2014, 5, 12), new Date(2014, 5, 14));
+        List<Date> actual = Dates.from(2014, 5, 10).to(2014, 5, 15).by(2).build();
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void specifyWithISOString() {
-        List<Date> expected = Lists.newArrayList(new Date(2014, 5, 10), new Date(2014, 5, 11), new Date(2014, 5, 12));
-        List<Date> actual = Dates.from("2014-05-10").to("2014-05-12").build();
+    public void generateByNegativeStep() {
+        List<Date> expected = Lists.newArrayList(new Date(2014, 5, 20), new Date(2014, 5, 18), new Date(2014, 5, 16));
+        List<Date> actual = Dates.from("2014-05-20").to("2014-05-15").by(-2).build();
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void testGenerateSequenceByWeek() {
+    public void testGenerateDatesByWeek() {
         List<Date> expected = Lists.newArrayList(new Date(2014, 5, 10), new Date(2014, 5, 17), new Date(2014, 5, 24));
         List<Date> actual = Dates.from(2014, 5, 10).to(2014, 5, 24).byWeek().build();
         assertThat(actual, is(expected));
     }
 
     @Test
-    public void testGenerateSequenceByMonth() {
+    public void testGenerateDatesByMonth() {
         List<Date> expected = Lists.newArrayList(new Date(2014, 5, 10), new Date(2014, 6, 10), new Date(2014, 7, 10));
         List<Date> actual = Dates.from(2014, 5, 10).to(2014, 7, 10).byMonth().build();
         assertThat(actual, is(expected));
@@ -59,7 +61,7 @@ public class Dates1Test {
     }
 
     @Test
-    public void testGenerateSequenceByYear() {
+    public void testGenerateDatesByYear() {
         List<Date> expected = Lists.newArrayList(new Date(2014, 5, 10), new Date(2015, 5, 10), new Date(2016, 5, 10));
         List<Date> actual = Dates.from(2014, 5, 10).to(2016, 5, 10).byYear().build();
         assertThat(actual, is(expected));
@@ -94,12 +96,34 @@ public class Dates1Test {
     }
 
     @Test
-    public void testBackward() {
-        List<Date> expected = Lists.newArrayList(new Date(2014, 5, 12), new Date(2014, 5, 11), new Date(2014, 5, 10));
-        List<Date> actual = Dates.from(2014, 5, 12).to(2014, 5, 10).byDays(-1).build();
+    public void testFilterOurWeekends() {
+        // import static io.lamma.LammaConversion.*;
+        List<Date> expected = Lists.newArrayList(date(2015, 10, 8), date(2015, 10, 9), date(2015, 10, 12));
+        List<Date> actual = Dates.from(2015, 10, 8).to(2015, 10, 12).except(weekends()).build();
         assertThat(actual, is(expected));
     }
 
+    @Test
+    public void testFilterOurWeekendsAndOtherHoliday() {
+        // import static io.lamma.LammaConversion.*;
+
+        List<Date> expected = Lists.newArrayList(date(2015, 12, 23), date(2015, 12, 24), date(2015, 12, 29), date(2015, 12, 30));
+
+        HolidayRule ukHoliday2015 = simpleHolidayRule(
+                date(2015, 1, 1), date(2015, 4, 3), date(2015, 4, 6),
+                date(2015, 5, 4), date(2015, 5, 25), date(2015, 8, 31),
+                date(2015, 12, 25), date(2015, 12, 28)
+        );
+
+        // these two are identical
+        List<Date> alt1 = Dates.from(2015, 12, 23).to(2015, 12, 30).except(weekends()).except(ukHoliday2015).build();
+        List<Date> alt2 = Dates.from(2015, 12, 23).to(2015, 12, 30).except(weekends().and(ukHoliday2015)).build();
+
+        assertThat(alt1, is(expected));
+        assertThat(alt2, is(expected));
+    }
+
+    // not in tutorial
     @Test
     public void testForwardWithFraction() {
         List<Date> expected = Lists.newArrayList(new Date(2014, 5, 10), new Date(2014, 8, 10));
@@ -107,6 +131,7 @@ public class Dates1Test {
         assertThat(actual, is(expected));
     }
 
+    // not in tutorial
     @Test
     public void testBackwardWithFraction() {
         List<Date> expected = Lists.newArrayList(new Date(2014, 10, 20), new Date(2014, 7, 20));

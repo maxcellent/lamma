@@ -3,6 +3,7 @@ package io.lamma.partial.date
 import io.lamma.DayOfYear._
 import io.lamma.{JavaDateUtil, DayOfYear, Date}
 
+import collection.JavaConverters._
 import scala.annotation.tailrec                  
 
 private[lamma] trait YearOps {
@@ -49,6 +50,8 @@ private[lamma] trait YearOps {
    * eg, if this.dayOfWeek == Wednesday, then this is a list of all Wednesday in the same year
    */
   lazy val sameWeekdaysOfYear = thisYear.filter(_.dayOfWeek == dayOfWeek).toList
+
+  lazy val sameWeekdaysOfYear4j = sameWeekdaysOfYear.asJava
 
   /**
    * coming day of year excluding this date

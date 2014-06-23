@@ -4,6 +4,9 @@ import java.sql.{Date => SDate}
 import io.lamma.partial.date.{YearOps, MonthOps, WeekOps}
 import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
 
+/**
+ * immutable object to represent a Date. All mutating operations will return a new Date.
+ */
 case class Date(yyyy: Int, mm: Int, dd: Int)
   extends Ordered[Date] with WeekOps with MonthOps with YearOps {
 

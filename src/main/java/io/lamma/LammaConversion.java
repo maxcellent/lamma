@@ -42,6 +42,10 @@ public class LammaConversion {
         return new Date(yyyy, mm, dd);
     }
 
+    public static Date date(String isoRepr) {
+        return Date$.MODULE$.apply(isoRepr);
+    }
+
     public static HolidayRule noHoliday() {
         return NoHoliday$.MODULE$;
     }

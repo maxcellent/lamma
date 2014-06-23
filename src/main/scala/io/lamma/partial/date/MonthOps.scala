@@ -3,6 +3,7 @@ package io.lamma.partial.date
 import io.lamma.DayOfMonth._
 import io.lamma.{JavaDateUtil, Month, DayOfMonth, Date}
 
+import collection.JavaConverters._
 import scala.annotation.tailrec
 
 private[lamma] trait MonthOps {
@@ -53,6 +54,8 @@ private[lamma] trait MonthOps {
    * eg, if this.dayOfWeek == Wednesday, then this is a list of all Wednesday in the same month
    */
   lazy val sameWeekdaysOfMonth = thisMonth.filter(_.dayOfWeek == dayOfWeek).toList
+
+  lazy val sameWeekdaysOfMonth4j = sameWeekdaysOfMonth.asJava
 
   /**
    * coming day of month excluding this date
