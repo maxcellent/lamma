@@ -1,15 +1,11 @@
 package io.lamma
 
 import org.scalatest.{FlatSpec, Matchers}
-import LammaConversion._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
+import LammaJavaImports._
 import io.lamma.Shifter.NoShift
 import io.lamma.Selector._
-import LammaConst._
 import DayOfMonth._
 import DayOfYear._
-import io.lamma._
 import io.lamma.DayOfMonth.LastWeekdayOfMonth
 import io.lamma.DayOfMonth.NthWeekdayOfMonth
 import io.lamma.Selector.ModifiedPreceding
@@ -26,8 +22,32 @@ import io.lamma.StubRulePeriodBuilder.{ShortEnd, LongEnd, ShortStart, LongStart}
 import io.lamma.Anchor.{PeriodEnd, PeriodStart, OtherDate}
 import com.google.common.collect.Lists
 
-@RunWith(classOf[JUnitRunner])
-class LammaConversionSpec extends FlatSpec with Matchers {
+class LammaJavaImportsSpec extends FlatSpec with Matchers {
+
+  "DateOfWeek" should "match lamma version" in {
+    MONDAY should be(Monday)
+    TUESDAY should be(Tuesday)
+    WEDNESDAY should be(Wednesday)
+    THURSDAY should be(Thursday)
+    FRIDAY should be(Friday)
+    SATURDAY should be(Saturday)
+    SUNDAY should be(Sunday)
+  }
+
+  "Months" should "match lamma version" in {
+    JANUARY should be(January)
+    FEBRUARY should be(February)
+    MARCH should be(March)
+    APRIL should be(April)
+    MAY should be(May)
+    JUNE should be(June)
+    JULY should be(July)
+    AUGUST should be(August)
+    SEPTEMBER should be(September)
+    OCTOBER should be(October)
+    NOVEMBER should be(November)
+    DECEMBER should be(December)
+  }
 
   "list" should "convert java array to scala iterable" in {
     list(1, 2, 3, 4, 5) should be(List(1, 2, 3, 4, 5))

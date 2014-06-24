@@ -8,8 +8,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-// always import these two lines when using Java, this will make our life a lot easier
-import static io.lamma.LammaConversion.*;
+// always import this line when using Java, this will make our life a lot easier
+import static io.lamma.LammaJavaImports.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 

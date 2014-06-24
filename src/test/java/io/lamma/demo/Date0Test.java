@@ -1,10 +1,9 @@
 package io.lamma.demo;
 
 /**
- * always import these two line when you are using Java
+ * always import this line when you are using Java
  */
-import static io.lamma.LammaConversion.*;
-import static io.lamma.LammaConst.*;
+import static io.lamma.LammaJavaImports.*;
 
 import io.lamma.Date;
 

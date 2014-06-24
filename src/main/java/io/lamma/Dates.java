@@ -2,9 +2,8 @@ package io.lamma;
 
 import scala.Option;
 
-import static io.lamma.LammaConversion.*;
+import static io.lamma.LammaJavaImports.*;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

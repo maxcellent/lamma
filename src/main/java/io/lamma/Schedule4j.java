@@ -1,7 +1,7 @@
 package io.lamma;
 
-import static io.lamma.LammaConversion.javaList;
-import static io.lamma.LammaConversion.scalaList;
+import static io.lamma.LammaJavaImports.javaList;
+import static io.lamma.LammaJavaImports.scalaList;
 
 import java.util.List;
 

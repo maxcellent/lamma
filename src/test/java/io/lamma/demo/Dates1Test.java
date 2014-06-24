@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
-import static io.lamma.LammaConversion.*;
+import static io.lamma.LammaJavaImports.*;
 
 /**
  * this class covers all java code used in Tutorial 1: Basic Date Generation

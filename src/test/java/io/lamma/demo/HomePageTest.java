@@ -1,7 +1,7 @@
 package io.lamma.demo;
 
 // always import this when coding Lamma with Java
-import static io.lamma.LammaConversion.*;
+import static io.lamma.LammaJavaImports.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
