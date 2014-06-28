@@ -49,10 +49,22 @@ class MonthOpsSpec extends FlatSpec with Matchers {
     Date(2016, 2, 15).sameWeekdaysOfMonth should be(expected)
   }
 
+  "nextOrSameDayOfMonth" should "work" in {
+    Date(2014, 4, 10).nextOrSameDayOfMonth(10 th day) should be(Date(2014, 4, 10))
+    Date(2014, 4, 9).nextOrSameDayOfMonth(10 th day) should be(Date(2014, 4, 10))
+    Date(2014, 4, 11).nextOrSameDayOfMonth(10 th day) should be(Date(2014, 5, 10))
+  }
+
   "nextOrSame" should "work" in {
     Date(2014, 4, 10).nextOrSame(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
     Date(2014, 4, 9).nextOrSame(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
     Date(2014, 4, 11).nextOrSame(NthDayOfMonth(10)) should be(Date(2014, 5, 10))
+  }
+
+  "nextDayOfMonth" should "work" in {
+    Date(2014, 4, 10).nextDayOfMonth(10 th day) should be(Date(2014, 5, 10))
+    Date(2014, 4, 9).nextDayOfMonth(10 th day) should be(Date(2014, 4, 10))
+    Date(2014, 4, 11).nextDayOfMonth(10 th day) should be(Date(2014, 5, 10))
   }
 
   "next" should "work" in {
@@ -71,10 +83,22 @@ class MonthOpsSpec extends FlatSpec with Matchers {
     Date(2014, 8,  1).nextFirstDayOfMonth should be(Date(2014, 9, 1))
   }
 
+  "previousOrSameDayOfMonth" should "work" in {
+    Date(2014, 4, 10).previousOrSameDayOfMonth(10 th day) should be(Date(2014, 4, 10))
+    Date(2014, 4, 9).previousOrSameDayOfMonth(10 th day) should be(Date(2014, 3, 10))
+    Date(2014, 4, 11).previousOrSameDayOfMonth(10 th day) should be(Date(2014, 4, 10))
+  }
+
   "previousOrSame" should "work" in {
     Date(2014, 4, 10).previousOrSame(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
     Date(2014, 4, 9).previousOrSame(NthDayOfMonth(10)) should be(Date(2014, 3, 10))
     Date(2014, 4, 11).previousOrSame(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+  }
+
+  "previousDayOfMonth" should "work" in {
+    Date(2014, 4, 10).previousDayOfMonth(10 th day) should be(Date(2014, 3, 10))
+    Date(2014, 4, 9).previousDayOfMonth(10 th day) should be(Date(2014, 3, 10))
+    Date(2014, 4, 11).previousDayOfMonth(10 th day) should be(Date(2014, 4, 10))
   }
 
   "previous" should "work" in {

@@ -71,11 +71,15 @@ private[lamma] trait MonthOps {
 
   lazy val sameWeekdaysOfMonth4j = sameWeekdaysOfMonth.asJava
 
+  def nextOrSameDayOfMonth(dom: DayOfMonth) = nextOrSame(dom)
+
   def nextOrSame(dom: DayOfMonth) = MonthOps.nextOrSame(this, dom)
 
   @deprecated("replace with next(DayOfMonth)", "2.1.0")
   def comingDayOfMonth(dom: DayOfMonth) = next(dom)
-  
+
+  def nextDayOfMonth(dom: DayOfMonth) = next(dom)
+
   /**
    * coming day of month excluding this date
    */
@@ -109,11 +113,15 @@ private[lamma] trait MonthOps {
    */
   lazy val nextFirstDayOfMonth = next(FirstDayOfMonth)
 
+  def previousOrSameDayOfMonth(dom: DayOfMonth) = previousOrSame(dom)
+
   def previousOrSame(dom: DayOfMonth) = MonthOps.previousOrSame(this, dom)
 
   @deprecated("replace with previous(DayOfMonth)", "2.1.0")
   def pastDayOfMonth(dom: DayOfMonth) = MonthOps.previousOrSame(this - 1, dom)
-  
+
+  def previousDayOfMonth(dom: DayOfMonth) = previous(dom)
+
   /**
    * past day of month excluding this date
    */

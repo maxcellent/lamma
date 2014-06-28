@@ -77,11 +77,15 @@ private[lamma] trait YearOps {
 
   lazy val sameWeekdaysOfYear4j = sameWeekdaysOfYear.asJava
 
+  def nextOrSameDayOfYear(doy: DayOfYear) = nextOrSame(doy)
+
   def nextOrSame(doy: DayOfYear) = YearOps.nextOrSame(this, doy)
 
   @deprecated("replaced with next(DayOfYear)", "2.1.0")
   def comingDayOfYear(doy: DayOfYear) = next(doy)
-  
+
+  def nextDayOfYear(doy: DayOfYear) = next(doy)
+
   /**
    * coming day of year excluding this date
    */
@@ -111,10 +115,14 @@ private[lamma] trait YearOps {
    */
   lazy val nextFirstDayOfYear = next(FirstDayOfYear)
 
+  def previousOrSameDayOfYear(doy: DayOfYear) = previousOrSame(doy)
+
   def previousOrSame(doy: DayOfYear) = YearOps.previousOrSame(this, doy)
 
   @deprecated("replace with previous(DayOfYear)", "2.1.0")
   def pastDayOfYear(doy: DayOfYear) = previous(doy)
+
+  def previousDayOfYear(doy: DayOfYear) = previous(doy)
 
   /**
    * previous day of year before this date

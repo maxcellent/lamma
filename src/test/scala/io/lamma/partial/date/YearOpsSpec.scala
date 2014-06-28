@@ -68,9 +68,19 @@ class YearOpsSpec extends FlatSpec with Matchers {
     Date(2016, 3, 21).sameWeekdaysOfYear should contain(Date(2016, 2, 29))
   }
 
+  "nextOrSameDayOfYear" should "work" in {
+    Date(2014, 4, 10).nextOrSameDayOfYear(1 st day) should be(Date(2015, 1, 1))
+    Date(2014, 1, 1).nextOrSameDayOfYear(1 st day) should be(Date(2014, 1, 1))
+  }
+
   "nextOrSame" should "work" in {
     Date(2014, 4, 10).nextOrSame(FirstDayOfYear) should be(Date(2015, 1, 1))
     Date(2014, 1, 1).nextOrSame(FirstDayOfYear) should be(Date(2014, 1, 1))
+  }
+
+  "nextDayOfYear" should "work" in {
+    Date(2014, 4, 10).nextDayOfYear(1 st day) should be(Date(2015, 1, 1))
+    Date(2014, 1, 1).nextDayOfYear(1 st day) should be(Date(2015, 1, 1))
   }
 
   "next" should "work" in {
@@ -88,9 +98,19 @@ class YearOpsSpec extends FlatSpec with Matchers {
     Date(2015, 1, 1).nextFirstDayOfYear should be(Date(2016, 1, 1))
   }
 
+  "previousOrSameDayOfYear" should "work" in {
+    Date(2014, 4, 10).previousOrSameDayOfYear(1 st day) should be(Date(2014, 1, 1))
+    Date(2014, 1, 1).previousOrSameDayOfYear(1 st day) should be(Date(2014, 1, 1))
+  }
+
   "previousOrSame" should "work" in {
     Date(2014, 4, 10).previousOrSame(FirstDayOfYear) should be(Date(2014, 1, 1))
     Date(2014, 1, 1).previousOrSame(FirstDayOfYear) should be(Date(2014, 1, 1))
+  }
+
+  "previousDayOfYear" should "work" in {
+    Date(2014, 4, 10).previousDayOfYear(1 st day) should be(Date(2014, 1, 1))
+    Date(2014, 1, 1).previousDayOfYear(1 st day) should be(Date(2013, 1, 1))
   }
 
   "previous" should "work" in {
