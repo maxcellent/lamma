@@ -12,8 +12,6 @@ private[lamma] trait MonthOps {
 
   lazy val month = Month.of(mm)
 
-  lazy val monthSinceBC = yyyy * 12 + mm
-
   /**
    * max day of this month, different month length and leap month are considered
    */
@@ -39,8 +37,6 @@ private[lamma] trait MonthOps {
     matched.head
   }
 
-  def withWeekOfMonth(n: Int): Date = this.withDayOfMonth(NthWeekdayOfMonth(n, dayOfWeek))
-
   @deprecated(message = "replaced by firstDayOfMonth", since = "2.1.0")
   def thisMonthBegin = firstDayOfMonth
 
@@ -64,6 +60,8 @@ private[lamma] trait MonthOps {
    * an iterable for every day in the month
    */
   lazy val daysOfMonth = firstDayOfMonth to lastDayOfMonth
+
+  lazy val daysOfMonth4j = daysOfMonth.javaIterable
 
   /**
    * Every day in the same month with same dow <br>
@@ -192,11 +190,11 @@ private[lamma] trait MonthOps {
    * @param dow DayOfWeek
    * @return a new copy of the date
    */
-  def dayOfWeekInMonth(n: Int, dow: DayOfWeek) = withDayOfMonth(NthWeekdayOfMonth(n, dow))
+  def dayOfWeekInMonth(n: Int, dow: DayOfWeek) = this.withDayOfMonth(n th dow)
 
-  def firstInMonth(dow: DayOfWeek) = dayOfWeekInMonth(1, dow)
+  def firstInMonth(dow: DayOfWeek) = this.withDayOfMonth(1 st dow)
 
-  def lastInMonth(dow: DayOfWeek) = withDayOfMonth(LastWeekdayOfMonth(dow))
+  def lastInMonth(dow: DayOfWeek) = this.withDayOfMonth(LastWeekdayOfMonth(dow))
 }
 
 private object MonthOps {

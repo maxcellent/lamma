@@ -6,6 +6,7 @@ package io.lamma.demo;
 import static io.lamma.LammaJavaImports.*;
 
 import io.lamma.Date;
+import io.lamma.DayOfWeek;
 
 
 /**
@@ -53,23 +54,23 @@ public class Date0Test {
         // Output: 7 (int)
 
         // ==== week operations  ======
-        System.out.println(date(2014, 7, 7).isMonday()); // from isMonday to ... isSunday
+        System.out.println(date(2014, 7, 7).is(DayOfWeek.MONDAY)); // from isMonday to ... isSunday
         // Output: true
 
-        System.out.println(date(2014, 7, 7).comingFriday()); // find the next Friday excludes today
+        System.out.println(date(2014, 7, 7).next(DayOfWeek.FRIDAY)); // find the next Friday excludes today
         // Output: Date(2014,7,11)
 
-        System.out.println(date(2014, 7, 7).pastWednesday()); // find the past Wednesday excludes today
+        System.out.println(date(2014, 7, 7).previous(DayOfWeek.WEDNESDAY)); // find the past Wednesday excludes today
         // Output: Date(2014,7,2)
 
-        System.out.println(date(2014, 7, 7).thisWeekBegin()); // fist day of this week.
-        // Output: Date(2014,7,7)   (In Lamma, a week starts from Monday)
+        System.out.println(date(2014, 7, 7).withDayOfWeek(DayOfWeek.MONDAY));
+        // Output: Date(2014,7,7)
 
-        System.out.println(date(2014, 7, 7).thisWeekEnd()); // last day of this week.
-        // Output: Date(2014,7,13)   (In Lamma, a week ends with Sunday)
+        System.out.println(date(2014, 7, 7).withDayOfWeek(DayOfWeek.SUNDAY));
+        // Output: Date(2014,7,13)
 
         // list of dates of this week
-        for (Date d : date(2014, 7, 7).thisWeek().javaIterable()) {
+        for (Date d : date(2014, 7, 7).daysOfWeek4j()) {
             System.out.println(d);
         }
         // Output: from Date(2014,7,7) to Date(2014,7,13)

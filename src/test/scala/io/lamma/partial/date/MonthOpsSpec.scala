@@ -1,10 +1,21 @@
 package io.lamma.partial.date
 
+import collection.JavaConversions._
 import io.lamma._
 import io.lamma.DayOfMonth.NthDayOfMonth
 import org.scalatest.{Matchers, FlatSpec}
 
 class MonthOpsSpec extends FlatSpec with Matchers {
+
+  "daysOfMonth4j" should "work" in {
+    val d = Date(2014, 4, 15)
+    d.daysOfMonth4j.toList should be(d.daysOfMonth.toList)
+  }
+
+  "sameWeekdaysOfMonth4j" should "work" in {
+    val d = Date(2014, 4, 15)
+    d.sameWeekdaysOfMonth4j.toList should be(d.sameWeekdaysOfMonth.toList)
+  }
 
   "withDayOfMonth" should "throw exception when input DayOfMonth is invalid" in {
     val dom = new DayOfMonth {
@@ -16,9 +27,10 @@ class MonthOpsSpec extends FlatSpec with Matchers {
   }
 
   "withDayOfMonth" should "work" in {
-    Date(2014, 4, 10).withDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
-    Date(2014, 4, 9).withDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
-    Date(2014, 4, 11).withDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 10).withDayOfMonth(10 th day) should be(Date(2014, 4, 10))
+    Date(2014, 4, 9).withDayOfMonth(10 th day) should be(Date(2014, 4, 10))
+    Date(2014, 4, 11).withDayOfMonth(10 th day) should be(Date(2014, 4, 10))
+    Date(2014, 8, 15).withDayOfMonth(2 nd Friday) should be(Date(2014, 8, 8))
   }
 
   "firstDayOfMonth" should "work" in {
@@ -37,23 +49,35 @@ class MonthOpsSpec extends FlatSpec with Matchers {
     Date(2016, 2, 15).sameWeekdaysOfMonth should be(expected)
   }
 
-  "comingDayOfMonth" should "work" in {
+  "nextOrSame" should "work" in {
+    Date(2014, 4, 10).nextOrSame(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 9).nextOrSame(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 11).nextOrSame(NthDayOfMonth(10)) should be(Date(2014, 5, 10))
+  }
+
+  "next" should "work" in {
     Date(2014, 4, 10).next(NthDayOfMonth(10)) should be(Date(2014, 5, 10))
     Date(2014, 4, 9).next(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
     Date(2014, 4, 11).next(NthDayOfMonth(10)) should be(Date(2014, 5, 10))
   }
 
-  "comingLastDayOfMonth" should "work" in {
+  "nextLastDayOfMonth" should "work" in {
     Date(2014, 7, 30).nextLastDayOfMonth should be(Date(2014, 7, 31))
     Date(2014, 7, 31).nextLastDayOfMonth should be(Date(2014, 8, 31))
   }
 
-  "comingFirstDayOfMonth" should "work" in {
+  "nextFirstDayOfMonth" should "work" in {
     Date(2014, 7, 31).nextFirstDayOfMonth should be(Date(2014, 8, 1))
     Date(2014, 8,  1).nextFirstDayOfMonth should be(Date(2014, 9, 1))
   }
 
-  "pastDayOfMonth" should "work" in {
+  "previousOrSame" should "work" in {
+    Date(2014, 4, 10).previousOrSame(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 9).previousOrSame(NthDayOfMonth(10)) should be(Date(2014, 3, 10))
+    Date(2014, 4, 11).previousOrSame(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+  }
+
+  "previous" should "work" in {
     Date(2014, 4, 10).previous(NthDayOfMonth(10)) should be(Date(2014, 3, 10))
     Date(2014, 4, 9).previous(NthDayOfMonth(10)) should be(Date(2014, 3, 10))
     Date(2014, 4, 11).previous(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
@@ -96,16 +120,14 @@ class MonthOpsSpec extends FlatSpec with Matchers {
     Date(2016, 6, 5).maxDayOfMonth should be(30)
   }
 
-  "nthDayOfMonth" should "work" in {
+  "dayOfMonth" should "work" in {
     Date(2014, 5, 9).dayOfMonth should be(9)
-  }
-
-  "monthSinceBC" should "work" in {
-    Date(2000, 5, 5).monthSinceBC should be(24005)
   }
 
   "dayOfWeekInMonth" should "work" in {
     Date(2014, 7, 5).dayOfWeekInMonth(2, Friday) should be(Date(2014, 7, 11))
+
+    Date(2014, 7, 5).withDayOfMonth(2 nd Friday) should be(Date(2014, 7, 11))
   }
 
   "firstInMonth" should "work" in {

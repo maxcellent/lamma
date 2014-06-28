@@ -65,6 +65,10 @@ package object lamma {
     Date(yyyy, mm, dd)
   }
 
+  implicit def tuplesToDates(t: ((Int, Int, Int), (Int, Int, Int))) = {
+    tupleToDate(t._1) -> tupleToDate(t._2)
+  }
+
   implicit def isoStrToDate(isoStr: String) = Date(isoStr)
 
   // =========== durations ===============
@@ -146,4 +150,10 @@ package object lamma {
   val lastSaturday = Locator(Last, Saturday)
 
   val lastSunday = Locator(Last, Sunday)
+
+  implicit def dayOfWeekSupportConversion(dowSupport: DayOfWeekSupport) = dowSupport.dow
+
+  implicit def dayOfMonthSupportConversion(domSupport: DayOfMonthSupport) = domSupport.dom
+
+  implicit def dayOfYearSupportConversion(doySupport: DayOfYearSupport) = doySupport.doy
 }

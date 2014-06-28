@@ -61,28 +61,28 @@ case class Date(yyyy: Int, mm: Int, dd: Int)
    *
    * @see io.lamma.Selector.Forward
    */
-  def forward(cal: HolidayRule) = Forward(cal).select(this)
+  def forward(cal: HolidayRule) = select(Forward(cal))
 
   /**
    * select the date with backward convention for given holiday.
    *
    * @see io.lamma.Selector.Backward
    */
-  def backward(cal: HolidayRule) = Backward(cal).select(this)
+  def backward(cal: HolidayRule) = select(Backward(cal))
 
   /**
    * select the date with modified following convention for given holiday.
    *
    * @see io.lamma.Selector.ModifiedFollowing
    */
-  def modifiedFollowing(cal: HolidayRule) = ModifiedFollowing(cal).select(this)
+  def modifiedFollowing(cal: HolidayRule) = select(ModifiedFollowing(cal))
 
   /**
    * select the date with modified preceding convention for given holiday.
    *
    * @see io.lamma.Selector.ModifiedPreceding
    */
-  def modifiedPreceding(cal: HolidayRule) = ModifiedPreceding(cal).select(this)
+  def modifiedPreceding(cal: HolidayRule) = select(ModifiedPreceding(cal))
 
   def compare(that: Date) = this.toISOString.compare(that.toISOString)
 
@@ -111,26 +111,15 @@ case class Date(yyyy: Int, mm: Int, dd: Int)
 }
 
 object Date {
-  final val ISOStringLen = "1978-01-01".size
+  private[lamma] final val ISOStringLen = "1978-01-01".size
 
-  private[lamma] def monthsBetween(input: ((Int, Int, Int), (Int, Int, Int))): Int = {
-    val (from, to) = unpack(input)
-    monthsBetween(from, to)
-  }
+  private[lamma] def monthsBetween(d: (Date, Date)): Int = monthsBetween(d._1, d._2)
 
   private[lamma] def monthsBetween(d1: Date, d2: Date) = JavaDateUtil.monthsBetween(d1, d2)
 
-  private[lamma] def yearsBetween(input: ((Int, Int, Int), (Int, Int, Int))): Int = {
-    val (from, to) = unpack(input)
-    yearsBetween(from, to)
-  }
+  private[lamma] def yearsBetween(input: (Date, Date)): Int = yearsBetween(input._1, input._2)
 
   private[lamma] def yearsBetween(d1: Date, d2: Date) = JavaDateUtil.yearsBetween(d1, d2)
-
-  private[lamma] def unpack(pair: ((Int, Int, Int), (Int, Int, Int))) = {
-    val ((y1, m1, d1), (y2, m2, d2)) = pair
-    Date(y1, m1, d1) -> Date(y2, m2, d2)
-  }
 
   /**
    * @param isoRepr in yyyy-MM-dd format, eg, 2014-02-26

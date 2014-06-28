@@ -13,10 +13,7 @@ case class Period(start: Date, end: Date) {
 
 object Period {
 
-  def apply(input: ((Int, Int, Int), (Int, Int, Int))) = {
-    val (from, to) = Date.unpack(input)
-    new Period(from, to)
-  }
+  def apply(input: (Date, Date)) = new Period(input._1, input._2)
 
   /**
    * Create list of periods from period end days. <br>

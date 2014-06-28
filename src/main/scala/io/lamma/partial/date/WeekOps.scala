@@ -30,6 +30,8 @@ private[lamma] trait WeekOps {
    */
   lazy val daysOfWeek = previousOrSame(Monday) to nextOrSame(Sunday)
 
+  lazy val daysOfWeek4j = daysOfWeek.javaIterable
+
   lazy val dayOfWeek = JavaDateUtil.dayOfWeek(this)
 
   /**
@@ -172,5 +174,4 @@ private object WeekOps {
       previousOrSame(d - 1, target)
     }
   }
-
 }

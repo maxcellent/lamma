@@ -192,4 +192,20 @@ class DateSpec extends FlatSpec with Matchers {
       Date("2014-0520")
     }
   }
+
+  "shift" should "work" in {
+    val shifter = Shifter.apply(3, Weekends)
+    (2014, 7, 17) shift shifter should be(Date(2014, 7, 22))
+  }
+
+  "compare" should "sort date in ascending order" in {
+    val dates = Date(2014, 5, 20) :: Date(2014, 5, 11) :: Date(2014, 5, 15) :: Nil
+    val expected = Date(2014, 5, 11) :: Date(2014, 5, 15) :: Date(2014, 5, 20) :: Nil
+    dates.sorted should be(expected)
+  }
+
+  "until" should "work" in {
+    val expected = (2014, 5, 20) to (2014, 5, 24)
+    (2014, 5, 20) until (2014, 5, 25) should be(expected)
+  }
 }

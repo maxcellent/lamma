@@ -52,12 +52,30 @@ class JavaDateUtilSpec extends WordSpec with Matchers {
     }
   }
 
+  "monthsBetween" should {
+    "return 0 for days in the same month" in {
+      monthsBetween((2014, 1, 5), (2014, 1, 20)) should be(0)
+    }
+
+    "return 0 for not completed month, even they are on different month" in {
+      monthsBetween((2014, 1, 5), (2014, 2, 4)) should be(0)
+    }
+
+    "return completed month" in {
+      monthsBetween((2014, 1, 5), (2014, 2, 5)) should be(1)
+    }
+
+    "consider leap month" in {
+      monthsBetween((2016, 2, 29), (2017, 2, 28)) should be(12)
+    }
+  }
+
   "yearsBetween" should {
     "return 0 for days in the same year" in {
       yearsBetween(Date(2014, 1, 5), Date(2014, 5, 1)) should be(0)
     }
 
-    "return 0 for not complet year, even yyyy is different" in {
+    "return 0 for not completed year, even yyyy is different" in {
       yearsBetween(Date(2014, 1, 5), Date(2015, 1, 4)) should be(0)
     }
 
@@ -68,7 +86,5 @@ class JavaDateUtilSpec extends WordSpec with Matchers {
     "consider leap year" in {
       yearsBetween(Date(2016, 2, 29), Date(2017, 2, 28)) should be(1)
     }
-
-
   }
 }

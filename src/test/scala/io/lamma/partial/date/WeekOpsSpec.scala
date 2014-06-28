@@ -1,9 +1,15 @@
 package io.lamma.partial.date
 
+import collection.JavaConversions._
 import io.lamma._
 import org.scalatest.{Matchers, FlatSpec}
 
 class WeekOpsSpec extends FlatSpec with Matchers {
+
+  "daysOfWeek4j" should "work" in {
+    val d = Date(2014, 4, 15)
+    d.daysOfWeek4j.toList should be(d.daysOfWeek.toList)
+  }
 
   "dayOfWeek" should "work" in {
     Date(2014, 4, 10).dayOfWeek should be(Thursday)
@@ -27,5 +33,11 @@ class WeekOpsSpec extends FlatSpec with Matchers {
   "previous" should "work" in {
     Date(2014, 4, 10).previous(Monday) should be(Date(2014, 4, 7))
     Date(2014, 4, 10).previous(Thursday) should be(Date(2014, 4, 3))
+  }
+
+  "isWeekend" should "work" in {
+    (2014, 8, 8).isWeekend should be(false)
+    (2014, 8, 9).isWeekend should be(true)
+    (2014, 8, 10).isWeekend should be(true)
   }
 }

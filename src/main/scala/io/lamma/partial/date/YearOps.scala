@@ -35,12 +35,6 @@ private[lamma] trait YearOps {
     matched.head
   }
 
-  def withDayOfYear(n: Int): Date = this.withDayOfYear(NthDayOfYear(n))
-
-  def withWeekOfYear(n: Int): Date = this.withDayOfYear(NthWeekdayOfYear(n, dayOfWeek))
-
-  def withMonthOfYear(m: Month): Date = this.withDayOfYear(NthMonthOfYear(m, NthDayOfMonth(dayOfMonth)))
-
   @deprecated("replace with firstDayOfYear", "2.1.0")
   def thisYearBegin = firstDayOfYear
 
@@ -72,6 +66,8 @@ private[lamma] trait YearOps {
    * an iterable for every day in the year
    */
   lazy val daysOfYear = firstDayOfYear to lastDayOfYear
+
+  lazy val daysOfYear4j = daysOfYear.javaIterable
 
   /**
    * Every day in the same year with same dow <br>
@@ -117,7 +113,7 @@ private[lamma] trait YearOps {
 
   def previousOrSame(doy: DayOfYear) = YearOps.previousOrSame(this, doy)
 
-  @deprecated("replace with previous(DayOfYear)")
+  @deprecated("replace with previous(DayOfYear)", "2.1.0")
   def pastDayOfYear(doy: DayOfYear) = previous(doy)
 
   /**
@@ -149,9 +145,9 @@ private[lamma] trait YearOps {
    */
   lazy val previousFirstDayOfYear = previous(FirstDayOfYear)
 
-  def dayOfWeekInYear(n: Int, dow: DayOfWeek) = this.withDayOfYear(NthWeekdayOfYear(n, dow))
+  def dayOfWeekInYear(n: Int, dow: DayOfWeek) = this.withDayOfYear(n th dow)
 
-  def firstInYear(dow: DayOfWeek) = this.dayOfWeekInYear(1, dow)
+  def firstInYear(dow: DayOfWeek) = this.withDayOfYear(1 st dow)
 
   def lastInYear(dow: DayOfWeek) = this.withDayOfYear(LastWeekdayOfYear(dow))
 

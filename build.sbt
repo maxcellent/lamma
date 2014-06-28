@@ -10,7 +10,7 @@ crossScalaVersions := Seq("2.10.4", "2.11.1")
 
 javaOptions := Seq("-Xmx1g")
 
-javacOptions := Seq("-Xlint:unchecked")
+javacOptions := Seq("-Xlint:unchecked", "-Xlint:deprecation")
 
 scalacOptions := Seq("-feature", "-deprecation", "-language:postfixOps", "-language:implicitConversions")
 

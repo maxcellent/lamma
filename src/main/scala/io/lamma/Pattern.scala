@@ -158,7 +158,7 @@ case class Yearly(step: Int, doyOpt: Option[DayOfYear] = None) extends Pattern {
         acc
       } else {
         val next = current + (step years)
-        val adjusted = next.dayOfThisYear(doy)
+        val adjusted = next.withDayOfYear(doy)
         doRecur(adjusted, to, acc :+ current)
       }
     }
@@ -190,7 +190,7 @@ object Yearly {
       acc
     } else {
       val next = current + (step years)
-      recur(next, to, step, doy, acc :+ next.dayOfThisYear(doy))
+      recur(next, to, step, doy, acc :+ next.withDayOfYear(doy))
     }
   }
 }
