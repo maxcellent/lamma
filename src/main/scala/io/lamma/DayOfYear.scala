@@ -67,13 +67,13 @@ object DayOfYear {
 
   def LastWeekdayOfYear(weekday: DayOfWeek) = NthWeekdayOfYear(53, weekday)
 
-  def FirstMonthOfYear(pom: DayOfMonth) = NthMonthOfYear(January, pom)
+  def FirstMonthOfYear(dom: DayOfMonth) = NthMonthOfYear(January, dom)
 
-  case class NthMonthOfYear(m: Month, pom: DayOfMonth) extends DayOfYear {
-    override def isValidDOY(d: Date) = d.month == m && pom.isValidDOM(d)
+  case class NthMonthOfYear(m: Month, dom: DayOfMonth) extends DayOfYear {
+    override def isValidDOY(d: Date) = d.month == m && dom.isValidDOM(d)
   }
 
-  def LastMonthOfYear(pom: DayOfMonth) = NthMonthOfYear(December, pom)
+  def LastMonthOfYear(dom: DayOfMonth) = NthMonthOfYear(December, dom)
 }
 
 class InvalidPositionOfYearException(poy: DayOfYear, failingYear: Int, result: List[Date])

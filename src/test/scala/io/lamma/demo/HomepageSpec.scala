@@ -321,13 +321,13 @@ class HomepageSpec extends WordSpec with Matchers {
       "when there are only one recurrence date generated" should {
         val start = Date(2014, 10, 1)
         val end = Date(2014, 10, 10)
-        val pom = NthDayOfMonth(5)  // single recurrence date Date(2014, 10, 5)
+        val dom = NthDayOfMonth(5)  // single recurrence date Date(2014, 10, 5)
 
         val split = Period((2014, 10, 1) -> (2014, 10, 5)) :: Period((2014, 10, 6) -> (2014, 10, 10)) :: Nil
         val merged = Period((2014, 10, 1) -> (2014, 10, 10)) :: Nil
 
         def period(startRule: StartRule, endRule: EndRule) = {
-          Schedule(start, end, Monthly(1, pom), StubRulePeriodBuilder(startRule, endRule)).periods
+          Schedule(start, end, Monthly(1, dom), StubRulePeriodBuilder(startRule, endRule)).periods
         }
 
         "if Start Rule will merge, then end rule will not split too (always be ignored)" in {

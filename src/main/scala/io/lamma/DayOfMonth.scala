@@ -14,15 +14,15 @@ trait DayOfMonth {
 }
 
 object DayOfMonth {
-  def validate(pom: DayOfMonth) = {
+  def validate(dom: DayOfMonth) = {
 
     def validate(yyyy: Int, mm: Int) = {
       val start = Date(yyyy, mm, 1)
       val end = start + (1 month) - 1
-      val result = (start to end).filter(pom.isValidDOM).toList
+      val result = (start to end).filter(dom.isValidDOM).toList
 
       if (result.size != 1) {
-        throw new InvalidPositionOfMonthException(pom, yyyy, mm, result)
+        throw new InvalidPositionOfMonthException(dom, yyyy, mm, result)
       }
     }
 
@@ -73,5 +73,5 @@ object DayOfMonth {
   }
 }
 
-class InvalidPositionOfMonthException(pom: DayOfMonth, failingYear: Int, failingMonth: Int, result: List[Date])
-  extends RuntimeException(s"${pom.toString} does not work for $failingYear-$failingMonth. Please make sure there is one and only one day matches for each month. Actual result: $result")
+class InvalidPositionOfMonthException(dom: DayOfMonth, failingYear: Int, failingMonth: Int, result: List[Date])
+  extends RuntimeException(s"${dom.toString} does not work for $failingYear-$failingMonth. Please make sure there is one and only one day matches for each month. Actual result: $result")

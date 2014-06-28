@@ -54,7 +54,7 @@ class PositionOfYearSpec extends WordSpec with Matchers {
     "throw exception when input PositionOfYear is invalid" in {
 
       /**
-       * this POM will match last day of every month
+       * this DOY will match last day of every month
        */
       case object InvalidPOY extends DayOfYear {
         override def isValidDOY(d: Date) = d.isLastDayOfMonth

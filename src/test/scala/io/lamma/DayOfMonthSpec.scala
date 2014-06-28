@@ -3,7 +3,7 @@ package io.lamma
 import org.scalatest.{WordSpec, Matchers}
 import io.lamma.DayOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
 
-class PositionOfMonthSpec extends WordSpec with Matchers {
+class DayOfMonthSpec extends WordSpec with Matchers {
 
   "NthDayOfMonth" should {
     "be valid" in {
@@ -81,14 +81,14 @@ class PositionOfMonthSpec extends WordSpec with Matchers {
     "throw exception when the PositionOfMonth is incorrectly implemented" in {
 
       /**
-       * this POM will match every Friday
+       * this DOM will match every Friday
        */
-      case object InvalidPOM extends DayOfMonth {
+      case object InvalidDom extends DayOfMonth {
         override def isValidDOM(d: Date) = d.dayOfWeek == Friday
       }
 
       intercept[InvalidPositionOfMonthException] {
-        DayOfMonth.validate(InvalidPOM)
+        DayOfMonth.validate(InvalidDom)
       }
     }
   }
