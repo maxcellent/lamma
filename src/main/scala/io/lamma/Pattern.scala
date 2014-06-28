@@ -139,9 +139,9 @@ object Monthly {
     require(step != 0, "step cannot be 0.")
 
     if (step > 0) {
-      (from - 1).comingDayOfMonth(dom)
+      (from - 1).next(dom)
     } else {
-      (from + 1).pastDayOfMonth(dom)
+      (from + 1).previous(dom)
     }
   }
 }
@@ -178,9 +178,9 @@ object Yearly {
     require(step != 0, "step cannot be 0.")
 
     if (step > 0) {
-      (from - 1).comingDayOfYear(doy)
+      (from - 1).next(doy)
     } else {
-      (from + 1).pastDayOfYear(doy)
+      (from + 1).previous(doy)
     }
   }
 

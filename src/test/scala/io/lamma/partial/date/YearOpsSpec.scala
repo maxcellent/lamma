@@ -11,57 +11,57 @@ class YearOpsSpec extends FlatSpec with Matchers {
       override def isValidDOY(d: Date) = d.dd == 29 && d.month == February
     }
     intercept[IllegalArgumentException] {
-      Date(2014, 4, 10).dayOfThisYear(dom)
+      Date(2014, 4, 10).withDayOfYear(dom)
     }
   }
 
   "dayOfThisYear" should "work" in {
-    Date(2014, 4, 10).dayOfThisYear(FirstDayOfYear) should be(Date(2014, 1, 1))
-    Date(2014, 1, 1).dayOfThisYear(FirstDayOfYear) should be(Date(2014, 1, 1))
+    Date(2014, 4, 10).withDayOfYear(FirstDayOfYear) should be(Date(2014, 1, 1))
+    Date(2014, 1, 1).withDayOfYear(FirstDayOfYear) should be(Date(2014, 1, 1))
   }
 
-  "thisYearBegin" should "work" in {
-    Date(2014, 4, 10).thisYearBegin should be(Date(2014, 1, 1))
-    Date(2014, 1, 1).thisYearBegin should be(Date(2014, 1, 1))
+  "firstDayOfYear" should "work" in {
+    Date(2014, 4, 10).firstDayOfYear should be(Date(2014, 1, 1))
+    Date(2014, 1, 1).firstDayOfYear should be(Date(2014, 1, 1))
   }
 
-  "thisYearEnd" should "work" in {
-    Date(2014, 4, 10).thisYearEnd should be(Date(2014, 12, 31))
-    Date(2014, 12, 31).thisYearEnd should be(Date(2014, 12, 31))
+  "lastDayOfYear" should "work" in {
+    Date(2014, 4, 10).lastDayOfYear should be(Date(2014, 12, 31))
+    Date(2014, 12, 31).lastDayOfYear should be(Date(2014, 12, 31))
   }
 
   "sameWeekdaysOfYear" should "contain leap day" in {
     Date(2016, 3, 21).sameWeekdaysOfYear should contain(Date(2016, 2, 29))
   }
 
-  "comingDayOfYear" should "work" in {
-    Date(2014, 4, 10).comingDayOfYear(FirstDayOfYear) should be(Date(2015, 1, 1))
-    Date(2014, 1, 1).comingDayOfYear(FirstDayOfYear) should be(Date(2015, 1, 1))
+  "next" should "work" in {
+    Date(2014, 4, 10).next(FirstDayOfYear) should be(Date(2015, 1, 1))
+    Date(2014, 1, 1).next(FirstDayOfYear) should be(Date(2015, 1, 1))
   }
 
-  "comingYearEnd" should "work" in {
-    Date(2014, 8, 2).comingYearEnd should be(Date(2014, 12, 31))
-    Date(2014, 12, 31).comingYearEnd should be(Date(2015, 12, 31))
+  "nextLastDayOfYear" should "work" in {
+    Date(2014, 8, 2).nextLastDayOfYear should be(Date(2014, 12, 31))
+    Date(2014, 12, 31).nextLastDayOfYear should be(Date(2015, 12, 31))
   }
 
-  "comingYearBegin" should "work" in {
-    Date(2014, 8, 2).comingYearBegin should be(Date(2015, 1, 1))
-    Date(2015, 1, 1).comingYearBegin should be(Date(2016, 1, 1))
+  "nextFirstDayOfYear" should "work" in {
+    Date(2014, 8, 2).nextFirstDayOfYear should be(Date(2015, 1, 1))
+    Date(2015, 1, 1).nextFirstDayOfYear should be(Date(2016, 1, 1))
   }
 
   "pastDayOfYear" should "work" in {
-    Date(2014, 4, 10).pastDayOfYear(FirstDayOfYear) should be(Date(2014, 1, 1))
-    Date(2014, 1, 1).pastDayOfYear(FirstDayOfYear) should be(Date(2013, 1, 1))
+    Date(2014, 4, 10).previous(FirstDayOfYear) should be(Date(2014, 1, 1))
+    Date(2014, 1, 1).previous(FirstDayOfYear) should be(Date(2013, 1, 1))
   }
 
-  "pastYearEnd" should "work" in {
-    Date(2014, 8, 2).pastYearEnd should be(Date(2013, 12, 31))
-    Date(2013, 12, 31).pastYearEnd should be(Date(2012, 12, 31))
+  "previousLastDayOfYear" should "work" in {
+    Date(2014, 8, 2).previousLastDayOfYear should be(Date(2013, 12, 31))
+    Date(2013, 12, 31).previousLastDayOfYear should be(Date(2012, 12, 31))
   }
 
-  "pastYearBegin" should "work" in {
-    Date(2014, 8, 2).pastYearBegin should be(Date(2014, 1, 1))
-    Date(2014, 1, 1).pastYearBegin should be(Date(2013, 1, 1))
+  "previousFirstDayOfYear" should "work" in {
+    Date(2014, 8, 2).previousFirstDayOfYear should be(Date(2014, 1, 1))
+    Date(2014, 1, 1).previousFirstDayOfYear should be(Date(2013, 1, 1))
   }
 
   "maxDayOfYear" should "work" in {
@@ -74,9 +74,9 @@ class YearOpsSpec extends FlatSpec with Matchers {
     Date(2016, 12, 31).isLastDayOfYear should be(true)
   }
 
-  "nthDayOfYear" should "work" in {
-    Date(2014, 2, 9).nthDayOfYear should be(40)
-    Date(2014, 3, 9).nthDayOfYear should be(68)
-    Date(2016, 3, 9).nthDayOfYear should be(69)
+  "dayOfYear" should "work" in {
+    Date(2014, 2, 9).dayOfYear should be(40)
+    Date(2014, 3, 9).dayOfYear should be(68)
+    Date(2016, 3, 9).dayOfYear should be(69)
   }
 }

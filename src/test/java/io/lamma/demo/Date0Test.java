@@ -97,7 +97,7 @@ public class Date0Test {
         System.out.println(date(2016, 2, 5).maxDayOfYear());     // max day of year, leap year is considered
         // Output: 366
 
-        System.out.println(date(2016, 2, 5).nthDayOfYear());       // day of year
+        System.out.println(date(2016, 2, 5).dayOfYear());       // day of year
         // Output: 36 (2016-02-05 is the 36th day of 2016)
 
         // all Fridays in 2016

@@ -71,12 +71,17 @@ private[lamma] trait MonthOps {
 
   lazy val sameWeekdaysOfMonth4j = sameWeekdaysOfMonth.asJava
 
+  def nextOrSame(dom: DayOfMonth) = MonthOps.nextOrSame(this, dom)
+
+  @deprecated("replace with next(DayOfMonth)", "2.1.0")
+  def comingDayOfMonth(dom: DayOfMonth) = next(dom)
+  
   /**
    * coming day of month excluding this date
    */
-  def comingDayOfMonth(dom: DayOfMonth) = MonthOps.comingDayOfMonth(this + 1, dom)
+  def next(dom: DayOfMonth) = MonthOps.nextOrSame(this + 1, dom)
 
-  @deprecated(message = "replaced by nextLastDayOfMonth", since = "2.1.0")
+  @deprecated("replaced by nextLastDayOfMonth", "2.1.0")
   def comingMonthEnd = nextLastDayOfMonth
 
   /**
@@ -89,10 +94,10 @@ private[lamma] trait MonthOps {
    *
    *   Note this is different from lastDayOfNextMonth
    */
-  lazy val nextLastDayOfMonth = comingDayOfMonth(LastDayOfMonth)
+  lazy val nextLastDayOfMonth = next(LastDayOfMonth)
 
-  @deprecated(message = "replaced by comingFirstDayOfMonth", since = "2.1.0")
-  def comingMonthBegin = comingDayOfMonth(FirstDayOfMonth)
+  @deprecated("replaced by comingFirstDayOfMonth", "2.1.0")
+  def comingMonthBegin = next(FirstDayOfMonth)
 
   /**
    * shorthand of comingDayOfMonth(FirstDayOfMonth)<br>
@@ -102,14 +107,19 @@ private[lamma] trait MonthOps {
    *   Date(2014, 8,  1).comingMonthBegin => Date(2014, 9, 1)
    *   }}}
    */
-  lazy val nextFirstDayOfMonth = comingDayOfMonth(FirstDayOfMonth)
+  lazy val nextFirstDayOfMonth = next(FirstDayOfMonth)
 
+  def previousOrSame(dom: DayOfMonth) = MonthOps.previousOrSame(this, dom)
+
+  @deprecated("replace with previous(DayOfMonth)", "2.1.0")
+  def pastDayOfMonth(dom: DayOfMonth) = MonthOps.previousOrSame(this - 1, dom)
+  
   /**
    * past day of month excluding this date
    */
-  def pastDayOfMonth(dom: DayOfMonth) = MonthOps.pastDayOfMonth(this - 1, dom)
+  def previous(dom: DayOfMonth) = MonthOps.previousOrSame(this - 1, dom)
 
-  @deprecated(message = "replace by previousLastDayOfMonth", since = "2.1.0")
+  @deprecated("replace by previousLastDayOfMonth", "2.1.0")
   def pastMonthEnd = previousLastDayOfMonth
 
   /**
@@ -120,9 +130,9 @@ private[lamma] trait MonthOps {
    *    Date(2014, 7, 31).pastMonthEnd => Date(2014, 6, 30)
    *    }}}
    */
-  lazy val previousLastDayOfMonth = pastDayOfMonth(LastDayOfMonth)
+  lazy val previousLastDayOfMonth = previous(LastDayOfMonth)
 
-  @deprecated(message = "replaced by previousFirstDayOfMonth", since = "2.1.0")
+  @deprecated("replaced by previousFirstDayOfMonth", "2.1.0")
   def pastMonthBegin = previousFirstDayOfMonth
 
   /**
@@ -135,13 +145,13 @@ private[lamma] trait MonthOps {
    *
    *  Note this is different from firstDayOfPreviousMonth
    */
-  lazy val previousFirstDayOfMonth = pastDayOfMonth(FirstDayOfMonth)
+  lazy val previousFirstDayOfMonth = previous(FirstDayOfMonth)
 
   /**
    * day of next month. A shorthand of
    * {{{this + (1 month) dayOfMonth (dom)}}}
    */
-  def dayOfNextMonth(dom: DayOfMonth) = this + (1 month) withDayOfMonth (dom)
+  def dayOfNextMonth(dom: DayOfMonth) = this + (1 month) withDayOfMonth dom
 
   /**
    * shorthand of
@@ -159,7 +169,7 @@ private[lamma] trait MonthOps {
    * day of previous month. A shorthand of
    * {{{this - (1 month) dayOfMonth (dom)}}}
    */
-  def dayOfPreviousMonth(dom: DayOfMonth) = this - (1 month) withDayOfMonth (dom)
+  def dayOfPreviousMonth(dom: DayOfMonth) = this - (1 month) withDayOfMonth dom
 
   /**
    * shorthand of
@@ -189,20 +199,20 @@ private[lamma] trait MonthOps {
 
 private object MonthOps {
   @tailrec
-  private def comingDayOfMonth(d: Date, dom: DayOfMonth): Date = {
+  private def nextOrSame(d: Date, dom: DayOfMonth): Date = {
     if (dom.isValidDOM(d)) {
       d
     } else {
-      comingDayOfMonth(d + 1, dom)
+      nextOrSame(d + 1, dom)
     }
   }
 
   @tailrec
-  private def pastDayOfMonth(d: Date, dom: DayOfMonth): Date = {
+  private def previousOrSame(d: Date, dom: DayOfMonth): Date = {
     if (dom.isValidDOM(d)) {
       d
     } else {
-      pastDayOfMonth(d - 1, dom)
+      previousOrSame(d - 1, dom)
     }
   }
 }

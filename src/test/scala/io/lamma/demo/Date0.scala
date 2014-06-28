@@ -56,7 +56,7 @@ object Date0 extends App {
   // ======== year operations ======
   Date(2016, 2, 5).maxDayOfYear
 
-  Date(2016, 2, 5).nthDayOfYear
+  Date(2016, 2, 5).dayOfYear
 
   Date(2014, 7, 7).sameWeekdaysOfYear
 }

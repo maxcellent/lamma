@@ -38,9 +38,9 @@ class MonthOpsSpec extends FlatSpec with Matchers {
   }
 
   "comingDayOfMonth" should "work" in {
-    Date(2014, 4, 10).comingDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 5, 10))
-    Date(2014, 4, 9).comingDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
-    Date(2014, 4, 11).comingDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 5, 10))
+    Date(2014, 4, 10).next(NthDayOfMonth(10)) should be(Date(2014, 5, 10))
+    Date(2014, 4, 9).next(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 11).next(NthDayOfMonth(10)) should be(Date(2014, 5, 10))
   }
 
   "comingLastDayOfMonth" should "work" in {
@@ -54,9 +54,9 @@ class MonthOpsSpec extends FlatSpec with Matchers {
   }
 
   "pastDayOfMonth" should "work" in {
-    Date(2014, 4, 10).pastDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 3, 10))
-    Date(2014, 4, 9).pastDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 3, 10))
-    Date(2014, 4, 11).pastDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 10).previous(NthDayOfMonth(10)) should be(Date(2014, 3, 10))
+    Date(2014, 4, 9).previous(NthDayOfMonth(10)) should be(Date(2014, 3, 10))
+    Date(2014, 4, 11).previous(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
   }
 
   "previousLastDayOfMonth" should "work" in {
