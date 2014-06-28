@@ -120,7 +120,7 @@ case class Monthly(step: Int, domOpt: Option[DayOfMonth] = None) extends Pattern
         acc
       } else {
         val next = current + (step months)
-        doRecur(next.dayOfThisMonth(dom), to, acc :+ current)
+        doRecur(next.dayOfMonth(dom), to, acc :+ current)
       }
     }
 

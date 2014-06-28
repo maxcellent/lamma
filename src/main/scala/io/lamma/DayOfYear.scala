@@ -38,7 +38,7 @@ object DayOfYear {
       if (n > d.maxDayOfYear) {
         d.isLastDayOfYear
       } else {
-        d.dayOfYear == n
+        d.nthDayOfYear == n
       }
     }
   }

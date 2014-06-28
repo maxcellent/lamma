@@ -14,9 +14,9 @@ private[lamma] trait YearOps {
    */
   lazy val maxDayOfYear = JavaDateUtil.maxDayOfYear(this)
 
-  lazy val dayOfYear = JavaDateUtil.dayOfYear(this)
+  lazy val nthDayOfYear = JavaDateUtil.dayOfYear(this)
 
-  lazy val isLastDayOfYear = dayOfYear == maxDayOfYear
+  lazy val isLastDayOfYear = nthDayOfYear == maxDayOfYear
 
   def thisDayOfYear(doy: DayOfYear) = dayOfThisYear(doy)
 

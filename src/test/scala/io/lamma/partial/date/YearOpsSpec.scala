@@ -74,9 +74,9 @@ class YearOpsSpec extends FlatSpec with Matchers {
     Date(2016, 12, 31).isLastDayOfYear should be(true)
   }
 
-  "dayOfYear" should "work" in {
-    Date(2014, 2, 9).dayOfYear should be(40)
-    Date(2014, 3, 9).dayOfYear should be(68)
-    Date(2016, 3, 9).dayOfYear should be(69)
+  "nthDayOfYear" should "work" in {
+    Date(2014, 2, 9).nthDayOfYear should be(40)
+    Date(2014, 3, 9).nthDayOfYear should be(68)
+    Date(2016, 3, 9).nthDayOfYear should be(69)
   }
 }

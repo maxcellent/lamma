@@ -45,18 +45,18 @@ object Date0 extends App {
   Date(2014, 7, 7).thisWeek             // list of dates of this week
 
   // ======== month operations ======
-  Date(2014, 7, 7).thisMonth            // lists of Dates from
+  Date(2014, 7, 7).daysOfMonth            // lists of Dates from
 
   Date(2016, 2, 5).maxDayOfMonth
 
-  Date(2016, 2, 5).thisMonthEnd         // last day of this month
+  Date(2016, 2, 5).lastDayOfMonth         // last day of this month
 
   Date(2016, 2, 5).sameWeekdaysOfMonth
 
   // ======== year operations ======
   Date(2016, 2, 5).maxDayOfYear
 
-  Date(2016, 2, 5).dayOfYear
+  Date(2016, 2, 5).nthDayOfYear
 
   Date(2014, 7, 7).sameWeekdaysOfYear
 }
