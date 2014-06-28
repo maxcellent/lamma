@@ -25,21 +25,6 @@ import DayOfWeek._
 
 class LammaJavaImportsSpec extends FlatSpec with Matchers {
 
-  "Months" should "match lamma version" in {
-    JANUARY should be(January)
-    FEBRUARY should be(February)
-    MARCH should be(March)
-    APRIL should be(April)
-    MAY should be(May)
-    JUNE should be(June)
-    JULY should be(July)
-    AUGUST should be(August)
-    SEPTEMBER should be(September)
-    OCTOBER should be(October)
-    NOVEMBER should be(November)
-    DECEMBER should be(December)
-  }
-
   "list" should "convert java array to scala iterable" in {
     list(1, 2, 3, 4, 5) should be(List(1, 2, 3, 4, 5))
   }
@@ -181,7 +166,7 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
   }
 
   "nthMonthOfYear" should "be the same as lamma version" in {
-    nthMonthOfYear(FEBRUARY, lastDayOfMonth()) should be(NthMonthOfYear(February, LastDayOfMonth))
+    nthMonthOfYear(Month.FEBRUARY, lastDayOfMonth()) should be(NthMonthOfYear(February, LastDayOfMonth))
   }
 
   "lastMonthOfYear" should "be the same as lamma version" in {

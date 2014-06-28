@@ -9,7 +9,7 @@ import scala.annotation.tailrec
 private[lamma] trait MonthOps {
   this: Date =>
 
-  lazy val month = Month(mm)
+  lazy val month = Month.of(mm)
 
   lazy val monthSinceBC = yyyy * 12 + mm
 

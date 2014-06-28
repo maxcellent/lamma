@@ -34,6 +34,30 @@ package object lamma {
 
   val Sunday = DayOfWeek.SUNDAY
 
+  // ========== months ==============
+  val January = Month.JANUARY
+
+  val February = Month.FEBRUARY
+
+  val March = Month.MARCH
+
+  val April = Month.APRIL
+
+  val May = Month.MAY
+
+  val June = Month.JUNE
+
+  val July = Month.JULY
+
+  val August = Month.AUGUST
+
+  val September = Month.SEPTEMBER
+
+  val October = Month.OCTOBER
+
+  val November = Month.NOVEMBER
+
+  val December = Month.DECEMBER
 
   // =========== dates ==============
   implicit def tupleToDate(t: (Int, Int, Int)) = {

@@ -19,13 +19,13 @@ object Locator {
 
   def apply(l: Last.type, dow: DayOfWeek) = OrdinalWeekLocator(Right(Last), dow)
 
-  def apply(n: Int, m: Month) = OrdinalMonthLocator(Left(m.ordinal), OrdinalLocator(Left(n)))
+  def apply(n: Int, m: Month) = OrdinalMonthLocator(Left(m.n), OrdinalLocator(Left(n)))
 
-  def apply(l: Last.type, m: Month) = OrdinalMonthLocator(Left(m.ordinal), OrdinalLocator(Right(Last)))
+  def apply(l: Last.type, m: Month) = OrdinalMonthLocator(Left(m.n), OrdinalLocator(Right(Last)))
 
-  def apply(n: Int, dow: DayOfWeek, m: Month): OrdinalMonthLocator = OrdinalMonthLocator(Left(m.ordinal), Locator(n, dow))
+  def apply(n: Int, dow: DayOfWeek, m: Month): OrdinalMonthLocator = OrdinalMonthLocator(Left(m.n), Locator(n, dow))
 
-  def apply(l: Last.type, dow: DayOfWeek, m: Month): OrdinalMonthLocator = OrdinalMonthLocator(Left(m.ordinal), Locator(Last, dow))
+  def apply(l: Last.type, dow: DayOfWeek, m: Month): OrdinalMonthLocator = OrdinalMonthLocator(Left(m.n), Locator(Last, dow))
 }
 
 sealed trait DayOfWeekSupport {
@@ -39,7 +39,7 @@ sealed trait DayOfMonthSupport {
 
   def dom: DayOfMonth
 
-  def of(m: Month) = OrdinalMonthLocator(Left(m.ordinal), this)
+  def of(m: Month) = OrdinalMonthLocator(Left(m.n), this)
 }
 
 sealed trait DayOfYearSupport {
@@ -90,7 +90,7 @@ case class OrdinalWeekLocator(o: Either[Int, Last.type], dow: DayOfWeek) extends
  */
 case class OrdinalMonthLocator(o: Either[Int, Last.type], dom: DayOfMonthSupport) extends Locator with DayOfYearSupport {
   lazy val doy = o match {
-    case Left(n) => NthMonthOfYear(Month(n), dom.dom)
+    case Left(n) => NthMonthOfYear(Month.of(n), dom.dom)
     case Right(Last) => NthMonthOfYear(December, dom.dom)
   }
 }
