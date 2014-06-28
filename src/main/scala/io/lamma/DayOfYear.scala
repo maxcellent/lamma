@@ -14,11 +14,11 @@ trait DayOfYear {
 
 object DayOfYear {
 
-  def validate(poy: DayOfYear) = {
+  def validate(doy: DayOfYear) = {
     def validate(yyyy: Int) = {
-      val result = (Date(yyyy, 1, 1) to Date(yyyy, 12, 31)).filter(poy.isValidDOY).toList
+      val result = (Date(yyyy, 1, 1) to Date(yyyy, 12, 31)).filter(doy.isValidDOY).toList
       if (result.size != 1) {
-        throw new InvalidPositionOfYearException(poy, yyyy, result)
+        throw new InvalidDayOfYearException(doy, yyyy, result)
       }
     }
 
@@ -76,5 +76,5 @@ object DayOfYear {
   def LastMonthOfYear(dom: DayOfMonth) = NthMonthOfYear(December, dom)
 }
 
-class InvalidPositionOfYearException(poy: DayOfYear, failingYear: Int, result: List[Date])
-  extends RuntimeException(s"${poy.toString} does not work for year $failingYear. Please make sure there is one and only one day matches for each year. Actual result: $result")
+class InvalidDayOfYearException(doy: DayOfYear, failingYear: Int, result: List[Date])
+  extends RuntimeException(s"${doy.toString} does not work for year $failingYear. Please make sure there is one and only one day matches for each year. Actual result: $result")

@@ -22,7 +22,7 @@ object DayOfMonth {
       val result = (start to end).filter(dom.isValidDOM).toList
 
       if (result.size != 1) {
-        throw new InvalidPositionOfMonthException(dom, yyyy, mm, result)
+        throw new InvalidDayOfMonthException(dom, yyyy, mm, result)
       }
     }
 
@@ -73,5 +73,5 @@ object DayOfMonth {
   }
 }
 
-class InvalidPositionOfMonthException(dom: DayOfMonth, failingYear: Int, failingMonth: Int, result: List[Date])
+class InvalidDayOfMonthException(dom: DayOfMonth, failingYear: Int, failingMonth: Int, result: List[Date])
   extends RuntimeException(s"${dom.toString} does not work for $failingYear-$failingMonth. Please make sure there is one and only one day matches for each month. Actual result: $result")

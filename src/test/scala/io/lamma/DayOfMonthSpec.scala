@@ -87,7 +87,7 @@ class DayOfMonthSpec extends WordSpec with Matchers {
         override def isValidDOM(d: Date) = d.dayOfWeek == Friday
       }
 
-      intercept[InvalidPositionOfMonthException] {
+      intercept[InvalidDayOfMonthException] {
         DayOfMonth.validate(InvalidDom)
       }
     }

@@ -3,7 +3,7 @@ package io.lamma
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.DayOfYear.{NthWeekdayOfYear, NthDayOfYear}
 
-class PositionOfYearSpec extends WordSpec with Matchers {
+class DayOfYearSpec extends WordSpec with Matchers {
 
   "NthDayOfYear" should {
     "be valid" in {
@@ -56,12 +56,12 @@ class PositionOfYearSpec extends WordSpec with Matchers {
       /**
        * this DOY will match last day of every month
        */
-      case object InvalidPOY extends DayOfYear {
+      case object InvalidDOY extends DayOfYear {
         override def isValidDOY(d: Date) = d.isLastDayOfMonth
       }
 
-      intercept[InvalidPositionOfYearException] {
-        DayOfYear.validate(InvalidPOY)
+      intercept[InvalidDayOfYearException] {
+        DayOfYear.validate(InvalidDOY)
       }
     }
   }
