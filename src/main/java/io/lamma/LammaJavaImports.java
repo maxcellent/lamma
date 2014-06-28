@@ -19,21 +19,6 @@ import java.util.Arrays;
  */
 public class LammaJavaImports {
 
-    // =========== day of week ==========
-    public static final DayOfWeek MONDAY = Monday$.MODULE$;
-
-    public static final DayOfWeek TUESDAY = Tuesday$.MODULE$;
-
-    public static final DayOfWeek WEDNESDAY = Wednesday$.MODULE$;
-
-    public static final DayOfWeek THURSDAY = Thursday$.MODULE$;
-
-    public static final DayOfWeek FRIDAY = Friday$.MODULE$;
-
-    public static final DayOfWeek SATURDAY = Saturday$.MODULE$;
-
-    public static final DayOfWeek SUNDAY = Sunday$.MODULE$;
-
     // ============ months ==========
     public static final Month JANUARY = January$.MODULE$;
 

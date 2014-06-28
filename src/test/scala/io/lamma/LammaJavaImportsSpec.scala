@@ -21,18 +21,9 @@ import io.lamma.DayOfYear.NthDayOfYear
 import io.lamma.StubRulePeriodBuilder.{ShortEnd, LongEnd, ShortStart, LongStart}
 import io.lamma.Anchor.{PeriodEnd, PeriodStart, OtherDate}
 import com.google.common.collect.Lists
+import DayOfWeek._
 
 class LammaJavaImportsSpec extends FlatSpec with Matchers {
-
-  "DateOfWeek" should "match lamma version" in {
-    MONDAY should be(Monday)
-    TUESDAY should be(Tuesday)
-    WEDNESDAY should be(Wednesday)
-    THURSDAY should be(Thursday)
-    FRIDAY should be(Friday)
-    SATURDAY should be(Saturday)
-    SUNDAY should be(Sunday)
-  }
 
   "Months" should "match lamma version" in {
     JANUARY should be(January)

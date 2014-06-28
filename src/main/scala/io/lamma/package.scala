@@ -19,6 +19,21 @@ import io.lamma.Locator.Last
  * @see <a href="http://www.lamma.io" target="_blank">http://www.lamma.io</a> for samples and tutorials
  */
 package object lamma {
+  // ========== day of week ===========
+  val Monday = DayOfWeek.MONDAY
+
+  val Tuesday = DayOfWeek.TUESDAY
+
+  val Wednesday = DayOfWeek.WEDNESDAY
+
+  val Thursday = DayOfWeek.THURSDAY
+
+  val Friday = DayOfWeek.FRIDAY
+
+  val Saturday = DayOfWeek.SATURDAY
+
+  val Sunday = DayOfWeek.SUNDAY
+
 
   // =========== dates ==============
   implicit def tupleToDate(t: (Int, Int, Int)) = {
@@ -86,7 +101,7 @@ package object lamma {
     def th(dow: DayOfWeek) = Locator(n, dow)
   }
 
-  implicit def weekdayToLocator(weekday: DayOfWeek) = Locator(weekday.ordinal)
+  implicit def weekdayToLocator(weekday: DayOfWeek) = Locator(weekday.n)
 
   // because of the way scala works
   // we cannot make this like: last day / last Friday

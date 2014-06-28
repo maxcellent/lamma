@@ -9,7 +9,7 @@ sealed trait Locator
 object Locator {
   case object Last
 
-  def apply(dow: DayOfWeek): Locator = Locator(dow.ordinal)
+  def apply(dow: DayOfWeek): Locator = Locator(dow.n)
 
   def apply(n: Int) = OrdinalLocator(Left(n))
 
@@ -53,7 +53,7 @@ sealed trait DayOfYearSupport {
  */
 case class OrdinalLocator(o: Either[Int, Last.type]) extends Locator with DayOfWeekSupport with DayOfMonthSupport with DayOfYearSupport {
   lazy val dow = o match {
-    case Left(n) => DayOfWeek(n)
+    case Left(n) => DayOfWeek.of(n)
     case Right(Last) => Sunday
   }
 

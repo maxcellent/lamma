@@ -9,6 +9,7 @@ import java.util.List;
 import static io.lamma.LammaJavaImports.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import static io.lamma.DayOfWeek.*;
 
 /**
  * this class covers all java code used in Tutorial 2: Advanced Date Generation
