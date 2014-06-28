@@ -39,6 +39,8 @@ private[lamma] trait MonthOps {
     matched.head
   }
 
+  def withWeekOfMonth(n: Int): Date = this.withDayOfMonth(NthWeekdayOfMonth(n, dayOfWeek))
+
   @deprecated(message = "replaced by firstDayOfMonth", since = "2.1.0")
   def thisMonthBegin = firstDayOfMonth
 

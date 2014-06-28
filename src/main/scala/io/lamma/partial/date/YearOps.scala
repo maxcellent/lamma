@@ -35,7 +35,11 @@ private[lamma] trait YearOps {
     matched.head
   }
 
-  def withDayOfYear(n: Int): Date = withDayOfYear(NthDayOfYear(n))
+  def withDayOfYear(n: Int): Date = this.withDayOfYear(NthDayOfYear(n))
+
+  def withWeekOfYear(n: Int): Date = this.withDayOfYear(NthWeekdayOfYear(n, dayOfWeek))
+
+  def withMonthOfYear(m: Month): Date = this.withDayOfYear(NthMonthOfYear(m, NthDayOfMonth(dayOfMonth)))
 
   @deprecated("replace with firstDayOfYear", "2.1.0")
   def thisYearBegin = firstDayOfYear
