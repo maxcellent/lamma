@@ -6,19 +6,19 @@ import org.scalatest.{Matchers, FlatSpec}
 
 class MonthOpsSpec extends FlatSpec with Matchers {
 
-  "dayOfMonth" should "throw exception when input DayOfMonth is invalid" in {
+  "withDayOfMonth" should "throw exception when input DayOfMonth is invalid" in {
     val dom = new DayOfMonth {
       override def isValidDOM(d: Date) = d.dd == 31
     }
     intercept[IllegalArgumentException] {
-      Date(2014, 4, 10).dayOfMonth(dom)
+      Date(2014, 4, 10).withDayOfMonth(dom)
     }
   }
 
-  "dayOfMonth" should "work" in {
-    Date(2014, 4, 10).dayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
-    Date(2014, 4, 9).dayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
-    Date(2014, 4, 11).dayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+  "withDayOfMonth" should "work" in {
+    Date(2014, 4, 10).withDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 9).withDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
+    Date(2014, 4, 11).withDayOfMonth(NthDayOfMonth(10)) should be(Date(2014, 4, 10))
   }
 
   "firstDayOfMonth" should "work" in {
@@ -97,7 +97,7 @@ class MonthOpsSpec extends FlatSpec with Matchers {
   }
 
   "nthDayOfMonth" should "work" in {
-    Date(2014, 5, 9).nthDayOfMonth should be(9)
+    Date(2014, 5, 9).dayOfMonth should be(9)
   }
 
   "monthSinceBC" should "work" in {

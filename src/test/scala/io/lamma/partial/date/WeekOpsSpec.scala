@@ -9,39 +9,23 @@ class WeekOpsSpec extends FlatSpec with Matchers {
     Date(2014, 4, 10).dayOfWeek should be(Thursday)
   }
 
-  "thisWeekBegin" should "work" in {
-    Date(2014, 6, 9).thisWeekBegin should be(Date(2014, 6, 9))
-    Date(2014, 6, 12).thisWeekBegin should be(Date(2014, 6, 9))
+  "nextOrSame" should "work" in {
+    Date(2014, 7, 5).nextOrSame(Monday) should be(Date(2014, 7, 7))
+    Date(2014, 7, 5).nextOrSame(Saturday) should be(Date(2014, 7, 5)) // note 2014-07-05 itself is already Saturday
   }
 
-  "thisWeekEnd" should "work" in {
-    Date(2014, 6, 8).thisWeekEnd should be(Date(2014, 6, 8))
-    Date(2014, 6, 5).thisWeekEnd should be(Date(2014, 6, 8))
+  "next" should "work" in {
+    Date(2014, 4, 10).next(Monday) should be(Date(2014, 4, 14))
+    Date(2014, 4, 10).next(Thursday) should be(Date(2014, 4, 17))
   }
 
-  "comingDayOfWeek" should "work" in {
-    Date(2014, 4, 10).comingDayOfWeek(Monday) should be(Date(2014, 4, 14))
-    Date(2014, 4, 10).comingDayOfWeek(Thursday) should be(Date(2014, 4, 17))
-
-    Date(2014, 4, 10).comingMonday should be(Date(2014, 4, 14))
-    Date(2014, 4, 10).comingTuesday should be(Date(2014, 4, 15))
-    Date(2014, 4, 10).comingWednesday should be(Date(2014, 4, 16))
-    Date(2014, 4, 10).comingThursday should be(Date(2014, 4, 17))
-    Date(2014, 4, 10).comingFriday should be(Date(2014, 4, 11))
-    Date(2014, 4, 10).comingSaturday should be(Date(2014, 4, 12))
-    Date(2014, 4, 10).comingSunday should be(Date(2014, 4, 13))
+  "previousOrSame" should "work" in {
+    Date("2014-07-05").previousOrSame(Monday) should be(Date("2014-06-30"))
+    Date("2014-07-05").previousOrSame(Saturday) should be(Date("2014-07-05")) // note 2014-07-05 itself is already Saturday
   }
 
-  "pastDayOfWeek" should "work" in {
-    Date(2014, 4, 10).pastDayOfWeek(Monday) should be(Date(2014, 4, 7))
-    Date(2014, 4, 10).pastDayOfWeek(Thursday) should be(Date(2014, 4, 3))
-
-    Date(2014, 4, 10).pastMonday should be(Date(2014, 4, 7))
-    Date(2014, 4, 10).pastTuesday should be(Date(2014, 4, 8))
-    Date(2014, 4, 10).pastWednesday should be(Date(2014, 4, 9))
-    Date(2014, 4, 10).pastThursday should be(Date(2014, 4, 3))
-    Date(2014, 4, 10).pastFriday should be(Date(2014, 4, 4))
-    Date(2014, 4, 10).pastSaturday should be(Date(2014, 4, 5))
-    Date(2014, 4, 10).pastSunday should be(Date(2014, 4, 6))
+  "previous" should "work" in {
+    Date(2014, 4, 10).previous(Monday) should be(Date(2014, 4, 7))
+    Date(2014, 4, 10).previous(Thursday) should be(Date(2014, 4, 3))
   }
 }

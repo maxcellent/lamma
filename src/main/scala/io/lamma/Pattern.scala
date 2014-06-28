@@ -96,9 +96,9 @@ object Weekly {
     require(step != 0, "step cannot be 0.")
 
     if (step > 0) {
-      (from - 1).comingDayOfWeek(dow)
+      (from - 1).next(dow)
     } else {
-      (from + 1).pastDayOfWeek(dow)
+      (from + 1).previous(dow)
     }
   }
 }
@@ -120,7 +120,7 @@ case class Monthly(step: Int, domOpt: Option[DayOfMonth] = None) extends Pattern
         acc
       } else {
         val next = current + (step months)
-        doRecur(next.dayOfMonth(dom), to, acc :+ current)
+        doRecur(next.withDayOfMonth(dom), to, acc :+ current)
       }
     }
 

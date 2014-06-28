@@ -21,19 +21,19 @@ private[lamma] trait MonthOps {
 
   lazy val isLastDayOfMonth = dd == maxDayOfMonth
 
-  lazy val nthDayOfMonth = dd
+  lazy val dayOfMonth = dd
 
-  @deprecated(message = "replaced by dayOfMonth", since = "2.1.0")
-  def thisDayOfMonth(dom: DayOfMonth) = dayOfMonth(dom)
+  @deprecated(message = "replaced by withDayOfMonth", since = "2.1.0")
+  def thisDayOfMonth(dom: DayOfMonth) = withDayOfMonth(dom)
 
-  @deprecated(message = "replaced by dayOfMonth", since = "2.1.0")
-  def dayOfThisMonth(dom: DayOfMonth) = dayOfMonth(dom)
+  @deprecated(message = "replaced by withDayOfMonth", since = "2.1.0")
+  def dayOfThisMonth(dom: DayOfMonth) = withDayOfMonth(dom)
 
   /**
    * find the day of this month matching input DayOfMonth <br>
    * an IllegalArgumentException will be thrown if there is no or more than one dates.
    */
-  def dayOfMonth(dom: DayOfMonth) = {
+  def withDayOfMonth(dom: DayOfMonth) = {
     val matched = daysOfMonth.filter(dom.isValidDOM)
     require(matched.size == 1, s"Invalid DayOfMonth: $dom. Matched dates: $matched")
     matched.head
@@ -141,7 +141,7 @@ private[lamma] trait MonthOps {
    * day of next month. A shorthand of
    * {{{this + (1 month) dayOfMonth (dom)}}}
    */
-  def dayOfNextMonth(dom: DayOfMonth) = this + (1 month) dayOfMonth (dom)
+  def dayOfNextMonth(dom: DayOfMonth) = this + (1 month) withDayOfMonth (dom)
 
   /**
    * shorthand of
@@ -159,7 +159,7 @@ private[lamma] trait MonthOps {
    * day of previous month. A shorthand of
    * {{{this - (1 month) dayOfMonth (dom)}}}
    */
-  def dayOfPreviousMonth(dom: DayOfMonth) = this - (1 month) dayOfMonth (dom)
+  def dayOfPreviousMonth(dom: DayOfMonth) = this - (1 month) withDayOfMonth (dom)
 
   /**
    * shorthand of
@@ -180,11 +180,11 @@ private[lamma] trait MonthOps {
    * @param dow DayOfWeek
    * @return a new copy of the date
    */
-  def dayOfWeekInMonth(n: Int, dow: DayOfWeek) = dayOfMonth(NthWeekdayOfMonth(n, dow))
+  def dayOfWeekInMonth(n: Int, dow: DayOfWeek) = withDayOfMonth(NthWeekdayOfMonth(n, dow))
 
   def firstInMonth(dow: DayOfWeek) = dayOfWeekInMonth(1, dow)
 
-  def lastInMonth(dow: DayOfWeek) = dayOfMonth(LastWeekdayOfMonth(dow))
+  def lastInMonth(dow: DayOfWeek) = withDayOfMonth(LastWeekdayOfMonth(dow))
 }
 
 private object MonthOps {

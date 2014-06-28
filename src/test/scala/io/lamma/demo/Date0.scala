@@ -32,17 +32,17 @@ object Date0 extends App {
   (2014, 7, 10) - (2014, 7, 3)  // minus two dates
 
   // ==== week operations  ======
-  Date(2014, 7, 7).isMonday
+  Date(2014, 7, 7).is(Monday)
 
-  Date(2014, 7, 7).comingFriday         // find the next Friday excludes today
+  Date(2014, 7, 7).withDayOfWeek(Monday)        // Monday of this week
 
-  Date(2014, 7, 7).pastWednesday        // find the past Wednesday excludes today
-
-  Date(2014, 7, 7).thisWeekBegin        // Monday of this week
-
-  Date(2014, 7, 7).thisWeekEnd          // Sunday of this week
+  Date(2014, 7, 7).withDayOfWeek(Sunday)          // Sunday of this week
   
-  Date(2014, 7, 7).thisWeek             // list of dates of this week
+  Date(2014, 7, 7).daysOfWeek             // list of dates of this week
+
+  Date(2014, 7, 7).next(Friday)         // find the next Friday excludes today
+
+  Date(2014, 7, 7).previous(Wednesday)        // find the past Wednesday excludes today
 
   // ======== month operations ======
   Date(2014, 7, 7).daysOfMonth            // lists of Dates from

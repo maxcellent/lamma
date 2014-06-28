@@ -11,145 +11,165 @@ private[lamma] trait WeekOps {
    * The first day of this week (Monday) <br>
    *   http://en.wikipedia.org/wiki/ISO_week_date
    */
-  lazy val thisWeekBegin = (this + 1).pastMonday
+  @deprecated("replaced with withDayOfWeek(Monday)", "2.1.0")
+  def thisWeekBegin = withDayOfWeek(Monday)
 
   /**
    * The last day of this week (Sunday) <br>
    *   http://en.wikipedia.org/wiki/ISO_week_date
    */
-  lazy val thisWeekEnd = (this - 1).comingSunday
+  @deprecated("replaced with withDayOfWeek(Sunday)", "2.1.0")
+  def thisWeekEnd = withDayOfWeek(Sunday)
+
+  @deprecated("replaced by daysOfWeek", "2.1.0")
+  def thisWeek = daysOfWeek
 
   /**
    * an iterable for every day in this week <br>
-   *   (week starts on Monday according to ISO 8601: http://en.wikipedia.org/wiki/ISO_week_date)
+   *   (week starts on Monday and ends on Sunday according to ISO 8601: http://en.wikipedia.org/wiki/ISO_week_date)
    */
-  lazy val thisWeek = thisWeekBegin to thisWeekEnd
+  lazy val daysOfWeek = previousOrSame(Monday) to nextOrSame(Sunday)
 
   lazy val dayOfWeek = JavaDateUtil.dayOfWeek(this)
 
-  lazy val isMonday = dayOfWeek == Monday
+  /**
+   * return days of week of specified
+   */
+  def withDayOfWeek(dow: DayOfWeek) = daysOfWeek.find(_.is(dow)).get
 
-  lazy val isTuesday = dayOfWeek == Tuesday
+  def is(dow: DayOfWeek) = this.dayOfWeek == dow
 
-  lazy val isWednesday = dayOfWeek == Wednesday
+  @deprecated("replace by is(Monday)", "2.1.0")
+  def isMonday = dayOfWeek == Monday
 
-  lazy val isThursday = dayOfWeek == Thursday
+  @deprecated("replace by is(Tuesday)", "2.1.0")
+  def isTuesday = dayOfWeek == Tuesday
 
-  lazy val isFriday = dayOfWeek == Friday
+  @deprecated("replace by is(Wednesday)", "2.1.0")
+  def isWednesday = dayOfWeek == Wednesday
 
-  lazy val isSaturday = dayOfWeek == Saturday
+  @deprecated("replace by is(Thursday)", "2.1.0")
+  def isThursday = dayOfWeek == Thursday
 
-  lazy val isSunday = dayOfWeek == Sunday
+  @deprecated("replace by is(Friday)", "2.1.0")
+  def isFriday = dayOfWeek == Friday
 
-  lazy val isWeekend = isSaturday || isSunday
+  @deprecated("replace by is(Saturday)", "2.1.0")
+  def isSaturday = dayOfWeek == Saturday
+
+  @deprecated("replace by is(Sunday)", "2.1.0")
+  def isSunday = dayOfWeek == Sunday
+
+  def isWeekend = is(Saturday) || is(Sunday)
 
   /**
-   * calculate the coming day of week excluding this date: <br>
+   * return the first occurrence of the specified day-of-week after current date, unless current date is already on that day.
    *   <br>
    *   For example: <br>
-   *   Date(2014-07-05).comingWeekday(Monday) => Date(2014-07-07) <br>
-   *   Date(2014-07-05).comingWeekday(Saturday) => Date(2014-07-12) // note 2014-07-05 itself is already Saturday <br>
+   *     {{{
+   *     Date(2014-07-05).nextOrSame(Monday) => Date(2014-07-07)
+   *     Date(2014-07-05).nextOrSame(Saturday) => Date(2014-07-5) // note 2014-07-05 itself is already Saturday
+   *     }}}
+   *    <br>
    */
-  def comingDayOfWeek(wd: DayOfWeek) = WeekOps.comingWeekday(this + 1, wd)
+  def nextOrSame(dow: DayOfWeek) = WeekOps.nextOrSame(this, dow)
+
+  @deprecated(message = "replaced by next(DayOfWeek)", since = "2.1.0")
+  def comingDayOfWeek(dow: DayOfWeek) = WeekOps.nextOrSame(this + 1, dow)
 
   /**
-   * shorthand of comingWeekday(Monday)
-   */
-  lazy val comingMonday = comingDayOfWeek(Monday)
-
-  /**
-   * shorthand of comingWeekday(Tuesday)
-   */
-  lazy val comingTuesday = comingDayOfWeek(Tuesday)
-
-  /**
-   * shorthand of comingWeekday(Wednesday)
-   */
-  lazy val comingWednesday = comingDayOfWeek(Wednesday)
-
-  /**
-   * shorthand of comingWeekday(Thursday)
-   */
-  lazy val comingThursday = comingDayOfWeek(Thursday)
-
-  /**
-   * shorthand of comingWeekday(Friday)
-   */
-  lazy val comingFriday = comingDayOfWeek(Friday)
-
-  /**
-   * shorthand of comingWeekday(Saturday)
-   */
-  lazy val comingSaturday = comingDayOfWeek(Saturday)
-
-  /**
-   * shorthand of comingWeekday(Sunday)
-   */
-  lazy val comingSunday = comingDayOfWeek(Sunday)
-
-  /**
-   * past day of week excluding this date<br>
+   * return the first occurrence of the specified day-of-week after current date: <br>
    *   <br>
    *   For example: <br>
-   *   Date(2014-07-05).pastWeekday(Monday) => Date(2014-06-30) <br>
-   *   Date(2014-07-05).pastWeekday(Saturday) => Date(2014-06-28) // note 2014-07-05 itself is already Saturday <br>
+   *   Date(2014-07-05).next(Monday) => Date(2014-07-07) <br>
+   *   Date(2014-07-05).next(Saturday) => Date(2014-07-12) // note 2014-07-05 itself is already Saturday <br>
    */
-  def pastDayOfWeek(wd: DayOfWeek) = WeekOps.pastWeekday(this - 1, wd)
+  def next(dow: DayOfWeek) = WeekOps.nextOrSame(this + 1, dow)
+
+  @deprecated("replaced by next(Monday)", "2.1.0")
+  def comingMonday = next(Monday)
+
+  @deprecated("replaced by next(Tuesday)", "2.1.0")
+  def comingTuesday = next(Tuesday)
+
+  @deprecated("replaced by next(Wednesday)", "2.1.0")
+  def comingWednesday = next(Wednesday)
+
+  @deprecated("replaced by next(Thursday)", "2.1.0")
+  def comingThursday = next(Thursday)
+
+  @deprecated("replaced by nextFriday", "2.1.0")
+  def comingFriday = next(Friday)
+
+  @deprecated("replaced by nextSaturday", "2.1.0")
+  def comingSaturday = next(Saturday)
+
+  @deprecated("replaced by nextSunday", "2.1.0")
+  def comingSunday = next(Sunday)
 
   /**
-   * shorthand of pastWeekday(Monday)
+   * previous day of week before current date, unless current date is already on specified day-of-week <br>
+   *
+   * For example: <br>
+   * {{{
+   *  Date(2014-07-05).previousOrSame(Monday) => Date(2014-06-30)
+   *  Date(2014-07-05).previousOrSame(Saturday) => Date(2014-07-05) // note 2014-07-05 itself is already Saturday
+   * }}}
    */
-  lazy val pastMonday = pastDayOfWeek(Monday)
+  def previousOrSame(dow: DayOfWeek) = WeekOps.previousOrSame(this, dow)
+
+  @deprecated("replaced by previous(DayOfWeek)", "2.1.0")
+  def pastDayOfWeek(dow: DayOfWeek) = previous(dow)
 
   /**
-   * shorthand of pastWeekday(Tuesday)
+   * previous day-of-week excluding this date. For example:
+   * {{{
+   *   Date(2014-07-05).previous(Monday) => Date(2014-06-30) <br>
+   *   Date(2014-07-05).previous(Saturday) => Date(2014-06-28) // note 2014-07-05 itself is already Saturday <br>
+   * }}}
    */
-  lazy val pastTuesday = pastDayOfWeek(Tuesday)
+  def previous(dow: DayOfWeek) = WeekOps.previousOrSame(this - 1, dow)
 
-  /**
-   * shorthand of pastWeekday(Wednesday)
-   */
-  lazy val pastWednesday = pastDayOfWeek(Wednesday)
+  @deprecated("replaced by previous(Monday)", "2.1.0")
+  def pastMonday = previous(Monday)
 
-  /**
-   * shorthand of pastWeekday(Thursday)
-   */
-  lazy val pastThursday = pastDayOfWeek(Thursday)
+  @deprecated("replaced by previous(Tuesday)", "2.1.0")
+  def pastTuesday = previous(Tuesday)
 
-  /**
-   * shorthand of pastWeekday(Friday)
-   */
-  lazy val pastFriday = pastDayOfWeek(Friday)
+  @deprecated("replaced by previous(Wednesday)", "2.1.0")
+  def pastWednesday = previous(Wednesday)
 
-  /**
-   * shorthand of pastWeekday(Saturday)
-   */
-  lazy val pastSaturday = pastDayOfWeek(Saturday)
+  @deprecated("replaced by previous(Thursday)", "2.1.0")
+  def pastThursday = previous(Thursday)
 
-  /**
-   * shorthand of pastWeekday(Sunday)
-   */
-  lazy val pastSunday = pastDayOfWeek(Sunday)
+  @deprecated("replaced by previous(Friday)", "2.1.0")
+  def pastFriday = previous(Friday)
+
+  @deprecated("replaced by previous(Saturday)", "2.1.0")
+  def pastSaturday = previous(Saturday)
+
+  @deprecated("replaced by previous(Sunday)", "2.1.0")
+  def pastSunday = previous(Sunday)
 
 }
 
 private object WeekOps {
 
   @tailrec
-  private def comingWeekday(d: Date, target: DayOfWeek): Date = {
+  private def nextOrSame(d: Date, target: DayOfWeek): Date = {
     if (d.dayOfWeek == target) {
       d
     } else {
-      comingWeekday(d + 1, target)
+      nextOrSame(d + 1, target)
     }
   }
 
   @tailrec
-  private def pastWeekday(d: Date, target: DayOfWeek): Date = {
+  private def previousOrSame(d: Date, target: DayOfWeek): Date = {
     if (d.dayOfWeek == target) {
       d
     } else {
-      pastWeekday(d - 1, target)
+      previousOrSame(d - 1, target)
     }
   }
 
