@@ -30,12 +30,18 @@ private[lamma] trait WeekOps {
    */
   lazy val daysOfWeek = previousOrSame(Monday) to nextOrSame(Sunday)
 
+  /**
+   * <b>Java Friendly.</b> It is recommended to use [[daysOfWeek]] for Scala.
+   *
+   * an iterable for every day in this week <br>
+   *   (week starts on Monday and ends on Sunday according to ISO 8601: http://en.wikipedia.org/wiki/ISO_week_date)
+   */
   lazy val daysOfWeek4j = daysOfWeek.javaIterable
 
   lazy val dayOfWeek = JavaDateUtil.dayOfWeek(this)
 
   /**
-   * return days of week of specified
+   * find the day of this week matching specified day-of-week
    */
   def withDayOfWeek(dow: DayOfWeek) = daysOfWeek.find(_.is(dow)).get
 
@@ -152,7 +158,6 @@ private[lamma] trait WeekOps {
 
   @deprecated("replaced by previous(Sunday)", "2.1.0")
   def pastSunday = previous(Sunday)
-
 }
 
 private object WeekOps {

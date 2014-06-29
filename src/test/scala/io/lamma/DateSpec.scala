@@ -13,6 +13,7 @@ class DateSpec extends FlatSpec with Matchers {
   // + / - operators for Scala
   "+" should "work for int (days)" in {
     Date(2014, 4, 10) + 10 should be(Date(2014, 4, 20))
+    Date(2014, 4, 10) + -2 should be(Date(2014, 4, 8))
   }
 
   "+" should "work for days" in {
@@ -33,6 +34,7 @@ class DateSpec extends FlatSpec with Matchers {
 
   "-" should "work for int (days)" in {
     Date(2014, 4, 10) - 5 should be(Date(2014, 4, 5))
+    Date(2014, 4, 10) - -5 should be(Date(2014, 4, 15))
   }
 
   "-" should "work for days" in {

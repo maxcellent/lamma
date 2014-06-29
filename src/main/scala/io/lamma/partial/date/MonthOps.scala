@@ -13,7 +13,7 @@ private[lamma] trait MonthOps {
   lazy val month = Month.of(mm)
 
   /**
-   * max day of this month, different month length and leap month are considered
+   * max day of this month, different month lengths and leap month are considered
    */
   lazy val maxDayOfMonth = JavaDateUtil.maxDayOfMonth(this)
 
@@ -28,8 +28,14 @@ private[lamma] trait MonthOps {
   def dayOfThisMonth(dom: DayOfMonth) = withDayOfMonth(dom)
 
   /**
-   * find the day of this month matching input DayOfMonth <br>
-   * an IllegalArgumentException will be thrown if there is no or more than one dates.
+   * find the day of this month matching specified day-of-month. DSL can be used directly.
+   *
+   * Usage example:
+   * {{{
+   *    Date(2014, 5, 5).withDayOfMonth(lastDay)
+   *    Date(2014, 5, 5).withDayOfMonth(3 rd Friday)
+   *    Date(2014, 5, 5).withDayOfMonth(20 th day)
+   * }}}
    */
   def withDayOfMonth(dom: DayOfMonth) = {
     val matched = daysOfMonth.filter(dom.isValidDOM)
@@ -61,6 +67,11 @@ private[lamma] trait MonthOps {
    */
   lazy val daysOfMonth = firstDayOfMonth to lastDayOfMonth
 
+  /**
+   * <b>Java Friendly.</b> It is recommended to use [[daysOfMonth]] for Scala.
+   *
+   * an iterable for every day in the month
+   */
   lazy val daysOfMonth4j = daysOfMonth.javaIterable
 
   /**
@@ -69,19 +80,48 @@ private[lamma] trait MonthOps {
    */
   lazy val sameWeekdaysOfMonth = daysOfMonth.filter(_.dayOfWeek == dayOfWeek).toList
 
+  /**
+   * <b>Java Friendly.</b> It is recommended to use [[sameWeekdaysOfMonth]] for Scala.
+   *
+   * Every day in the same month with same dow <br>
+   * eg, if this.dayOfWeek == Wednesday, then this is a list of all Wednesday in the same month
+   */
   lazy val sameWeekdaysOfMonth4j = sameWeekdaysOfMonth.asJava
 
+  /**
+   * This method is an alias of [[nextOrSame(DayOfMonth)]] for Scala to prevent overloading when using DSL.
+   *
+   * Usage example:
+   * {{{
+   *   Date(2014, 5, 5).nextOrSameDayOfMonth(3 rd Friday)
+   * }}}
+   */
   def nextOrSameDayOfMonth(dom: DayOfMonth) = nextOrSame(dom)
 
+  /**
+   * <b>Java Friendly.</b> It is recommended to use [[nextOrSameDayOfMonth]] for Scala.
+   *
+   * coming day-of-month including this date
+   */
   def nextOrSame(dom: DayOfMonth) = MonthOps.nextOrSame(this, dom)
 
   @deprecated("replace with next(DayOfMonth)", "2.1.0")
   def comingDayOfMonth(dom: DayOfMonth) = next(dom)
 
+  /**
+   * This method is an alias of [[next(DayOfMonth)]] for Scala to prevent overloading when using DSL.
+   *
+   * Usage example:
+   * {{{
+   *   Date(2014, 5, 5).nextDayOfMonth(3 rd Friday)
+   * }}}
+   */
   def nextDayOfMonth(dom: DayOfMonth) = next(dom)
 
   /**
-   * coming day of month excluding this date
+   * <b>Java Friendly.</b> It is recommended to use [[nextDayOfMonth]] for Scala.
+   *
+   * coming day-of-month excluding this date
    */
   def next(dom: DayOfMonth) = MonthOps.nextOrSame(this + 1, dom)
 
@@ -113,17 +153,40 @@ private[lamma] trait MonthOps {
    */
   lazy val nextFirstDayOfMonth = next(FirstDayOfMonth)
 
+  /**
+   * This method is an alias of [[previousOrSame(DayOfMonth)]] for Scala to prevent overloading when using DSL.
+   *
+   * Usage example:
+   * {{{
+   *   Date(2014, 5, 5).previousOrSameDayOfMonth(3 rd Friday)
+   * }}}
+   */
   def previousOrSameDayOfMonth(dom: DayOfMonth) = previousOrSame(dom)
 
+  /**
+   * <b>Java Friendly.</b> It is recommended to use [[previousOrSameDayOfMonth]] for Scala.
+   *
+   * past day-of-month including this date
+   */
   def previousOrSame(dom: DayOfMonth) = MonthOps.previousOrSame(this, dom)
 
   @deprecated("replace with previous(DayOfMonth)", "2.1.0")
   def pastDayOfMonth(dom: DayOfMonth) = MonthOps.previousOrSame(this - 1, dom)
 
+  /**
+   * This method is an alias of [[previous(DayOfMonth)]] for Scala to prevent overloading when using DSL.
+   *
+   * Usage example:
+   * {{{
+   *   Date(2014, 5, 5).previousDayOfMonth(3 rd Friday)
+   * }}}
+   */
   def previousDayOfMonth(dom: DayOfMonth) = previous(dom)
 
   /**
-   * past day of month excluding this date
+   * <b>Java Friendly.</b> It is recommended to use [[previousDayOfMonth]] for Scala.
+   *
+   * past day-of-month excluding this date
    */
   def previous(dom: DayOfMonth) = MonthOps.previousOrSame(this - 1, dom)
 
@@ -174,8 +237,8 @@ private[lamma] trait MonthOps {
   lazy val lastDayOfNextMonth = dayOfNextMonth(LastDayOfMonth)
 
   /**
-   * day of previous month. A shorthand of
-   * {{{this - (1 month) dayOfMonth (dom)}}}
+   * find day-of-month for the previous month. A shorthand of
+   * {{{this - (1 month) withDayOfMonth (dom)}}}
    */
   def dayOfPreviousMonth(dom: DayOfMonth) = this - (1 month) withDayOfMonth dom
 
@@ -192,7 +255,16 @@ private[lamma] trait MonthOps {
   lazy val lastDayOfPreviousMonth = dayOfPreviousMonth(LastDayOfMonth)
 
   /**
-   * Returns the day-of-week in the same month.
+   * <b>Java Friendly.</b> For Scala, it is recommended to use DSL with [[withDayOfMonth]] directly.
+   *
+   * Find nth occurrence of day-of-week in current month.
+   *
+   * For example:
+   * {{{ new Date(2014, 5, 5).dayOfWeekInMonth(3, DayOfWeek.FRIDAY); }}}
+   *
+   * which is identical to
+   * {{{ Date(2014, 5, 5).withDayOfMonth(3 rd Friday) }}}
+   * in Scala
    *
    * @param n ordinal of the month, from 1 to 5
    * @param dow DayOfWeek
@@ -200,8 +272,32 @@ private[lamma] trait MonthOps {
    */
   def dayOfWeekInMonth(n: Int, dow: DayOfWeek) = this.withDayOfMonth(n th dow)
 
+  /**
+   * <b>Java Friendly.</b> For Scala, it is recommended to use DSL with [[withDayOfMonth]] directly.
+   *
+   * Find first occurrence of day-of-week in current month.
+   *
+   * For example:
+   * {{{ new Date(2014, 5, 5).firstInMonth(DayOfWeek.FRIDAY); }}}
+   *
+   * which is identical to
+   * {{{ Date(2014, 5, 5).withDayOfMonth(1 st Friday) }}}
+   * in Scala
+   */
   def firstInMonth(dow: DayOfWeek) = this.withDayOfMonth(1 st dow)
 
+  /**
+   * <b>Java Friendly.</b> For Scala, it is recommended to use DSL with [[withDayOfMonth]] directly.
+   *
+   * Find last occurrence of day-of-week in current month.
+   *
+   * For example:
+   * {{{ new Date(2014, 5, 5).lastInMonth(DayOfWeek.FRIDAY); }}}
+   *
+   * which is identical to
+   * {{{ Date(2014, 5, 5).withDayOfMonth(lastFriday) }}}
+   * in Scala
+   */
   def lastInMonth(dow: DayOfWeek) = this.withDayOfMonth(LastWeekdayOfMonth(dow))
 }
 
