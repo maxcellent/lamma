@@ -54,7 +54,9 @@ public class Date0Test {
         // Output: 7 (int)
 
         // ==== week operations  ======
-        System.out.println(date(2014, 7, 7).is(DayOfWeek.MONDAY)); // from isMonday to ... isSunday
+
+        // is(DayOfWeek)
+        System.out.println(date(2014, 7, 7).is(DayOfWeek.MONDAY));
         // Output: true
 
         System.out.println(date(2014, 7, 7).next(DayOfWeek.FRIDAY)); // find the next Friday excludes today
@@ -77,7 +79,7 @@ public class Date0Test {
 
         // ======== month operations ======
         // lists of Dates of this month
-        for (Date d : date(2014, 7, 7).daysOfMonth().javaIterable()) {
+        for (Date d : date(2014, 7, 7).daysOfMonth4j()) {
             System.out.println(d);
         }
         // Output: from Date(2014,7,1) to Date(2014,7,31)
