@@ -82,6 +82,43 @@ class HolidayRuleSpec extends WordSpec with Matchers {
     }
   }
 
+  "and" should {
+    "return holiday itself if it's merging with NoHoliday" in {
+      Weekends and NoHoliday should be(Weekends)
+      NoHoliday and Weekends should be(Weekends)
+    }
+
+    "return composite holiday rule if none of them are composite holiday" in {
+      Weekends and SimpleHolidayRule() should be(CompositeHolidayRule(Weekends, SimpleHolidayRule()))
+    }
+
+    "return composite holiday rule if one of them are already composite holiday" in {
+      val rule1 = Weekends
+      val rule2 = CompositeHolidayRule(SimpleHolidayRule())
+      val expected = CompositeHolidayRule(SimpleHolidayRule(), Weekends)
+
+      rule1 and rule2 should be(expected)
+      rule2 and rule1 should be(expected)
+    }
+
+    "merge composite holidays if both of them are composite holiday" in {
+      val rule1 = CompositeHolidayRule(Weekends)
+      val rule2 = CompositeHolidayRule(SimpleHolidayRule())
+      val expected = CompositeHolidayRule(SimpleHolidayRule(), Weekends)
+
+      rule1 and rule2 should be(expected)
+      rule2 and rule1 should be(expected)
+    }
+
+    "work with multiple holiday rule" in {
+      val rule1 = SimpleHolidayRule( (2014, 5, 5), (2014, 6, 7))
+      val rule2 = SimpleHolidayRule( (2014, 5, 10) )
+      val rule3 = SimpleHolidayRule( (2014, 8, 10) )
+
+      rule1 and rule2 and rule3 should be(CompositeHolidayRule(rule1, rule2, rule3))
+    }
+  }
+
   "CompositeHolidayRule" should {
     "always return false if no underlying rule is defined" in {
       (Date(2014, 1, 1) to Date(2014, 12, 31)).exists(CompositeHolidayRule().isHoliday) should be(false)

@@ -31,9 +31,8 @@ trait HolidayRule {
     }
   }
 
-  // TODO: tests
   /**
-   * merge holiday with another holiday, NoHoliday will be ignored
+   * merge holiday rule with another holiday rule, NoHoliday will be ignored
    */
   def and(that: HolidayRule) = (this, that) match {
     case (NoHoliday, cal2) => cal2
