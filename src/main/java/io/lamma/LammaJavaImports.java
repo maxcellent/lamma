@@ -44,10 +44,16 @@ public class LammaJavaImports {
     }
 
     // ========= date & holidays ==========
+    /**
+     * helper method, alias of new Date(yyyy, mm, dd)
+     */
     public static Date date(int yyyy, int mm, int dd) {
         return new Date(yyyy, mm, dd);
     }
 
+    /**
+     * helper method, takes an ISO representation to create a Date object. eg, date("2014-09-30")
+     */
     public static Date date(String isoRepr) {
         return Date$.MODULE$.apply(isoRepr);
     }
