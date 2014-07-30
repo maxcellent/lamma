@@ -1,4 +1,4 @@
-package io.lamma.demo
+package io.lamma.demo;
 
 /**
  * this will be used in Quick Start page, all commands are executed in REPL order
@@ -37,7 +37,7 @@ object Date0 extends App {
   Date(2014, 7, 7).withDayOfWeek(Monday)        // Monday of this week
 
   Date(2014, 7, 7).withDayOfWeek(Sunday)          // Sunday of this week
-  
+
   Date(2014, 7, 7).daysOfWeek             // list of dates of this week
 
   Date(2014, 7, 7).next(Friday)         // find the next Friday excludes today

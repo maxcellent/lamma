@@ -22,6 +22,11 @@ libraryDependencies += "com.google.guava" % "guava" % "17.0" % "test"
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.6" % "test"
 
+// ========== sample source directories =========
+unmanagedResourceDirectories in Test += baseDirectory.value / "src/sample/java"
+
+unmanagedResourceDirectories in Test += baseDirectory.value / "src/sample/scala"
+
 // ============ publish / release related ================
 
 publishMavenStyle := true
