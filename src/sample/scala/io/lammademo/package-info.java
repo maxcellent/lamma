@@ -3,4 +3,4 @@
  *
  * please don't reorder them
  */
-package io.lamma.demo;
+package io.lammademo;

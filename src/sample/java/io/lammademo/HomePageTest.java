@@ -1,4 +1,4 @@
-package io.lamma.demo;
+package io.lammademo;
 
 // always import this when coding Lamma with Java
 import static io.lamma.LammaJavaImports.*;
