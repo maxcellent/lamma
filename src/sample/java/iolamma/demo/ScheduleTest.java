@@ -1,4 +1,4 @@
-package io.lammademo;
+package iolamma.demo;
 
 import com.google.common.collect.Lists;
 import io.lamma.Date;

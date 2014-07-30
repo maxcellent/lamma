@@ -1,4 +1,4 @@
-package io.lammademo
+package iolamma.demo
 
 /**
  * this will be used in Quick Start page, all commands are executed in REPL order
