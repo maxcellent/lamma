@@ -1,4 +1,4 @@
-package iolamma.stackoverflow;
+package iolamma4j.stackoverflow;
 
 import io.lamma.Date;
 import io.lamma.DayOfWeek;

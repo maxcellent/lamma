@@ -1,4 +1,4 @@
-package iolamma.stackoverflow;
+package iolamma4j.stackoverflow;
 
 import static org.junit.Assert.*;
 

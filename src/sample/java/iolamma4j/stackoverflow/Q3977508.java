@@ -1,4 +1,4 @@
-package iolamma.stackoverflow;
+package iolamma4j.stackoverflow;
 
 import com.google.common.collect.Lists;
 import io.lamma.Date;

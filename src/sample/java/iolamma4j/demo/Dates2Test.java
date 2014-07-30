@@ -1,4 +1,4 @@
-package iolamma.demo;
+package iolamma4j.demo;
 
 import com.google.common.collect.Lists;
 import io.lamma.*;

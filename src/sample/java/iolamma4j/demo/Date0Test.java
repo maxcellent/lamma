@@ -1,4 +1,4 @@
-package iolamma.demo;
+package iolamma4j.demo;
 
 /**
  * always import this line when you are using Java
