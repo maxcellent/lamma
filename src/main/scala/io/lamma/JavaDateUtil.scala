@@ -19,7 +19,11 @@ object JavaDateUtil {
     cal
   }
 
-  private val isoFmt = {
+  /**
+   * use method instead of val
+   * because SimpleDateFormat is not thread safe and thus cannot be shared among multiple threads
+   */
+  def isoFmt = {
     val fmt = new SimpleDateFormat("yyyy-MM-dd")
     fmt.setCalendar(newCalender)  // specify UTC calendar here, to make sure the formatted date is also in UTC
     fmt
