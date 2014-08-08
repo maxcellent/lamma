@@ -1,7 +1,5 @@
 package iolamma4j.demo;
 
-// always import this when coding Lamma with Java
-import static io.lamma.LammaJavaImports.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -56,7 +54,7 @@ public class HomePageTest {
                 Dates.newDate(2017, 3, 31),             // expiry date = 2017-03-31
                 Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),// recurring the last day of every 6 months
                 StubRulePeriodBuilders.of(StubRulePeriodBuilders.Rules.longEnd(270)),    // merge last stub if the merged period is no longer than 270 days
-                list(couponDate, settlementDate));      // generate coupon date and settlement date for each period
+                Lists.newArrayList(couponDate, settlementDate));      // generate coupon date and settlement date for each period
 
         assertThat(result.getPeriods(), is(expectedPeriods));
         assertThat(result.get("CouponDate"), is(expectedCouponDates));

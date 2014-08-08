@@ -1,8 +1,5 @@
 package io.lamma;
 
-import static io.lamma.LammaJavaImports.javaList;
-import static io.lamma.LammaJavaImports.scalaList;
-
 import java.util.List;
 
 /**
@@ -17,13 +14,8 @@ public class Schedule4j {
         return new Schedule4j(schedule);
     }
 
-    public static Schedule4j schedule(Date start, Date end, Pattern pattern, java.util.List<DateDef> dateDefs) {
-        return schedule(start, end, pattern, Schedule$.MODULE$.apply$default$4(), scalaList(dateDefs), Schedule$.MODULE$.apply$default$6());
-    }
-
-    public static Schedule4j schedule(Date start, Date end, Pattern pattern, scala.collection.immutable.List<DateDef> dateDefs) {
-        Schedule schedule = Schedule$.MODULE$.apply(start, end, pattern, Schedule$.MODULE$.apply$default$4(), dateDefs, Schedule$.MODULE$.apply$default$6());
-        return new Schedule4j(schedule);
+    public static Schedule4j schedule(Date start, Date end, Pattern pattern, List<DateDef> dateDefs) {
+        return schedule(start, end, pattern, Schedule$.MODULE$.apply$default$4(), dateDefs, Schedule$.MODULE$.apply$default$6());
     }
 
     public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder) {
@@ -31,21 +23,12 @@ public class Schedule4j {
         return new Schedule4j(schedule);
     }
 
-    public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder, java.util.List<DateDef> dateDefs) {
-        return schedule(start, end, pattern, periodBuilder, scalaList(dateDefs), Schedule$.MODULE$.apply$default$6());
+    public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder, List<DateDef> dateDefs) {
+        return schedule(start, end, pattern, periodBuilder, dateDefs, Schedule$.MODULE$.apply$default$6());
     }
 
-    public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder, scala.collection.immutable.List<DateDef> dateDefs) {
-        Schedule schedule = Schedule$.MODULE$.apply(start, end, pattern, periodBuilder, dateDefs, Schedule$.MODULE$.apply$default$6());
-        return new Schedule4j(schedule);
-    }
-
-    public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder, java.util.List<DateDef> dateDefs, Direction direction) {
-        return schedule(start, end, pattern, periodBuilder, scalaList(dateDefs), direction);
-    }
-
-    public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder, scala.collection.immutable.List<DateDef> dateDefs, Direction direction) {
-        Schedule schedule = Schedule$.MODULE$.apply(start, end, pattern, periodBuilder, dateDefs, direction);
+    public static Schedule4j schedule(Date start, Date end, Pattern pattern, PeriodBuilder periodBuilder, List<DateDef> dateDefs, Direction direction) {
+        Schedule schedule = Schedule$.MODULE$.apply(start, end, pattern, periodBuilder, JavaCollectionUtil.asScala(dateDefs), direction);
         return new Schedule4j(schedule);
     }
 
@@ -60,7 +43,7 @@ public class Schedule4j {
     }
 
     public List<Period> getPeriods() {
-        return javaList(schedule.periods());
+        return JavaCollectionUtil.asJava(schedule.periods());
     }
 
     public String toPrintableString() {
@@ -68,7 +51,7 @@ public class Schedule4j {
     }
 
     public List<Date> get(String dateDefName) {
-        return javaList(schedule.apply(dateDefName));
+        return JavaCollectionUtil.asJava(schedule.apply(dateDefName));
     }
 
     @Override

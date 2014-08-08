@@ -1,6 +1,5 @@
 package io.lamma;
 
-import static io.lamma.LammaJavaImports.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -62,7 +61,7 @@ public class Schedule4jTest {
                 new Period(Dates.newDate(2014, 8, 1), Dates.newDate(2014, 8, 31))
         );
 
-        Schedule4j schedule = Schedule4j.schedule(start, end, pattern, periodBuilder, list(couponDate, settlementDate));
+        Schedule4j schedule = Schedule4j.schedule(start, end, pattern, periodBuilder, Lists.newArrayList(couponDate, settlementDate));
         assertThat(schedule.getPeriods(), is(expectedPeriods));
     }
 }

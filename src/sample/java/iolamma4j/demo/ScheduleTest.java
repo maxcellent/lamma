@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import java.util.List;
 
-// always import this line when using Java, this will make our life a lot easier
-import static io.lamma.LammaJavaImports.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -36,7 +34,7 @@ public class ScheduleTest {
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2016, 12, 31),
                 Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),
-                list(couponDate, settlementDate));
+                Lists.newArrayList(couponDate, settlementDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
         assertThat(result.get("settlementDate"), is(expectedSettlementDates));
@@ -56,7 +54,7 @@ public class ScheduleTest {
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2017, 1, 31),
                 Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),
-                list(couponDate));
+                Lists.newArrayList(couponDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
     }
@@ -74,7 +72,8 @@ public class ScheduleTest {
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2017, 1, 31),
                 Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),
-                StubRulePeriodBuilders.of(StubRulePeriodBuilders.Rules.longEnd(270)), list(couponDate));
+                StubRulePeriodBuilders.of(StubRulePeriodBuilders.Rules.longEnd(270)),
+                Lists.newArrayList(couponDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
     }

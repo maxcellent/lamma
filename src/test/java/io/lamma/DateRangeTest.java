@@ -1,6 +1,5 @@
 package io.lamma;
 
-import static io.lamma.LammaJavaImports.*;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 

@@ -1,14 +1,6 @@
 package io.lamma;
 
-import static scala.collection.JavaConverters.collectionAsScalaIterableConverter;
-
-import scala.collection.Iterable;
-import scala.collection.JavaConverters;
-import scala.collection.immutable.List;
 import scala.collection.immutable.Set;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This class contains interop alias to use Lamma with Java <br>
@@ -18,30 +10,6 @@ import java.util.Arrays;
  *  import io.lamma.LammaJavaImports.*;
  */
 public class LammaJavaImports {
-
-    // =========== collections ================
-    @SafeVarargs
-    public static <E> Iterable<E> iterable(E ... elems) {
-        return collectionAsScalaIterableConverter(new ArrayList<E>(Arrays.asList(elems))).asScala();
-    }
-
-    @SafeVarargs
-    public static <E> List<E> list(E ... elems) {
-        return iterable(elems).toList();
-    }
-
-    @SafeVarargs
-    public static <E> Set<E> set(E ... elems) {
-        return iterable(elems).toSet();
-    }
-
-    public static <E> List<E> scalaList(java.util.List<E> javaList) {
-        return collectionAsScalaIterableConverter(javaList).asScala().toList();
-    }
-
-    public static <E> java.util.List<E> javaList(List<E> scalaList) {
-        return JavaConverters.seqAsJavaListConverter(scalaList).asJava();
-    }
 
     // ========= date & holidays ==========
     /**
@@ -101,7 +69,7 @@ public class LammaJavaImports {
      */
     @Deprecated
     public static HolidayRule compositeHolidayRules(HolidayRule... rules) {
-        return CompositeHolidayRule$.MODULE$.apply(iterable(rules).<HolidayRule>toSeq());
+        return HolidayRules.newCompositeHolidayRule(rules);
     }
 
     // ========= shifters =========

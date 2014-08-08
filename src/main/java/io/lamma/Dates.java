@@ -2,8 +2,6 @@ package io.lamma;
 
 import scala.Option;
 
-import static io.lamma.LammaJavaImports.*;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -141,7 +139,7 @@ public class Dates {
 
     public List<Date> build() {
         DateRangeBuilder builder = new DateRangeBuilder(from, to, duration, holiday, Option.apply(loc),
-                scalaList(shifters), selector, Option.apply(customDayOfMonth), Option.apply(customDayOfYear));
+                JavaCollectionUtil.asScala(shifters), selector, Option.apply(customDayOfMonth), Option.apply(customDayOfYear));
         return builder.javaList();
     }
 

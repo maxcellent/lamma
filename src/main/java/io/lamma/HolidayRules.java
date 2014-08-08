@@ -1,7 +1,5 @@
 package io.lamma;
 
-import scala.collection.JavaConverters;
-
 import java.util.Set;
 
 /**
@@ -16,15 +14,17 @@ public class HolidayRules {
     public static final HolidayRule WEEKENDS = Weekends$.MODULE$;
 
     public static HolidayRule newSimpleHolidayRule(Date... holidays) {
-        return new SimpleHolidayRule(LammaJavaImports.iterable(holidays).<Date>toSet());
+        scala.collection.immutable.Set<Date> scalaSet = JavaCollectionUtil.asScalaSeq(holidays).toSet();
+        return new SimpleHolidayRule(scalaSet);
     }
 
     public static HolidayRule newSimpleHolidayRule(Set<Date> holidays) {
-        scala.collection.immutable.Set<Date> scalaSet = JavaConverters.asScalaSetConverter(holidays).asScala().toSet();
+        scala.collection.immutable.Set<Date> scalaSet = JavaCollectionUtil.asScala(holidays);
         return new SimpleHolidayRule(scalaSet);
     }
 
     public static HolidayRule newCompositeHolidayRule(HolidayRule... rules) {
-        return CompositeHolidayRule$.MODULE$.apply(LammaJavaImports.iterable(rules).<HolidayRule>toSeq());
+        scala.collection.Seq<HolidayRule> scalaSeq = JavaCollectionUtil.asScalaSeq(rules);
+        return CompositeHolidayRule$.MODULE$.apply(scalaSeq);
     }
 }

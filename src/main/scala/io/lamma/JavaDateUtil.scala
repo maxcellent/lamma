@@ -9,7 +9,7 @@ import scala.util.{Failure, Success, Try}
 /**
  * all operations requiring java.util.Date are maintained here
  */
-object JavaDateUtil {
+private[lamma] object JavaDateUtil {
 
   def calendar(d: Date): JCalendar = calendar(d.yyyy, d.mm, d.dd)
 

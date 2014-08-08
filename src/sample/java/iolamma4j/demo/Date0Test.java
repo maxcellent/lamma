@@ -1,10 +1,5 @@
 package iolamma4j.demo;
 
-/**
- * always import this line when you are using Java
- */
-import static io.lamma.LammaJavaImports.*;
-
 import io.lamma.Date;
 import io.lamma.Dates;
 import io.lamma.DayOfWeek;
