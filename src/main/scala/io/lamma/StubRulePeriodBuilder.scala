@@ -3,7 +3,7 @@ package io.lamma
 import StubRulePeriodBuilder._
 
 /**
- * build periods based on stub rules
+ * stub rule based period builders
  *
  * @param startRule
  * @param endRule

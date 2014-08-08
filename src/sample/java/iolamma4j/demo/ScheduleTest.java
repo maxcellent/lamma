@@ -74,7 +74,7 @@ public class ScheduleTest {
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2017, 1, 31),
                 Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),
-                stubRulePeriodBuilder(longEnd(270)), list(couponDate));
+                StubRulePeriodBuilders.of(StubRulePeriodBuilders.Rules.longEnd(270)), list(couponDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
     }

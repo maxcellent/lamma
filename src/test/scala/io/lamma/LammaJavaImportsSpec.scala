@@ -41,34 +41,6 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
     javaList(List(1, 2, 3)) should be(Lists.newArrayList(1, 2, 3))
   }
 
-  // ============== period builder / stub rule ===============
-  "longStart" should "be the same as lamma version" in {
-    longStart(5) should be(LongStart(5))
-    longStart() should be(LongStart())
-  }
-
-  "shortStart" should "be the same as lamma version" in {
-    shortStart(5) should be(ShortStart(5))
-    shortStart() should be(ShortStart())
-  }
-
-  "longEnd" should "be the same as lamma version" in {
-    longEnd(5) should be(LongEnd(5))
-    longEnd() should be(LongEnd())
-  }
-
-  "shortEnd" should "be the same as lamma version" in {
-    shortEnd(5) should be(ShortEnd(5))
-    shortEnd() should be(ShortEnd())
-  }
-
-  "stubRulePeriodBuilder" should "be the same as lamma version" in {
-    stubRulePeriodBuilder() should be(StubRulePeriodBuilder())
-    stubRulePeriodBuilder(shortStart(5)) should be(StubRulePeriodBuilder(startRule = ShortStart(5)))
-    stubRulePeriodBuilder(longEnd(20)) should be(StubRulePeriodBuilder(endRule = LongEnd(20)))
-    stubRulePeriodBuilder(shortStart(3), longEnd(6)) should be(StubRulePeriodBuilder(ShortStart(3), LongEnd(6)))
-  }
-
   // ============== datedef and anchor ===============
   "periodEnd" should "be the same as lamma version" in {
     periodEnd() should be(PeriodEnd)

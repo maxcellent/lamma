@@ -566,60 +566,116 @@ public class LammaJavaImports {
     }
 
     // ============== period builder / stub rule ===============
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.noStartNoEnd` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder stubRulePeriodBuilder() {
-        return StubRulePeriodBuilder$.MODULE$.apply(StubRulePeriodBuilder$.MODULE$.apply$default$1(), StubRulePeriodBuilder$.MODULE$.apply$default$2());
+        return StubRulePeriodBuilders.noStartNoEnd();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.of` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder stubRulePeriodBuilder(StubRulePeriodBuilder.StartRule start) {
-        return StubRulePeriodBuilder$.MODULE$.apply(start, StubRulePeriodBuilder$.MODULE$.apply$default$2());
+        return StubRulePeriodBuilders.of(start);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.of` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder stubRulePeriodBuilder(StubRulePeriodBuilder.EndRule end) {
-        return StubRulePeriodBuilder$.MODULE$.apply(StubRulePeriodBuilder$.MODULE$.apply$default$1(), end);
+        return StubRulePeriodBuilders.of(end);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.of` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder stubRulePeriodBuilder(StubRulePeriodBuilder.StartRule start, StubRulePeriodBuilder.EndRule end) {
-        return StubRulePeriodBuilder$.MODULE$.apply(start, end);
+        return StubRulePeriodBuilders.of(start, end);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.Rules.noStart` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder.StartRule noStartRule() {
-        return StubRulePeriodBuilder$.MODULE$.NoStartRule();
+        return StubRulePeriodBuilders.Rules.noStart();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.Rules.longStart` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder.StartRule longStart() {
-        return new StubRulePeriodBuilder.LongStart(StubRulePeriodBuilder.LongStart$.MODULE$.apply$default$1());
+        return StubRulePeriodBuilders.Rules.longStart();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.Rules.longStart` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder.StartRule longStart(int n) {
-        return StubRulePeriodBuilder.LongStart$.MODULE$.apply(n);
+        return StubRulePeriodBuilders.Rules.longStart(n);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.Rules.shortStart` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder.StartRule shortStart() {
-        return new StubRulePeriodBuilder.ShortStart(StubRulePeriodBuilder.ShortStart$.MODULE$.apply$default$1());
+        return StubRulePeriodBuilders.Rules.shortStart();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.Rules.shortStart` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder.StartRule shortStart(int n) {
-        return StubRulePeriodBuilder.ShortStart$.MODULE$.apply(n);
+        return StubRulePeriodBuilders.Rules.shortStart(n);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.Rules.noEnd` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder.EndRule noEndRule() {
-        return StubRulePeriodBuilder$.MODULE$.NoEndRule();
+        return StubRulePeriodBuilders.Rules.noEnd();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.Rules.longEnd` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder.EndRule longEnd() {
-        return new StubRulePeriodBuilder.LongEnd(StubRulePeriodBuilder.LongEnd$.MODULE$.apply$default$1());
+        return StubRulePeriodBuilders.Rules.longEnd();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.Rules.longEnd` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder.EndRule longEnd(int n) {
-        return StubRulePeriodBuilder.LongEnd$.MODULE$.apply(n);
+        return StubRulePeriodBuilders.Rules.longEnd(n);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.Rules.shortEnd` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder.EndRule shortEnd() {
-        return new StubRulePeriodBuilder.ShortEnd(StubRulePeriodBuilder.ShortEnd$.MODULE$.apply$default$1());
+        return StubRulePeriodBuilders.Rules.shortEnd();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `StubRulePeriodBuilders.Rules.shortEnd` instead
+     */
+    @Deprecated
     public static StubRulePeriodBuilder.EndRule shortEnd(int n) {
-        return StubRulePeriodBuilder.ShortEnd$.MODULE$.apply(n);
+        return StubRulePeriodBuilders.Rules.shortEnd(n);
     }
 
     // ================== DateDef and Anchor================

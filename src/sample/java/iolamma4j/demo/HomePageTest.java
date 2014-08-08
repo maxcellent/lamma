@@ -55,7 +55,7 @@ public class HomePageTest {
                 Dates.newDate(2014, 3, 1),              // issue date = 2014-03-01
                 Dates.newDate(2017, 3, 31),             // expiry date = 2017-03-31
                 Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),// recurring the last day of every 6 months
-                stubRulePeriodBuilder(longEnd(270)),    // merge last stub if the merged period is no longer than 270 days
+                StubRulePeriodBuilders.of(StubRulePeriodBuilders.Rules.longEnd(270)),    // merge last stub if the merged period is no longer than 270 days
                 list(couponDate, settlementDate));      // generate coupon date and settlement date for each period
 
         assertThat(result.getPeriods(), is(expectedPeriods));
