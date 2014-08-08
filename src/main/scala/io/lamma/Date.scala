@@ -1,6 +1,7 @@
 package io.lamma
 
 import java.sql.{Date => SDate}
+import java.util.Calendar
 import io.lamma.partial.date.{YearOps, MonthOps, WeekOps}
 import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
 
@@ -344,4 +345,9 @@ object Date {
    * @param isoRepr in yyyy-MM-dd format, eg, 2014-02-26
    */
   def apply(isoRepr: String): Date = JavaDateUtil.date(JavaDateUtil.calendar(isoRepr))
+
+  /**
+   * @return a new instance of today in system timezone
+   */
+  def today() = JavaDateUtil.date(Calendar.getInstance)
 }

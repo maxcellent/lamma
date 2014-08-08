@@ -13,6 +13,13 @@ import java.util.List;
 public class Dates {
 
     /**
+     * @return a new instance of today in system timezone
+     */
+    public static Date today() {
+        return Date$.MODULE$.today();
+    }
+
+    /**
      * helper method, takes an ISO representation to create a Date object. eg, date("2014-09-30")
      */
     public static Date newDate(String isoRepr) {
