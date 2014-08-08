@@ -35,7 +35,7 @@ public class ScheduleTest {
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2016, 12, 31),
-                months(6, DayOfMonths.lastDayOfMonth()),
+                Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),
                 list(couponDate, settlementDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
@@ -54,7 +54,9 @@ public class ScheduleTest {
         DateDef couponDate = dateDef("CouponDate", periodEnd(), Selectors.newModifiedFollowingSelector(HolidayRules.WEEKENDS));
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
-                Dates.newDate(2017, 1, 31), months(6, DayOfMonths.lastDayOfMonth()), list(couponDate));
+                Dates.newDate(2017, 1, 31),
+                Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),
+                list(couponDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
     }
@@ -71,7 +73,7 @@ public class ScheduleTest {
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2017, 1, 31),
-                months(6, DayOfMonths.lastDayOfMonth()),
+                Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),
                 stubRulePeriodBuilder(longEnd(270)), list(couponDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));

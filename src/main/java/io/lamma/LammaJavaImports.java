@@ -260,157 +260,309 @@ public class LammaJavaImports {
     }
 
     // ========== day of year ==============
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.firstDayOfYear` instead
+     */
+    @Deprecated
     public static DayOfYear firstDayOfYear() {
         return DayOfYears.firstDayOfYear();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.secondDayOfYear` instead
+     */
+    @Deprecated
     public static DayOfYear secondDayOfYear() {
         return DayOfYears.secondDayOfYear();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.nthDayOfYear` instead
+     */
+    @Deprecated
     public static DayOfYear nthDayOfYear(int n) {
         return DayOfYears.nthDayOfYear(n);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.lastDayOfYear` instead
+     */
+    @Deprecated
     public static DayOfYear lastDayOfYear() {
         return DayOfYears.lastDayOfYear();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.firstWeekDayOfYear` instead
+     */
+    @Deprecated
     public static DayOfYear firstWeekDayOfYear(DayOfWeek dow) {
         return DayOfYears.firstWeekDayOfYear(dow);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.nthWeekdayOfYear` instead
+     */
+    @Deprecated
     public static DayOfYear nthWeekdayOfYear(int n, DayOfWeek dow) {
         return DayOfYears.nthWeekdayOfYear(n, dow);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.lastWeekdayOfYear` instead
+     */
+    @Deprecated
     public static DayOfYear lastWeekdayOfYear(DayOfWeek dow) {
         return DayOfYears.lastWeekdayOfYear(dow);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.firstMonthOfYear` instead
+     */
+    @Deprecated
     public static DayOfYear firstMonthOfYear(DayOfMonth dom) {
         return DayOfYears.firstMonthOfYear(dom);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.nthMonthOfYear` instead
+     */
+    @Deprecated
     public static DayOfYear nthMonthOfYear(Month m, DayOfMonth dom) {
         return DayOfYears.nthMonthOfYear(m, dom);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.lastMonthOfYear` instead
+     */
+    @Deprecated
     public static DayOfYear lastMonthOfYear(DayOfMonth dom) {
         return DayOfYears.lastMonthOfYear(dom);
     }
 
     // ========== recurrence pattern ==============
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_DAY` instead
+     */
+    @Deprecated
     public static Daily everyDay() {
-        return new Daily(1);
+        return Patterns.EVERY_DAY;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_OTHER_DAY` instead
+     */
+    @Deprecated
     public static Daily everyOtherDay() {
-        return new Daily(2);
+        return Patterns.EVERY_OTHER_DAY;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newDailyPattern` instead
+     */
+    @Deprecated
     public static Daily days(int days) {
-        return new Daily(days);
+        return Patterns.newDailyPattern(days);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newDailyBackwardPattern` instead
+     */
+    @Deprecated
     public static Daily daysBackward(int days) {
-        return new Daily(- days);
+        return Patterns.newDailyBackwardPattern(days);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_WEEK` instead
+     */
+    @Deprecated
     public static Weekly everyWeek() {
-        return Weekly$.MODULE$.apply(1, Weekly$.MODULE$.apply$default$2());
+        return Patterns.EVERY_WEEK;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_OTHER_WEEK` instead
+     */
+    @Deprecated
     public static Weekly everyOtherWeek() {
-        return Weekly$.MODULE$.apply(2, Weekly$.MODULE$.apply$default$2());
+        return Patterns.EVERY_OTHER_WEEK;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyPattern` instead
+     */
+    @Deprecated
     public static Weekly weeks(int weeks) {
-        return Weekly$.MODULE$.apply(weeks, Weekly$.MODULE$.apply$default$2());
+        return Patterns.newWeeklyPattern(weeks);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyPattern` instead
+     */
+    @Deprecated
     public static Weekly weeks(DayOfWeek dow) {
-        return Weekly$.MODULE$.apply(1, dow);
+        return Patterns.newWeeklyPattern(dow);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyPattern` instead
+     */
+    @Deprecated
     public static Weekly weeks(int weeks, DayOfWeek dow) {
-        return Weekly$.MODULE$.apply(weeks, dow);
+        return Patterns.newWeeklyPattern(weeks, dow);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyBackwardPattern` instead
+     */
+    @Deprecated
     public static Weekly weeksBackward(int weeks) {
-        return Weekly$.MODULE$.apply(- weeks, Weekly$.MODULE$.apply$default$2());
+        return Patterns.newWeeklyBackwardPattern(weeks);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyBackwardPattern` instead
+     */
+    @Deprecated
     public static Weekly weeksBackward(DayOfWeek dow) {
-        return Weekly$.MODULE$.apply(-1, dow);
+        return Patterns.newWeeklyBackwardPattern(dow);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyBackwardPattern` instead
+     */
+    @Deprecated
     public static Weekly weeksBackward(int weeks, DayOfWeek dow) {
-        return Weekly$.MODULE$.apply(- weeks, dow);
+        return Patterns.newWeeklyBackwardPattern(weeks, dow);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_MONTH` instead
+     */
+    @Deprecated
     public static Monthly everyMonth() {
-        return Monthly$.MODULE$.apply(1, Monthly$.MODULE$.apply$default$2());
+        return Patterns.EVERY_MONTH;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_OTHER_MONTH` instead
+     */
+    @Deprecated
     public static Monthly everyOtherMonth() {
-        return Monthly$.MODULE$.apply(2, Monthly$.MODULE$.apply$default$2());
+        return Patterns.EVERY_OTHER_MONTH;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyPattern` instead
+     */
+    @Deprecated
     public static Monthly months(int n) {
-        return Monthly$.MODULE$.apply(n, Monthly$.MODULE$.apply$default$2());
+        return Patterns.newMonthlyPattern(n);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyPattern` instead
+     */
+    @Deprecated
     public static Monthly months(DayOfMonth dom) {
-        return Monthly$.MODULE$.apply(1, dom);
+        return Patterns.newMonthlyPattern(dom);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyPattern` instead
+     */
+    @Deprecated
     public static Monthly months(int n, DayOfMonth dom) {
-        return Monthly$.MODULE$.apply(n, dom);
+        return Patterns.newMonthlyPattern(n, dom);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyBackwardPattern` instead
+     */
+    @Deprecated
     public static Monthly monthsBackward(int n) {
-        return Monthly$.MODULE$.apply(-n, Monthly$.MODULE$.apply$default$2());
+        return Patterns.newMonthlyBackwardPattern(n);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyBackwardPattern` instead
+     */
+    @Deprecated
     public static Monthly monthsBackward(DayOfMonth dom) {
-        return Monthly$.MODULE$.apply(-1, dom);
+        return Patterns.newMonthlyBackwardPattern(dom);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyBackwardPattern` instead
+     */
+    @Deprecated
     public static Monthly monthsBackward(int n, DayOfMonth dom) {
-        return Monthly$.MODULE$.apply(-n, dom);
+        return Patterns.newMonthlyBackwardPattern(n, dom);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_YEAR` instead
+     */
+    @Deprecated
     public static Yearly everyYear() {
-        return Yearly$.MODULE$.apply(1, Yearly$.MODULE$.apply$default$2());
+        return Patterns.EVERY_YEAR;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_OTHER_YEAR` instead
+     */
+    @Deprecated
     public static Yearly everyOtherYear() {
-        return Yearly$.MODULE$.apply(2, Yearly$.MODULE$.apply$default$2());
+        return Patterns.EVERY_OTHER_YEAR;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyPattern` instead
+     */
+    @Deprecated
     public static Yearly years(int n) {
-        return Yearly$.MODULE$.apply(n, Yearly$.MODULE$.apply$default$2());
+        return Patterns.newYearlyPattern(n);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyPattern` instead
+     */
+    @Deprecated
     public static Yearly years(DayOfYear doy) {
-        return Yearly$.MODULE$.apply(1, doy);
+        return Patterns.newYearlyPattern(doy);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyPattern` instead
+     */
+    @Deprecated
     public static Yearly years(int n, DayOfYear doy) {
-        return Yearly$.MODULE$.apply(n, doy);
+        return Patterns.newYearlyPattern(n, doy);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyBackwardPattern` instead
+     */
+    @Deprecated
     public static Yearly yearsBackward(int n) {
-        return Yearly$.MODULE$.apply(-n, Yearly$.MODULE$.apply$default$2());
+        return Patterns.newYearlyBackwardPattern(n);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyBackwardPattern` instead
+     */
+    @Deprecated
     public static Yearly yearsBackward(DayOfYear doy) {
-        return Yearly$.MODULE$.apply(-1, doy);
+        return Patterns.newYearlyBackwardPattern(doy);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyBackwardPattern` instead
+     */
+    @Deprecated
     public static Yearly yearsBackward(int n, DayOfYear doy) {
-        return Yearly$.MODULE$.apply(-n, doy);
+        return Patterns.newYearlyBackwardPattern(n, doy);
     }
 
     // ============== period builder / stub rule ===============

@@ -15,7 +15,7 @@ public class Schedule4jTest {
     public void testScheduleGenerationWith3Params() {
         Date start = Dates.newDate(2014, 5, 1);
         Date end = Dates.newDate(2014, 8, 31);
-        Pattern pattern = months(DayOfMonths.lastDayOfMonth());
+        Pattern pattern = Patterns.newMonthlyPattern(DayOfMonths.lastDayOfMonth());
 
         List<Period> expectedPeriods = Lists.newArrayList(
                 new Period(Dates.newDate(2014, 5, 1), Dates.newDate(2014, 5, 31)),
@@ -32,7 +32,7 @@ public class Schedule4jTest {
     public void testScheduleGenerationWith4Params() {
         Date start = Dates.newDate(2014, 5, 1);
         Date end = Dates.newDate(2014, 8, 31);
-        Pattern pattern = months(DayOfMonths.lastDayOfMonth());
+        Pattern pattern = Patterns.newMonthlyPattern(DayOfMonths.lastDayOfMonth());
         PeriodBuilder periodBuilder = stubRulePeriodBuilder();
 
         List<Period> expectedPeriods = Lists.newArrayList(
@@ -50,7 +50,7 @@ public class Schedule4jTest {
     public void testScheduleGenerationWith5Params() {
         Date start = Dates.newDate(2014, 5, 1);
         Date end = Dates.newDate(2014, 8, 31);
-        Pattern pattern = months(DayOfMonths.lastDayOfMonth());
+        Pattern pattern = Patterns.newMonthlyPattern(DayOfMonths.lastDayOfMonth());
         PeriodBuilder periodBuilder = stubRulePeriodBuilder();
         DateDef couponDate = dateDef("CouponDate", Selectors.newModifiedFollowingSelector());
         DateDef settlementDate = dateDef("SettlementDate", otherDate("CouponDate"), Shifters.newCalendarDaysShifter(2));
