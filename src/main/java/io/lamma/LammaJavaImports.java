@@ -210,29 +210,53 @@ public class LammaJavaImports {
         return Selectors.newModifiedPrecedingSelector(rule);
     }
 
-    // ========== position of month ==============
+    // ========== day of month ==============
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.firstDayOfMonth` instead
+     */
+    @Deprecated
     public static DayOfMonth firstDayOfMonth() {
-        return DayOfMonth$.MODULE$.FirstDayOfMonth();
+        return DayOfMonths.firstDayOfMonth();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.nthDayOfMonth` instead
+     */
+    @Deprecated
     public static DayOfMonth nthDayOfMonth(int n) {
-        return new DayOfMonth.NthDayOfMonth(n);
+        return DayOfMonths.nthDayOfMonth(n);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.lastDayOfMonth` instead
+     */
+    @Deprecated
     public static DayOfMonth lastDayOfMonth() {
-        return DayOfMonth.LastDayOfMonth$.MODULE$;
+        return DayOfMonths.lastDayOfMonth();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.firstWeekdayOfMonth` instead
+     */
+    @Deprecated
     public static DayOfMonth firstWeekdayOfMonth(DayOfWeek dow) {
-        return DayOfMonth$.MODULE$.FirstWeekdayOfMonth(dow);
+        return DayOfMonths.firstWeekdayOfMonth(dow);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.nthWeekdayOfMonth` instead
+     */
+    @Deprecated
     public static DayOfMonth nthWeekdayOfMonth(int n, DayOfWeek dow) {
-        return new DayOfMonth.NthWeekdayOfMonth(n, dow);
+        return DayOfMonths.nthWeekdayOfMonth(n, dow);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.lastWeekdayOfMonth` instead
+     */
+    @Deprecated
     public static DayOfMonth lastWeekdayOfMonth(DayOfWeek dow) {
-        return new DayOfMonth.LastWeekdayOfMonth(dow);
+        return DayOfMonths.lastWeekdayOfMonth(dow);
     }
 
     // ========== position of year ==============

@@ -41,31 +41,6 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
     javaList(List(1, 2, 3)) should be(Lists.newArrayList(1, 2, 3))
   }
 
-  // ========== position of month ==============
-  "firstDayOfMonth" should "be the same as lamma version" in {
-    firstDayOfMonth() should be(FirstDayOfMonth)
-  }
-
-  "nthDayOfMonth" should "be the same as lamma version" in {
-    nthDayOfMonth(12) should be(NthDayOfMonth(12))
-  }
-
-  "lastDayOfMonth" should "be the same as lamma version" in {
-    lastDayOfMonth() should be(LastDayOfMonth)
-  }
-
-  "firstWeekdayOfMonth" should "be the same as lamma version" in {
-    firstWeekdayOfMonth(FRIDAY) should be(FirstWeekdayOfMonth(Friday))
-  }
-
-  "nthWeekdayOfMonth" should "be the same as lamma version" in {
-    nthWeekdayOfMonth(3, THURSDAY) should be(NthWeekdayOfMonth(3, Thursday))
-  }
-
-  "lastWeekdayOfMonth" should "be the same as lamma version" in {
-    lastWeekdayOfMonth(MONDAY) should be(LastWeekdayOfMonth(Monday))
-  }
-
   // ========== position of year ==============
   "firstDayOfYear" should "be the same as lamma version" in {
     firstDayOfYear() should be(FirstDayOfYear)
@@ -96,15 +71,15 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
   }
 
   "firstMonthOfYear" should "be the same as lamma version" in {
-    firstMonthOfYear(lastDayOfMonth()) should be(FirstMonthOfYear(LastDayOfMonth))
+    firstMonthOfYear(DayOfMonths.lastDayOfMonth()) should be(FirstMonthOfYear(LastDayOfMonth))
   }
 
   "nthMonthOfYear" should "be the same as lamma version" in {
-    nthMonthOfYear(Month.FEBRUARY, lastDayOfMonth()) should be(NthMonthOfYear(February, LastDayOfMonth))
+    nthMonthOfYear(Month.FEBRUARY, DayOfMonths.lastDayOfMonth()) should be(NthMonthOfYear(February, LastDayOfMonth))
   }
 
   "lastMonthOfYear" should "be the same as lamma version" in {
-    lastMonthOfYear(firstDayOfMonth()) should be(LastMonthOfYear(FirstDayOfMonth))
+    lastMonthOfYear(DayOfMonths.firstDayOfMonth()) should be(LastMonthOfYear(FirstDayOfMonth))
   }
 
   // ========== recurrence pattern: day patterns ==============
@@ -156,14 +131,14 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
 
   "months" should "be the same as lamma version" in {
     months(3) should be(Monthly(3))
-    months(lastWeekdayOfMonth(FRIDAY)) should be(Monthly(1, LastWeekdayOfMonth(Friday)))
-    months(5, firstDayOfMonth()) should be(Monthly(5, FirstDayOfMonth))
+    months(DayOfMonths.lastWeekdayOfMonth(FRIDAY)) should be(Monthly(1, LastWeekdayOfMonth(Friday)))
+    months(5, DayOfMonths.firstDayOfMonth()) should be(Monthly(5, FirstDayOfMonth))
   }
 
   "monthsBackward" should "be the same as lamma version" in {
     monthsBackward(3) should be(Monthly(-3))
-    monthsBackward(lastWeekdayOfMonth(FRIDAY)) should be(Monthly(-1, LastWeekdayOfMonth(Friday)))
-    monthsBackward(5, firstDayOfMonth()) should be(Monthly(-5, FirstDayOfMonth))
+    monthsBackward(DayOfMonths.lastWeekdayOfMonth(FRIDAY)) should be(Monthly(-1, LastWeekdayOfMonth(Friday)))
+    monthsBackward(5, DayOfMonths.firstDayOfMonth()) should be(Monthly(-5, FirstDayOfMonth))
   }
 
   // ========== recurrence pattern: year patterns ==============

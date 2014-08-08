@@ -54,7 +54,7 @@ public class HomePageTest {
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2014, 3, 1),              // issue date = 2014-03-01
                 Dates.newDate(2017, 3, 31),             // expiry date = 2017-03-31
-                months(6, lastDayOfMonth()),            // recurring the last day of every 6 months
+                months(6, DayOfMonths.lastDayOfMonth()),// recurring the last day of every 6 months
                 stubRulePeriodBuilder(longEnd(270)),    // merge last stub if the merged period is no longer than 270 days
                 list(couponDate, settlementDate));      // generate coupon date and settlement date for each period
 
