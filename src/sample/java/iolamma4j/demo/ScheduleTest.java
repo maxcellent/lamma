@@ -30,7 +30,7 @@ public class ScheduleTest {
                 Dates.newDate(2017, 1, 3));
 
         DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(HolidayRules.WEEKENDS));
-        DateDef settlementDate = dateDef("settlementDate", otherDate("CouponDate"), shiftWorkingDays(2, HolidayRules.WEEKENDS));
+        DateDef settlementDate = dateDef("settlementDate", otherDate("CouponDate"), Shifters.newWorkingDaysShifter(2, HolidayRules.WEEKENDS));
 
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),

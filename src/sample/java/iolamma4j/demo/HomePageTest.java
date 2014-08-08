@@ -23,7 +23,7 @@ public class HomePageTest {
         // coupon date = end date of each generated period, modified following convention
         DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(cal));
         // settlement date = coupon date + 2 working days with the same calendar
-        DateDef settlementDate = dateDef("SettlementDate", otherDate("CouponDate"), shiftWorkingDays(2, cal));
+        DateDef settlementDate = dateDef("SettlementDate", otherDate("CouponDate"), Shifters.newWorkingDaysShifter(2, cal));
 
         List<Period> expectedPeriods = Lists.newArrayList(
                 new Period(Dates.newDate(2014, 3, 1), Dates.newDate(2014, 8, 31)),
