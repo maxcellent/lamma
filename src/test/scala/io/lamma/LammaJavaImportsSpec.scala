@@ -42,26 +42,14 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
   }
 
   // ============== datedef and anchor ===============
-  "periodEnd" should "be the same as lamma version" in {
-    periodEnd() should be(PeriodEnd)
-  }
-
-  "periodStart" should "be the same as lamma version" in {
-    periodStart() should be(PeriodStart)
-  }
-
-  "otherDate" should "be the same as lamma version" in {
-    otherDate("SomeDate") should be(OtherDate("SomeDate"))
-  }
-
   "dateDef" should "be the same as lamma version" in {
     dateDef("SomeDate") should be(DateDef("SomeDate"))
-    dateDef("SomeDate", periodStart()) should be(DateDef("SomeDate", relativeTo = PeriodStart))
+    dateDef("SomeDate", Anchors.periodStart()) should be(DateDef("SomeDate", relativeTo = PeriodStart))
     dateDef("SomeDate", Shifters.newCalendarDaysShifter(2)) should be(DateDef("SomeDate", shifter = ShiftCalendarDays(2)))
     dateDef("SomeDate", Selectors.newForwardSelector()) should be(DateDef("SomeDate", selector = Forward()))
-    dateDef("SomeDate", periodStart(), Shifters.newCalendarDaysShifter(2)) should be(DateDef("SomeDate", relativeTo = PeriodStart, shifter = ShiftCalendarDays(2)))
-    dateDef("SomeDate", periodStart(), Selectors.newForwardSelector()) should be(DateDef("SomeDate", relativeTo = PeriodStart, selector = Forward()))
+    dateDef("SomeDate", Anchors.periodStart(), Shifters.newCalendarDaysShifter(2)) should be(DateDef("SomeDate", relativeTo = PeriodStart, shifter = ShiftCalendarDays(2)))
+    dateDef("SomeDate", Anchors.periodStart(), Selectors.newForwardSelector()) should be(DateDef("SomeDate", relativeTo = PeriodStart, selector = Forward()))
     dateDef("SomeDate", Shifters.newCalendarDaysShifter(2), Selectors.newForwardSelector()) should be(DateDef("SomeDate", shifter = ShiftCalendarDays(2), selector = Forward()))
-    dateDef("SomeDate", periodStart(), Shifters.newCalendarDaysShifter(2), Selectors.newForwardSelector()) should be(DateDef("SomeDate", PeriodStart, ShiftCalendarDays(2), Forward()))
+    dateDef("SomeDate", Anchors.periodStart(), Shifters.newCalendarDaysShifter(2), Selectors.newForwardSelector()) should be(DateDef("SomeDate", PeriodStart, ShiftCalendarDays(2), Forward()))
   }
 }

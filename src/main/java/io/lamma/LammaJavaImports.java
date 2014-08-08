@@ -679,16 +679,28 @@ public class LammaJavaImports {
     }
 
     // ================== DateDef and Anchor================
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Anchors.periodEnd` instead
+     */
+    @Deprecated
     public static Anchor periodEnd() {
-        return Anchor.PeriodEnd$.MODULE$;
+        return Anchors.periodEnd();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Anchors.periodStart` instead
+     */
+    @Deprecated
     public static Anchor periodStart() {
-        return Anchor.PeriodStart$.MODULE$;
+        return Anchors.periodStart();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Anchors.otherDate` instead
+     */
+    @Deprecated
     public static Anchor otherDate(String name) {
-        return new Anchor.OtherDate(name);
+        return Anchors.otherDate(name);
     }
 
     public static DateDef dateDef(String name) {
