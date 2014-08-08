@@ -1,5 +1,10 @@
 package io.lamma;
 
+/**
+ * utility class to construct Locators with Java<br>
+ *
+ * The original Scala io.lamma.Locator uses infix DSL, which is not quite Java friendly.
+ */
 public class Locators {
 
     interface Builder {

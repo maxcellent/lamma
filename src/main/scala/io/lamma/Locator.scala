@@ -4,6 +4,9 @@ import Locator._
 import io.lamma.DayOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
 import io.lamma.DayOfYear.{NthMonthOfYear, NthWeekdayOfYear, LastDayOfYear, NthDayOfYear}
 
+/**
+ * Locator is used to generate DayOfWeek, DayOfMonth and DayOfYear depends on the context
+ */
 sealed trait Locator
 
 object Locator {
