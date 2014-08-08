@@ -102,7 +102,7 @@ public class Dates1Test {
                 Dates.newDate(2015, 10, 9),
                 Dates.newDate(2015, 10, 12)
         );
-        List<Date> actual = Dates.from(2015, 10, 8).to(2015, 10, 12).except(HolidayRules.WEEKENDS).build();
+        List<Date> actual = Dates.from(2015, 10, 8).to(2015, 10, 12).except(HolidayRules.weekends()).build();
         assertThat(actual, is(expected));
     }
 
@@ -114,7 +114,7 @@ public class Dates1Test {
                 Dates.newDate(2015, 12, 29),
                 Dates.newDate(2015, 12, 30));
 
-        HolidayRule ukHoliday2015 = HolidayRules.newSimpleHolidayRule(
+        HolidayRule ukHoliday2015 = HolidayRules.simpleRule(
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2015, 4, 3),
                 Dates.newDate(2015, 4, 6),
@@ -126,8 +126,8 @@ public class Dates1Test {
         );
 
         // these two are identical
-        List<Date> alt1 = Dates.from(2015, 12, 23).to(2015, 12, 30).except(HolidayRules.WEEKENDS).except(ukHoliday2015).build();
-        List<Date> alt2 = Dates.from(2015, 12, 23).to(2015, 12, 30).except(HolidayRules.WEEKENDS.and(ukHoliday2015)).build();
+        List<Date> alt1 = Dates.from(2015, 12, 23).to(2015, 12, 30).except(HolidayRules.weekends()).except(ukHoliday2015).build();
+        List<Date> alt2 = Dates.from(2015, 12, 23).to(2015, 12, 30).except(HolidayRules.weekends().and(ukHoliday2015)).build();
 
         assertThat(alt1, is(expected));
         assertThat(alt2, is(expected));

@@ -9,21 +9,25 @@ import java.util.Set;
  */
 public class HolidayRules {
 
-    public static final HolidayRule NO_HOLIDAY = NoHoliday$.MODULE$;
+    public static HolidayRule noHoliday() {
+        return NoHoliday$.MODULE$;
+    }
 
-    public static final HolidayRule WEEKENDS = Weekends$.MODULE$;
+    public static HolidayRule weekends() {
+        return Weekends$.MODULE$;
+    }
 
-    public static HolidayRule newSimpleHolidayRule(Date... holidays) {
+    public static HolidayRule simpleRule(Date... holidays) {
         scala.collection.immutable.Set<Date> scalaSet = JavaCollectionUtil.asScalaSeq(holidays).toSet();
         return new SimpleHolidayRule(scalaSet);
     }
 
-    public static HolidayRule newSimpleHolidayRule(Set<Date> holidays) {
+    public static HolidayRule simpleRule(Set<Date> holidays) {
         scala.collection.immutable.Set<Date> scalaSet = JavaCollectionUtil.asScala(holidays);
         return new SimpleHolidayRule(scalaSet);
     }
 
-    public static HolidayRule newCompositeHolidayRule(HolidayRule... rules) {
+    public static HolidayRule compositeRule(HolidayRule... rules) {
         scala.collection.Seq<HolidayRule> scalaSeq = JavaCollectionUtil.asScalaSeq(rules);
         return CompositeHolidayRule$.MODULE$.apply(scalaSeq);
     }

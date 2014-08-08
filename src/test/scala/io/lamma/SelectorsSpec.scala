@@ -10,23 +10,23 @@ class SelectorsSpec extends FlatSpec with Matchers {
     SAME_DAY_SELECTOR should be(SameDay)
   }
 
-  "newForwardSelector" should "be the same as lamma version" in {
-    newForwardSelector() should be(Forward())
-    newForwardSelector(HolidayRules.NO_HOLIDAY) should be(Forward(NoHoliday))
+  "forward" should "be the same as lamma version" in {
+    forward() should be(Forward())
+    forward(HolidayRules.noHoliday()) should be(Forward(NoHoliday))
   }
 
-  "newBackwardSelector" should "be the same as lamma version" in {
-    newBackwardSelector() should be(Backward())
-    newBackwardSelector(HolidayRules.NO_HOLIDAY) should be(Backward(NoHoliday))
+  "backward" should "be the same as lamma version" in {
+    backward() should be(Backward())
+    backward(HolidayRules.noHoliday()) should be(Backward(NoHoliday))
   }
 
-  "newModifiedFollowingSelector" should "be the same as lamma version" in {
-    newModifiedFollowingSelector() should be(ModifiedFollowing())
-    newModifiedFollowingSelector(HolidayRules.NO_HOLIDAY) should be(ModifiedFollowing(NoHoliday))
+  "modifiedFollowing" should "be the same as lamma version" in {
+    modifiedFollowing() should be(ModifiedFollowing())
+    modifiedFollowing(HolidayRules.noHoliday()) should be(ModifiedFollowing(NoHoliday))
   }
 
-  "newModifiedPrecedingSelector" should "be the same as lamma version" in {
-    newModifiedPrecedingSelector() should be(ModifiedPreceding())
-    newModifiedPrecedingSelector(HolidayRules.NO_HOLIDAY) should be(ModifiedPreceding(NoHoliday))
+  "modifiedPreceding" should "be the same as lamma version" in {
+    modifiedPreceding() should be(ModifiedPreceding())
+    modifiedPreceding(HolidayRules.noHoliday()) should be(ModifiedPreceding(NoHoliday))
   }
 }

@@ -33,31 +33,31 @@ public class LammaJavaImports {
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.NO_HOLIDAY` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.noHoliday` instead
      */
     @Deprecated
     public static HolidayRule noHoliday() {
-        return HolidayRules.NO_HOLIDAY;
+        return HolidayRules.noHoliday();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.WEEKENDS` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.weekends` instead
      */
     @Deprecated
     public static HolidayRule weekends() {
-        return HolidayRules.WEEKENDS;
+        return HolidayRules.weekends();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.newSimpleHolidayRule` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.simpleRule` instead
      */
     @Deprecated
     public static HolidayRule simpleHolidayRule(Date... holidays) {
-        return HolidayRules.newSimpleHolidayRule(holidays);
+        return HolidayRules.simpleRule(holidays);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.newSimpleHolidayRule` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.simpleRule` instead
      */
     @Deprecated
     public static HolidayRule simpleHolidayRule(Set<Date> holidays) {
@@ -69,40 +69,40 @@ public class LammaJavaImports {
      */
     @Deprecated
     public static HolidayRule compositeHolidayRules(HolidayRule... rules) {
-        return HolidayRules.newCompositeHolidayRule(rules);
+        return HolidayRules.compositeRule(rules);
     }
 
     // ========= shifters =========
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.NO_SHIFT` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.noShift` instead
      */
     @Deprecated
     public static Shifter noShift() {
-        return Shifters.NO_SHIFT;
+        return Shifters.noShift();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.newCalendarDaysShifter` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.byCalendarDays` instead
      */
     @Deprecated
     public static Shifter shiftCalendarDays(int days) {
-        return Shifters.newCalendarDaysShifter(days);
+        return Shifters.byCalendarDays(days);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.newWorkingDaysShifter` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.byWorkingDays` instead
      */
     @Deprecated
     public static Shifter shiftWorkingDays(int days) {
-        return Shifters.newWorkingDaysShifter(days);
+        return Shifters.byWorkingDays(days);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.newWorkingDaysShifter` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.byWorkingDays` instead
      */
     @Deprecated
     public static Shifter shiftWorkingDays(int days, HolidayRule rule) {
-        return Shifters.newWorkingDaysShifter(days, rule);
+        return Shifters.byWorkingDays(days, rule);
     }
 
     // ========= selectors =========
@@ -115,422 +115,422 @@ public class LammaJavaImports {
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newForwardSelector` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.forward` instead
      */
     @Deprecated
     public static Selector forward() {
-        return Selectors.newForwardSelector();
+        return Selectors.forward();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newForwardSelector` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.forward` instead
      */
     @Deprecated
     public static Selector forward(HolidayRule rule) {
-        return Selectors.newForwardSelector(rule);
+        return Selectors.forward(rule);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newBackwardSelector` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.backward` instead
      */
     @Deprecated
     public static Selector backward() {
-        return Selectors.newBackwardSelector();
+        return Selectors.backward();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newBackwardSelector` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.backward` instead
      */
     @Deprecated
     public static Selector backward(HolidayRule rule) {
-        return Selectors.newBackwardSelector(rule);
+        return Selectors.backward(rule);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newModifiedFollowingSelector` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.modifiedFollowing` instead
      */
     @Deprecated
     public static Selector modifiedFollowing() {
-        return Selectors.newModifiedFollowingSelector();
+        return Selectors.modifiedFollowing();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newModifiedFollowingSelector` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.modifiedFollowing` instead
      */
     @Deprecated
     public static Selector modifiedFollowing(HolidayRule rule) {
-        return Selectors.newModifiedFollowingSelector(rule);
+        return Selectors.modifiedFollowing(rule);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newModifiedPrecedingSelector` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.modifiedPreceding` instead
      */
     @Deprecated
     public static Selector modifiedPreceding() {
-        return Selectors.newModifiedPrecedingSelector();
+        return Selectors.modifiedPreceding();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newModifiedPrecedingSelector` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.modifiedPreceding` instead
      */
     @Deprecated
     public static Selector modifiedPreceding(HolidayRule rule) {
-        return Selectors.newModifiedPrecedingSelector(rule);
+        return Selectors.modifiedPreceding(rule);
     }
 
     // ========== day of month ==============
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.firstDayOfMonth` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.firstDay` instead
      */
     @Deprecated
     public static DayOfMonth firstDayOfMonth() {
-        return DayOfMonths.firstDayOfMonth();
+        return DayOfMonths.firstDay();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.nthDayOfMonth` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.nthDay` instead
      */
     @Deprecated
     public static DayOfMonth nthDayOfMonth(int n) {
-        return DayOfMonths.nthDayOfMonth(n);
+        return DayOfMonths.nthDay(n);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.lastDayOfMonth` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.lastDay` instead
      */
     @Deprecated
     public static DayOfMonth lastDayOfMonth() {
-        return DayOfMonths.lastDayOfMonth();
+        return DayOfMonths.lastDay();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.firstWeekdayOfMonth` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.firstWeekday` instead
      */
     @Deprecated
     public static DayOfMonth firstWeekdayOfMonth(DayOfWeek dow) {
-        return DayOfMonths.firstWeekdayOfMonth(dow);
+        return DayOfMonths.firstWeekday(dow);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.nthWeekdayOfMonth` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.nthWeekday` instead
      */
     @Deprecated
     public static DayOfMonth nthWeekdayOfMonth(int n, DayOfWeek dow) {
-        return DayOfMonths.nthWeekdayOfMonth(n, dow);
+        return DayOfMonths.nthWeekday(n, dow);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.lastWeekdayOfMonth` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfMonths.lastWeekday` instead
      */
     @Deprecated
     public static DayOfMonth lastWeekdayOfMonth(DayOfWeek dow) {
-        return DayOfMonths.lastWeekdayOfMonth(dow);
+        return DayOfMonths.lastWeekday(dow);
     }
 
     // ========== day of year ==============
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.firstDayOfYear` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.firstDay` instead
      */
     @Deprecated
     public static DayOfYear firstDayOfYear() {
-        return DayOfYears.firstDayOfYear();
+        return DayOfYears.firstDay();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.secondDayOfYear` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.secondDay` instead
      */
     @Deprecated
     public static DayOfYear secondDayOfYear() {
-        return DayOfYears.secondDayOfYear();
+        return DayOfYears.secondDay();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.nthDayOfYear` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.nthDay` instead
      */
     @Deprecated
     public static DayOfYear nthDayOfYear(int n) {
-        return DayOfYears.nthDayOfYear(n);
+        return DayOfYears.nthDay(n);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.lastDayOfYear` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.lastDay` instead
      */
     @Deprecated
     public static DayOfYear lastDayOfYear() {
-        return DayOfYears.lastDayOfYear();
+        return DayOfYears.lastDay();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.firstWeekDayOfYear` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.firstWeekDay` instead
      */
     @Deprecated
     public static DayOfYear firstWeekDayOfYear(DayOfWeek dow) {
-        return DayOfYears.firstWeekDayOfYear(dow);
+        return DayOfYears.firstWeekDay(dow);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.nthWeekdayOfYear` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.nthWeekday` instead
      */
     @Deprecated
     public static DayOfYear nthWeekdayOfYear(int n, DayOfWeek dow) {
-        return DayOfYears.nthWeekdayOfYear(n, dow);
+        return DayOfYears.nthWeekday(n, dow);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.lastWeekdayOfYear` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.lastWeekday` instead
      */
     @Deprecated
     public static DayOfYear lastWeekdayOfYear(DayOfWeek dow) {
-        return DayOfYears.lastWeekdayOfYear(dow);
+        return DayOfYears.lastWeekday(dow);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.firstMonthOfYear` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.firstMonth` instead
      */
     @Deprecated
     public static DayOfYear firstMonthOfYear(DayOfMonth dom) {
-        return DayOfYears.firstMonthOfYear(dom);
+        return DayOfYears.firstMonth(dom);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.nthMonthOfYear` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.nthMonth` instead
      */
     @Deprecated
     public static DayOfYear nthMonthOfYear(Month m, DayOfMonth dom) {
-        return DayOfYears.nthMonthOfYear(m, dom);
+        return DayOfYears.nthMonth(m, dom);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.lastMonthOfYear` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DayOfYears.lastMonth` instead
      */
     @Deprecated
     public static DayOfYear lastMonthOfYear(DayOfMonth dom) {
-        return DayOfYears.lastMonthOfYear(dom);
+        return DayOfYears.lastMonth(dom);
     }
 
     // ========== recurrence pattern ==============
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_DAY` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.everyDay` instead
      */
     @Deprecated
     public static Daily everyDay() {
-        return Patterns.EVERY_DAY;
+        return Patterns.everyDay();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_OTHER_DAY` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.everyOtherDay` instead
      */
     @Deprecated
     public static Daily everyOtherDay() {
-        return Patterns.EVERY_OTHER_DAY;
+        return Patterns.everyOtherDay();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newDailyPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.daily` instead
      */
     @Deprecated
     public static Daily days(int days) {
-        return Patterns.newDailyPattern(days);
+        return Patterns.daily(days);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newDailyBackwardPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.dailyBackward` instead
      */
     @Deprecated
     public static Daily daysBackward(int days) {
-        return Patterns.newDailyBackwardPattern(days);
+        return Patterns.dailyBackward(days);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_WEEK` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.everyWeek` instead
      */
     @Deprecated
     public static Weekly everyWeek() {
-        return Patterns.EVERY_WEEK;
+        return Patterns.everyWeek();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_OTHER_WEEK` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.everyOtherWeek` instead
      */
     @Deprecated
     public static Weekly everyOtherWeek() {
-        return Patterns.EVERY_OTHER_WEEK;
+        return Patterns.everyOtherWeek();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.weekly` instead
      */
     @Deprecated
     public static Weekly weeks(int weeks) {
-        return Patterns.newWeeklyPattern(weeks);
+        return Patterns.weekly(weeks);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.weekly` instead
      */
     @Deprecated
     public static Weekly weeks(DayOfWeek dow) {
-        return Patterns.newWeeklyPattern(dow);
+        return Patterns.weekly(dow);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.weekly` instead
      */
     @Deprecated
     public static Weekly weeks(int weeks, DayOfWeek dow) {
-        return Patterns.newWeeklyPattern(weeks, dow);
+        return Patterns.weekly(weeks, dow);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyBackwardPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.weeklyBackward` instead
      */
     @Deprecated
     public static Weekly weeksBackward(int weeks) {
-        return Patterns.newWeeklyBackwardPattern(weeks);
+        return Patterns.weeklyBackward(weeks);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyBackwardPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.weeklyBackward` instead
      */
     @Deprecated
     public static Weekly weeksBackward(DayOfWeek dow) {
-        return Patterns.newWeeklyBackwardPattern(dow);
+        return Patterns.weeklyBackward(dow);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newWeeklyBackwardPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.weeklyBackward` instead
      */
     @Deprecated
     public static Weekly weeksBackward(int weeks, DayOfWeek dow) {
-        return Patterns.newWeeklyBackwardPattern(weeks, dow);
+        return Patterns.weeklyBackward(weeks, dow);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_MONTH` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.everyMonth` instead
      */
     @Deprecated
     public static Monthly everyMonth() {
-        return Patterns.EVERY_MONTH;
+        return Patterns.everyMonth();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_OTHER_MONTH` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.everyOtherMonth` instead
      */
     @Deprecated
     public static Monthly everyOtherMonth() {
-        return Patterns.EVERY_OTHER_MONTH;
+        return Patterns.everyOtherMonth();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.monthly` instead
      */
     @Deprecated
     public static Monthly months(int n) {
-        return Patterns.newMonthlyPattern(n);
+        return Patterns.monthly(n);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.monthly` instead
      */
     @Deprecated
     public static Monthly months(DayOfMonth dom) {
-        return Patterns.newMonthlyPattern(dom);
+        return Patterns.monthly(dom);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.monthly` instead
      */
     @Deprecated
     public static Monthly months(int n, DayOfMonth dom) {
-        return Patterns.newMonthlyPattern(n, dom);
+        return Patterns.monthly(n, dom);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyBackwardPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.monthlyBackward` instead
      */
     @Deprecated
     public static Monthly monthsBackward(int n) {
-        return Patterns.newMonthlyBackwardPattern(n);
+        return Patterns.monthlyBackward(n);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyBackwardPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.monthlyBackward` instead
      */
     @Deprecated
     public static Monthly monthsBackward(DayOfMonth dom) {
-        return Patterns.newMonthlyBackwardPattern(dom);
+        return Patterns.monthlyBackward(dom);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newMonthlyBackwardPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.monthlyBackward` instead
      */
     @Deprecated
     public static Monthly monthsBackward(int n, DayOfMonth dom) {
-        return Patterns.newMonthlyBackwardPattern(n, dom);
+        return Patterns.monthlyBackward(n, dom);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_YEAR` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.everyYear` instead
      */
     @Deprecated
     public static Yearly everyYear() {
-        return Patterns.EVERY_YEAR;
+        return Patterns.everyYear();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.EVERY_OTHER_YEAR` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.everyOtherYear` instead
      */
     @Deprecated
     public static Yearly everyOtherYear() {
-        return Patterns.EVERY_OTHER_YEAR;
+        return Patterns.everyOtherYear();
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.yearly` instead
      */
     @Deprecated
     public static Yearly years(int n) {
-        return Patterns.newYearlyPattern(n);
+        return Patterns.yearly(n);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.yearly` instead
      */
     @Deprecated
     public static Yearly years(DayOfYear doy) {
-        return Patterns.newYearlyPattern(doy);
+        return Patterns.yearly(doy);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.yearly` instead
      */
     @Deprecated
     public static Yearly years(int n, DayOfYear doy) {
-        return Patterns.newYearlyPattern(n, doy);
+        return Patterns.yearly(n, doy);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyBackwardPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.yearlyBackward` instead
      */
     @Deprecated
     public static Yearly yearsBackward(int n) {
-        return Patterns.newYearlyBackwardPattern(n);
+        return Patterns.yearlyBackward(n);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyBackwardPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.yearlyBackward` instead
      */
     @Deprecated
     public static Yearly yearsBackward(DayOfYear doy) {
-        return Patterns.newYearlyBackwardPattern(doy);
+        return Patterns.yearlyBackward(doy);
     }
 
     /**
-     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.newYearlyBackwardPattern` instead
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Patterns.yearlyBackward` instead
      */
     @Deprecated
     public static Yearly yearsBackward(int n, DayOfYear doy) {
-        return Patterns.newYearlyBackwardPattern(n, doy);
+        return Patterns.yearlyBackward(n, doy);
     }
 
     // ============== period builder / stub rule ===============

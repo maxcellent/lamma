@@ -17,11 +17,11 @@ public class HomePageTest {
     @Test
     public void scheduleGenerationForA37mTenorFCN() {
         // a real business holiday rule will be used in production
-        HolidayRule cal = HolidayRules.WEEKENDS;
+        HolidayRule cal = HolidayRules.weekends();
         // coupon date = end date of each generated period, modified following convention
-        DateDef couponDate = DateDefs.of("CouponDate", Anchors.periodEnd(), Selectors.newModifiedFollowingSelector(cal));
+        DateDef couponDate = DateDefs.of("CouponDate", Anchors.periodEnd(), Selectors.modifiedFollowing(cal));
         // settlement date = coupon date + 2 working days with the same calendar
-        DateDef settlementDate = DateDefs.of("SettlementDate", Anchors.otherDate("CouponDate"), Shifters.newWorkingDaysShifter(2, cal));
+        DateDef settlementDate = DateDefs.of("SettlementDate", Anchors.otherDate("CouponDate"), Shifters.byWorkingDays(2, cal));
 
         List<Period> expectedPeriods = Lists.newArrayList(
                 new Period(Dates.newDate(2014, 3, 1), Dates.newDate(2014, 8, 31)),
@@ -52,7 +52,7 @@ public class HomePageTest {
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2014, 3, 1),              // issue date = 2014-03-01
                 Dates.newDate(2017, 3, 31),             // expiry date = 2017-03-31
-                Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),// recurring the last day of every 6 months
+                Patterns.monthly(6, DayOfMonths.lastDay()),// recurring the last day of every 6 months
                 StubRulePeriodBuilders.of(StubRulePeriodBuilders.Rules.longEnd(270)),    // merge last stub if the merged period is no longer than 270 days
                 Lists.newArrayList(couponDate, settlementDate));      // generate coupon date and settlement date for each period
 

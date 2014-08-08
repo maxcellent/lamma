@@ -7,27 +7,33 @@ package io.lamma;
  */
 public class DayOfMonths {
 
-    public static DayOfMonth firstDayOfMonth() {
+    /**
+     * @return first day of month
+     */
+    public static DayOfMonth firstDay() {
         return DayOfMonth$.MODULE$.FirstDayOfMonth();
     }
 
-    public static DayOfMonth nthDayOfMonth(int n) {
+    /**
+     * @return nth day of month
+     */
+    public static DayOfMonth nthDay(int n) {
         return new DayOfMonth.NthDayOfMonth(n);
     }
 
-    public static DayOfMonth lastDayOfMonth() {
+    public static DayOfMonth lastDay() {
         return DayOfMonth.LastDayOfMonth$.MODULE$;
     }
 
-    public static DayOfMonth firstWeekdayOfMonth(DayOfWeek dow) {
+    public static DayOfMonth firstWeekday(DayOfWeek dow) {
         return DayOfMonth$.MODULE$.FirstWeekdayOfMonth(dow);
     }
 
-    public static DayOfMonth nthWeekdayOfMonth(int n, DayOfWeek dow) {
+    public static DayOfMonth nthWeekday(int n, DayOfWeek dow) {
         return new DayOfMonth.NthWeekdayOfMonth(n, dow);
     }
 
-    public static DayOfMonth lastWeekdayOfMonth(DayOfWeek dow) {
+    public static DayOfMonth lastWeekday(DayOfWeek dow) {
         return new DayOfMonth.LastWeekdayOfMonth(dow);
     }
 

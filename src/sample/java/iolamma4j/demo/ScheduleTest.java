@@ -27,13 +27,13 @@ public class ScheduleTest {
                 Dates.newDate(2016, 7, 4),
                 Dates.newDate(2017, 1, 3));
 
-        DateDef couponDate = DateDefs.of("CouponDate", Anchors.periodEnd(), Selectors.newModifiedFollowingSelector(HolidayRules.WEEKENDS));
-        DateDef settlementDate = DateDefs.of("settlementDate", Anchors.otherDate("CouponDate"), Shifters.newWorkingDaysShifter(2, HolidayRules.WEEKENDS));
+        DateDef couponDate = DateDefs.of("CouponDate", Anchors.periodEnd(), Selectors.modifiedFollowing(HolidayRules.weekends()));
+        DateDef settlementDate = DateDefs.of("settlementDate", Anchors.otherDate("CouponDate"), Shifters.byWorkingDays(2, HolidayRules.weekends()));
 
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2016, 12, 31),
-                Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),
+                Patterns.monthly(6, DayOfMonths.lastDay()),
                 Lists.newArrayList(couponDate, settlementDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
@@ -49,11 +49,11 @@ public class ScheduleTest {
                 Dates.newDate(2016, 12, 30),
                 Dates.newDate(2017, 1, 31));
                 
-        DateDef couponDate = DateDefs.of("CouponDate", Anchors.periodEnd(), Selectors.newModifiedFollowingSelector(HolidayRules.WEEKENDS));
+        DateDef couponDate = DateDefs.of("CouponDate", Anchors.periodEnd(), Selectors.modifiedFollowing(HolidayRules.weekends()));
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2017, 1, 31),
-                Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),
+                Patterns.monthly(6, DayOfMonths.lastDay()),
                 Lists.newArrayList(couponDate));
 
         assertThat(result.get("CouponDate"), is(expectedCouponDates));
@@ -67,11 +67,11 @@ public class ScheduleTest {
                 Dates.newDate(2016, 6, 30),
                 Dates.newDate(2017, 1, 31));
 
-        DateDef couponDate = DateDefs.of("CouponDate", Anchors.periodEnd(), Selectors.newModifiedFollowingSelector(HolidayRules.WEEKENDS));
+        DateDef couponDate = DateDefs.of("CouponDate", Anchors.periodEnd(), Selectors.modifiedFollowing(HolidayRules.weekends()));
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2017, 1, 31),
-                Patterns.newMonthlyPattern(6, DayOfMonths.lastDayOfMonth()),
+                Patterns.monthly(6, DayOfMonths.lastDay()),
                 StubRulePeriodBuilders.of(StubRulePeriodBuilders.Rules.longEnd(270)),
                 Lists.newArrayList(couponDate));
 

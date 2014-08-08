@@ -1,7 +1,9 @@
 package io.lamma
 
 /**
- * for each PositionOfMonth implementation
+ * This class locates one day in a month <br>
+ *
+ * For each DayOfMonth implementation,
  * Lamma expect there is one and only one day match the criteria
  */
 trait DayOfMonth {

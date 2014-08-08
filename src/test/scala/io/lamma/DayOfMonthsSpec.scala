@@ -1,33 +1,32 @@
 package io.lamma
 
-import DayOfMonths._
-import io.lamma.DayOfMonth._
+import DayOfMonth._
 import io.lamma.DayOfWeek._
 import org.scalatest.{Matchers, FlatSpec}
 
 class DayOfMonthsSpec extends FlatSpec with Matchers {
 
-  "firstDayOfMonth" should "be the same as lamma version" in {
-    firstDayOfMonth() should be(FirstDayOfMonth)
+  "firstDay" should "be the same as lamma version" in {
+    DayOfMonths.firstDay() should be(FirstDayOfMonth)
   }
 
-  "nthDayOfMonth" should "be the same as lamma version" in {
-    nthDayOfMonth(12) should be(NthDayOfMonth(12))
+  "nthDay" should "be the same as lamma version" in {
+    DayOfMonths.nthDay(12) should be(NthDayOfMonth(12))
   }
 
-  "lastDayOfMonth" should "be the same as lamma version" in {
-    lastDayOfMonth() should be(LastDayOfMonth)
+  "lastDay" should "be the same as lamma version" in {
+    DayOfMonths.lastDay() should be(LastDayOfMonth)
   }
 
-  "firstWeekdayOfMonth" should "be the same as lamma version" in {
-    firstWeekdayOfMonth(FRIDAY) should be(FirstWeekdayOfMonth(Friday))
+  "firstWeekday" should "be the same as lamma version" in {
+    DayOfMonths.firstWeekday(FRIDAY) should be(FirstWeekdayOfMonth(Friday))
   }
 
-  "nthWeekdayOfMonth" should "be the same as lamma version" in {
-    nthWeekdayOfMonth(3, THURSDAY) should be(NthWeekdayOfMonth(3, Thursday))
+  "nthWeekday" should "be the same as lamma version" in {
+    DayOfMonths.nthWeekday(3, THURSDAY) should be(NthWeekdayOfMonth(3, Thursday))
   }
 
-  "lastWeekdayOfMonth" should "be the same as lamma version" in {
-    lastWeekdayOfMonth(MONDAY) should be(LastWeekdayOfMonth(Monday))
+  "lastWeekday" should "be the same as lamma version" in {
+    DayOfMonths.lastWeekday(MONDAY) should be(LastWeekdayOfMonth(Monday))
   }
 }

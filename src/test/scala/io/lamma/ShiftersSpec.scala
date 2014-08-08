@@ -7,16 +7,16 @@ import org.scalatest.{Matchers, FlatSpec}
 class ShiftersSpec extends FlatSpec with Matchers {
 
   "noShift" should "be the same as lamma version" in {
-    NO_SHIFT should be(NoShift)
+    noShift should be(NoShift)
   }
 
-  "newCalendarDaysShifter" should "be the same as lamma version" in {
-    newCalendarDaysShifter(5) should be(ShiftCalendarDays(5))
+  "byCalendarDays" should "be the same as lamma version" in {
+    byCalendarDays(5) should be(ShiftCalendarDays(5))
   }
 
-  "newWorkingDaysShifter" should "be the same as lamma version" in {
-    newWorkingDaysShifter(10) should be(ShiftWorkingDays(10))
-    newWorkingDaysShifter(10, HolidayRules.NO_HOLIDAY) should be(ShiftWorkingDays(10, NoHoliday))
+  "byWorkingDays" should "be the same as lamma version" in {
+    byWorkingDays(10) should be(ShiftWorkingDays(10))
+    byWorkingDays(10, HolidayRules.noHoliday()) should be(ShiftWorkingDays(10, NoHoliday))
   }
 
 }

@@ -1,7 +1,9 @@
 package io.lamma
 
 /**
- * for each DayOfYear implementation
+ * This class locates one day in a year <br>
+ *
+ * For each DayOfYear implementation,
  * Lamma expect there is one and only one day match the criteria in each year
  */
 trait DayOfYear {
