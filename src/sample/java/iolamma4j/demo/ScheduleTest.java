@@ -1,10 +1,7 @@
 package iolamma4j.demo;
 
 import com.google.common.collect.Lists;
-import io.lamma.Date;
-import io.lamma.DateDef;
-import io.lamma.Dates;
-import io.lamma.Schedule4j;
+import io.lamma.*;
 import org.junit.Test;
 
 import java.util.List;
@@ -32,8 +29,8 @@ public class ScheduleTest {
                 Dates.newDate(2016, 7, 4),
                 Dates.newDate(2017, 1, 3));
 
-        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekends()));
-        DateDef settlementDate = dateDef("settlementDate", otherDate("CouponDate"), shiftWorkingDays(2, weekends()));
+        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(HolidayRules.WEEKENDS));
+        DateDef settlementDate = dateDef("settlementDate", otherDate("CouponDate"), shiftWorkingDays(2, HolidayRules.WEEKENDS));
 
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
@@ -54,7 +51,7 @@ public class ScheduleTest {
                 Dates.newDate(2016, 12, 30),
                 Dates.newDate(2017, 1, 31));
                 
-        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekends()));
+        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(HolidayRules.WEEKENDS));
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2017, 1, 31), months(6, lastDayOfMonth()), list(couponDate));
@@ -70,7 +67,7 @@ public class ScheduleTest {
                 Dates.newDate(2016, 6, 30),
                 Dates.newDate(2017, 1, 31));
 
-        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(weekends()));
+        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(HolidayRules.WEEKENDS));
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2017, 1, 31),

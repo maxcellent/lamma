@@ -112,7 +112,7 @@ public class Dates2Test {
                 Dates.newDate(2014,1,29),
                 Dates.newDate(2014,2,26),
                 Dates.newDate(2014,3,27));
-        List<Date> actual = Dates.from(2014, 1, 1).to(2014, 3, 31).byMonth().on(Locators.lastDay()).shift(-2, weekends()).build();
+        List<Date> actual = Dates.from(2014, 1, 1).to(2014, 3, 31).byMonth().on(Locators.lastDay()).shift(-2, HolidayRules.WEEKENDS).build();
         assertThat(actual, is(expected));
     }
 
@@ -123,7 +123,7 @@ public class Dates2Test {
                 Dates.newDate(2014,1,29),
                 Dates.newDate(2014,2,26),
                 Dates.newDate(2014,3,31));   // last date is different
-        List<Date> actual = Dates.from(2014, 1, 1).to(2014, 3, 31).byMonth().on(Locators.lastDay()).shift(-2).forward(weekends()).build();
+        List<Date> actual = Dates.from(2014, 1, 1).to(2014, 3, 31).byMonth().on(Locators.lastDay()).shift(-2).forward(HolidayRules.WEEKENDS).build();
         assertThat(actual, is(expected));
     }
 

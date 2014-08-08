@@ -41,25 +41,6 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
     javaList(List(1, 2, 3)) should be(Lists.newArrayList(1, 2, 3))
   }
 
-  // ========== calendars ==========
-  "noHoliday" should "be the same as lamma version" in {
-    noHoliday() should be(NoHoliday)
-  }
-
-  "weekends" should "be the same as lamma version" in {
-    weekends() should be(Weekends)
-  }
-
-  "simpeHolidayRule" should "be the same as lamma version" in {
-    val expected = SimpleHolidayRule(Date(2014, 5, 1), Date(2014, 5, 2))
-    simpleHolidayRule(Dates.newDate(2014, 5, 1), Dates.newDate(2014, 5, 2)) should be(expected)
-    simpleHolidayRule(set(Dates.newDate(2014, 5, 1), Dates.newDate(2014, 5, 2))) should be(expected)
-  }
-
-  "compositeHolidayRules" should "be the same as lamma version" in {
-    compositeHolidayRules(noHoliday(), weekends()) should be(CompositeHolidayRule(NoHoliday, Weekends))
-  }
-
   // ========== shifters ==========
   "noShift" should "be the same as lamma version" in {
     noShift() should be(NoShift)
@@ -71,7 +52,7 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
 
   "shiftWorkingDays" should "be the same as lamma version" in {
     shiftWorkingDays(10) should be(ShiftWorkingDays(10))
-    shiftWorkingDays(10, noHoliday()) should be(ShiftWorkingDays(10, NoHoliday))
+    shiftWorkingDays(10, HolidayRules.NO_HOLIDAY) should be(ShiftWorkingDays(10, NoHoliday))
   }
 
   // ========= selectors =========
@@ -81,22 +62,22 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
 
   "forward" should "be the same as lamma version" in {
     forward() should be(Forward())
-    forward(noHoliday()) should be(Forward(NoHoliday))
+    forward(HolidayRules.NO_HOLIDAY) should be(Forward(NoHoliday))
   }
 
   "backward" should "be the same as lamma version" in {
     backward() should be(Backward())
-    backward(noHoliday()) should be(Backward(NoHoliday))
+    backward(HolidayRules.NO_HOLIDAY) should be(Backward(NoHoliday))
   }
 
   "modifiedFollowing" should "be the same as lamma version" in {
     modifiedFollowing() should be(ModifiedFollowing())
-    modifiedFollowing(noHoliday()) should be(ModifiedFollowing(NoHoliday))
+    modifiedFollowing(HolidayRules.NO_HOLIDAY) should be(ModifiedFollowing(NoHoliday))
   }
 
   "modifiedPreceding" should "be the same as lamma version" in {
     modifiedPreceding() should be(ModifiedPreceding())
-    modifiedPreceding(noHoliday()) should be(ModifiedPreceding(NoHoliday))
+    modifiedPreceding(HolidayRules.NO_HOLIDAY) should be(ModifiedPreceding(NoHoliday))
   }
 
   // ========== position of month ==============

@@ -51,7 +51,7 @@ object Pattern {
  * always recur by calendar day
  *
  * use cases like: "d1 to d2 by n working days" can be solved by:
- *  val dates = Date(2014, 5, 10) to Date(2014, 10, 10) except weekends
+ *  val dates = Date(2014, 5, 10) to Date(2014, 10, 10) except Weekends
  *  dates.toList.grouped(5).map(_.last).foreach(println)
  *
  * @param step in days

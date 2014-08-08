@@ -2,9 +2,9 @@ package iolamma4j.stackoverflow;
 
 import io.lamma.Date;
 import io.lamma.HolidayRule;
+import io.lamma.HolidayRules;
 import org.junit.Test;
 
-import static io.lamma.LammaJavaImports.weekends;
 import static org.junit.Assert.assertEquals;
 
 /**
@@ -19,7 +19,7 @@ public class Q3036858 {
         assertEquals(new Date(2014, 4, 30), findDate(new Date(2014, 5, 25)));  // the most recent working day of 2014-05-25 is not the last working day of May
     }
 
-    private static HolidayRule cal = weekends();   // let's use weekend calendar for now
+    private static HolidayRule cal = HolidayRules.WEEKENDS;   // let's use weekend calendar for now
 
     public static Date findDate(Date current) {
         if (cal.isHoliday(current)) {

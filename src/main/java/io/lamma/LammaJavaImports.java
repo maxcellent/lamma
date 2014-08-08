@@ -64,22 +64,42 @@ public class LammaJavaImports {
         return Dates.newDate(isoRepr);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.NO_HOLIDAY` instead
+     */
+    @Deprecated
     public static HolidayRule noHoliday() {
-        return NoHoliday$.MODULE$;
+        return HolidayRules.NO_HOLIDAY;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.WEEKENDS` instead
+     */
+    @Deprecated
     public static HolidayRule weekends() {
-        return Weekends$.MODULE$;
+        return HolidayRules.WEEKENDS;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.newSimpleHolidayRule` instead
+     */
+    @Deprecated
     public static HolidayRule simpleHolidayRule(Date... holidays) {
-        return new SimpleHolidayRule(iterable(holidays).<Date>toSet());
+        return HolidayRules.newSimpleHolidayRule(holidays);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.newSimpleHolidayRule` instead
+     */
+    @Deprecated
     public static HolidayRule simpleHolidayRule(Set<Date> holidays) {
         return new SimpleHolidayRule(holidays);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `HolidayRules.newCompositeHolidayRules` instead
+     */
+    @Deprecated
     public static HolidayRule compositeHolidayRules(HolidayRule... rules) {
         return CompositeHolidayRule$.MODULE$.apply(iterable(rules).<HolidayRule>toSeq());
     }

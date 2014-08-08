@@ -19,7 +19,7 @@ public class HomePageTest {
     @Test
     public void scheduleGenerationForA37mTenorFCN() {
         // a real business holiday rule will be used in production
-        HolidayRule cal = weekends();
+        HolidayRule cal = HolidayRules.WEEKENDS;
         // coupon date = end date of each generated period, modified following convention
         DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(cal));
         // settlement date = coupon date + 2 working days with the same calendar
