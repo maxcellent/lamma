@@ -14,10 +14,15 @@ public class DateRangeTest {
 
     @Test
     public void testJavaIterator() {
-        List<Date> expected = Lists.newArrayList(date(2014, 5, 5), date(2014, 5, 6), date(2014, 5, 7), date(2014, 5, 8));
+        List<Date> expected = Lists.newArrayList(
+                Dates.newDate(2014, 5, 5),
+                Dates.newDate(2014, 5, 6),
+                Dates.newDate(2014, 5, 7),
+                Dates.newDate(2014, 5, 8)
+        );
 
-        Date fromDate = date(2014, 5, 5);
-        Date toDate = date(2014, 5, 8);
+        Date fromDate = Dates.newDate(2014, 5, 5);
+        Date toDate = Dates.newDate(2014, 5, 8);
         DateRangeBuilder range = fromDate.to(toDate);
 
         List<Date> actual = new LinkedList<Date>();

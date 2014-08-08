@@ -97,22 +97,32 @@ public class Dates1Test {
 
     @Test
     public void testFilterOurWeekends() {
-        // import static io.lamma.LammaConversion.*;
-        List<Date> expected = Lists.newArrayList(date(2015, 10, 8), date(2015, 10, 9), date(2015, 10, 12));
+        List<Date> expected = Lists.newArrayList(
+                Dates.newDate(2015, 10, 8),
+                Dates.newDate(2015, 10, 9),
+                Dates.newDate(2015, 10, 12)
+        );
         List<Date> actual = Dates.from(2015, 10, 8).to(2015, 10, 12).except(weekends()).build();
         assertThat(actual, is(expected));
     }
 
     @Test
     public void testFilterOurWeekendsAndOtherHoliday() {
-        // import static io.lamma.LammaConversion.*;
-
-        List<Date> expected = Lists.newArrayList(date(2015, 12, 23), date(2015, 12, 24), date(2015, 12, 29), date(2015, 12, 30));
+        List<Date> expected = Lists.newArrayList(
+                Dates.newDate(2015, 12, 23),
+                Dates.newDate(2015, 12, 24),
+                Dates.newDate(2015, 12, 29),
+                Dates.newDate(2015, 12, 30));
 
         HolidayRule ukHoliday2015 = simpleHolidayRule(
-                date(2015, 1, 1), date(2015, 4, 3), date(2015, 4, 6),
-                date(2015, 5, 4), date(2015, 5, 25), date(2015, 8, 31),
-                date(2015, 12, 25), date(2015, 12, 28)
+                Dates.newDate(2015, 1, 1),
+                Dates.newDate(2015, 4, 3),
+                Dates.newDate(2015, 4, 6),
+                Dates.newDate(2015, 5, 4),
+                Dates.newDate(2015, 5, 25),
+                Dates.newDate(2015, 8, 31),
+                Dates.newDate(2015, 12, 25),
+                Dates.newDate(2015, 12, 28)
         );
 
         // these two are identical

@@ -46,16 +46,22 @@ public class LammaJavaImports {
     // ========= date & holidays ==========
     /**
      * helper method, alias of new Date(yyyy, mm, dd)
+     *
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use constructor `new Date(yyyy, mm, dd)` instead
      */
+    @Deprecated
     public static Date date(int yyyy, int mm, int dd) {
-        return new Date(yyyy, mm, dd);
+        return Dates.newDate(yyyy, mm, dd);
     }
 
     /**
      * helper method, takes an ISO representation to create a Date object. eg, date("2014-09-30")
+     *
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Dates.newDate(isoRepr)` instead
      */
+    @Deprecated
     public static Date date(String isoRepr) {
-        return Date$.MODULE$.apply(isoRepr);
+        return Dates.newDate(isoRepr);
     }
 
     public static HolidayRule noHoliday() {

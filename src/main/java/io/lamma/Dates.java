@@ -9,7 +9,10 @@ import java.util.List;
 
 public class Dates {
 
-    static Date date(String isoRepr) {
+    /**
+     * helper method, takes an ISO representation to create a Date object. eg, date("2014-09-30")
+     */
+    public static Date newDate(String isoRepr) {
         if (isoRepr == null) {
             throw new IllegalArgumentException("From date must not be null. Expected: yyyy-MM-dd");
         }
@@ -17,7 +20,12 @@ public class Dates {
         return Date$.MODULE$.apply(isoRepr);
     }
 
-    static Date date(Integer yyyy, Integer mm, Integer dd) {
+    /**
+     * helper method, alias of new Date(yyyy, mm, dd) with null checkings
+     *
+     * to prevent unclear NullPointerException when converting from java.lang.Integer to scala.Int
+     */
+    public static Date newDate(Integer yyyy, Integer mm, Integer dd) {
         if (yyyy == null) {
             throw new IllegalArgumentException("yyyy should not be null");
         }
@@ -40,11 +48,11 @@ public class Dates {
     }
 
     public static DatesFrom from(Integer yyyy, Integer mm, Integer dd) {
-        return from(date(yyyy, mm, dd));
+        return from(newDate(yyyy, mm, dd));
     }
 
     public static DatesFrom from(String isoRepr) {
-        return from(date(isoRepr));
+        return from(newDate(isoRepr));
     }
 
     public static class DatesFrom {
@@ -64,11 +72,11 @@ public class Dates {
         }
 
         public Dates to(Integer yyyy, Integer mm, Integer dd) {
-            return to(date(yyyy, mm, dd));
+            return to(newDate(yyyy, mm, dd));
         }
 
         public Dates to(String isoRepr) {
-            return to(date(isoRepr));
+            return to(newDate(isoRepr));
         }
 
         @Override

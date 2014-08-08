@@ -41,15 +41,7 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
     javaList(List(1, 2, 3)) should be(Lists.newArrayList(1, 2, 3))
   }
 
-  // ========== date & calendars ==========
-  "date" should "construct lamma date" in {
-    date(2014, 5, 5) should be(Date(2014, 5, 5))
-  }
-
-  "date" should "construct lamma date from ISO string" in {
-    date("2014-05-05") should be(Date(2014, 5, 5))
-  }
-
+  // ========== calendars ==========
   "noHoliday" should "be the same as lamma version" in {
     noHoliday() should be(NoHoliday)
   }
@@ -60,8 +52,8 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
 
   "simpeHolidayRule" should "be the same as lamma version" in {
     val expected = SimpleHolidayRule(Date(2014, 5, 1), Date(2014, 5, 2))
-    simpleHolidayRule(date(2014, 5, 1), date(2014, 5, 2)) should be(expected)
-    simpleHolidayRule(set(date(2014, 5, 1), date(2014, 5, 2))) should be(expected)
+    simpleHolidayRule(Dates.newDate(2014, 5, 1), Dates.newDate(2014, 5, 2)) should be(expected)
+    simpleHolidayRule(set(Dates.newDate(2014, 5, 1), Dates.newDate(2014, 5, 2))) should be(expected)
   }
 
   "compositeHolidayRules" should "be the same as lamma version" in {

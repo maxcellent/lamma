@@ -9,6 +9,43 @@ import org.scalatest.{WordSpec, Matchers}
 
 class DatesSpec extends WordSpec with Matchers {
 
+  // ========== date & calendars ==========
+  "newDate" should {
+    "construct lamma date" in {
+      Dates.newDate(2014, 5, 5) should be(Date(2014, 5, 5))
+    }
+
+    "throw exception when yyyy is null" in {
+      intercept[IllegalArgumentException] {
+        Dates.newDate(null, 5, 5)
+      }
+    }
+
+    "throw exception when mm is null" in {
+      intercept[IllegalArgumentException] {
+        Dates.newDate(2014, null, 5)
+      }
+    }
+
+    "throw exception when dd is null" in {
+      intercept[IllegalArgumentException] {
+        Dates.newDate(2014, 5, null)
+      }
+    }
+  }
+
+  "newDate" should {
+    "construct lamma date from ISO string" in {
+      Dates.newDate("2014-05-05") should be(Date(2014, 5, 5))
+    }
+
+    "throw exception when input string is null" in {
+      intercept[IllegalArgumentException] {
+        Dates.newDate(null)
+      }
+    }
+  }
+
   "from / to helper" should {
     "construct Dates object properly with Date object" in {
       Dates.from(Date(2014, 5, 5)).to(Date(2014, 5, 10)) should be(new Dates(Date(2014, 5, 5), Date(2014, 5, 10)))
