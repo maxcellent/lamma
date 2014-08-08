@@ -703,35 +703,67 @@ public class LammaJavaImports {
         return Anchors.otherDate(name);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DateDefs.of` instead
+     */
+    @Deprecated
     public static DateDef dateDef(String name) {
-        return new DateDef(name, DateDef$.MODULE$.apply$default$2(), DateDef$.MODULE$.apply$default$3(), DateDef$.MODULE$.apply$default$4());
+        return DateDefs.of(name);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DateDefs.of` instead
+     */
+    @Deprecated
     public static DateDef dateDef(String name, Anchor relativeTo) {
-        return new DateDef(name, relativeTo, DateDef$.MODULE$.apply$default$3(), DateDef$.MODULE$.apply$default$4());
+        return DateDefs.of(name, relativeTo);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DateDefs.of` instead
+     */
+    @Deprecated
     public static DateDef dateDef(String name, Shifter shifter) {
-        return new DateDef(name, DateDef$.MODULE$.apply$default$2(), shifter, DateDef$.MODULE$.apply$default$4());
+        return DateDefs.of(name, shifter);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DateDefs.of` instead
+     */
+    @Deprecated
     public static DateDef dateDef(String name, Selector selector) {
-        return new DateDef(name, DateDef$.MODULE$.apply$default$2(), DateDef$.MODULE$.apply$default$3(), selector);
+        return DateDefs.of(name, selector);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DateDefs.of` instead
+     */
+    @Deprecated
     public static DateDef dateDef(String name, Anchor relativeTo, Shifter shifter) {
-        return new DateDef(name, relativeTo, shifter, DateDef$.MODULE$.apply$default$4());
+        return DateDefs.of(name, relativeTo, shifter);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DateDefs.of` instead
+     */
+    @Deprecated
     public static DateDef dateDef(String name, Anchor relativeTo, Selector selector) {
-        return new DateDef(name, relativeTo, DateDef$.MODULE$.apply$default$3(), selector);
+        return DateDefs.of(name, relativeTo, selector);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DateDefs.of` instead
+     */
+    @Deprecated
     public static DateDef dateDef(String name, Shifter shifter, Selector selector) {
-        return new DateDef(name, DateDef$.MODULE$.apply$default$2(), shifter, selector);
+        return DateDefs.of(name, shifter, selector);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `DateDefs.of` instead
+     */
+    @Deprecated
     public static DateDef dateDef(String name, Anchor relativeTo, Shifter shifter, Selector selector) {
-        return new DateDef(name, relativeTo, shifter, selector);
+        return DateDefs.of(name, relativeTo, shifter, selector);
     }
 }

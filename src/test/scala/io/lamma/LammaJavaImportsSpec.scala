@@ -40,16 +40,4 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
   "javaList" should "convert scala list to Java list" in {
     javaList(List(1, 2, 3)) should be(Lists.newArrayList(1, 2, 3))
   }
-
-  // ============== datedef and anchor ===============
-  "dateDef" should "be the same as lamma version" in {
-    dateDef("SomeDate") should be(DateDef("SomeDate"))
-    dateDef("SomeDate", Anchors.periodStart()) should be(DateDef("SomeDate", relativeTo = PeriodStart))
-    dateDef("SomeDate", Shifters.newCalendarDaysShifter(2)) should be(DateDef("SomeDate", shifter = ShiftCalendarDays(2)))
-    dateDef("SomeDate", Selectors.newForwardSelector()) should be(DateDef("SomeDate", selector = Forward()))
-    dateDef("SomeDate", Anchors.periodStart(), Shifters.newCalendarDaysShifter(2)) should be(DateDef("SomeDate", relativeTo = PeriodStart, shifter = ShiftCalendarDays(2)))
-    dateDef("SomeDate", Anchors.periodStart(), Selectors.newForwardSelector()) should be(DateDef("SomeDate", relativeTo = PeriodStart, selector = Forward()))
-    dateDef("SomeDate", Shifters.newCalendarDaysShifter(2), Selectors.newForwardSelector()) should be(DateDef("SomeDate", shifter = ShiftCalendarDays(2), selector = Forward()))
-    dateDef("SomeDate", Anchors.periodStart(), Shifters.newCalendarDaysShifter(2), Selectors.newForwardSelector()) should be(DateDef("SomeDate", PeriodStart, ShiftCalendarDays(2), Forward()))
-  }
 }
