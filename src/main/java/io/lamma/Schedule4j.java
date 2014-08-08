@@ -5,6 +5,11 @@ import static io.lamma.LammaJavaImports.scalaList;
 
 import java.util.List;
 
+/**
+ * java wrapper of `io.lamma.Schedule` <br>
+ *
+ * to provide convenient API to interop with Scala methods
+ */
 public class Schedule4j {
 
     public static Schedule4j schedule(Date start, Date end, Pattern pattern) {

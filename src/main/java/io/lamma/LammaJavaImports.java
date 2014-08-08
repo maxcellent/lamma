@@ -105,20 +105,36 @@ public class LammaJavaImports {
     }
 
     // ========= shifters =========
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.NO_SHIFT` instead
+     */
+    @Deprecated
     public static Shifter noShift() {
-        return Shifter.NoShift$.MODULE$;
+        return Shifters.NO_SHIFT;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.newCalendarDaysShifter` instead
+     */
+    @Deprecated
     public static Shifter shiftCalendarDays(int days) {
-        return new Shifter.ShiftCalendarDays(days);
+        return Shifters.newCalendarDaysShifter(days);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.newWorkingDaysShifter` instead
+     */
+    @Deprecated
     public static Shifter shiftWorkingDays(int days) {
-        return new Shifter.ShiftWorkingDays(days, Shifter.ShiftWorkingDays$.MODULE$.apply$default$2());
+        return Shifters.newWorkingDaysShifter(days);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Shifters.newWorkingDaysShifter` instead
+     */
+    @Deprecated
     public static Shifter shiftWorkingDays(int days, HolidayRule rule) {
-        return new Shifter.ShiftWorkingDays(days, rule);
+        return Shifters.newWorkingDaysShifter(days, rule);
     }
 
     // ========= selectors =========

@@ -41,20 +41,6 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
     javaList(List(1, 2, 3)) should be(Lists.newArrayList(1, 2, 3))
   }
 
-  // ========== shifters ==========
-  "noShift" should "be the same as lamma version" in {
-    noShift() should be(NoShift)
-  }
-
-  "shiftCalendarDays" should "be the same as lamma version" in {
-    shiftCalendarDays(5) should be(ShiftCalendarDays(5))
-  }
-
-  "shiftWorkingDays" should "be the same as lamma version" in {
-    shiftWorkingDays(10) should be(ShiftWorkingDays(10))
-    shiftWorkingDays(10, HolidayRules.NO_HOLIDAY) should be(ShiftWorkingDays(10, NoHoliday))
-  }
-
   // ========= selectors =========
   "sameDay" should "be the same as lamma version" in {
     sameDay() should be(SameDay)
@@ -270,11 +256,11 @@ class LammaJavaImportsSpec extends FlatSpec with Matchers {
   "dateDef" should "be the same as lamma version" in {
     dateDef("SomeDate") should be(DateDef("SomeDate"))
     dateDef("SomeDate", periodStart()) should be(DateDef("SomeDate", relativeTo = PeriodStart))
-    dateDef("SomeDate", shiftCalendarDays(2)) should be(DateDef("SomeDate", shifter = ShiftCalendarDays(2)))
+    dateDef("SomeDate", Shifters.newCalendarDaysShifter(2)) should be(DateDef("SomeDate", shifter = ShiftCalendarDays(2)))
     dateDef("SomeDate", forward()) should be(DateDef("SomeDate", selector = Forward()))
-    dateDef("SomeDate", periodStart(), shiftCalendarDays(2)) should be(DateDef("SomeDate", relativeTo = PeriodStart, shifter = ShiftCalendarDays(2)))
+    dateDef("SomeDate", periodStart(), Shifters.newCalendarDaysShifter(2)) should be(DateDef("SomeDate", relativeTo = PeriodStart, shifter = ShiftCalendarDays(2)))
     dateDef("SomeDate", periodStart(), forward()) should be(DateDef("SomeDate", relativeTo = PeriodStart, selector = Forward()))
-    dateDef("SomeDate", shiftCalendarDays(2), forward()) should be(DateDef("SomeDate", shifter = ShiftCalendarDays(2), selector = Forward()))
-    dateDef("SomeDate", periodStart(), shiftCalendarDays(2), forward()) should be(DateDef("SomeDate", PeriodStart, ShiftCalendarDays(2), Forward()))
+    dateDef("SomeDate", Shifters.newCalendarDaysShifter(2), forward()) should be(DateDef("SomeDate", shifter = ShiftCalendarDays(2), selector = Forward()))
+    dateDef("SomeDate", periodStart(), Shifters.newCalendarDaysShifter(2), forward()) should be(DateDef("SomeDate", PeriodStart, ShiftCalendarDays(2), Forward()))
   }
 }

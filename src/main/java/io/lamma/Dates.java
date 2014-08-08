@@ -7,6 +7,11 @@ import static io.lamma.LammaJavaImports.*;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * utility class to construct Date or Dates with Java<br>
+ *
+ * The original Scala version io.lamma.Date is not quite Java friendly.
+ */
 public class Dates {
 
     /**
