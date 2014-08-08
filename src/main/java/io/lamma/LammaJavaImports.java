@@ -259,45 +259,45 @@ public class LammaJavaImports {
         return DayOfMonths.lastWeekdayOfMonth(dow);
     }
 
-    // ========== position of year ==============
+    // ========== day of year ==============
     public static DayOfYear firstDayOfYear() {
-        return DayOfYear$.MODULE$.FirstDayOfYear();
+        return DayOfYears.firstDayOfYear();
     }
 
     public static DayOfYear secondDayOfYear() {
-        return DayOfYear$.MODULE$.SecondDayOfYear();
+        return DayOfYears.secondDayOfYear();
     }
 
     public static DayOfYear nthDayOfYear(int n) {
-        return new DayOfYear.NthDayOfYear(n);
+        return DayOfYears.nthDayOfYear(n);
     }
 
     public static DayOfYear lastDayOfYear() {
-        return DayOfYear.LastDayOfYear$.MODULE$;
+        return DayOfYears.lastDayOfYear();
     }
 
     public static DayOfYear firstWeekDayOfYear(DayOfWeek dow) {
-        return DayOfYear$.MODULE$.FirstWeekDayOfYear(dow);
+        return DayOfYears.firstWeekDayOfYear(dow);
     }
 
     public static DayOfYear nthWeekdayOfYear(int n, DayOfWeek dow) {
-        return new DayOfYear.NthWeekdayOfYear(n, dow);
+        return DayOfYears.nthWeekdayOfYear(n, dow);
     }
 
     public static DayOfYear lastWeekdayOfYear(DayOfWeek dow) {
-        return DayOfYear$.MODULE$.LastWeekdayOfYear(dow);
+        return DayOfYears.lastWeekdayOfYear(dow);
     }
 
     public static DayOfYear firstMonthOfYear(DayOfMonth dom) {
-        return DayOfYear$.MODULE$.FirstMonthOfYear(dom);
+        return DayOfYears.firstMonthOfYear(dom);
     }
 
     public static DayOfYear nthMonthOfYear(Month m, DayOfMonth dom) {
-        return new DayOfYear.NthMonthOfYear(m, dom);
+        return DayOfYears.nthMonthOfYear(m, dom);
     }
 
     public static DayOfYear lastMonthOfYear(DayOfMonth dom) {
-        return DayOfYear$.MODULE$.LastMonthOfYear(dom);
+        return DayOfYears.lastMonthOfYear(dom);
     }
 
     // ========== recurrence pattern ==============
