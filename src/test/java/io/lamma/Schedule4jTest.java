@@ -52,7 +52,7 @@ public class Schedule4jTest {
         Date end = Dates.newDate(2014, 8, 31);
         Pattern pattern = months(lastDayOfMonth());
         PeriodBuilder periodBuilder = stubRulePeriodBuilder();
-        DateDef couponDate = dateDef("CouponDate", modifiedFollowing());
+        DateDef couponDate = dateDef("CouponDate", Selectors.newModifiedFollowingSelector());
         DateDef settlementDate = dateDef("SettlementDate", otherDate("CouponDate"), Shifters.newCalendarDaysShifter(2));
 
         List<Period> expectedPeriods = Lists.newArrayList(

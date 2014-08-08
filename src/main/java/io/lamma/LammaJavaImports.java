@@ -138,40 +138,76 @@ public class LammaJavaImports {
     }
 
     // ========= selectors =========
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.SAME_DAY_SELECTOR` instead
+     */
+    @Deprecated
     public static Selector sameDay() {
-        return Selector.SameDay$.MODULE$;
+        return Selectors.SAME_DAY_SELECTOR;
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newForwardSelector` instead
+     */
+    @Deprecated
     public static Selector forward() {
-        return new Selector.Forward(Selector.Forward$.MODULE$.apply$default$1());
+        return Selectors.newForwardSelector();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newForwardSelector` instead
+     */
+    @Deprecated
     public static Selector forward(HolidayRule rule) {
-        return new Selector.Forward(rule);
+        return Selectors.newForwardSelector(rule);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newBackwardSelector` instead
+     */
+    @Deprecated
     public static Selector backward() {
-        return new Selector.Backward(Selector.Backward$.MODULE$.apply$default$1());
+        return Selectors.newBackwardSelector();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newBackwardSelector` instead
+     */
+    @Deprecated
     public static Selector backward(HolidayRule rule) {
-        return new Selector.Backward(rule);
+        return Selectors.newBackwardSelector(rule);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newModifiedFollowingSelector` instead
+     */
+    @Deprecated
     public static Selector modifiedFollowing() {
-        return new Selector.ModifiedFollowing(Selector.ModifiedFollowing$.MODULE$.apply$default$1());
+        return Selectors.newModifiedFollowingSelector();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newModifiedFollowingSelector` instead
+     */
+    @Deprecated
     public static Selector modifiedFollowing(HolidayRule rule) {
-        return new Selector.ModifiedFollowing(rule);
+        return Selectors.newModifiedFollowingSelector(rule);
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newModifiedPrecedingSelector` instead
+     */
+    @Deprecated
     public static Selector modifiedPreceding() {
-        return new Selector.ModifiedPreceding(Selector.ModifiedPreceding$.MODULE$.apply$default$1());
+        return Selectors.newModifiedPrecedingSelector();
     }
 
+    /**
+     * @deprecated (since 2.2.0 will be removed in 2.3.0) use `Selectors.newModifiedPrecedingSelector` instead
+     */
+    @Deprecated
     public static Selector modifiedPreceding(HolidayRule rule) {
-        return new Selector.ModifiedPreceding(rule);
+        return Selectors.newModifiedPrecedingSelector(rule);
     }
 
     // ========== position of month ==============

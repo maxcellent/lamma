@@ -21,7 +21,7 @@ public class HomePageTest {
         // a real business holiday rule will be used in production
         HolidayRule cal = HolidayRules.WEEKENDS;
         // coupon date = end date of each generated period, modified following convention
-        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(cal));
+        DateDef couponDate = dateDef("CouponDate", periodEnd(), Selectors.newModifiedFollowingSelector(cal));
         // settlement date = coupon date + 2 working days with the same calendar
         DateDef settlementDate = dateDef("SettlementDate", otherDate("CouponDate"), Shifters.newWorkingDaysShifter(2, cal));
 

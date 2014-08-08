@@ -29,7 +29,7 @@ public class ScheduleTest {
                 Dates.newDate(2016, 7, 4),
                 Dates.newDate(2017, 1, 3));
 
-        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(HolidayRules.WEEKENDS));
+        DateDef couponDate = dateDef("CouponDate", periodEnd(), Selectors.newModifiedFollowingSelector(HolidayRules.WEEKENDS));
         DateDef settlementDate = dateDef("settlementDate", otherDate("CouponDate"), Shifters.newWorkingDaysShifter(2, HolidayRules.WEEKENDS));
 
         Schedule4j result = Schedule4j.schedule(
@@ -51,7 +51,7 @@ public class ScheduleTest {
                 Dates.newDate(2016, 12, 30),
                 Dates.newDate(2017, 1, 31));
                 
-        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(HolidayRules.WEEKENDS));
+        DateDef couponDate = dateDef("CouponDate", periodEnd(), Selectors.newModifiedFollowingSelector(HolidayRules.WEEKENDS));
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2017, 1, 31), months(6, lastDayOfMonth()), list(couponDate));
@@ -67,7 +67,7 @@ public class ScheduleTest {
                 Dates.newDate(2016, 6, 30),
                 Dates.newDate(2017, 1, 31));
 
-        DateDef couponDate = dateDef("CouponDate", periodEnd(), modifiedFollowing(HolidayRules.WEEKENDS));
+        DateDef couponDate = dateDef("CouponDate", periodEnd(), Selectors.newModifiedFollowingSelector(HolidayRules.WEEKENDS));
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
                 Dates.newDate(2017, 1, 31),

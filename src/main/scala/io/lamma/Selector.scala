@@ -8,6 +8,10 @@ trait Selector {
 }
 
 object Selector {
+
+  /**
+   * select current date
+   */
   case object SameDay extends Selector {
     override def select(d: Date) = d
   }
