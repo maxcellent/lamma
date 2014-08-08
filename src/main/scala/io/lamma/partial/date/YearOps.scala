@@ -19,12 +19,6 @@ private[lamma] trait YearOps {
 
   lazy val isLastDayOfYear = dayOfYear == maxDayOfYear
 
-  @deprecated("replaced by dayOfYear(DayOfYear)", "2.1.0")
-  def thisDayOfYear(doy: DayOfYear) = withDayOfYear(doy)
-
-  @deprecated("replaced by dayOfYear(DayOfYear)", "2.1.0")
-  def dayOfThisYear(doy: DayOfYear) = withDayOfYear(doy)
-
   /**
    * find the day of this year matching specified day-of-year
    */
@@ -45,9 +39,6 @@ private[lamma] trait YearOps {
     matched.head
   }
 
-  @deprecated("replace with firstDayOfYear", "2.1.0")
-  def thisYearBegin = firstDayOfYear
-
   /**
    * first day of the year
    */
@@ -63,9 +54,6 @@ private[lamma] trait YearOps {
    */
   lazy val firstDayOfPreviousYear = Date(yyyy - 1, 1, 1)
 
-  @deprecated("replace with lastDayOfYear", "2.1.0")
-  def thisYearEnd = lastDayOfYear
-
   /**
    * last day of the year
    */
@@ -80,9 +68,6 @@ private[lamma] trait YearOps {
    * last day of previous year
    */
   lazy val lastDayOfPreviousYear = Date(yyyy - 1, 12, 31)
-
-  @deprecated("replace with daysOfYear", "2.1.0")
-  def thisYear = daysOfYear
 
   /**
    * an iterable for every day in the year
@@ -127,9 +112,6 @@ private[lamma] trait YearOps {
    */
   def nextOrSame(doy: DayOfYear) = YearOps.nextOrSame(this, doy)
 
-  @deprecated("replaced with next(DayOfYear)", "2.1.0")
-  def comingDayOfYear(doy: DayOfYear) = next(doy)
-
   /**
    * This method is an alias of [[next(DayOfYear)]] for Scala to prevent overloading when using DSL.
    *
@@ -147,9 +129,6 @@ private[lamma] trait YearOps {
    */
   def next(doy: DayOfYear) = YearOps.nextOrSame(this + 1, doy)
 
-  @deprecated("replaced by nextLastDayOfYear", "2.1.0")
-  def comingYearEnd = next(LastDayOfYear)
-
   /**
    * shorthand of next(LastDayOfYear). For example:
    * {{{
@@ -159,9 +138,6 @@ private[lamma] trait YearOps {
    * Note this is different from lastDayOfNextYear
    */
   lazy val nextLastDayOfYear = next(LastDayOfYear)
-
-  @deprecated("replaced by nextFirstDayOfYear", "2.1.0")
-  def comingYearBegin = nextFirstDayOfYear
 
   /**
    * shorthand of next(FirstDayOfYear)<br>
@@ -188,9 +164,6 @@ private[lamma] trait YearOps {
    */
   def previousOrSame(doy: DayOfYear) = YearOps.previousOrSame(this, doy)
 
-  @deprecated("replace with previous(DayOfYear)", "2.1.0")
-  def pastDayOfYear(doy: DayOfYear) = previous(doy)
-
   /**
    * This method is an alias of [[previous(DayOfYear)]] for Scala to prevent overloading when using DSL.
    *
@@ -208,9 +181,6 @@ private[lamma] trait YearOps {
    */
   def previous(doy: DayOfYear) = YearOps.previousOrSame(this - 1, doy)
 
-  @deprecated("replaced by previousLastDayOfYear", "2.1.0")
-  def pastYearEnd = previousLastDayOfYear
-
   /**
    * shorthand of previous(LastDayOfYear)<br>
    *   For example: <br>
@@ -218,9 +188,6 @@ private[lamma] trait YearOps {
    *     Date(2013, 12, 31).previousLastDayOfYear => Date(2012, 12, 31) <br>
    */
   lazy val previousLastDayOfYear = previous(LastDayOfYear)
-
-  @deprecated("replaced by previousFirstDayOfYear", "2.1.0")
-  def pastYearBegin = previousFirstDayOfYear
 
   /**
    * shorthand of previous(FirstDayOfYear). For example:

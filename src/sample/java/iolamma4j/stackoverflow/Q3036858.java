@@ -23,7 +23,7 @@ public class Q3036858 {
 
     public static Date findDate(Date current) {
         if (cal.isHoliday(current)) {
-            Date lastWorkingDayOfThisMonth = current.thisMonthEnd().backward(cal);
+            Date lastWorkingDayOfThisMonth = current.lastDayOfMonth().backward(cal);
             Date mostRecentWorkingDay = current.backward(cal);
             if (lastWorkingDayOfThisMonth.equals(mostRecentWorkingDay)) {
                 return mostRecentWorkingDay;
@@ -36,7 +36,7 @@ public class Q3036858 {
     }
 
     public static Date lastWorkingDayOfLastMonth(Date d) {
-        return d.pastMonthEnd().backward(cal);
+        return d.lastDayOfPreviousMonth().backward(cal);
     }
 
 }

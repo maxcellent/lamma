@@ -21,12 +21,6 @@ private[lamma] trait MonthOps {
 
   lazy val dayOfMonth = dd
 
-  @deprecated(message = "replaced by withDayOfMonth", since = "2.1.0")
-  def thisDayOfMonth(dom: DayOfMonth) = withDayOfMonth(dom)
-
-  @deprecated(message = "replaced by withDayOfMonth", since = "2.1.0")
-  def dayOfThisMonth(dom: DayOfMonth) = withDayOfMonth(dom)
-
   /**
    * find the day of this month matching specified day-of-month. DSL can be used directly.
    *
@@ -43,24 +37,15 @@ private[lamma] trait MonthOps {
     matched.head
   }
 
-  @deprecated(message = "replaced by firstDayOfMonth", since = "2.1.0")
-  def thisMonthBegin = firstDayOfMonth
-
   /**
    * first day of current month
    */
   lazy val firstDayOfMonth = Date(yyyy, mm, 1)
 
-  @deprecated(message = "replaced by lastDayOfMonth", since = "2.1.0")
-  def thisMonthEnd = lastDayOfMonth
-
   /**
    * last day of the month, different month end and leap month are handled properly
    */
   lazy val lastDayOfMonth = Date(yyyy, mm, maxDayOfMonth)
-
-  @deprecated(message = "replaced by daysOfMonth", since = "2.1.0")
-  def thisMonth =  daysOfMonth
 
   /**
    * an iterable for every day in the month
@@ -105,9 +90,6 @@ private[lamma] trait MonthOps {
    */
   def nextOrSame(dom: DayOfMonth) = MonthOps.nextOrSame(this, dom)
 
-  @deprecated("replace with next(DayOfMonth)", "2.1.0")
-  def comingDayOfMonth(dom: DayOfMonth) = next(dom)
-
   /**
    * This method is an alias of [[next(DayOfMonth)]] for Scala to prevent overloading when using DSL.
    *
@@ -125,9 +107,6 @@ private[lamma] trait MonthOps {
    */
   def next(dom: DayOfMonth) = MonthOps.nextOrSame(this + 1, dom)
 
-  @deprecated("replaced by nextLastDayOfMonth", "2.1.0")
-  def comingMonthEnd = nextLastDayOfMonth
-
   /**
    * shorthand of comingDayOfMonth(LastDayOfMonth)<br>
    *   For example:
@@ -139,9 +118,6 @@ private[lamma] trait MonthOps {
    *   Note this is different from lastDayOfNextMonth
    */
   lazy val nextLastDayOfMonth = next(LastDayOfMonth)
-
-  @deprecated("replaced by comingFirstDayOfMonth", "2.1.0")
-  def comingMonthBegin = next(FirstDayOfMonth)
 
   /**
    * shorthand of comingDayOfMonth(FirstDayOfMonth)<br>
@@ -170,9 +146,6 @@ private[lamma] trait MonthOps {
    */
   def previousOrSame(dom: DayOfMonth) = MonthOps.previousOrSame(this, dom)
 
-  @deprecated("replace with previous(DayOfMonth)", "2.1.0")
-  def pastDayOfMonth(dom: DayOfMonth) = MonthOps.previousOrSame(this - 1, dom)
-
   /**
    * This method is an alias of [[previous(DayOfMonth)]] for Scala to prevent overloading when using DSL.
    *
@@ -190,9 +163,6 @@ private[lamma] trait MonthOps {
    */
   def previous(dom: DayOfMonth) = MonthOps.previousOrSame(this - 1, dom)
 
-  @deprecated("replace by previousLastDayOfMonth", "2.1.0")
-  def pastMonthEnd = previousLastDayOfMonth
-
   /**
    * shorthand of pastDayOfMonth(LastDayOfMonth)<br>
    *  For example:<br>
@@ -202,9 +172,6 @@ private[lamma] trait MonthOps {
    *    }}}
    */
   lazy val previousLastDayOfMonth = previous(LastDayOfMonth)
-
-  @deprecated("replaced by previousFirstDayOfMonth", "2.1.0")
-  def pastMonthBegin = previousFirstDayOfMonth
 
   /**
    * shorthand of pastDayOfMonth(FirstDayOfMonth)<br>
