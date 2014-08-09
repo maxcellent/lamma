@@ -1,13 +1,13 @@
 package io.lamma;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.LinkedList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class DateRangeTest {
 
@@ -29,7 +29,7 @@ public class DateRangeTest {
             actual.add(d);
         }
 
-        assertThat(actual, is(expected));
+        assertEquals(actual, expected);
     }
 
 }

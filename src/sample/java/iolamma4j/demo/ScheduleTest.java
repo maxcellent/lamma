@@ -6,8 +6,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
 
 /**
  * this class covers all java code used in Tutorial 3: Advanced Schedule Generation
@@ -36,8 +35,8 @@ public class ScheduleTest {
                 Patterns.monthly(6, DayOfMonths.lastDay()),
                 Lists.newArrayList(couponDate, settlementDate));
 
-        assertThat(result.get("CouponDate"), is(expectedCouponDates));
-        assertThat(result.get("settlementDate"), is(expectedSettlementDates));
+        assertEquals(result.get("CouponDate"), expectedCouponDates);
+        assertEquals(result.get("settlementDate"), expectedSettlementDates);
     }
 
     @Test
@@ -56,7 +55,7 @@ public class ScheduleTest {
                 Patterns.monthly(6, DayOfMonths.lastDay()),
                 Lists.newArrayList(couponDate));
 
-        assertThat(result.get("CouponDate"), is(expectedCouponDates));
+        assertEquals(result.get("CouponDate"), expectedCouponDates);
     }
 
     @Test
@@ -75,6 +74,6 @@ public class ScheduleTest {
                 StubRulePeriodBuilders.of(StubRulePeriodBuilders.Rules.longEnd(270)),
                 Lists.newArrayList(couponDate));
 
-        assertThat(result.get("CouponDate"), is(expectedCouponDates));
+        assertEquals(result.get("CouponDate"), expectedCouponDates);
     }
 }

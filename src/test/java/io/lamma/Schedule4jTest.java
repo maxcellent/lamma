@@ -1,12 +1,11 @@
 package io.lamma;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-
 import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 public class Schedule4jTest {
 
@@ -24,7 +23,7 @@ public class Schedule4jTest {
         );
 
         Schedule4j schedule = Schedule4j.schedule(start, end, pattern);
-        assertThat(schedule.getPeriods(), is(expectedPeriods));
+        assertEquals(schedule.getPeriods(), expectedPeriods);
     }
 
     @Test
@@ -42,7 +41,7 @@ public class Schedule4jTest {
         );
 
         Schedule4j schedule = Schedule4j.schedule(start, end, pattern, periodBuilder);
-        assertThat(schedule.getPeriods(), is(expectedPeriods));
+        assertEquals(schedule.getPeriods(), expectedPeriods);
     }
 
     @Test
@@ -62,6 +61,6 @@ public class Schedule4jTest {
         );
 
         Schedule4j schedule = Schedule4j.schedule(start, end, pattern, periodBuilder, Lists.newArrayList(couponDate, settlementDate));
-        assertThat(schedule.getPeriods(), is(expectedPeriods));
+        assertEquals(schedule.getPeriods(), expectedPeriods);
     }
 }

@@ -4,7 +4,6 @@ import io.lamma.Date;
 import io.lamma.Dates;
 import io.lamma.DayOfWeek;
 
-
 /**
  * this will be used in Quick Start page
  */
@@ -55,15 +54,19 @@ public class Date0Test {
         System.out.println(Dates.newDate(2014, 7, 7).is(DayOfWeek.MONDAY));
         // Output: true
 
-        System.out.println(Dates.newDate(2014, 7, 7).next(DayOfWeek.FRIDAY)); // find the next Friday excludes today
+        // find the next Friday excludes today
+        System.out.println(Dates.newDate(2014, 7, 7).next(DayOfWeek.FRIDAY));
         // Output: Date(2014,7,11)
 
-        System.out.println(Dates.newDate(2014, 7, 7).previous(DayOfWeek.WEDNESDAY)); // find the past Wednesday excludes today
+        // find the past Wednesday excludes today
+        System.out.println(Dates.newDate(2014, 7, 7).previous(DayOfWeek.WEDNESDAY));
         // Output: Date(2014,7,2)
 
+        // goto Monday of current week (a week starts with Monday)
         System.out.println(Dates.newDate(2014, 7, 7).withDayOfWeek(DayOfWeek.MONDAY));
         // Output: Date(2014,7,7)
 
+        // goto Sunday of current week (a week starts with Monday)
         System.out.println(Dates.newDate(2014, 7, 7).withDayOfWeek(DayOfWeek.SUNDAY));
         // Output: Date(2014,7,13)
 
@@ -80,10 +83,12 @@ public class Date0Test {
         }
         // Output: from Date(2014,7,1) to Date(2014,7,31)
 
-        System.out.println(Dates.newDate(2016, 2, 5).maxDayOfMonth());   // max day of month, leap day is considered
+        // max day of month, leap day is considered
+        System.out.println(Dates.newDate(2016, 2, 5).maxDayOfMonth());
         // Output: 29
 
-        System.out.println(Dates.newDate(2016, 2, 5).maxDayOfMonth());   // last day of this month, leap day is considered
+        // last day of this month, leap day is considered
+        System.out.println(Dates.newDate(2016, 2, 5).maxDayOfMonth());
         // Output: Date(2016, 2, 29)
 
         // all Fridays in Feb, 2016
@@ -93,7 +98,8 @@ public class Date0Test {
         // Output: Date(2016,2,5), Date(2016,2,12), Date(2016,2,19) and Date(2016,2,26)
 
         // ======== year operations ======
-        System.out.println(Dates.newDate(2016, 2, 5).maxDayOfYear());     // max day of year, leap year is considered
+        // max day of year, leap year is considered
+        System.out.println(Dates.newDate(2016, 2, 5).maxDayOfYear());
         // Output: 366
 
         System.out.println(Dates.newDate(2016, 2, 5).dayOfYear());       // day of year

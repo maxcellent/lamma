@@ -6,10 +6,7 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
-import static io.lamma.DayOfWeek.*;
-import static io.lamma.Month.*;
+import static org.junit.Assert.assertEquals;
 
 /**
  * this class covers all java code used in Tutorial 2: Advanced Date Generation
@@ -24,8 +21,8 @@ public class Dates2Test {
                 Dates.newDate(2014, 6, 3),
                 Dates.newDate(2014, 6, 24)
         );
-        List<Date> actual = Dates.from(2014, 5, 10).to(2014, 7, 1).byWeeks(3).on(TUESDAY).build();
-        assertThat(actual, is(expected));
+        List<Date> actual = Dates.from(2014, 5, 10).to(2014, 7, 1).byWeeks(3).on(DayOfWeek.TUESDAY).build();
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -36,7 +33,7 @@ public class Dates2Test {
                 Dates.newDate(2014, 7, 10)
         );
         List<Date> actual = Dates.from(2014, 5, 1).to(2014, 7, 30).byMonth().on(Locators.nthDay(10)).build();
-        assertThat(actual, is(expected));
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -46,8 +43,8 @@ public class Dates2Test {
                 Dates.newDate(2014, 7, 11),
                 Dates.newDate(2014, 9, 12)
         );
-        List<Date> actual = Dates.from(2014, 5, 1).to(2014, 9, 30).byMonths(2).on(Locators.nth(2, FRIDAY)).build();
-        assertThat(actual, is(expected));
+        List<Date> actual = Dates.from(2014, 5, 1).to(2014, 9, 30).byMonths(2).on(Locators.nth(2, DayOfWeek.FRIDAY)).build();
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -57,8 +54,8 @@ public class Dates2Test {
                 Dates.newDate(2015, 12, 29),
                 Dates.newDate(2016, 12, 27)
         );
-        List<Date> actual = Dates.from(2014, 1, 1).to(2016, 12, 31).byYear().on(Locators.last(TUESDAY)).build();
-        assertThat(actual, is(expected));
+        List<Date> actual = Dates.from(2014, 1, 1).to(2016, 12, 31).byYear().on(Locators.last(DayOfWeek.TUESDAY)).build();
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -69,8 +66,8 @@ public class Dates2Test {
                 Dates.newDate(2016,2,19),
                 Dates.newDate(2019,2,15)
         );
-        List<Date> actual = Dates.from(2010, 1, 1).to(2019, 12, 31).byYears(3).on(Locators.nth(3, FRIDAY).of(FEBRUARY)).build();
-        assertThat(actual, is(expected));
+        List<Date> actual = Dates.from(2010, 1, 1).to(2019, 12, 31).byYears(3).on(Locators.nth(3, DayOfWeek.FRIDAY).of(Month.FEBRUARY)).build();
+        assertEquals(actual, expected);
     }
 
     /**
@@ -80,7 +77,7 @@ public class Dates2Test {
 
         @Override
         public boolean isValidDOM(Date d) {
-            return d.month() == FEBRUARY ? d.dd() == 1 : d.dd() == 3;
+            return d.month() == Month.FEBRUARY ? d.dd() == 1 : d.dd() == 3;
         }
     }
 
@@ -91,7 +88,7 @@ public class Dates2Test {
                 Dates.newDate(2014, 2, 1),
                 Dates.newDate(2014, 3, 3));
         List<Date> actual = Dates.from(2014, 1, 1).to(2014, 3, 31).byMonth().on(new MyPositionOfMonth()).build();
-        assertThat(actual, is(expected));
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -102,7 +99,7 @@ public class Dates2Test {
                 Dates.newDate(2014,3,29)
         );
         List<Date> actual = Dates.from(2014, 1, 1).to(2014, 3, 31).byMonth().on(Locators.lastDay()).shift(-2).build();
-        assertThat(actual, is(expected));
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -112,7 +109,7 @@ public class Dates2Test {
                 Dates.newDate(2014,2,26),
                 Dates.newDate(2014,3,27));
         List<Date> actual = Dates.from(2014, 1, 1).to(2014, 3, 31).byMonth().on(Locators.lastDay()).shift(-2, HolidayRules.weekends()).build();
-        assertThat(actual, is(expected));
+        assertEquals(actual, expected);
     }
 
     @Test
@@ -123,7 +120,7 @@ public class Dates2Test {
                 Dates.newDate(2014,2,26),
                 Dates.newDate(2014,3,31));   // last date is different
         List<Date> actual = Dates.from(2014, 1, 1).to(2014, 3, 31).byMonth().on(Locators.lastDay()).shift(-2).forward(HolidayRules.weekends()).build();
-        assertThat(actual, is(expected));
+        assertEquals(actual, expected);
     }
 
     // ========= edge cases ======
@@ -131,20 +128,20 @@ public class Dates2Test {
     public void testRecurrencePatternTooLongForward() {
         List<Date> expected = Lists.newArrayList(Dates.newDate(2014, 1, 1));
         List<Date> actual = Dates.from(2014, 1, 1).to(2014, 3, 31).byMonths(6).build();
-        assertThat(actual, is(expected));
+        assertEquals(actual, expected);
     }
 
     @Test
     public void testRecurrencePatternTooLongBackward() {
         List<Date> expected = Lists.newArrayList(Dates.newDate(2014, 3, 31));
         List<Date> actual = Dates.from(2014, 3, 31).to(2014, 1, 1).byMonths(-6).build();
-        assertThat(actual, is(expected));
+        assertEquals(actual, expected);
     }
 
     @Test
     public void testSameFromAndToDate() {
         List<Date> expected = Lists.newArrayList(Dates.newDate(2014, 1, 1));
         List<Date> actual = Dates.from(2014, 1, 1).to(2014, 1, 1).byMonth().build();
-        assertThat(actual, is(expected));
+        assertEquals(actual, expected);
     }
 }

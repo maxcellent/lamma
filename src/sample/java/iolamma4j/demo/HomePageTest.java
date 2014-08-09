@@ -1,7 +1,7 @@
 package iolamma4j.demo;
 
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.google.common.collect.Lists;
 import io.lamma.*;
@@ -13,6 +13,34 @@ import java.util.List;
  * this test is written for home page sample
  */
 public class HomePageTest {
+
+    // ============= Basic date manipulation ==============
+    @Test
+    public void basic() {
+        assertEquals(new Date(2014, 7, 5), new Date(2014, 7, 2).plusDays(3));
+
+        assertEquals(6, new Date(2014, 7, 8).minus(new Date(2014, 7, 2)));
+
+        assertTrue(new Date(2014, 7, 8).isAfter(new Date(2014, 7, 2)));
+    }
+
+    // ============= advanced date generation ==============
+    @Test
+    public void advanced() {
+        List<Date> expected = Lists.newArrayList(
+                new Date(2014,12,1),
+                new Date(2014,12,11),
+                new Date(2014,12,16),
+                new Date(2014,12,26),
+                new Date(2014,12,31)
+        );
+
+        List<Date> actual = Dates.from(2014, 12, 1).to(2014, 12, 31).byDays(5).except(HolidayRules.weekends()).build();
+
+        assertEquals(expected, actual);
+    }
+
+    // ============= Professional schedule generation ======
 
     @Test
     public void scheduleGenerationForA37mTenorFCN() {
@@ -48,7 +76,6 @@ public class HomePageTest {
                 Dates.newDate(2016, 9, 2),
                 Dates.newDate(2017, 4, 4));
 
-        // we are calling Lamma4j this time, it's a Java wrapper
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2014, 3, 1),              // issue date = 2014-03-01
                 Dates.newDate(2017, 3, 31),             // expiry date = 2017-03-31
@@ -56,9 +83,9 @@ public class HomePageTest {
                 StubRulePeriodBuilders.of(StubRulePeriodBuilders.Rules.longEnd(270)),    // merge last stub if the merged period is no longer than 270 days
                 Lists.newArrayList(couponDate, settlementDate));      // generate coupon date and settlement date for each period
 
-        assertThat(result.getPeriods(), is(expectedPeriods));
-        assertThat(result.get("CouponDate"), is(expectedCouponDates));
-        assertThat(result.get("SettlementDate"), is(expectedSettlementDates));
+        assertEquals(result.getPeriods(), expectedPeriods);
+        assertEquals(result.get("CouponDate"), expectedCouponDates);
+        assertEquals(result.get("SettlementDate"), expectedSettlementDates);
     }
 
 }
