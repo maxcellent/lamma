@@ -25,7 +25,7 @@ case class DateRangeBuilder(from: Date,
                             shifters: List[Shifter] = Nil,
                             selector: Selector = SameDay,
                             customDom: Option[DayOfMonth] = None,
-                            customDoy: Option[DayOfYear] = None) extends AbstractSeq[Date] with IndexedSeq[Date] {
+                            customDoy: Option[DayOfYear] = None) extends IndexedSeq[Date] {
   require(step.n != 0, "step cannot be 0.")
 
   lazy val dateRange = DateRange(from, to, pattern, holiday, shifters, selector)

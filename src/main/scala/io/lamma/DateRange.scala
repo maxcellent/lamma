@@ -38,7 +38,7 @@ case class DateRange(from: Date,
                      pattern: Pattern = Daily(1),
                      holiday: HolidayRule = NoHoliday,
                      shifters: List[Shifter] = Nil,
-                     selector: Selector = SameDay) extends AbstractSeq[Date] with IndexedSeq[Date] {
+                     selector: Selector = SameDay) extends IndexedSeq[Date] {
 
   lazy val generated = pattern.recur(from, to)
 
