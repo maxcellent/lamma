@@ -52,4 +52,13 @@ class DateRangeSpec extends WordSpec with Matchers {
       actual.toList should be(Nil)
     }
   }
+
+  "==" should {
+    "return true when DateRange is comparing with an IndexedSeq" in {
+      val list = List(Date(2014, 8, 5), Date(2014, 8, 6), Date(2014, 8, 7))
+      val rangeBuilder = (2014, 8, 5) to (2014, 8, 7)
+      rangeBuilder should be(list)
+      rangeBuilder.dateRange should be(list)
+    }
+  }
 }

@@ -3,6 +3,8 @@ package io.lamma
 import io.lamma.Selector._
 
 import collection.JavaConverters._
+import scala.collection.AbstractSeq
+import scala.collection.immutable.IndexedSeq
 
 /**
  * builder class to manipulate DateRange
@@ -23,7 +25,7 @@ case class DateRangeBuilder(from: Date,
                             shifters: List[Shifter] = Nil,
                             selector: Selector = SameDay,
                             customDom: Option[DayOfMonth] = None,
-                            customDoy: Option[DayOfYear] = None) extends Traversable[Date] {
+                            customDoy: Option[DayOfYear] = None) extends AbstractSeq[Date] with IndexedSeq[Date] {
   require(step.n != 0, "step cannot be 0.")
 
   lazy val dateRange = DateRange(from, to, pattern, holiday, shifters, selector)
@@ -94,4 +96,8 @@ case class DateRangeBuilder(from: Date,
    * override toString method so to make builder transparent
    */
   override def toString = dateRange.toString
+
+  override def length = dateRange.length
+
+  def apply(idx: Int) = dateRange(idx)
 }

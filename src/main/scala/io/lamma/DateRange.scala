@@ -3,6 +3,8 @@ package io.lamma
 import io.lamma.Selector.SameDay
 
 import collection.JavaConverters._
+import scala.collection.AbstractSeq
+import scala.collection.immutable.IndexedSeq
 
 /**
  * The `DateRange` class represents all date values in range. Both start and end date included. <br>
@@ -36,7 +38,7 @@ case class DateRange(from: Date,
                      pattern: Pattern = Daily(1),
                      holiday: HolidayRule = NoHoliday,
                      shifters: List[Shifter] = Nil,
-                     selector: Selector = SameDay) extends Traversable[Date] {
+                     selector: Selector = SameDay) extends AbstractSeq[Date] with IndexedSeq[Date] {
 
   lazy val generated = pattern.recur(from, to)
 
@@ -55,4 +57,8 @@ case class DateRange(from: Date,
   lazy val javaIterable = this.toIterable.asJava
 
   lazy val javaList = this.toList.asJava
+
+  override def length = generated.size
+
+  def apply(idx: Int) = generated(idx)
 }
