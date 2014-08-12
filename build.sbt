@@ -2,7 +2,7 @@ organization := "io.lamma"
 
 name := "lamma"
 
-version := "2.2.0"
+version := "2.2.1"
 
 scalaVersion := "2.11.1"
 
