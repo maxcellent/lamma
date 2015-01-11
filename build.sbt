@@ -6,7 +6,7 @@ version := "2.2.1"
 
 scalaVersion := "2.11.1"
 
-crossScalaVersions := Seq("2.10.4", "2.11.1")
+crossScalaVersions := Seq("2.10.4", "2.11.4")
 
 javaOptions := Seq("-Xmx1g")
 
