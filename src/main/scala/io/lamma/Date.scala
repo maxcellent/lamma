@@ -328,6 +328,11 @@ case class Date(yyyy: Int, mm: Int, dd: Int)
    * standard ISO string in yyyy-mm-dd. eg, 2014-05-23 or 2014-11-02
    */
   lazy val toISOString = f"$yyyy%04d-$mm%02d-$dd%02d"
+
+  /**
+   * int representation in yyyyMMdd form
+   */
+  lazy val toISOInt = yyyy * 10000 + mm * 100 + dd
 }
 
 object Date {
@@ -345,6 +350,19 @@ object Date {
    * @param isoRepr in yyyy-MM-dd format, eg, 2014-02-26
    */
   def apply(isoRepr: String): Date = JavaDateUtil.date(JavaDateUtil.calendar(isoRepr))
+
+  /**
+   * Allocates a <code>Date</code> object and initializes it to
+   * represent the integer in yyyyMMdd form
+   *
+   * @param date date representation in yyyyMMdd form
+   */
+  def apply(date: Int): Date = {
+    val yyyy = date / 10000
+    val mm = date % 10000 / 100
+    val dd = date % 100
+    Date(yyyy, mm, dd)
+  }
 
   /**
    * @return a new instance of today in system timezone

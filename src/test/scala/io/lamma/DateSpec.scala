@@ -187,12 +187,22 @@ class DateSpec extends FlatSpec with Matchers {
     Date(2014, 11, 29).toISOString should be("2014-11-29")
   }
 
-  "apply" should "support ISO string" in {
+  "Date.apply" should "support ISO string" in {
     Date("2014-05-20") should be(Date(2014, 5, 20))
 
     intercept[IllegalArgumentException] {
       Date("2014-0520")
     }
+  }
+
+  "toISOInt" should "convert date into yyyyMMdd form" in {
+    Date(2005, 12, 27).toISOInt should be(20051227)
+    Date(335, 12, 27).toISOInt should be(3351227)
+  }
+
+  "Date.apply" should "work with integer input" in {
+    Date(20051227) should be(Date(2005, 12, 27))
+    Date(3351227) should be(Date(335, 12, 27))
   }
 
   "shift" should "work" in {
