@@ -1,13 +1,13 @@
 language: scala
 
 scala:
-  - 2.11.1
-  - 2.11.0
+  - 2.11.4
   - 2.10.4
 
 branches:
   only:
     - master
+    - 2.2
 
 notifications:
   email:
@@ -15,5 +15,7 @@ notifications:
       - hacker@zhuchenye.com
 
 jdk:
+  - openjdk6
   - openjdk7
   - oraclejdk7
+  - oraclejdk8
