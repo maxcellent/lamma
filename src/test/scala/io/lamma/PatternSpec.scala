@@ -2,9 +2,12 @@ package io.lamma
 
 import io.lamma.DayOfMonth.{NthWeekdayOfMonth, LastDayOfMonth}
 import io.lamma.DayOfYear.{NthMonthOfYear, LastDayOfYear}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
 import Pattern.recur
 
+@RunWith(classOf[JUnitRunner])
 class PatternSpec extends WordSpec with Matchers {
 
   "recur" should {

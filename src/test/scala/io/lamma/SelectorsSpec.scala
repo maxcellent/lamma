@@ -2,8 +2,11 @@ package io.lamma
 
 import Selectors._
 import io.lamma.Selector._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, FlatSpec}
 
+@RunWith(classOf[JUnitRunner])
 class SelectorsSpec extends FlatSpec with Matchers {
 
   "sameDay" should "be the same as lamma version" in {

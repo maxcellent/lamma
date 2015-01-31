@@ -1,7 +1,10 @@
 package io.lamma
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{WordSpec, Matchers}
 
+@RunWith(classOf[JUnitRunner])
 class DateRangeSpec extends WordSpec with Matchers {
 
   "DateRange" should {

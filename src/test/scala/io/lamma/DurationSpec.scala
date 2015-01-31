@@ -1,7 +1,10 @@
 package io.lamma
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, FlatSpec}
 
+@RunWith(classOf[JUnitRunner])
 class DurationSpec extends FlatSpec with Matchers {
 
   "implicit duration" should "work" in {

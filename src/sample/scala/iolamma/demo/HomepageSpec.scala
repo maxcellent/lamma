@@ -1,5 +1,7 @@
 package io.lammaweb
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
 import io.lamma.DayOfMonth.LastDayOfMonth
 import io.lamma.Anchor.PeriodEnd
@@ -13,7 +15,8 @@ import io.lamma.Shifter.ShiftWorkingDays
 /**
  * used in homepage
  */
-class HomePageSpec extends WordSpec with Matchers {
+@RunWith(classOf[JUnitRunner])
+class HomepageSpec extends WordSpec with Matchers {
 
   // ============= basic date manipulation ===============
   "basic" in {

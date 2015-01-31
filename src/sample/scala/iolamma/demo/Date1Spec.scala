@@ -2,12 +2,15 @@ package io.lamma.demo
 
 import io.lamma._
 import io.lamma.{Weekends, Date}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
 
 /**
  * this class covers all scala code used in Tutorial 1: Basic Date Generation
  *   it was Tutorial 1: Basic Sequence Generation in 1.x
  */
+@RunWith(classOf[JUnitRunner])
 class Date1Spec extends WordSpec with Matchers {
   "generate date sequence by day" in {
     val expected = Date(2014, 5, 10) :: Date(2014, 5, 11) :: Date(2014, 5, 12) :: Nil

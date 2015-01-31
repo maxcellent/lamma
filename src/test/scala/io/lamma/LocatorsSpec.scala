@@ -1,7 +1,10 @@
 package io.lamma
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, FlatSpec}
 
+@RunWith(classOf[JUnitRunner])
 class LocatorsSpec extends FlatSpec with Matchers {
 
   "firstDay" should "work" in {

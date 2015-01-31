@@ -1,9 +1,12 @@
 package io.lamma
 
 import com.google.common.collect.{Sets, Lists}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, FlatSpec}
 import JavaCollectionUtil._
 
+@RunWith(classOf[JUnitRunner])
 class JavaCollectionUtilSpec extends FlatSpec with Matchers {
 
   "asScalaSeq" should "convert from java array to scala seq" in {

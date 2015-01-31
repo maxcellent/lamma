@@ -1,7 +1,10 @@
 package io.lamma
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, FlatSpec}
 
+@RunWith(classOf[JUnitRunner])
 class DateSpec extends FlatSpec with Matchers {
 
   "init" should "throw exception when input date is not valid" in {

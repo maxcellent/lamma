@@ -1,10 +1,13 @@
 package io.lamma
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, FlatSpec}
 import io.lamma.Anchor.{OtherDate, PeriodEnd}
 import io.lamma.Selector.Forward
 import io.lamma.Shifter.ShiftCalendarDays
 
+@RunWith(classOf[JUnitRunner])
 class DateDefSpec extends FlatSpec with Matchers {
 
   "populate" should "combine everything together" in {

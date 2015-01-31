@@ -2,8 +2,11 @@ package io.lamma
 
 import io.lamma.DayOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
 import io.lamma.DayOfYear.{NthMonthOfYear, NthWeekdayOfYear, LastDayOfYear, NthDayOfYear}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{WordSpec, Matchers}
 
+@RunWith(classOf[JUnitRunner])
 class LocatorSpec extends WordSpec with Matchers {
 
   "OrdinalLocator" should {

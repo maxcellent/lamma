@@ -1,8 +1,11 @@
 package io.lamma
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{WordSpec, Matchers}
 import io.lamma.StubRulePeriodBuilder._
 
+@RunWith(classOf[JUnitRunner])
 class StubRulePeriodBuilderSpec extends WordSpec with Matchers {
 
   "LongStart stub rule" should {

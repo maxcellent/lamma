@@ -1,9 +1,12 @@
 package io.lamma
 
 import com.google.common.collect.Sets
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 import HolidayRules._
 
+@RunWith(classOf[JUnitRunner])
 class HolidayRulesSpec extends FlatSpec with Matchers {
 
   "noHoliday" should "be the same as lamma version" in {

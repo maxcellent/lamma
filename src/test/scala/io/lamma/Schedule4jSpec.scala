@@ -1,11 +1,14 @@
 package io.lamma
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
 import io.lamma.Anchor.{OtherDate, PeriodEnd}
 import io.lamma.Shifter.{ShiftWorkingDays, NoShift}
 import io.lamma.Selector.Forward
 import com.google.common.collect.Lists
 
+@RunWith(classOf[JUnitRunner])
 class Schedule4jSpec extends FlatSpec with Matchers {
 
    val couponDef = DateDef("CouponDate", PeriodEnd, NoShift, Forward())

@@ -1,9 +1,13 @@
 package io.lamma.partial.date
 
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+
 import collection.JavaConversions._
 import io.lamma._
 import org.scalatest.{Matchers, FlatSpec}
 
+@RunWith(classOf[JUnitRunner])
 class WeekOpsSpec extends FlatSpec with Matchers {
 
   "daysOfWeek4j" should "work" in {

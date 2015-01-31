@@ -1,12 +1,15 @@
 package io.lamma
 
 import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 import collection.JavaConversions._
 import io.lamma.DayOfMonth.NthDayOfMonth
 import io.lamma.DayOfYear.NthDayOfYear
 import org.scalatest.{WordSpec, Matchers}
 
+@RunWith(classOf[JUnitRunner])
 class DatesSpec extends WordSpec with Matchers {
 
   // ========== date & calendars ==========

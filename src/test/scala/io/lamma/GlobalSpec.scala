@@ -1,11 +1,14 @@
 package io.lamma
 
 import io.lamma.Locator.Last
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
 
 /**
  * this spec covers io/lamma/package.scala
  */
+@RunWith(classOf[JUnitRunner])
 class GlobalSpec extends WordSpec with Matchers {
 
   "Duration to Pattern conversion" should {

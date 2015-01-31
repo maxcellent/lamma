@@ -2,8 +2,11 @@ package io.lamma
 
 import io.lamma.StubRulePeriodBuilders._
 import io.lamma.StubRulePeriodBuilder.{ShortEnd, LongEnd, ShortStart, LongStart}
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, FlatSpec}
 
+@RunWith(classOf[JUnitRunner])
 class StubRulePeriodBuildersSpec extends FlatSpec with Matchers {
 
   "longStart" should "be the same as lamma version" in {

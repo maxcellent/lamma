@@ -1,12 +1,15 @@
 package io.lamma.demo
 
 import io.lamma._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
 
 /**
  * this class covers all scala code used in Tutorial 2: Advanced Date Generation
  *  it was Tutorial 2: Advanced Sequence Generation in 1.x
  */
+@RunWith(classOf[JUnitRunner])
 class Date2Spec extends WordSpec with Matchers {
 
   "you can specify day of week when generating with Weeks" in {

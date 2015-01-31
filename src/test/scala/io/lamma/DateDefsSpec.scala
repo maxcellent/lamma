@@ -3,8 +3,11 @@ package io.lamma
 import io.lamma.Anchor.PeriodStart
 import io.lamma.Selector.Forward
 import io.lamma.Shifter.ShiftCalendarDays
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, FlatSpec}
 
+@RunWith(classOf[JUnitRunner])
 class DateDefsSpec extends FlatSpec with Matchers {
 
   "DateDefs.of" should "be the same as lamma version" in {

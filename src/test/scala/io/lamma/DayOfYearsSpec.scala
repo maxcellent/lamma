@@ -3,8 +3,11 @@ package io.lamma
 import io.lamma.DayOfMonth._
 import io.lamma.DayOfWeek._
 import io.lamma.DayOfYear._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, FlatSpec}
 
+@RunWith(classOf[JUnitRunner])
 class DayOfYearsSpec extends FlatSpec with Matchers {
 
   "firstDay" should "be the same as lamma version" in {

@@ -4,11 +4,14 @@ import io.lamma.Anchor.PeriodEnd
 import io.lamma.DayOfMonth.NthDayOfMonth
 import io.lamma.StubRulePeriodBuilder._
 import io.lamma._
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
 
 /**
  * FIXME: group them into separated detailed topics
  */
+@RunWith(classOf[JUnitRunner])
 class PendingSpec extends WordSpec with Matchers {
 
   "topic: recurrence pattern" should {
