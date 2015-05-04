@@ -1,6 +1,11 @@
 package io.lamma
 
-trait HolidayRule {
+/**
+ * abstract class is used instead of trait
+ *
+ * otherwise it's not quite java friendly https://github.com/maxcellent/lamma/issues/4
+ */
+abstract class HolidayRule {
 
   def isHoliday(d: Date): Boolean
 
