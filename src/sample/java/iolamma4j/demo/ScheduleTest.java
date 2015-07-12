@@ -27,7 +27,7 @@ public class ScheduleTest {
                 Dates.newDate(2017, 1, 3));
 
         DateDef couponDate = DateDefs.of("CouponDate", Anchors.periodEnd(), Selectors.modifiedFollowing(HolidayRules.weekends()));
-        DateDef settlementDate = DateDefs.of("settlementDate", Anchors.otherDate("CouponDate"), Shifters.byWorkingDays(2, HolidayRules.weekends()));
+        DateDef settlementDate = DateDefs.of("SettlementDate", Anchors.otherDate("CouponDate"), Shifters.byWorkingDays(2, HolidayRules.weekends()));
 
         Schedule4j result = Schedule4j.schedule(
                 Dates.newDate(2015, 1, 1),
@@ -36,7 +36,7 @@ public class ScheduleTest {
                 Lists.newArrayList(couponDate, settlementDate));
 
         assertEquals(result.get("CouponDate"), expectedCouponDates);
-        assertEquals(result.get("settlementDate"), expectedSettlementDates);
+        assertEquals(result.get("SettlementDate"), expectedSettlementDates);
     }
 
     @Test
