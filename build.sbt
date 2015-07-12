@@ -4,7 +4,7 @@ name := "lamma"
 
 version := "2.2.2"
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
 crossScalaVersions := Seq("2.10.5", "2.11.7")
 
