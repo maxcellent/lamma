@@ -14,13 +14,13 @@ javacOptions := Seq("-Xlint:unchecked", "-Xlint:deprecation")
 
 scalacOptions := Seq("-feature", "-deprecation", "-language:postfixOps", "-language:implicitConversions")
 
-libraryDependencies += "junit" % "junit" % "4.11" % "test"
+libraryDependencies += "junit" % "junit" % "4.12" % "test"
 
 libraryDependencies += "com.novocode" % "junit-interface" % "0.9" % "test"  // we need to have this lib in order to run junit with sbt test
 
-libraryDependencies += "com.google.guava" % "guava" % "17.0" % "test"
+libraryDependencies += "com.google.guava" % "guava" % "18.0" % "test"
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.6" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.4" % "test"
 
 // ========== demo + sample source directories =========
 unmanagedSourceDirectories in Test += baseDirectory.value / "src/sample/java"
