@@ -2,7 +2,7 @@ organization := "io.lamma"
 
 name := "lamma"
 
-version := "2.2.2"
+version := "2.2.3"
 
 scalaVersion := "2.11.7"
 
@@ -10,7 +10,7 @@ crossScalaVersions := Seq("2.10.5", "2.11.7")
 
 javaOptions := Seq("-Xmx1g")
 
-javacOptions := Seq("-Xlint:unchecked", "-Xlint:deprecation")
+javacOptions := Seq("-Xlint:unchecked", "-Xlint:deprecation", "-source", "1.5", "-target", "1.5")
 
 scalacOptions := Seq("-feature", "-deprecation", "-language:postfixOps", "-language:implicitConversions")
 
