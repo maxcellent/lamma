@@ -2,29 +2,39 @@ package io.lamma;
 
 public enum Month {
 
-    JANUARY,
+    JANUARY(Quarter.Q1),
 
-    FEBRUARY,
+    FEBRUARY(Quarter.Q1),
 
-    MARCH,
+    MARCH(Quarter.Q1),
 
-    APRIL,
+    APRIL(Quarter.Q2),
 
-    MAY,
+    MAY(Quarter.Q2),
 
-    JUNE,
+    JUNE(Quarter.Q2),
 
-    JULY,
+    JULY(Quarter.Q3),
 
-    AUGUST,
+    AUGUST(Quarter.Q3),
 
-    SEPTEMBER,
+    SEPTEMBER(Quarter.Q3),
 
-    OCTOBER,
+    OCTOBER(Quarter.Q4),
 
-    NOVEMBER,
+    NOVEMBER(Quarter.Q4),
 
-    DECEMBER;
+    DECEMBER(Quarter.Q4);
+
+    private final Quarter q;
+
+    Month(Quarter q) {
+        this.q = q;
+    }
+
+    public Quarter quarter() {
+        return this.q;
+    }
 
     public int n() {
         return this.ordinal() + 1;

@@ -21,6 +21,8 @@ private[lamma] trait MonthOps {
 
   lazy val dayOfMonth = dd
 
+  lazy val quarter = month.quarter()
+
   /**
    * find the day of this month matching specified day-of-month. DSL can be used directly.
    *

@@ -152,6 +152,10 @@ class MonthOpsSpec extends FlatSpec with Matchers {
     Date(2014, 5, 9).dayOfMonth should be(9)
   }
 
+  "quarter" should "work" in {
+    Date(2014, 9, 3).quarter should be(Quarter.Q3)
+  }
+
   "dayOfWeekInMonth" should "work" in {
     Date(2014, 7, 5).dayOfWeekInMonth(2, Friday) should be(Date(2014, 7, 11))
 
