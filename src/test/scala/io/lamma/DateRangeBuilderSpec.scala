@@ -7,7 +7,7 @@ import org.scalatest.{Matchers, WordSpec}
 @RunWith(classOf[JUnitRunner])
 class DateRangeBuilderSpec extends WordSpec with Matchers {
 
-  "on" should {
+  "validation rules" should {
     "throw exception if dow is assigned to a day pattern" in {
       intercept[IllegalArgumentException] {
         val range = Date(2014, 5, 1) to Date(2014, 5, 5) by (5 days) on Tuesday

@@ -2,8 +2,7 @@ package io.lamma
 
 import io.lamma.Selector._
 
-import collection.JavaConverters._
-import scala.collection.AbstractSeq
+import scala.collection.JavaConverters._
 import scala.collection.immutable.IndexedSeq
 
 /**
@@ -30,7 +29,23 @@ case class DateRangeBuilder(from: Date,
 
   lazy val dateRange = DateRange(from, to, pattern, holiday, shifters, selector)
 
-  override def foreach[U](f: Date => U) = dateRange.foreach(f)
+  override def foreach[U](f: Date => U) = {
+    def iae(msg: String) = throw new IllegalArgumentException(s"$loc is not applicable to step by ${step.n} days")
+
+    // validate when loc is defined
+    loc.foreach {
+      l =>
+        step match {
+          case DayDuration(n) => iae(s"$loc is not applicable to step by ${step.n} days")
+          case WeekDuration(n) if !l.isInstanceOf[DayOfWeekSupport] => iae(s"$loc is not applicable to step by ${step.n} weeks")
+          case MonthDuration(n) if !l.isInstanceOf[DayOfMonthSupport] => iae(s"$loc is not applicable to step by ${step.n} months")
+          case YearDuration(n) if !l.isInstanceOf[DayOfYearSupport] => iae(s"$loc is not applicable to step by ${step.n} years")
+          case _ => // pass
+        }
+    }
+
+    dateRange.foreach(f)
+  }
 
   def by(d: day.type): DateRangeBuilder = by(1)
 
@@ -42,15 +57,7 @@ case class DateRangeBuilder(from: Date,
 
   def on(dow: DayOfWeek): DateRangeBuilder = on(Locator(dow))
 
-  def on(loc: Locator) = {
-    step match {
-      case DayDuration(n) => throw new IllegalArgumentException(s"$loc is not applicable to step by ${step.n} days")
-      case WeekDuration(n) if !loc.isInstanceOf[DayOfWeekSupport] => throw new IllegalArgumentException(s"$loc is not applicable to step by ${step.n} weeks")
-      case MonthDuration(n) if !loc.isInstanceOf[DayOfMonthSupport] => throw new IllegalArgumentException(s"$loc is not applicable to step by ${step.n} months")
-      case YearDuration(n) if !loc.isInstanceOf[DayOfYearSupport] => throw new IllegalArgumentException(s"$loc is not applicable to step by ${step.n} years")
-      case _ => this.copy(loc = Some(loc))
-    }
-  }
+  def on(loc: Locator) = this.copy(loc = Some(loc))
 
   def on(dom: DayOfMonth) = this.copy(customDom = Some(dom))
 
