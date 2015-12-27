@@ -1,13 +1,13 @@
-package io.lamma.demo
+package iolamma.demo
 
+import io.lamma.Anchor.PeriodEnd
+import io.lamma.Selector.ModifiedFollowing
+import io.lamma.Shifter.ShiftWorkingDays
+import io.lamma.StubRulePeriodBuilder.LongEnd
+import io.lamma._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
-import io.lamma._
-import io.lamma.Anchor.PeriodEnd
-import io.lamma.StubRulePeriodBuilder.LongEnd
-import io.lamma.Shifter.ShiftWorkingDays
-import io.lamma.Selector.ModifiedFollowing
 
 /**
  * this class covers all scala code used in Tutorial 3: Advanced Schedule Generation

@@ -2,8 +2,9 @@ package io.lamma
 
 import java.sql.{Date => SDate}
 import java.util.Calendar
-import io.lamma.partial.date.{YearOps, MonthOps, WeekOps}
-import io.lamma.Selector.{ModifiedPreceding, ModifiedFollowing, Backward, Forward}
+
+import io.lamma.Selector.{Backward, Forward, ModifiedFollowing, ModifiedPreceding}
+import io.lamma.partial.date.{MonthOps, WeekOps, YearOps}
 
 /**
  * immutable object to represent a Date. All mutating operations will return a new Date.

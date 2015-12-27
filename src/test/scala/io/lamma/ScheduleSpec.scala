@@ -1,11 +1,11 @@
 package io.lamma
 
+import io.lamma.Anchor.{OtherDate, PeriodEnd}
+import io.lamma.Selector.Forward
+import io.lamma.Shifter.{NoShift, ShiftWorkingDays}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
-import io.lamma.Anchor.{OtherDate, PeriodEnd}
-import io.lamma.Selector.Forward
-import io.lamma.Shifter.{ShiftWorkingDays, NoShift}
 
 @RunWith(classOf[JUnitRunner])
 class ScheduleSpec extends FlatSpec with Matchers {

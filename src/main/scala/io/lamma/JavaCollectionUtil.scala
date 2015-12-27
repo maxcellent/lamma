@@ -1,9 +1,8 @@
 package io.lamma
 
-import collection.JavaConverters._
+import java.util.{List => JList, Set => JSet}
 
-import java.util.{List => JList}
-import java.util.{Set => JSet}
+import scala.collection.JavaConverters._
 
 /**
  * all operations interop between java collection and scala collection are maintained here

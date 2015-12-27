@@ -2,7 +2,7 @@ package io.lamma
 
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 
 @RunWith(classOf[JUnitRunner])
 class DurationSpec extends FlatSpec with Matchers {

@@ -1,8 +1,8 @@
 package io.lamma
 
 import java.text.{ParseException, SimpleDateFormat}
+import java.util.Calendar._
 import java.util.{Calendar => JCalendar, TimeZone}
-import JCalendar._
 
 import scala.util.{Failure, Success, Try}
 

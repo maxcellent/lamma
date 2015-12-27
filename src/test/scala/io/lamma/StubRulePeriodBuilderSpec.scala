@@ -1,9 +1,9 @@
 package io.lamma
 
+import io.lamma.StubRulePeriodBuilder._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{WordSpec, Matchers}
-import io.lamma.StubRulePeriodBuilder._
+import org.scalatest.{Matchers, WordSpec}
 
 @RunWith(classOf[JUnitRunner])
 class StubRulePeriodBuilderSpec extends WordSpec with Matchers {

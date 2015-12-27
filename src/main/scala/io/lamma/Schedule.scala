@@ -1,6 +1,6 @@
 package io.lamma
 
-import Schedule._
+import io.lamma.Schedule._
 
 case class Schedule(periods: List[Period], dateDefs: List[DateDef]) {
 

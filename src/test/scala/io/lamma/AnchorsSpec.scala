@@ -1,10 +1,10 @@
 package io.lamma
 
-import io.lamma.Anchor.{OtherDate, PeriodStart, PeriodEnd}
+import io.lamma.Anchor.{OtherDate, PeriodEnd, PeriodStart}
 import io.lamma.Anchors._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 
 @RunWith(classOf[JUnitRunner])
 class AnchorsSpec extends FlatSpec with Matchers {

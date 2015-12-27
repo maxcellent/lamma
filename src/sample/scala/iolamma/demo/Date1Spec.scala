@@ -1,7 +1,6 @@
-package io.lamma.demo
+package iolamma.demo
 
-import io.lamma._
-import io.lamma.{Weekends, Date}
+import io.lamma.{Date, Weekends, _}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}

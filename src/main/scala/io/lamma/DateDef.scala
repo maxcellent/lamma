@@ -1,8 +1,8 @@
 package io.lamma
 
-import io.lamma.Shifter.NoShift
-import io.lamma.Selector.SameDay
 import io.lamma.Anchor.{OtherDate, PeriodEnd, PeriodStart}
+import io.lamma.Selector.SameDay
+import io.lamma.Shifter.NoShift
 
 case class DateDef(name: String,
                    relativeTo: Anchor = PeriodEnd,

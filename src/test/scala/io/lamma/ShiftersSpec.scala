@@ -1,10 +1,10 @@
 package io.lamma
 
+import io.lamma.Shifter.{NoShift, ShiftCalendarDays, ShiftWorkingDays}
 import io.lamma.Shifters._
-import io.lamma.Shifter.{ShiftWorkingDays, ShiftCalendarDays, NoShift}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 
 @RunWith(classOf[JUnitRunner])
 class ShiftersSpec extends FlatSpec with Matchers {

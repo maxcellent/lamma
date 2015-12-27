@@ -1,9 +1,9 @@
 package io.lamma
 
+import io.lamma.DayOfMonth.{LastDayOfMonth, LastWeekdayOfMonth, NthDayOfMonth, NthWeekdayOfMonth}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{WordSpec, Matchers}
-import io.lamma.DayOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
+import org.scalatest.{Matchers, WordSpec}
 
 @RunWith(classOf[JUnitRunner])
 class DayOfMonthSpec extends WordSpec with Matchers {

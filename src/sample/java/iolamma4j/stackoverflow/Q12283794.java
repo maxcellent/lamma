@@ -1,10 +1,10 @@
 package iolamma4j.stackoverflow;
 
-import static org.junit.Assert.*;
-
 import io.lamma.Date;
 import io.lamma.DayOfWeek;
 import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
  * http://stackoverflow.com/questions/12283794/determinining-the-date-of-a-particular-day-of-week

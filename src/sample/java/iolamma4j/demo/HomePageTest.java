@@ -1,13 +1,13 @@
 package iolamma4j.demo;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import com.google.common.collect.Lists;
 import io.lamma.*;
 import org.junit.Test;
 
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * this test is written for home page sample

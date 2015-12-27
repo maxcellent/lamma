@@ -1,16 +1,14 @@
-package io.lammaweb
+package iolamma.demo
 
+import io.lamma.Anchor.{OtherDate, PeriodEnd}
+import io.lamma.DayOfMonth.LastDayOfMonth
+import io.lamma.Selector.ModifiedFollowing
+import io.lamma.Shifter.ShiftWorkingDays
+import io.lamma.StubRulePeriodBuilder._
+import io.lamma._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
-import io.lamma.DayOfMonth.LastDayOfMonth
-import io.lamma.Anchor.PeriodEnd
-import io.lamma.StubRulePeriodBuilder._
-import io.lamma._
-import io.lamma.Anchor.OtherDate
-import io.lamma.Selector.ModifiedFollowing
-import io.lamma.DayOfMonth.NthDayOfMonth
-import io.lamma.Shifter.ShiftWorkingDays
 
 /**
  * used in homepage

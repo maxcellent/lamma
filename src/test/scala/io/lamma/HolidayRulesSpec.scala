@@ -1,10 +1,10 @@
 package io.lamma
 
 import com.google.common.collect.Sets
+import io.lamma.HolidayRules._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{FlatSpec, Matchers}
-import HolidayRules._
 
 @RunWith(classOf[JUnitRunner])
 class HolidayRulesSpec extends FlatSpec with Matchers {

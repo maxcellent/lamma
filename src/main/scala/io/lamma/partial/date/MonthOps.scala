@@ -1,11 +1,10 @@
 package io.lamma.partial.date
 
-import io.lamma._
 import io.lamma.DayOfMonth._
-import io.lamma.{JavaDateUtil, Month, DayOfMonth, Date}
+import io.lamma.{Date, DayOfMonth, JavaDateUtil, Month, _}
 
-import collection.JavaConverters._
-import annotation.tailrec
+import scala.annotation.tailrec
+import scala.collection.JavaConverters._
 
 private[lamma] trait MonthOps {
   this: Date =>

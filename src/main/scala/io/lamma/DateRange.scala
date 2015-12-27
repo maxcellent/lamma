@@ -2,8 +2,7 @@ package io.lamma
 
 import io.lamma.Selector.SameDay
 
-import collection.JavaConverters._
-import scala.collection.AbstractSeq
+import scala.collection.JavaConverters._
 import scala.collection.immutable.IndexedSeq
 
 /**

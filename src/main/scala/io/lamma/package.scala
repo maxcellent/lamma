@@ -151,9 +151,9 @@ package object lamma {
 
   val lastSunday = Locator(Last, Sunday)
 
-  implicit def dayOfWeekSupportConversion(dowSupport: DayOfWeekSupport) = dowSupport.dow
+  implicit def dayOfWeekSupportConversion(dowSupport: DayOfWeekSupport): DayOfWeek = dowSupport.dow
 
-  implicit def dayOfMonthSupportConversion(domSupport: DayOfMonthSupport) = domSupport.dom
+  implicit def dayOfMonthSupportConversion(domSupport: DayOfMonthSupport): DayOfMonth = domSupport.dom
 
-  implicit def dayOfYearSupportConversion(doySupport: DayOfYearSupport) = doySupport.doy
+  implicit def dayOfYearSupportConversion(doySupport: DayOfYearSupport): DayOfYear = doySupport.doy
 }

@@ -1,10 +1,10 @@
 package io.lamma
 
-import DayOfMonth._
+import io.lamma.DayOfMonth._
 import io.lamma.DayOfWeek._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalatest.{FlatSpec, Matchers}
 
 @RunWith(classOf[JUnitRunner])
 class DayOfMonthsSpec extends FlatSpec with Matchers {

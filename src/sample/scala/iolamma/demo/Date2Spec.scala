@@ -1,4 +1,4 @@
-package io.lamma.demo
+package iolamma.demo
 
 import io.lamma._
 import org.junit.runner.RunWith
@@ -81,12 +81,12 @@ class Date2Spec extends WordSpec with Matchers {
 
   // some edge cases
   "if the recurrence pattern is too long, then there will be only one day generated, based on the direction (forward or backward?)" in {
-    ((2014, 1, 1) to (2014, 3, 31) by (6 months)).toList should(be(List(Date(2014, 1, 1))))
+    ((2014, 1, 1) to(2014, 3, 31) by (6 months)).toList should be(List(Date(2014, 1, 1)))
 
-    ((2014, 3, 31) to (2014, 1, 1) by (-6 months)).toList should(be(List(Date(2014, 3, 31))))
+    ((2014, 3, 31) to(2014, 1, 1) by (-6 months)).toList should be(List(Date(2014, 3, 31)))
   }
 
   "single date will be generated, when start date equals to the end date" in {
-    ((2014, 1, 1) to (2014, 1, 1) by (6 months)).toList should(be(List(Date(2014, 1, 1))))
+    ((2014, 1, 1) to(2014, 1, 1) by (6 months)).toList should be(List(Date(2014, 1, 1)))
   }
 }

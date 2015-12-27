@@ -3,11 +3,10 @@ package io.lamma
 import io.lamma.DayOfMonth._
 import io.lamma.DayOfWeek._
 import io.lamma.DayOfYear._
+import io.lamma.Patterns._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, FlatSpec}
-
-import Patterns._
+import org.scalatest.{FlatSpec, Matchers}
 
 @RunWith(classOf[JUnitRunner])
 class PatternsSpec extends FlatSpec with Matchers {

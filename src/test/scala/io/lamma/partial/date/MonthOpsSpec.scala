@@ -1,12 +1,12 @@
 package io.lamma.partial.date
 
+import io.lamma.DayOfMonth.NthDayOfMonth
+import io.lamma._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
+import org.scalatest.{FlatSpec, Matchers}
 
-import collection.JavaConversions._
-import io.lamma._
-import io.lamma.DayOfMonth.NthDayOfMonth
-import org.scalatest.{Matchers, FlatSpec}
+import scala.collection.JavaConversions._
 
 @RunWith(classOf[JUnitRunner])
 class MonthOpsSpec extends FlatSpec with Matchers {

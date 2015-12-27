@@ -1,8 +1,8 @@
 package io.lamma
 
-import Locator._
-import io.lamma.DayOfMonth.{LastWeekdayOfMonth, NthWeekdayOfMonth, LastDayOfMonth, NthDayOfMonth}
-import io.lamma.DayOfYear.{NthMonthOfYear, NthWeekdayOfYear, LastDayOfYear, NthDayOfYear}
+import io.lamma.DayOfMonth.{LastDayOfMonth, LastWeekdayOfMonth, NthDayOfMonth, NthWeekdayOfMonth}
+import io.lamma.DayOfYear.{LastDayOfYear, NthDayOfYear, NthMonthOfYear, NthWeekdayOfYear}
+import io.lamma.Locator._
 
 /**
  * Locator is used to generate DayOfWeek, DayOfMonth and DayOfYear depends on the context

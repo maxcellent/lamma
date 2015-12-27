@@ -1,9 +1,9 @@
 package io.lamma
 
+import io.lamma.DayOfYear.{NthDayOfYear, NthWeekdayOfYear}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.{Matchers, WordSpec}
-import io.lamma.DayOfYear.{NthWeekdayOfYear, NthDayOfYear}
 
 @RunWith(classOf[JUnitRunner])
 class DayOfYearSpec extends WordSpec with Matchers {

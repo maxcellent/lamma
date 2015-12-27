@@ -1,6 +1,6 @@
 package io.lamma
 
-import StubRulePeriodBuilder._
+import io.lamma.StubRulePeriodBuilder._
 
 /**
  * stub rule based period builders

@@ -3,7 +3,7 @@ package io.lamma
 import io.lamma.DayOfMonth.NthDayOfMonth
 import io.lamma.DayOfYear.NthMonthOfYear
 
-import annotation.tailrec
+import scala.annotation.tailrec
 
 /**
  * recurrence pattern

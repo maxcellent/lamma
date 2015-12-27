@@ -1,10 +1,11 @@
 package io.lamma
 
+import java.util.TimeZone
+
+import io.lamma.JavaDateUtil._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{WordSpec, Matchers}
-import JavaDateUtil._
-import java.util.TimeZone
+import org.scalatest.{Matchers, WordSpec}
 
 @RunWith(classOf[JUnitRunner])
 class JavaDateUtilSpec extends WordSpec with Matchers {

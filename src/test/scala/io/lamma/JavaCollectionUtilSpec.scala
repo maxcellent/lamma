@@ -1,10 +1,10 @@
 package io.lamma
 
-import com.google.common.collect.{Sets, Lists}
+import com.google.common.collect.{Lists, Sets}
+import io.lamma.JavaCollectionUtil._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.{Matchers, FlatSpec}
-import JavaCollectionUtil._
+import org.scalatest.{FlatSpec, Matchers}
 
 @RunWith(classOf[JUnitRunner])
 class JavaCollectionUtilSpec extends FlatSpec with Matchers {
