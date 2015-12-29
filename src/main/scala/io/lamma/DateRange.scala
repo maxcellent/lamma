@@ -32,12 +32,12 @@ import scala.collection.immutable.IndexedSeq
  *  @param selector  How to select the date once the date is generated? eg, same day, following working day?
  *
  */
-case class DateRange(from: Date,
-                     to: Date,
-                     pattern: Pattern = Daily(1),
-                     holiday: HolidayRule = NoHoliday,
-                     shifters: List[Shifter] = Nil,
-                     selector: Selector = SameDay) extends IndexedSeq[Date] {
+class DateRange(from: Date,
+                to: Date,
+                pattern: Pattern,
+                holiday: HolidayRule,
+                shifters: List[Shifter],
+                selector: Selector) extends IndexedSeq[Date] {
 
   lazy val generated = pattern.recur(from, to)
 
@@ -60,4 +60,13 @@ case class DateRange(from: Date,
   override def length = generated.size
 
   def apply(idx: Int) = generated(idx)
+}
+
+object DateRange {
+  def apply(from: Date,
+            to: Date,
+            pattern: Pattern = Daily(1),
+            holiday: HolidayRule = NoHoliday,
+            shifters: List[Shifter] = Nil,
+            selector: Selector = SameDay) = new DateRange(from, to, pattern, holiday, shifters, selector)
 }

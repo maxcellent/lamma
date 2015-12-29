@@ -16,15 +16,15 @@ import scala.collection.immutable.IndexedSeq
  * @param shifters
  * @param selector
  */
-case class DateRangeBuilder(from: Date,
-                            to: Date,
-                            step: Duration = 1 day,
-                            holiday: HolidayRule = NoHoliday,
-                            loc: Option[Locator] = None,
-                            shifters: List[Shifter] = Nil,
-                            selector: Selector = SameDay,
-                            customDom: Option[DayOfMonth] = None,
-                            customDoy: Option[DayOfYear] = None) extends IndexedSeq[Date] {
+class DateRangeBuilder(from: Date,
+                       to: Date,
+                       step: Duration,
+                       holiday: HolidayRule,
+                       loc: Option[Locator],
+                       shifters: List[Shifter],
+                       selector: Selector,
+                       customDom: Option[DayOfMonth],
+                       customDoy: Option[DayOfYear]) extends IndexedSeq[Date] {
   require(step.n != 0, "step cannot be 0.")
 
   lazy val dateRange = DateRange(from, to, pattern, holiday, shifters, selector)
@@ -51,17 +51,17 @@ case class DateRangeBuilder(from: Date,
 
   def by(step: Int): DateRangeBuilder = by(step days)
 
-  def by(step: Duration) = this.copy(step = step)
+  def by(step: Duration) = DateRangeBuilder(from, to, step, holiday, loc, shifters, selector, customDom, customDoy)
 
-  def except(holiday: HolidayRule) = this.copy(holiday = this.holiday and holiday)
+  def except(holiday: HolidayRule) = DateRangeBuilder(from, to, step, this.holiday and holiday, loc, shifters, selector, customDom, customDoy)
 
   def on(dow: DayOfWeek): DateRangeBuilder = on(Locator(dow))
 
-  def on(loc: Locator) = this.copy(loc = Some(loc))
+  def on(loc: Locator) = DateRangeBuilder(from, to, step, holiday, Some(loc), shifters, selector, customDom, customDoy)
 
-  def on(dom: DayOfMonth) = this.copy(customDom = Some(dom))
+  def on(dom: DayOfMonth) = DateRangeBuilder(from, to, step, holiday, loc, shifters, selector, Some(dom), customDoy)
 
-  def on(doy: DayOfYear) = this.copy(customDoy = Some(doy))
+  def on(doy: DayOfYear) = DateRangeBuilder(from, to, step, holiday, loc, shifters, selector, customDom, Some(doy))
 
   lazy val pattern: Pattern = (step, loc, customDom, customDoy) match {
     case (DayDuration(n), _, _, _) => Daily(n)
@@ -87,7 +87,7 @@ case class DateRangeBuilder(from: Date,
 
   def shift(d: Int, holiday: HolidayRule): DateRangeBuilder = shift(Shifter(d, holiday))
 
-  def shift(shifter: Shifter) = this.copy(shifters = shifters :+ shifter)
+  def shift(shifter: Shifter) = DateRangeBuilder(from, to, step, holiday, loc, shifters :+ shifter, selector, customDom, customDoy)
 
   def forward(holiday: HolidayRule) = select(Forward(holiday))
 
@@ -97,7 +97,7 @@ case class DateRangeBuilder(from: Date,
 
   def modifiedPreceding(holiday: HolidayRule) = select(ModifiedPreceding(holiday))
 
-  def select(selector: Selector) = this.copy(selector = selector)
+  def select(selector: Selector) = DateRangeBuilder(from, to, step, holiday, loc, shifters, selector, customDom, customDoy)
 
   /**
    * override toString method so to make builder transparent
@@ -107,4 +107,18 @@ case class DateRangeBuilder(from: Date,
   override def length = dateRange.length
 
   def apply(idx: Int) = dateRange(idx)
+}
+
+
+object DateRangeBuilder {
+  def apply(from: Date,
+            to: Date,
+            step: Duration = 1 day,
+            holiday: HolidayRule = NoHoliday,
+            loc: Option[Locator] = None,
+            shifters: List[Shifter] = Nil,
+            selector: Selector = SameDay,
+            customDom: Option[DayOfMonth] = None,
+            customDoy: Option[DayOfYear] = None) =
+    new DateRangeBuilder(from, to, step, holiday, loc, shifters, selector, customDom, customDoy)
 }
