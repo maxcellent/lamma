@@ -27,7 +27,10 @@ class DateRangeBuilder(from: Date,
                        customDoy: Option[DayOfYear]) extends IndexedSeq[Date] {
   require(step.n != 0, "step cannot be 0.")
 
-  lazy val dateRange = DateRange(from, to, pattern, holiday, shifters, selector)
+  lazy val build = DateRange(from, to, pattern, holiday, shifters, selector)
+
+  @deprecated(message = "use `build` instead, will be deleted in lamma 2.4.0", since = "2.3.0")
+  lazy val dateRange = build
 
   override def foreach[U](f: Date => U) = {
     def iae(msg: String) = throw new IllegalArgumentException(s"$loc is not applicable to step by ${step.n} days")
@@ -44,7 +47,7 @@ class DateRangeBuilder(from: Date,
         }
     }
 
-    dateRange.foreach(f)
+    build.foreach(f)
   }
 
   def by(d: day.type): DateRangeBuilder = by(1)
@@ -102,11 +105,11 @@ class DateRangeBuilder(from: Date,
   /**
    * override toString method so to make builder transparent
    */
-  override def toString = dateRange.toString
+  override def toString = build.toString
 
-  override def length = dateRange.length
+  override def length = build.length
 
-  def apply(idx: Int) = dateRange(idx)
+  def apply(idx: Int) = build(idx)
 }
 
 
