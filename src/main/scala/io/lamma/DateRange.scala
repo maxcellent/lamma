@@ -44,9 +44,10 @@ class DateRange(from: Date,
 
   private[lamma] lazy val filtered = generated.filterNot(holiday.isHoliday)
 
-  private[lamma] lazy val shifted = filtered.map { d => (d /: shifters) {
-    _ shift _
-  }
+  private[lamma] lazy val shifted = filtered.map {
+    d => (d /: shifters) {
+      _ shift _
+    }
   }
 
   private[lamma] lazy val selected = shifted.map {
