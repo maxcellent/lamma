@@ -2,6 +2,7 @@ package io.lamma
 
 import io.lamma.Selector.SameDay
 
+import scala.annotation.meta.beanGetter
 import scala.collection.JavaConverters._
 import scala.collection.immutable.IndexedSeq
 
@@ -39,13 +40,18 @@ class DateRange(from: Date,
                 shifters: List[Shifter],
                 selector: Selector) extends IndexedSeq[Date] {
 
-  lazy val generated = pattern.recur(from, to)
+  private[lamma] lazy val generated = pattern.recur(from, to)
 
-  lazy val filtered = generated.filterNot(holiday.isHoliday)
+  private[lamma] lazy val filtered = generated.filterNot(holiday.isHoliday)
 
-  lazy val shifted = filtered.map { d => (d /: shifters) {_ shift _} }
+  private[lamma] lazy val shifted = filtered.map { d => (d /: shifters) {
+    _ shift _
+  }
+  }
 
-  lazy val selected = shifted.map { selector.select }
+  private[lamma] lazy val selected = shifted.map {
+    selector.select
+  }
 
   override def foreach[U](f: Date => U) = selected.foreach(f)
 
@@ -53,8 +59,10 @@ class DateRange(from: Date,
    * return an instance of {{{ java.lang.Iterable }}}
    * can be used in java for comprehension
    */
+  @beanGetter
   lazy val javaIterable = this.toIterable.asJava
 
+  @beanGetter
   lazy val javaList = this.toList.asJava
 
   override def length = generated.size

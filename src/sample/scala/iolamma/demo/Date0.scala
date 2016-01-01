@@ -7,6 +7,8 @@ object Date0 extends App {
 
   import io.lamma._
 
+  // the only thing you need to import
+
   Date(2014, 7, 5)  // create a new date
 
   Date("2014-05-05")  // create with ISO string
@@ -14,7 +16,7 @@ object Date0 extends App {
   // ========= compare dates =============
   Date(2014, 7, 7) < Date(2014, 7, 8)
 
-  (2014, 7, 7) < (2014, 7, 8)
+  (2014, 7, 7) <(2014, 7, 8) // implicit conversion from (Int, Int, Int) to io.lamma.Date
 
   (2014, 7, 7) >= (2014, 7, 8)
 
@@ -28,6 +30,8 @@ object Date0 extends App {
   (2014, 7, 5) + (10 years) // add 10 years
 
   (2014, 7, 5) - 5      // same as `-`
+
+  (2014, 7, 5) - (2 weeks)
 
   (2014, 7, 10) - (2014, 7, 3)  // minus two dates
 
