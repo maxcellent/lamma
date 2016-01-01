@@ -39,12 +39,7 @@ object Pattern {
     }
   }
 
-  def apply(d: Duration): Pattern = d match {
-    case DayDuration(n) => Daily(n)
-    case WeekDuration(n) => Weekly(n)
-    case MonthDuration(n) => Monthly(n)
-    case YearDuration(n) => Yearly(n)
-  }
+  def apply(d: Duration) = d.toPattern
 }
 
 /**
