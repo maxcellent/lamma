@@ -2,11 +2,11 @@ organization := "io.lamma"
 
 name := "lamma"
 
-version := "2.3.0"
+version := "2.3.1"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.12.1"
 
-crossScalaVersions := Seq("2.10.6", "2.11.7")
+crossScalaVersions := Seq("2.10.6", "2.11.7", "2.12.1")
 
 javaOptions := Seq("-Xmx1g")
 
@@ -18,9 +18,9 @@ libraryDependencies += "junit" % "junit" % "4.12" % "test"
 
 libraryDependencies += "com.novocode" % "junit-interface" % "0.11" % "test"  // we need to have this lib in order to run junit with sbt test
 
-libraryDependencies += "com.google.guava" % "guava" % "19.0" % "test"
+libraryDependencies += "com.google.guava" % "guava" % "20.0" % "test"
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.5" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test"
 
 // ========== demo + sample source directories =========
 unmanagedSourceDirectories in Test += baseDirectory.value / "src/sample/java"
