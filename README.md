@@ -5,7 +5,9 @@ Lamma schedule generator is a professional schedule generation library for finan
 
 [![Build Status](https://secure.travis-ci.org/maxcellent/lamma.png)](http://travis-ci.org/maxcellent/lamma)
 
-[![javadoc](https://javadoc.io/badge2/io.lamma/lamma_2.12/javadoc.svg)](https://javadoc.io/doc/io.lamma/lamma_2.12)
+[![javadoc 2.10](https://javadoc.io/badge2/io.lamma/lamma_2.12/javadoc.svg)](https://javadoc.io/doc/io.lamma/lamma_2.10)
+[![javadoc 2.11](https://javadoc.io/badge2/io.lamma/lamma_2.12/javadoc.svg)](https://javadoc.io/doc/io.lamma/lamma_2.11)
+[![javadoc 2.12](https://javadoc.io/badge2/io.lamma/lamma_2.12/javadoc.svg)](https://javadoc.io/doc/io.lamma/lamma_2.12)
 
 All documentations are now moved to http://lamma.io.
 
